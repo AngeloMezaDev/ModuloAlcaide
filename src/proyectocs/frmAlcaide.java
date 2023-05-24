@@ -4,6 +4,7 @@
  */
 package proyectocs;
 import java.awt.Color;
+import javax.swing.JPanel;
 /**
  *
  * @author Angelo Meza
@@ -43,6 +44,9 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        BtnOpcion5 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jPanelBanner = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -63,6 +67,11 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BtnActividades.setBackground(new java.awt.Color(85, 65, 118));
+        BtnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtnActividadesMousePressed(evt);
+            }
+        });
 
         jLabel9.setBackground(new java.awt.Color(204, 204, 204));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -89,13 +98,20 @@ public class frmAlcaide extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(BtnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addGroup(BtnActividadesLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel9)))
                 .addGap(41, 41, 41))
         );
 
         jPanelSide.add(BtnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 290, 50));
 
-        BtnOpcion2.setBackground(new java.awt.Color(85, 55, 100));
+        BtnOpcion2.setBackground(new java.awt.Color(64, 43, 100));
+        BtnOpcion2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtnOpcion2MousePressed(evt);
+            }
+        });
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -112,24 +128,29 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(BtnOpcion2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         BtnOpcion2Layout.setVerticalGroup(
             BtnOpcion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(BtnOpcion2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         jPanelSide.add(BtnOpcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 290, 50));
 
-        BtnOpcion3.setBackground(new java.awt.Color(85, 55, 100));
+        BtnOpcion3.setBackground(new java.awt.Color(64, 43, 100));
+        BtnOpcion3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtnOpcion3MousePressed(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -155,15 +176,20 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion3Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+            .addGroup(BtnOpcion3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addComponent(jLabel6)
-                .addContainerGap())
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         jPanelSide.add(BtnOpcion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 290, 50));
 
-        BtnOpcion4.setBackground(new java.awt.Color(85, 55, 100));
+        BtnOpcion4.setBackground(new java.awt.Color(64, 43, 100));
+        BtnOpcion4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtnOpcion4MousePressed(evt);
+            }
+        });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -190,9 +216,9 @@ public class frmAlcaide extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion4Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         jPanelSide.add(BtnOpcion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 290, 50));
@@ -207,6 +233,40 @@ public class frmAlcaide extends javax.swing.JFrame {
         LlbIconUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
         jPanelSide.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
+
+        BtnOpcion5.setBackground(new java.awt.Color(85, 55, 100));
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel14.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel14.setText("Log Out");
+
+        javax.swing.GroupLayout BtnOpcion5Layout = new javax.swing.GroupLayout(BtnOpcion5);
+        BtnOpcion5.setLayout(BtnOpcion5Layout);
+        BtnOpcion5Layout.setHorizontalGroup(
+            BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BtnOpcion5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel14)
+                .addContainerGap(174, Short.MAX_VALUE))
+        );
+        BtnOpcion5Layout.setVerticalGroup(
+            BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addContainerGap())
+        );
+
+        jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
         jPanelBanner.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -386,6 +446,43 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelExit2.setBackground(new Color(33, 45, 62));
     }//GEN-LAST:event_lblExit2MouseExited
 
+    private void BtnActividadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnActividadesMousePressed
+        // TODO add your handling code here:
+        setColor(BtnActividades);
+        resetColor(BtnOpcion2);
+        resetColor(BtnOpcion3);
+        resetColor(BtnOpcion4);
+    }//GEN-LAST:event_BtnActividadesMousePressed
+
+    private void BtnOpcion2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion2MousePressed
+        // TODO add your handling code here:
+        setColor(BtnOpcion2);
+        resetColor(BtnActividades);
+        resetColor(BtnOpcion3);
+        resetColor(BtnOpcion4);
+    }//GEN-LAST:event_BtnOpcion2MousePressed
+
+    private void BtnOpcion3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion3MousePressed
+        // TODO add your handling code here:
+        setColor(BtnOpcion3);
+        resetColor(BtnActividades);
+        resetColor(BtnOpcion2);
+        resetColor(BtnOpcion4);
+    }//GEN-LAST:event_BtnOpcion3MousePressed
+
+    private void BtnOpcion4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion4MousePressed
+        // TODO add your handling code here:
+        setColor(BtnOpcion4);
+        resetColor(BtnActividades);
+        resetColor(BtnOpcion2);
+        resetColor(BtnOpcion3);
+    }//GEN-LAST:event_BtnOpcion4MousePressed
+    void setColor(JPanel panel){
+        panel.setBackground(new Color(85,65,118));
+    }
+    void resetColor(JPanel panel){
+        panel.setBackground(new Color(64,43,100));
+    }
     /**
      * @param args the command line arguments
      */
@@ -426,12 +523,15 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel BtnOpcion2;
     private javax.swing.JPanel BtnOpcion3;
     private javax.swing.JPanel BtnOpcion4;
+    private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
     private java.awt.Choice choice1;
     private java.awt.Choice choice2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
