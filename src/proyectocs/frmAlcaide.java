@@ -97,23 +97,20 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(btnActividadesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel9))
         );
         btnActividadesLayout.setVerticalGroup(
             btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnActividadesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(btnActividadesLayout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel9)))
-                .addGap(41, 41, 41))
+            .addGroup(btnActividadesLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(btnActividadesLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel9))
         );
 
-        jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 290, 50));
+        jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -141,22 +138,20 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(jLabel4))
         );
         btnTalleresLayout.setVerticalGroup(
             btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(btnTalleresLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel4)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addComponent(jLabel4))
         );
 
-        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 290, 50));
+        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
         btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
         btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -184,22 +179,20 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(btnProfesoresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel6))
         );
         btnProfesoresLayout.setVerticalGroup(
             btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnProfesoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(btnProfesoresLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnProfesoresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel6)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addComponent(jLabel6))
         );
 
-        jPanelSide.add(btnProfesores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 290, 50));
+        jPanelSide.add(btnProfesores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
 
         btnReclusos.setBackground(new java.awt.Color(64, 43, 100));
         btnReclusos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -227,22 +220,20 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(btnReclusosLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel8))
         );
         btnReclusosLayout.setVerticalGroup(
             btnReclusosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnReclusosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnReclusosLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(14, 14, 14))
+            .addGroup(btnReclusosLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(btnReclusosLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel8))
         );
 
-        jPanelSide.add(btnReclusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 290, 50));
+        jPanelSide.add(btnReclusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 290, 50));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
