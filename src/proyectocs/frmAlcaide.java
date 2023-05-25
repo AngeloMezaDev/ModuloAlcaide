@@ -81,8 +81,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel9.setText("ACTIVIDADES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/user (2).png"))); // NOI18N
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/list.png"))); // NOI18N
 
         javax.swing.GroupLayout BtnActividadesLayout = new javax.swing.GroupLayout(BtnActividades);
         BtnActividades.setLayout(BtnActividadesLayout);
@@ -122,7 +121,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel4.setText("TALLERES");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
 
         javax.swing.GroupLayout BtnOpcion2Layout = new javax.swing.GroupLayout(BtnOpcion2);
         BtnOpcion2.setLayout(BtnOpcion2Layout);
@@ -156,7 +155,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/teacher.png.png"))); // NOI18N
 
         jLabel6.setBackground(new java.awt.Color(204, 204, 204));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -195,7 +194,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         });
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prison.png"))); // NOI18N
 
         jLabel8.setBackground(new java.awt.Color(204, 204, 204));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -233,14 +232,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
-        LlbIconUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
         jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
         jPanelSide.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
         BtnOpcion5.setBackground(new java.awt.Color(85, 55, 100));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/arrow.png"))); // NOI18N
 
         jLabel14.setBackground(new java.awt.Color(204, 204, 204));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -262,11 +261,11 @@ public class frmAlcaide extends javax.swing.JFrame {
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+            .addGroup(BtnOpcion5Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addComponent(jLabel14)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
@@ -403,7 +402,7 @@ public class frmAlcaide extends javax.swing.JFrame {
                     .addGroup(jPanelBackGroundLayout.createSequentialGroup()
                         .addGroup(jPanelBackGroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelBackGroundLayout.createSequentialGroup()
-                                .addGap(88, 88, 88)
+                                .addGap(109, 109, 109)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelBackGroundLayout.createSequentialGroup()
                                 .addGap(377, 377, 377)
