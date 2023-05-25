@@ -27,12 +27,9 @@ public class fmrProfesores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblPrueba = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lblPrueba.setText("Texto");
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -47,17 +44,13 @@ public class fmrProfesores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(185, 185, 185)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar)
-                    .addComponent(lblPrueba))
+                .addComponent(btnAgregar)
                 .addContainerGap(544, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(lblPrueba)
-                .addGap(38, 38, 38)
+                .addGap(172, 172, 172)
                 .addComponent(btnAgregar)
                 .addContainerGap(407, Short.MAX_VALUE))
         );
@@ -106,6 +99,5 @@ public class fmrProfesores extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
-    private javax.swing.JLabel lblPrueba;
     // End of variables declaration//GEN-END:variables
 }
