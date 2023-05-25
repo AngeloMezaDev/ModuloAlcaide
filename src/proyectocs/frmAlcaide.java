@@ -81,6 +81,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel9.setText("ACTIVIDADES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/user (2).png"))); // NOI18N
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout BtnActividadesLayout = new javax.swing.GroupLayout(BtnActividades);
