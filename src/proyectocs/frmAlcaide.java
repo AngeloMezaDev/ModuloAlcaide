@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package proyectocs;
+
 import java.awt.Color;
 import javax.swing.JPanel;
+
 /**
  *
  * @author Angelo Meza
@@ -29,16 +31,16 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         jPanelBackGround = new javax.swing.JPanel();
         jPanelSide = new javax.swing.JPanel();
-        BtnActividades = new javax.swing.JPanel();
+        btnActividades = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        BtnOpcion2 = new javax.swing.JPanel();
+        btnTalleres = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        BtnOpcion3 = new javax.swing.JPanel();
+        btnProfesores = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        BtnOpcion4 = new javax.swing.JPanel();
+        btnReclusos = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,10 +71,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        BtnActividades.setBackground(new java.awt.Color(85, 65, 118));
-        BtnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnActividadesMousePressed(evt);
+        btnActividades.setBackground(new java.awt.Color(85, 65, 118));
+        btnActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActividadesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActividadesMouseExited(evt);
             }
         });
 
@@ -84,35 +90,39 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/list.png"))); // NOI18N
 
-        javax.swing.GroupLayout BtnActividadesLayout = new javax.swing.GroupLayout(BtnActividades);
-        BtnActividades.setLayout(BtnActividadesLayout);
-        BtnActividadesLayout.setHorizontalGroup(
-            BtnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnActividadesLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnActividadesLayout = new javax.swing.GroupLayout(btnActividades);
+        btnActividades.setLayout(btnActividadesLayout);
+        btnActividadesLayout.setHorizontalGroup(
+            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnActividadesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addContainerGap(144, Short.MAX_VALUE))
         );
-        BtnActividadesLayout.setVerticalGroup(
-            BtnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnActividadesLayout.createSequentialGroup()
+        btnActividadesLayout.setVerticalGroup(
+            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnActividadesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(BtnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(BtnActividadesLayout.createSequentialGroup()
+                    .addGroup(btnActividadesLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel9)))
                 .addGap(41, 41, 41))
         );
 
-        jPanelSide.add(BtnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 290, 50));
+        jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 290, 50));
 
-        BtnOpcion2.setBackground(new java.awt.Color(64, 43, 100));
-        BtnOpcion2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnOpcion2MousePressed(evt);
+        btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
+        btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseExited(evt);
             }
         });
 
@@ -124,34 +134,38 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
 
-        javax.swing.GroupLayout BtnOpcion2Layout = new javax.swing.GroupLayout(BtnOpcion2);
-        BtnOpcion2.setLayout(BtnOpcion2Layout);
-        BtnOpcion2Layout.setHorizontalGroup(
-            BtnOpcion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnOpcion2Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
+        btnTalleres.setLayout(btnTalleresLayout);
+        btnTalleresLayout.setHorizontalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(160, Short.MAX_VALUE))
         );
-        BtnOpcion2Layout.setVerticalGroup(
-            BtnOpcion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion2Layout.createSequentialGroup()
+        btnTalleresLayout.setVerticalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(BtnOpcion2Layout.createSequentialGroup()
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addGap(0, 15, Short.MAX_VALUE))
         );
 
-        jPanelSide.add(BtnOpcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 290, 50));
+        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 290, 50));
 
-        BtnOpcion3.setBackground(new java.awt.Color(64, 43, 100));
-        BtnOpcion3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnOpcion3MousePressed(evt);
+        btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
+        btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnProfesoresMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnProfesoresMouseExited(evt);
             }
         });
 
@@ -163,34 +177,38 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
         jLabel6.setText("PROFESORES");
 
-        javax.swing.GroupLayout BtnOpcion3Layout = new javax.swing.GroupLayout(BtnOpcion3);
-        BtnOpcion3.setLayout(BtnOpcion3Layout);
-        BtnOpcion3Layout.setHorizontalGroup(
-            BtnOpcion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnOpcion3Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnProfesoresLayout = new javax.swing.GroupLayout(btnProfesores);
+        btnProfesores.setLayout(btnProfesoresLayout);
+        btnProfesoresLayout.setHorizontalGroup(
+            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnProfesoresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addContainerGap(143, Short.MAX_VALUE))
         );
-        BtnOpcion3Layout.setVerticalGroup(
-            BtnOpcion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion3Layout.createSequentialGroup()
+        btnProfesoresLayout.setVerticalGroup(
+            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnProfesoresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(BtnOpcion3Layout.createSequentialGroup()
+            .addGroup(btnProfesoresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel6)
                 .addGap(0, 15, Short.MAX_VALUE))
         );
 
-        jPanelSide.add(BtnOpcion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 290, 50));
+        jPanelSide.add(btnProfesores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 290, 50));
 
-        BtnOpcion4.setBackground(new java.awt.Color(64, 43, 100));
-        BtnOpcion4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                BtnOpcion4MousePressed(evt);
+        btnReclusos.setBackground(new java.awt.Color(64, 43, 100));
+        btnReclusos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReclusos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnReclusosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnReclusosMouseExited(evt);
             }
         });
 
@@ -202,29 +220,29 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(204, 204, 204));
         jLabel8.setText("RECLUSOS");
 
-        javax.swing.GroupLayout BtnOpcion4Layout = new javax.swing.GroupLayout(BtnOpcion4);
-        BtnOpcion4.setLayout(BtnOpcion4Layout);
-        BtnOpcion4Layout.setHorizontalGroup(
-            BtnOpcion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnOpcion4Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnReclusosLayout = new javax.swing.GroupLayout(btnReclusos);
+        btnReclusos.setLayout(btnReclusosLayout);
+        btnReclusosLayout.setHorizontalGroup(
+            btnReclusosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnReclusosLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addContainerGap(162, Short.MAX_VALUE))
         );
-        BtnOpcion4Layout.setVerticalGroup(
-            BtnOpcion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion4Layout.createSequentialGroup()
+        btnReclusosLayout.setVerticalGroup(
+            btnReclusosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnReclusosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnReclusosLayout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(14, 14, 14))
         );
 
-        jPanelSide.add(BtnOpcion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 290, 50));
+        jPanelSide.add(btnReclusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 290, 50));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -246,27 +264,26 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(204, 204, 204));
         jLabel14.setText("Log Out");
+        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BtnOpcion5Layout = new javax.swing.GroupLayout(BtnOpcion5);
         BtnOpcion5.setLayout(BtnOpcion5Layout);
         BtnOpcion5Layout.setHorizontalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BtnOpcion5Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(182, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap())
         );
         BtnOpcion5Layout.setVerticalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
-            .addGroup(BtnOpcion5Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
+            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
@@ -402,43 +419,68 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelExit2.setBackground(new Color(33, 45, 62));
     }//GEN-LAST:event_lblExit2MouseExited
 
-    private void BtnActividadesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnActividadesMousePressed
-        // TODO add your handling code here:
-        setColor(BtnActividades);
-        resetColor(BtnOpcion2);
-        resetColor(BtnOpcion3);
-        resetColor(BtnOpcion4);
-    }//GEN-LAST:event_BtnActividadesMousePressed
+    private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);
 
-    private void BtnOpcion2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion2MousePressed
-        // TODO add your handling code here:
-        setColor(BtnOpcion2);
-        resetColor(BtnActividades);
-        resetColor(BtnOpcion3);
-        resetColor(BtnOpcion4);
-    }//GEN-LAST:event_BtnOpcion2MousePressed
+    }//GEN-LAST:event_btnActividadesMouseExited
 
-    private void BtnOpcion3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion3MousePressed
-        // TODO add your handling code here:
-        setColor(BtnOpcion3);
-        resetColor(BtnActividades);
-        resetColor(BtnOpcion2);
-        resetColor(BtnOpcion4);
-    }//GEN-LAST:event_BtnOpcion3MousePressed
+    private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);
+    }//GEN-LAST:event_btnTalleresMouseExited
 
-    private void BtnOpcion4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnOpcion4MousePressed
-        // TODO add your handling code here:
-        setColor(BtnOpcion4);
-        resetColor(BtnActividades);
-        resetColor(BtnOpcion2);
-        resetColor(BtnOpcion3);
-    }//GEN-LAST:event_BtnOpcion4MousePressed
-    void setColor(JPanel panel){
-        panel.setBackground(new Color(85,65,118));
+    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
+
+    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
+
+    private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
+         setColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);
+    }//GEN-LAST:event_btnActividadesMouseEntered
+
+    private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
+        setColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);
+    }//GEN-LAST:event_btnTalleresMouseEntered
+
+    private void btnProfesoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseEntered
+         setColor(btnProfesores);
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnReclusos);
+    }//GEN-LAST:event_btnProfesoresMouseEntered
+
+    private void btnReclusosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseEntered
+         setColor(btnReclusos);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnActividades);
+    }//GEN-LAST:event_btnReclusosMouseEntered
+    void setColor(JPanel panel) {
+        panel.setBackground(new Color(85, 65, 118));
     }
-    void resetColor(JPanel panel){
-        panel.setBackground(new Color(64,43,100));
+
+    void resetColor(JPanel panel) {
+        panel.setBackground(new Color(64, 43, 100));
     }
+
     /**
      * @param args the command line arguments
      */
@@ -475,12 +517,12 @@ public class frmAlcaide extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel BtnActividades;
-    private javax.swing.JPanel BtnOpcion2;
-    private javax.swing.JPanel BtnOpcion3;
-    private javax.swing.JPanel BtnOpcion4;
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
+    private javax.swing.JPanel btnActividades;
+    private javax.swing.JPanel btnProfesores;
+    private javax.swing.JPanel btnReclusos;
+    private javax.swing.JPanel btnTalleres;
     private java.awt.Choice choice1;
     private java.awt.Choice choice2;
     private javax.swing.JLabel jLabel1;
