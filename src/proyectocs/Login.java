@@ -93,7 +93,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/prisoner (2).png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prisoner (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -171,9 +171,9 @@ public class Login extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(0, 0, 153));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 153));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/user (2).png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/user (2).png"))); // NOI18N
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/lock-outlined-padlock-symbol-for-security-interface_icon-icons.com_57803.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/lock-outlined-padlock-symbol-for-security-interface_icon-icons.com_57803.png"))); // NOI18N
 
         txtContrasena.setBackground(new java.awt.Color(33, 45, 62));
         txtContrasena.setForeground(new java.awt.Color(153, 153, 153));
@@ -226,7 +226,7 @@ public class Login extends javax.swing.JFrame {
             .addComponent(lblExit, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/eye.png"))); // NOI18N
+        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/eye.png"))); // NOI18N
         lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
