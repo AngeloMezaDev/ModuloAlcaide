@@ -47,6 +47,8 @@ public class frmAlcaide extends javax.swing.JFrame {
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanelBanner = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -116,7 +118,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("OPCION 2");
+        jLabel4.setText("TALLERES");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -158,7 +160,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel6.setBackground(new java.awt.Color(204, 204, 204));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel6.setText("OPCION 3");
+        jLabel6.setText("PROFESORES");
 
         javax.swing.GroupLayout BtnOpcion3Layout = new javax.swing.GroupLayout(BtnOpcion3);
         BtnOpcion3.setLayout(BtnOpcion3Layout);
@@ -169,7 +171,7 @@ public class frmAlcaide extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         BtnOpcion3Layout.setVerticalGroup(
             BtnOpcion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +199,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel8.setBackground(new java.awt.Color(204, 204, 204));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setText("OPCION 4");
+        jLabel8.setText("RECLUSOS");
 
         javax.swing.GroupLayout BtnOpcion4Layout = new javax.swing.GroupLayout(BtnOpcion4);
         BtnOpcion4.setLayout(BtnOpcion4Layout);
@@ -208,7 +210,7 @@ public class frmAlcaide extends javax.swing.JFrame {
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         BtnOpcion4Layout.setVerticalGroup(
             BtnOpcion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,6 +270,19 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
+        jLabel1.setBackground(new java.awt.Color(54, 33, 89));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("ROL:");
+        jLabel1.setOpaque(true);
+        jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
+
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setText("Angelo Meza");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
+
         jPanelBanner.setBackground(new java.awt.Color(122, 72, 221));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
@@ -287,7 +302,7 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(jPanelBannerLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel10)
-                .addContainerGap(481, Short.MAX_VALUE))
+                .addContainerGap(483, Short.MAX_VALUE))
             .addGroup(jPanelBannerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBannerLayout.createSequentialGroup()
                     .addGap(34, 34, 34)
@@ -527,6 +542,7 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel LlbIconUser;
     private java.awt.Choice choice1;
     private java.awt.Choice choice2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -542,15 +558,12 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
-    private javax.swing.JPanel jPanelExit;
-    private javax.swing.JPanel jPanelExit1;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblExit;
-    private javax.swing.JLabel lblExit1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
     // End of variables declaration//GEN-END:variables
 }
