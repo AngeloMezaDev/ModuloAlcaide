@@ -53,6 +53,8 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1347, 600));
@@ -87,7 +89,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel4.setText("ASISTENCIAS");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/group.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/asistencia_1.png"))); // NOI18N
 
         javax.swing.GroupLayout btnAsistenciasLayout = new javax.swing.GroupLayout(btnAsistencias);
         btnAsistencias.setLayout(btnAsistenciasLayout);
@@ -128,7 +130,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel5.setText("CALIFICACIONES");
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/group.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Informe.png"))); // NOI18N
 
         javax.swing.GroupLayout btnCalificacionesLayout = new javax.swing.GroupLayout(btnCalificaciones);
         btnCalificaciones.setLayout(btnCalificacionesLayout);
@@ -325,6 +327,21 @@ public class fmrProfesores extends javax.swing.JFrame {
 
         jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 1053, -1));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 910, 340));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -458,7 +475,9 @@ public class fmrProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelFondo;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblExit2;
     // End of variables declaration//GEN-END:variables
 }
