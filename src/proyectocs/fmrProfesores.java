@@ -124,6 +124,7 @@ public class fmrProfesores extends javax.swing.JFrame {
 
         btnCalificaciones.setBackground(new java.awt.Color(64, 43, 100));
         btnCalificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCalificaciones.setPreferredSize(new java.awt.Dimension(126, 50));
         btnCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCalificacionesMouseEntered(evt);
@@ -137,9 +138,13 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("CALIFICACIONES");
+        jLabel5.setName(""); // NOI18N
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Informe.png"))); // NOI18N
+        jLabel13.setMaximumSize(new java.awt.Dimension(32, 32));
+        jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
+        jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
 
         javax.swing.GroupLayout btnCalificacionesLayout = new javax.swing.GroupLayout(btnCalificaciones);
         btnCalificaciones.setLayout(btnCalificacionesLayout);
@@ -165,6 +170,7 @@ public class fmrProfesores extends javax.swing.JFrame {
 
         btnInformes.setBackground(new java.awt.Color(64, 43, 100));
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
@@ -222,6 +228,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         JPanelMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
         btnSalir.setBackground(new java.awt.Color(85, 55, 100));
+        btnSalir.setPreferredSize(new java.awt.Dimension(291, 50));
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/arrow.png"))); // NOI18N
@@ -258,19 +265,24 @@ public class fmrProfesores extends javax.swing.JFrame {
         JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
 
         JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
+        JPanelEncabezado.setAlignmentX(0.0F);
+        JPanelEncabezado.setAlignmentY(0.0F);
         JPanelEncabezado.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         JPanelEncabezado.setMinimumSize(new java.awt.Dimension(1010, 84));
         JPanelEncabezado.setPreferredSize(new java.awt.Dimension(1060, 84));
+        JPanelEncabezado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
         jLabel11.setText("PROFESORES");
+        JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
         jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - ASISTENCIAS\"");
+        JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
 
@@ -307,32 +319,7 @@ public class fmrProfesores extends javax.swing.JFrame {
                 .addComponent(lblExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout JPanelEncabezadoLayout = new javax.swing.GroupLayout(JPanelEncabezado);
-        JPanelEncabezado.setLayout(JPanelEncabezadoLayout);
-        JPanelEncabezadoLayout.setHorizontalGroup(
-            JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addContainerGap(688, Short.MAX_VALUE))
-                    .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelExit2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
-        JPanelEncabezadoLayout.setVerticalGroup(
-            JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
-                .addGroup(JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel11))
-                    .addComponent(jPanelExit2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jLabel10))
-        );
+        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, -1, -1));
 
         jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
@@ -368,6 +355,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
