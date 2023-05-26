@@ -95,7 +95,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new java.awt.Dimension(89, 20));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/asistencia_1.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Asistencia_2.png"))); // NOI18N
         jLabel12.setMaximumSize(new java.awt.Dimension(32, 32));
         jLabel12.setMinimumSize(new java.awt.Dimension(32, 32));
         jLabel12.setPreferredSize(new java.awt.Dimension(32, 32));
@@ -141,7 +141,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel5.setName(""); // NOI18N
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/calificaciones.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/calificaciones1.png"))); // NOI18N
         jLabel13.setMaximumSize(new java.awt.Dimension(32, 32));
         jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
         jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
@@ -181,7 +181,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/teacher.png.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Informe1.png"))); // NOI18N
 
         jLabel7.setBackground(new java.awt.Color(204, 204, 204));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
