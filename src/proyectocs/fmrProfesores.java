@@ -57,6 +57,9 @@ public class fmrProfesores extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1347, 600));
 
         jPanelFondo.setBackground(new java.awt.Color(255, 255, 255));
         jPanelFondo.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -73,6 +76,7 @@ public class fmrProfesores extends javax.swing.JFrame {
 
         btnAsistencias.setBackground(new java.awt.Color(85, 65, 118));
         btnAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAsistencias.setPreferredSize(new java.awt.Dimension(146, 47));
         btnAsistencias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsistenciasMouseEntered(evt);
@@ -86,9 +90,15 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("ASISTENCIAS");
+        jLabel4.setMaximumSize(new java.awt.Dimension(89, 20));
+        jLabel4.setMinimumSize(new java.awt.Dimension(89, 20));
+        jLabel4.setPreferredSize(new java.awt.Dimension(89, 20));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/asistencia_1.png"))); // NOI18N
+        jLabel12.setMaximumSize(new java.awt.Dimension(32, 32));
+        jLabel12.setMinimumSize(new java.awt.Dimension(32, 32));
+        jLabel12.setPreferredSize(new java.awt.Dimension(32, 32));
 
         javax.swing.GroupLayout btnAsistenciasLayout = new javax.swing.GroupLayout(btnAsistencias);
         btnAsistencias.setLayout(btnAsistenciasLayout);
@@ -98,16 +108,16 @@ public class fmrProfesores extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel4))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         btnAsistenciasLayout.setVerticalGroup(
             btnAsistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAsistenciasLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnAsistenciasLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel4))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         JPanelMenu.add(btnAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
@@ -244,10 +254,10 @@ public class fmrProfesores extends javax.swing.JFrame {
 
         JPanelMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
-        jPanelFondo.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanelFondo.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
         JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
 
-        JPanelEncabezado.setBackground(new java.awt.Color(102, 0, 204));
+        JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
         JPanelEncabezado.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         JPanelEncabezado.setMinimumSize(new java.awt.Dimension(1010, 84));
         JPanelEncabezado.setPreferredSize(new java.awt.Dimension(1060, 84));
@@ -306,7 +316,7 @@ public class fmrProfesores extends javax.swing.JFrame {
                 .addGroup(JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
                         .addComponent(jLabel10)
-                        .addContainerGap(681, Short.MAX_VALUE))
+                        .addContainerGap(688, Short.MAX_VALUE))
                     .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -324,7 +334,7 @@ public class fmrProfesores extends javax.swing.JFrame {
                 .addComponent(jLabel10))
         );
 
-        jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 1053, -1));
+        jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -339,7 +349,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 910, 340));
+        jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 257, 807, 320));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -347,14 +357,14 @@ public class fmrProfesores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(547, Short.MAX_VALUE))
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 345, Short.MAX_VALUE))
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
