@@ -5,6 +5,9 @@
  */
 package proyectocs;
 
+import java.awt.Color;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Mercy Palma
@@ -27,9 +30,103 @@ public class fmrProfesores extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelFondo = new javax.swing.JPanel();
+        JPanelMenu = new javax.swing.JPanel();
+        btnasistencias = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        JPanelEncabezado = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanelFondo.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelFondo.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jPanelFondo.setMinimumSize(new java.awt.Dimension(1347, 600));
+
+        JPanelMenu.setBackground(new java.awt.Color(85, 65, 118));
+        JPanelMenu.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        JPanelMenu.setMinimumSize(new java.awt.Dimension(290, 600));
+        JPanelMenu.setName(""); // NOI18N
+        JPanelMenu.setPreferredSize(new java.awt.Dimension(290, 600));
+        JPanelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnasistencias.setBackground(new java.awt.Color(64, 43, 100));
+        btnasistencias.setMinimumSize(new java.awt.Dimension(0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("ASISTENCIAS");
+
+        jLabel2.setText("HO");
+
+        javax.swing.GroupLayout btnasistenciasLayout = new javax.swing.GroupLayout(btnasistencias);
+        btnasistencias.setLayout(btnasistenciasLayout);
+        btnasistenciasLayout.setHorizontalGroup(
+            btnasistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnasistenciasLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+        );
+        btnasistenciasLayout.setVerticalGroup(
+            btnasistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnasistenciasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(btnasistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
+        );
+
+        JPanelMenu.add(btnasistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 133, -1, -1));
+
+        JPanelEncabezado.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setText("ASISTENCIAS");
+
+        javax.swing.GroupLayout JPanelEncabezadoLayout = new javax.swing.GroupLayout(JPanelEncabezado);
+        JPanelEncabezado.setLayout(JPanelEncabezadoLayout);
+        JPanelEncabezadoLayout.setHorizontalGroup(
+            JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel11)
+                .addContainerGap(864, Short.MAX_VALUE))
+        );
+        JPanelEncabezadoLayout.setVerticalGroup(
+            JPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanelEncabezadoLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel11)
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelFondoLayout = new javax.swing.GroupLayout(jPanelFondo);
+        jPanelFondo.setLayout(jPanelFondoLayout);
+        jPanelFondoLayout.setHorizontalGroup(
+            jPanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFondoLayout.createSequentialGroup()
+                .addComponent(JPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JPanelEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelFondoLayout.setVerticalGroup(
+            jPanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(JPanelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelFondoLayout.createSequentialGroup()
+                .addComponent(JPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -43,16 +140,26 @@ public class fmrProfesores extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(185, 185, 185)
+                .addGap(237, 237, 237)
                 .addComponent(btnAgregar)
-                .addContainerGap(544, Short.MAX_VALUE))
+                .addContainerGap(880, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(273, 273, 273)
+                    .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(274, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(172, 172, 172)
+                .addGap(183, 183, 183)
                 .addComponent(btnAgregar)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addContainerGap(476, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(172, 172, 172)
+                    .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(173, Short.MAX_VALUE)))
         );
 
         pack();
@@ -61,7 +168,9 @@ public class fmrProfesores extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
-
+void setColor(JPanel panel) {
+        panel.setBackground(new Color(85, 65, 118));
+    }
     /**
      * @param args the command line arguments
      */
@@ -98,6 +207,13 @@ public class fmrProfesores extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPanelEncabezado;
+    private javax.swing.JPanel JPanelMenu;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JPanel btnasistencias;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanelFondo;
     // End of variables declaration//GEN-END:variables
 }
