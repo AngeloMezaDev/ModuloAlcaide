@@ -141,7 +141,7 @@ public class fmrProfesores extends javax.swing.JFrame {
         jLabel5.setName(""); // NOI18N
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Informe.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/calificaciones.png"))); // NOI18N
         jLabel13.setMaximumSize(new java.awt.Dimension(32, 32));
         jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
         jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
