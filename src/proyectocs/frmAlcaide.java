@@ -45,12 +45,13 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanelBanner = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -239,12 +240,11 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
-        jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
-        jPanelSide.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
+        jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 40, 40));
 
         BtnOpcion5.setBackground(new java.awt.Color(85, 55, 100));
 
@@ -279,18 +279,27 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
+        jPanel1.setBackground(new java.awt.Color(54, 33, 89));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 30, 230, 20));
+
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("ADMINISTRADOR");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 180, 40));
+
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
-        jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
-        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField1.setText("Angelo Meza");
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.setFocusable(false);
-        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
+        jPanelSide.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 220, 40));
 
         jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
 
@@ -309,7 +318,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel11.setText("ALCAIDE");
         jPanelBanner.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 24, -1, -1));
 
-        jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
+        jPanelExit2.setBackground(new java.awt.Color(122, 72, 221));
 
         lblExit2.setBackground(new java.awt.Color(33, 45, 62));
         lblExit2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
@@ -407,11 +416,11 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseEntered
 
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(33, 45, 62));
+        jPanelExit2.setBackground(new Color(122,72,221));
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
@@ -419,20 +428,20 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnTalleresMouseExited
 
     private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
 
     private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
@@ -530,6 +539,7 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
