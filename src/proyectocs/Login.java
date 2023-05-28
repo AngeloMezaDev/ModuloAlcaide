@@ -16,6 +16,8 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    frmAlcaide actividades = new frmAlcaide();
+
     public Login() {
         initComponents();
         btnIngreso.requestFocusInWindow();
@@ -353,12 +355,24 @@ public class Login extends javax.swing.JFrame {
         // Validar que no sean iguales a los valores por defecto
         if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-        } else {
+            //Una vez se valide que las credenciales no sean las que por defecto vienen al cargar el formualario.Se manda a llamar al método.    
+        } else if (validarAdmin(usuario, contrasena)) {
             // Mostrar mensaje de bienvenida con el nombre de usuario
             JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+            cargarFormulario(actividades);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
+    private boolean validarAdmin(String usuario, String contrasena) {
+        //Se crea el método validarAdmin con credenciales.
+        return usuario.equals("Alcaide") && contrasena.equals("admin");
+    }
 
+    private void cargarFormulario(frmAlcaide actividades) {
+        actividades.setVisible(true);
+    }
     private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
         txtContrasena.setEchoChar((char) 0);
     }//GEN-LAST:event_lblPassMousePressed

@@ -5,6 +5,7 @@
 package proyectocs;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -47,7 +48,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         LlbIconUser = new javax.swing.JLabel();
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblLogout = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jTextField1 = new javax.swing.JTextField();
@@ -267,11 +268,16 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/arrow.png"))); // NOI18N
 
-        jLabel14.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel14.setText("Log Out");
-        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblLogout.setBackground(new java.awt.Color(204, 204, 204));
+        lblLogout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblLogout.setForeground(new java.awt.Color(204, 204, 204));
+        lblLogout.setText("Log Out");
+        lblLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLogoutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout BtnOpcion5Layout = new javax.swing.GroupLayout(BtnOpcion5);
         BtnOpcion5.setLayout(BtnOpcion5Layout);
@@ -281,14 +287,14 @@ public class frmAlcaide extends javax.swing.JFrame {
                 .addContainerGap(182, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel14)
+                .addComponent(lblLogout)
                 .addContainerGap())
         );
         BtnOpcion5Layout.setVerticalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
+                .addComponent(lblLogout)
                 .addGap(14, 14, 14))
             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
@@ -374,10 +380,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Actividad", "Descripcion", "Fecha y Hora"
@@ -556,7 +559,7 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseEntered
 
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(122,72,221));
+        jPanelExit2.setBackground(new Color(122, 72, 221));
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
@@ -587,7 +590,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
-         setColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
@@ -601,14 +604,14 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTalleresMouseEntered
 
     private void btnProfesoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseEntered
-         setColor(btnProfesores);
+        setColor(btnProfesores);
         resetColor(btnTalleres);
         resetColor(btnActividades);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnProfesoresMouseEntered
 
     private void btnReclusosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseEntered
-         setColor(btnReclusos);
+        setColor(btnReclusos);
         resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnActividades);
@@ -617,6 +620,25 @@ public class frmAlcaide extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
+        // Mostrar mensaje de confirmación para cerrar sesión
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada por el usuario
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Mostrar mensaje de sesión cerrada con éxito
+            JOptionPane.showMessageDialog(null, "Sesión cerrada con éxito", "Sesión cerrada", JOptionPane.INFORMATION_MESSAGE);
+
+            // Cerrar el formulario actual
+            this.dispose();
+
+            // Cargar el formulario de login
+            Login loginForm = new Login();
+            loginForm.setVisible(true);
+        }
+
+    }//GEN-LAST:event_lblLogoutMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -677,7 +699,6 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -709,5 +730,6 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblLogout;
     // End of variables declaration//GEN-END:variables
 }
