@@ -1,6 +1,7 @@
 package proyectocs;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class frmPerfil extends javax.swing.JFrame {
@@ -20,13 +21,13 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jPanelBackGround = new javax.swing.JPanel();
         jPanelSide = new javax.swing.JPanel();
-        btnActividades = new javax.swing.JPanel();
+        btnNotificaciones = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnTalleres = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        btnProfesores = new javax.swing.JPanel();
+        btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -34,7 +35,7 @@ public class frmPerfil extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblLogOut = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanelBanner = new javax.swing.JPanel();
@@ -68,14 +69,17 @@ public class frmPerfil extends javax.swing.JFrame {
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnActividades.setBackground(new java.awt.Color(85, 65, 118));
-        btnActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNotificaciones.setBackground(new java.awt.Color(85, 65, 118));
+        btnNotificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNotificacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnActividadesMouseEntered(evt);
+                btnNotificacionesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnActividadesMouseExited(evt);
+                btnNotificacionesMouseExited(evt);
             }
         });
 
@@ -87,34 +91,37 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/campana.png"))); // NOI18N
 
-        javax.swing.GroupLayout btnActividadesLayout = new javax.swing.GroupLayout(btnActividades);
-        btnActividades.setLayout(btnActividadesLayout);
-        btnActividadesLayout.setHorizontalGroup(
-            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnActividadesLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnNotificacionesLayout = new javax.swing.GroupLayout(btnNotificaciones);
+        btnNotificaciones.setLayout(btnNotificacionesLayout);
+        btnNotificacionesLayout.setHorizontalGroup(
+            btnNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnNotificacionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
-        btnActividadesLayout.setVerticalGroup(
-            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnActividadesLayout.createSequentialGroup()
+        btnNotificacionesLayout.setVerticalGroup(
+            btnNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnNotificacionesLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnActividadesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNotificacionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addGap(14, 14, 14))
         );
 
-        jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
+        jPanelSide.add(btnNotificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTalleresMouseEntered(evt);
             }
@@ -154,14 +161,17 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
-        btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
+        btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPerfilMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnProfesoresMouseEntered(evt);
+                btnPerfilMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnProfesoresMouseExited(evt);
+                btnPerfilMouseExited(evt);
             }
         });
 
@@ -173,28 +183,28 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
         jLabel6.setText("PERFIL");
 
-        javax.swing.GroupLayout btnProfesoresLayout = new javax.swing.GroupLayout(btnProfesores);
-        btnProfesores.setLayout(btnProfesoresLayout);
-        btnProfesoresLayout.setHorizontalGroup(
-            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnPerfilLayout = new javax.swing.GroupLayout(btnPerfil);
+        btnPerfil.setLayout(btnPerfilLayout);
+        btnPerfilLayout.setHorizontalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addContainerGap())
         );
-        btnProfesoresLayout.setVerticalGroup(
-            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+        btnPerfilLayout.setVerticalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel6))
         );
 
-        jPanelSide.add(btnProfesores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
+        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -212,11 +222,16 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/arrow.png"))); // NOI18N
 
-        jLabel14.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel14.setText("Log Out");
-        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblLogOut.setBackground(new java.awt.Color(204, 204, 204));
+        lblLogOut.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblLogOut.setForeground(new java.awt.Color(204, 204, 204));
+        lblLogOut.setText("Log Out");
+        lblLogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLogOutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout BtnOpcion5Layout = new javax.swing.GroupLayout(BtnOpcion5);
         BtnOpcion5.setLayout(BtnOpcion5Layout);
@@ -226,14 +241,14 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addContainerGap(183, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel14)
+                .addComponent(lblLogOut)
                 .addContainerGap())
         );
         BtnOpcion5Layout.setVerticalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
+                .addComponent(lblLogOut)
                 .addGap(14, 14, 14))
             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
@@ -247,7 +262,10 @@ public class frmPerfil extends javax.swing.JFrame {
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
         jTextField1.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField1.setText("PABLO ESCOBAR");
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Recluso");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTextField1.setFocusable(false);
@@ -482,41 +500,41 @@ public class frmPerfil extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
-        setColor(btnActividades);
+    private void btnNotificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseEntered
+        setColor(btnNotificaciones);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
-    }//GEN-LAST:event_btnActividadesMouseEntered
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnNotificacionesMouseEntered
 
-    private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
-        resetColor(btnActividades);
+    private void btnNotificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseExited
+        resetColor(btnNotificaciones);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
-    }//GEN-LAST:event_btnActividadesMouseExited
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnNotificacionesMouseExited
 
     private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
         setColor(btnTalleres);
-        resetColor(btnActividades);
-        resetColor(btnProfesores);
+        resetColor(btnNotificaciones);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseEntered
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        resetColor(btnActividades);
+        resetColor(btnNotificaciones);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseExited
 
-    private void btnProfesoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseEntered
-        setColor(btnProfesores);
+    private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
+        setColor(btnPerfil);
         resetColor(btnTalleres);
-        resetColor(btnActividades);
-    }//GEN-LAST:event_btnProfesoresMouseEntered
+        resetColor(btnNotificaciones);
+    }//GEN-LAST:event_btnPerfilMouseEntered
 
-    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
-        resetColor(btnActividades);
+    private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
+        resetColor(btnNotificaciones);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
-    }//GEN-LAST:event_btnProfesoresMouseExited
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnPerfilMouseExited
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
         System.exit(0);
@@ -550,6 +568,42 @@ public class frmPerfil extends javax.swing.JFrame {
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
+        // Mostrar mensaje de confirmación para cerrar sesión
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada por el usuario
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Mostrar mensaje de sesión cerrada con éxito
+            JOptionPane.showMessageDialog(null, "Sesión cerrada con éxito", "Sesión cerrada", JOptionPane.INFORMATION_MESSAGE);
+
+            // Cerrar el formulario actual
+            this.dispose();
+
+            // Cargar el formulario de login
+            Login loginForm = new Login();
+            loginForm.setVisible(true);
+        }
+    }//GEN-LAST:event_lblLogOutMouseClicked
+
+    private void btnNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseClicked
+        frmReclusos noti= new frmReclusos();
+        this.dispose();
+        noti.setVisible(true);
+    }//GEN-LAST:event_btnNotificacionesMouseClicked
+
+    private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
+        frmPerfil perfil=new frmPerfil();
+        this.dispose();
+        perfil.setVisible(true);
+    }//GEN-LAST:event_btnPerfilMouseClicked
+
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleres tall=new frmTalleres();
+        this.dispose();
+        tall.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -596,15 +650,14 @@ public class frmPerfil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
-    private javax.swing.JPanel btnActividades;
-    private javax.swing.JPanel btnProfesores;
+    private javax.swing.JPanel btnNotificaciones;
+    private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnTalleres;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -635,5 +688,6 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lblCodRec;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblLogOut;
     // End of variables declaration//GEN-END:variables
 }

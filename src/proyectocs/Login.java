@@ -16,8 +16,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    frmPerfil perfil=new frmPerfil();
     public Login() {
         initComponents();
+        btnIngreso.requestFocusInWindow();
     }
 
     /**
@@ -137,7 +139,6 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("CONTRASEÑA");
 
-        btnIngreso.setBackground(new java.awt.Color(255, 255, 255));
         btnIngreso.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         btnIngreso.setForeground(new java.awt.Color(0, 102, 0));
         btnIngreso.setText("INGRESAR");
@@ -154,14 +155,12 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setText("Ingrese su nombre de usuario");
         txtUsuario.setBorder(null);
         txtUsuario.setSelectedTextColor(new java.awt.Color(153, 153, 153));
-        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtUsuarioMousePressed(evt);
+        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusGained(evt);
             }
-        });
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusLost(evt);
             }
         });
 
@@ -180,9 +179,12 @@ public class Login extends javax.swing.JFrame {
         txtContrasena.setText("******");
         txtContrasena.setBorder(null);
         txtContrasena.setSelectedTextColor(new java.awt.Color(153, 153, 153));
-        txtContrasena.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtContrasenaMousePressed(evt);
+        txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusLost(evt);
             }
         });
 
@@ -319,10 +321,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
         System.exit(0);
     }//GEN-LAST:event_lblExitMouseClicked
@@ -338,47 +336,28 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lblExitMouseExited
 
-    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
-        //Validar para que no se borre la información luego de haberla ingresado.
-        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
-            txtUsuario.setText("");
-            //Colocar color al texto 
-            txtUsuario.setForeground(new Color(153, 153, 153));
-        }
-        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
-            //Colocar un mensaje predeterminado para mayor feedback
-            txtContrasena.setText("******");
-            txtContrasena.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtUsuarioMousePressed
-
-    private void txtContrasenaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContrasenaMousePressed
-        //Validar para que no se borre la información luego de haberla ingresado.
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            //Colocar color al texto 
-            txtContrasena.setForeground(new Color(153, 153, 153));
-        }
-        if (txtUsuario.getText().isEmpty()) {
-            //Colocar un mensaje predeterminado para mayor feedback
-            txtUsuario.setText("Ingrese su nombre de usuario");
-            txtUsuario.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtContrasenaMousePressed
-
     private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
-        //Creacion de dos variables de tipo String, donde se almacena el usuario y contraseña.
+       // Obtener el usuario y la contraseña ingresados
         String usuario = txtUsuario.getText();
         String contrasena = String.valueOf(txtContrasena.getPassword());
 
-        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
-            // Los campos de usuario y/o contraseña no han sido completados
+        // Validar que no sean iguales a los valores por defecto
+        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("**")) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Los campos de usuario y contraseña están completos
+            //Una vez se valide que las credenciales no sean las que por defecto vienen al cargar el formualario.Se manda a llamar al método.    
+        } else if (validarRecluso(usuario, contrasena)) {
+            // Mostrar mensaje de bienvenida con el nombre de usuario
             JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-        }
+            cargarFormulario(perfil);
 
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cargarFormulario(frmPerfil perfil) {
+        perfil.setVisible(true);
+    
 
     }//GEN-LAST:event_btnIngresoActionPerformed
 
@@ -389,6 +368,42 @@ public class Login extends javax.swing.JFrame {
     private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
         txtContrasena.setEchoChar('\u2022');
     }//GEN-LAST:event_lblPassMouseExited
+
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
+            txtUsuario.setText("");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.setText("Ingrese su nombre de usuario");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusLost
+
+    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
+        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+            txtContrasena.setText("");
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+        }
+    }//GEN-LAST:event_txtContrasenaFocusGained
+
+    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
+        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+            txtContrasena.setText("******");
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+        }
+    }//GEN-LAST:event_txtContrasenaFocusLost
+
+    private boolean validarRecluso(String usuario, String contrasena) {
+        //Se crea el método validarAdmin con credenciales.
+        return usuario.equals("Recluso") && contrasena.equals("recluso");
+    }
+
 
     /**
      * @param args the command line arguments

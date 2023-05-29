@@ -5,6 +5,7 @@
 package proyectocs;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -37,7 +38,7 @@ public class frmReclusos extends javax.swing.JFrame {
         btnTalleres = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        btnProfesores = new javax.swing.JPanel();
+        btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -117,6 +118,9 @@ public class frmReclusos extends javax.swing.JFrame {
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTalleresMouseEntered(evt);
             }
@@ -156,14 +160,17 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
-        btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
+        btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPerfilMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnProfesoresMouseEntered(evt);
+                btnPerfilMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnProfesoresMouseExited(evt);
+                btnPerfilMouseExited(evt);
             }
         });
 
@@ -175,28 +182,28 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
         jLabel6.setText("PERFIL");
 
-        javax.swing.GroupLayout btnProfesoresLayout = new javax.swing.GroupLayout(btnProfesores);
-        btnProfesores.setLayout(btnProfesoresLayout);
-        btnProfesoresLayout.setHorizontalGroup(
-            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnPerfilLayout = new javax.swing.GroupLayout(btnPerfil);
+        btnPerfil.setLayout(btnPerfilLayout);
+        btnPerfilLayout.setHorizontalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addContainerGap())
         );
-        btnProfesoresLayout.setVerticalGroup(
-            btnProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+        btnPerfilLayout.setVerticalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(btnProfesoresLayout.createSequentialGroup()
+            .addGroup(btnPerfilLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel6))
         );
 
-        jPanelSide.add(btnProfesores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
+        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -219,6 +226,11 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(204, 204, 204));
         jLabel14.setText("Log Out");
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout BtnOpcion5Layout = new javax.swing.GroupLayout(BtnOpcion5);
         BtnOpcion5.setLayout(BtnOpcion5Layout);
@@ -417,38 +429,38 @@ public class frmReclusos extends javax.swing.JFrame {
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
         setColor(btnActividades);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnActividadesMouseEntered
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
         resetColor(btnActividades);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
         setColor(btnTalleres);
         resetColor(btnActividades);
-        resetColor(btnProfesores);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseEntered
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
         resetColor(btnActividades);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseExited
 
-    private void btnProfesoresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseEntered
-        setColor(btnProfesores);
+    private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
+        setColor(btnPerfil);
         resetColor(btnTalleres);
         resetColor(btnActividades);
-    }//GEN-LAST:event_btnProfesoresMouseEntered
+    }//GEN-LAST:event_btnPerfilMouseEntered
 
-    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
+    private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
         resetColor(btnActividades);
         resetColor(btnTalleres);
-        resetColor(btnProfesores);
-    }//GEN-LAST:event_btnProfesoresMouseExited
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnPerfilMouseExited
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
         System.exit(0);
@@ -462,6 +474,36 @@ public class frmReclusos extends javax.swing.JFrame {
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
         jPanelExit2.setBackground(new Color(33, 45, 62));
     }//GEN-LAST:event_lblExit2MouseExited
+
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleres tall= new frmTalleres();
+        this.dispose();
+        tall.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
+
+    private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
+        frmPerfil perfil=new frmPerfil();
+        this.dispose();
+        perfil.setVisible(true);
+    }//GEN-LAST:event_btnPerfilMouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // Mostrar mensaje de confirmación para cerrar sesión
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada por el usuario
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Mostrar mensaje de sesión cerrada con éxito
+            JOptionPane.showMessageDialog(null, "Sesión cerrada con éxito", "Sesión cerrada", JOptionPane.INFORMATION_MESSAGE);
+
+            // Cerrar el formulario actual
+            this.dispose();
+
+            // Cargar el formulario de login
+            Login loginForm = new Login();
+            loginForm.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabel14MouseClicked
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -510,7 +552,7 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
-    private javax.swing.JPanel btnProfesores;
+    private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnTalleres;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
