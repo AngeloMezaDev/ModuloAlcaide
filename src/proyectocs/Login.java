@@ -16,8 +16,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+        frmProfesores profesores = new frmProfesores();
     public Login() {
         initComponents();
+        btnIngreso.requestFocusInWindow();
     }
 
     /**
@@ -137,7 +139,6 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("CONTRASEÑA");
 
-        btnIngreso.setBackground(new java.awt.Color(255, 255, 255));
         btnIngreso.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         btnIngreso.setForeground(new java.awt.Color(0, 102, 0));
         btnIngreso.setText("INGRESAR");
@@ -154,14 +155,17 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setText("Ingrese su nombre de usuario");
         txtUsuario.setBorder(null);
         txtUsuario.setSelectedTextColor(new java.awt.Color(153, 153, 153));
+        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusLost(evt);
+            }
+        });
         txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtUsuarioMousePressed(evt);
-            }
-        });
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
             }
         });
 
@@ -180,9 +184,12 @@ public class Login extends javax.swing.JFrame {
         txtContrasena.setText("******");
         txtContrasena.setBorder(null);
         txtContrasena.setSelectedTextColor(new java.awt.Color(153, 153, 153));
-        txtContrasena.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtContrasenaMousePressed(evt);
+        txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusLost(evt);
             }
         });
 
@@ -198,6 +205,7 @@ public class Login extends javax.swing.JFrame {
 
         lblExit.setBackground(new java.awt.Color(33, 45, 62));
         lblExit.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        lblExit.setForeground(new java.awt.Color(234, 230, 230));
         lblExit.setText("X");
         lblExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -319,10 +327,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
-
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
         System.exit(0);
     }//GEN-LAST:event_lblExitMouseClicked
@@ -352,31 +356,27 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtUsuarioMousePressed
 
-    private void txtContrasenaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContrasenaMousePressed
-        //Validar para que no se borre la información luego de haberla ingresado.
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            //Colocar color al texto 
-            txtContrasena.setForeground(new Color(153, 153, 153));
-        }
-        if (txtUsuario.getText().isEmpty()) {
-            //Colocar un mensaje predeterminado para mayor feedback
-            txtUsuario.setText("Ingrese su nombre de usuario");
-            txtUsuario.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtContrasenaMousePressed
-
     private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
         //Creacion de dos variables de tipo String, donde se almacena el usuario y contraseña.
+        // Obtener el usuario y la contraseña ingresados
         String usuario = txtUsuario.getText();
         String contrasena = String.valueOf(txtContrasena.getPassword());
 
+ 
+
+        // Validar que no sean iguales a los valores por defecto
         if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
-            // Los campos de usuario y/o contraseña no han sido completados
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Los campos de usuario y contraseña están completos
+            //Una vez se valide que las credenciales no sean las que por defecto vienen al cargar el formualario.Se manda a llamar al método.    
+        } else if (validarProfesores(usuario, contrasena)) {
+            // Mostrar mensaje de bienvenida con el nombre de usuario
             JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+            cargarFormulario(profesores);
+
+ 
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -390,6 +390,54 @@ public class Login extends javax.swing.JFrame {
         txtContrasena.setEchoChar('\u2022');
     }//GEN-LAST:event_lblPassMouseExited
 
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        // TODO add your handling code here:
+        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
+            txtUsuario.setText("");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
+        // TODO add your handling code here:
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.setText("Ingrese su nombre de usuario");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusLost
+
+    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
+        // TODO add your handling code here:
+        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+            txtContrasena.setText("");
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+        }
+    }//GEN-LAST:event_txtContrasenaFocusGained
+
+    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
+        // TODO add your handling code here:
+
+if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
+
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+
+            txtContrasena.setText("******");
+
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+
+        }
+    }//GEN-LAST:event_txtContrasenaFocusLost
+private boolean validarProfesores(String usuario, String contrasena) {
+        //Se crea el método validarAdmin con credenciales.
+        return usuario.equals("Profesor") && contrasena.equals("profesor");
+    }
+
+ 
+
+    private void cargarFormulario(frmProfesores profesores) {
+        profesores.setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */
