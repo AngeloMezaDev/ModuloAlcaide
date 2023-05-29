@@ -200,6 +200,7 @@ public class Login extends javax.swing.JFrame {
 
         lblExit.setBackground(new java.awt.Color(33, 45, 62));
         lblExit.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        lblExit.setForeground(new java.awt.Color(234, 230, 230));
         lblExit.setText("X");
         lblExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
