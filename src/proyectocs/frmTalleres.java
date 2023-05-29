@@ -443,7 +443,7 @@ public class frmTalleres extends javax.swing.JFrame {
 
     private void btnNotificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseExited
         resetColor(btnNotificaciones);
-        resetColor(btnTalleres);
+        setColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnNotificacionesMouseExited
 
@@ -455,7 +455,7 @@ public class frmTalleres extends javax.swing.JFrame {
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
         resetColor(btnNotificaciones);
-        resetColor(btnTalleres);
+        setColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseExited
 
@@ -467,7 +467,7 @@ public class frmTalleres extends javax.swing.JFrame {
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
         resetColor(btnNotificaciones);
-        resetColor(btnTalleres);
+        setColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 
