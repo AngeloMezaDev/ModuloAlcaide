@@ -16,8 +16,12 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    frmAlcaide actividades = new frmAlcaide();
+
     public Login() {
         initComponents();
+        btnIngreso.requestFocusInWindow();
+
     }
 
     /**
@@ -44,11 +48,11 @@ public class Login extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtContrasena = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelExit = new javax.swing.JPanel();
         lblExit = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
+        txtContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -93,7 +97,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/prisoner (2).png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prisoner (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,7 +134,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("CORREO ELECTRÓNICO");
+        jLabel4.setText("USUARIO");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Rockwell", 0, 24)); // NOI18N
@@ -154,14 +158,12 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setText("Ingrese su nombre de usuario");
         txtUsuario.setBorder(null);
         txtUsuario.setSelectedTextColor(new java.awt.Color(153, 153, 153));
-        txtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtUsuarioMousePressed(evt);
+        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusGained(evt);
             }
-        });
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsuarioFocusLost(evt);
             }
         });
 
@@ -171,20 +173,9 @@ public class Login extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(0, 0, 153));
         jSeparator2.setForeground(new java.awt.Color(0, 0, 153));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/user (2).png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/user (2).png"))); // NOI18N
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/lock-outlined-padlock-symbol-for-security-interface_icon-icons.com_57803.png"))); // NOI18N
-
-        txtContrasena.setBackground(new java.awt.Color(33, 45, 62));
-        txtContrasena.setForeground(new java.awt.Color(153, 153, 153));
-        txtContrasena.setText("******");
-        txtContrasena.setBorder(null);
-        txtContrasena.setSelectedTextColor(new java.awt.Color(153, 153, 153));
-        txtContrasena.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtContrasenaMousePressed(evt);
-            }
-        });
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/lock-outlined-padlock-symbol-for-security-interface_icon-icons.com_57803.png"))); // NOI18N
 
         jCheckBox1.setBackground(new java.awt.Color(33, 45, 62));
         jCheckBox1.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
@@ -196,8 +187,9 @@ public class Login extends javax.swing.JFrame {
 
         jPanelExit.setBackground(new java.awt.Color(33, 45, 62));
 
-        lblExit.setBackground(new java.awt.Color(33, 45, 62));
+        lblExit.setBackground(new java.awt.Color(49, 71, 103));
         lblExit.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        lblExit.setForeground(new java.awt.Color(234, 230, 230));
         lblExit.setText("X");
         lblExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblExit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -226,7 +218,7 @@ public class Login extends javax.swing.JFrame {
             .addComponent(lblExit, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/eye.png"))); // NOI18N
+        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/eye.png"))); // NOI18N
         lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -237,45 +229,65 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        txtContrasena.setBackground(new java.awt.Color(33, 45, 62));
+        txtContrasena.setForeground(new java.awt.Color(153, 153, 153));
+        txtContrasena.setText("******");
+        txtContrasena.setBorder(null);
+        txtContrasena.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtContrasenaFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(246, 246, 246)))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jCheckBox1)))
-                            .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPass))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel3)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(100, 100, 100)
+                .addComponent(jLabel3)
+                .addContainerGap(116, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 132, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(140, 140, 140))
                     .addComponent(jPanelExit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jCheckBox1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtContrasena)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPass)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(63, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,38 +298,39 @@ public class Login extends javax.swing.JFrame {
                 .addGap(71, 71, 71)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtContrasena)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel5))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
-                .addGap(34, 34, 34)
+                .addGap(28, 28, 28)
                 .addComponent(btnIngreso)
                 .addGap(113, 113, 113))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 430, 600));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 420, 600));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void lblExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitMouseClicked
         System.exit(0);
@@ -334,50 +347,32 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lblExitMouseExited
 
-    private void txtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsuarioMousePressed
-        //Validar para que no se borre la información luego de haberla ingresado.
-        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
-            txtUsuario.setText("");
-            //Colocar color al texto 
-            txtUsuario.setForeground(new Color(153, 153, 153));
-        }
-        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
-            //Colocar un mensaje predeterminado para mayor feedback
-            txtContrasena.setText("******");
-            txtContrasena.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtUsuarioMousePressed
-
-    private void txtContrasenaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtContrasenaMousePressed
-        //Validar para que no se borre la información luego de haberla ingresado.
-        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
-            txtContrasena.setText("");
-            //Colocar color al texto 
-            txtContrasena.setForeground(new Color(153, 153, 153));
-        }
-        if (txtUsuario.getText().isEmpty()) {
-            //Colocar un mensaje predeterminado para mayor feedback
-            txtUsuario.setText("Ingrese su nombre de usuario");
-            txtUsuario.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtContrasenaMousePressed
-
     private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
-        //Creacion de dos variables de tipo String, donde se almacena el usuario y contraseña.
+        // Obtener el usuario y la contraseña ingresados
         String usuario = txtUsuario.getText();
         String contrasena = String.valueOf(txtContrasena.getPassword());
 
+        // Validar que no sean iguales a los valores por defecto
         if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
-            // Los campos de usuario y/o contraseña no han sido completados
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Los campos de usuario y contraseña están completos
+            //Una vez se valide que las credenciales no sean las que por defecto vienen al cargar el formualario.Se manda a llamar al método.    
+        } else if (validarAdmin(usuario, contrasena)) {
+            // Mostrar mensaje de bienvenida con el nombre de usuario
             JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+            cargarFormulario(actividades);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_btnIngresoActionPerformed
+    private boolean validarAdmin(String usuario, String contrasena) {
+        //Se crea el método validarAdmin con credenciales.
+        return usuario.equals("Alcaide") && contrasena.equals("admin");
+    }
 
+    private void cargarFormulario(frmAlcaide actividades) {
+        actividades.setVisible(true);
+    }
     private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
         txtContrasena.setEchoChar((char) 0);
     }//GEN-LAST:event_lblPassMousePressed
@@ -385,6 +380,34 @@ public class Login extends javax.swing.JFrame {
     private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
         txtContrasena.setEchoChar('\u2022');
     }//GEN-LAST:event_lblPassMouseExited
+
+    private void txtUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusGained
+        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
+            txtUsuario.setText("");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusGained
+
+    private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
+        if (txtUsuario.getText().isEmpty()) {
+            txtUsuario.setText("Ingrese su nombre de usuario");
+            txtUsuario.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtUsuarioFocusLost
+
+    private void txtContrasenaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusGained
+        if (String.valueOf(txtContrasena.getPassword()).equals("******")) {
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+            txtContrasena.setText("");
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+        }    }//GEN-LAST:event_txtContrasenaFocusGained
+
+    private void txtContrasenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContrasenaFocusLost
+        if (String.valueOf(txtContrasena.getPassword()).isEmpty()) {
+            // Si el contenido del campo de contraseña es "******", lo borramos para permitir la edición
+            txtContrasena.setText("******");
+            txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
+        }    }//GEN-LAST:event_txtContrasenaFocusLost
 
     /**
      * @param args the command line arguments
