@@ -286,9 +286,9 @@ public class frmAlcaide extends javax.swing.JFrame {
             .addGroup(BtnOpcion5Layout.createSequentialGroup()
                 .addContainerGap(182, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLogout)
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
         BtnOpcion5Layout.setVerticalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

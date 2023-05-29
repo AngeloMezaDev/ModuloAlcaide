@@ -16,7 +16,9 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    frmAlcaide actividades = new frmAlcaide();
+    frmAlcaide alcaide = new frmAlcaide();
+    frmProfesores profesor = new frmProfesores();
+    frmPerfil recluso = new frmPerfil();
 
     public Login() {
         initComponents();
@@ -353,26 +355,60 @@ public class Login extends javax.swing.JFrame {
         String contrasena = String.valueOf(txtContrasena.getPassword());
 
         // Validar que no sean iguales a los valores por defecto
-        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
+        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("**")) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-            //Una vez se valide que las credenciales no sean las que por defecto vienen al cargar el formualario.Se manda a llamar al método.    
-        } else if (validarAdmin(usuario, contrasena)) {
-            // Mostrar mensaje de bienvenida con el nombre de usuario
-            JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-            cargarFormulario(actividades);
-
         } else {
-            JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            // Validar las credenciales según el rol
+            if (validarAdmin(usuario, contrasena)) {
+                // Mostrar mensaje de inicio de sesión exitoso para el rol de Alcaide
+                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Alcaide.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                alcaide.setVisible(true);
+
+            } else if (validarProfesores(usuario, contrasena)) {
+                // Mostrar mensaje de inicio de sesión exitoso para el rol de Profesores
+                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Profesor.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+
+                profesor.setVisible(true);
+            } else if (validarReclusos(usuario, contrasena)) {
+                // Mostrar mensaje de inicio de sesión exitoso para el rol de Reclusos
+                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Recluso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+
+                recluso.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
     private boolean validarAdmin(String usuario, String contrasena) {
-        //Se crea el método validarAdmin con credenciales.
-        return usuario.equals("Alcaide") && contrasena.equals("admin");
+        // Lógica de validación para el rol de Alcaide
+        if (usuario.equals("Alcaide") && contrasena.equals("admin")) {
+            return true; // Las credenciales son válidas para el rol de Alcaide
+        } else {
+            return false; // Las credenciales no son válidas para el rol de Alcaide
+        }
     }
 
-    private void cargarFormulario(frmAlcaide actividades) {
-        actividades.setVisible(true);
+    private boolean validarProfesores(String usuario, String contrasena) {
+        // Lógica de validación para el rol de Profesores
+        if (usuario.equals("Profesor") && contrasena.equals("profesor")) {
+            return true; // Las credenciales son válidas para el rol de Profesores
+        } else {
+            return false; // Las credenciales no son válidas para el rol de Profesores
+        }
     }
+
+    private boolean validarReclusos(String usuario, String contrasena) {
+        // Lógica de validación para el rol de Reclusos
+        if (usuario.equals("Recluso") && contrasena.equals("recluso")) {
+            return true; // Las credenciales son válidas para el rol de Reclusos
+        } else {
+            return false; // Las credenciales no son válidas para el rol de Reclusos
+        }
+    }
+
     private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
         txtContrasena.setEchoChar((char) 0);
     }//GEN-LAST:event_lblPassMousePressed
