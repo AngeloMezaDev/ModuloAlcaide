@@ -87,7 +87,7 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel9.setText("NOTIFICACIONES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/campana.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/campana.png"))); // NOI18N
 
         javax.swing.GroupLayout btnActividadesLayout = new javax.swing.GroupLayout(btnActividades);
         btnActividades.setLayout(btnActividadesLayout);
@@ -131,7 +131,7 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel4.setText("TALLERES");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/group.png"))); // NOI18N
 
         javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
         btnTalleres.setLayout(btnTalleresLayout);
@@ -168,7 +168,7 @@ public class frmReclusos extends javax.swing.JFrame {
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/PrisioneroPerfil.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/PrisioneroPerfil.png"))); // NOI18N
 
         jLabel6.setBackground(new java.awt.Color(204, 204, 204));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -205,14 +205,14 @@ public class frmReclusos extends javax.swing.JFrame {
         jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
-        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
+        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/UserIconBanner.png"))); // NOI18N
         jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
         jPanelSide.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
         BtnOpcion5.setBackground(new java.awt.Color(85, 55, 100));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/arrow.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/arrow.png"))); // NOI18N
 
         jLabel14.setBackground(new java.awt.Color(204, 204, 204));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

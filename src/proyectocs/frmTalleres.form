@@ -129,7 +129,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/campana.png"/>
+                      <Image iconType="3" name="/Imagen/campana.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -198,7 +198,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/group.png"/>
+                      <Image iconType="3" name="/Imagen/group.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -253,7 +253,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/PrisioneroPerfil.png"/>
+                      <Image iconType="3" name="/Imagen/PrisioneroPerfil.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -298,7 +298,7 @@
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagen/Imagenes_Alcaide/UserIconBanner.png"/>
+                  <Image iconType="3" name="/Imagen/UserIconBanner.png"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -354,7 +354,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/arrow.png"/>
+                      <Image iconType="3" name="/Imagen/arrow.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -671,7 +671,7 @@
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\ricar\Documents\NetBeansProjects\SistemaCarcelario-Alcaide\SistemaCarcelario-Alcaide\src\Imagen\Imagenes_Alcaide\TrabajoForzado1.png"/>
+                  <Image iconType="3" name="/Imagen/TrabajoForzado1.png"/>
                 </Property>
               </Properties>
             </Component>
