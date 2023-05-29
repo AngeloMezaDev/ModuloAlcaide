@@ -369,13 +369,11 @@ public class Login extends javax.swing.JFrame {
                 // Mostrar mensaje de inicio de sesión exitoso para el rol de Profesores
                 JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Profesor.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
-
                 profesor.setVisible(true);
             } else if (validarReclusos(usuario, contrasena)) {
                 // Mostrar mensaje de inicio de sesión exitoso para el rol de Reclusos
                 JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Recluso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
-
                 recluso.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
