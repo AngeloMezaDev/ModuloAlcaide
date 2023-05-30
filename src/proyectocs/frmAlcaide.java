@@ -388,7 +388,7 @@ public class frmAlcaide extends javax.swing.JFrame {
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null}
             },
             new String [] {
                 "ID", "Actividad", "Descripcion", "Fecha y Hora"
@@ -402,6 +402,7 @@ public class frmAlcaide extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
         jScrollPane1.setViewportView(jTable1);
@@ -429,6 +430,8 @@ public class frmAlcaide extends javax.swing.JFrame {
         jLabel18.setText("Descripción:");
 
         jScrollPane2.setViewportView(jTextPane1);
+
+        jDateChooser1.setDateFormatString("yyyy/MM/dd HH:mm:ss");
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
         jLabel19.setText("Fecha:");
