@@ -23,6 +23,8 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         //Establece que el foco no este dentro del JSpinner
         ((JSpinner.DefaultEditor) jsCantidadGrupos.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor) jsCantidadPersonas.getEditor()).getTextField().setEditable(false);
+        // Establece que el foco al iniciar el frm este en el ID
+        lblID.requestFocusInWindow();
 
     }
 
@@ -89,7 +91,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jsCantidadPersonas = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
         jPNombre = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jPCampoNombre = new javax.swing.JPanel();
@@ -515,10 +517,10 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("#T001");
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 43, -1));
+        lblID.setBackground(new java.awt.Color(255, 255, 255));
+        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblID.setText("#T001");
+        jPanel3.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 43, -1));
 
         jPNombre.setBackground(new java.awt.Color(204, 204, 204));
         jPNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -643,7 +645,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -654,6 +656,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                         .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -847,7 +850,6 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -892,6 +894,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JSpinner jsCantidadGrupos;
     private javax.swing.JSpinner jsCantidadPersonas;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JPanel panelAgregar;
     private javax.swing.JPanel panelCancelar;
