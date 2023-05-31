@@ -56,6 +56,12 @@ public class frmProfesores extends javax.swing.JFrame {
         lblExit2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -331,18 +337,35 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Asitencia", "Fecha"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 257, 807, 320));
+
+        jButton1.setText("CARGAR");
+        jPanelFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 160, -1, -1));
+        jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 90, 190, -1));
+
+        jLabel8.setText("TALLER:");
+        jPanelFondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanelFondo.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, -1, -1));
+
+        jLabel9.setText("GRUPO");
+        jPanelFondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanelFondo.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 120, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -486,6 +509,10 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel btnCalificaciones;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnSalir;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -497,6 +524,8 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
