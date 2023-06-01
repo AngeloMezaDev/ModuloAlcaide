@@ -380,10 +380,10 @@ public class frmTalleres extends javax.swing.JFrame {
         jLabel15.setText("Elija las actividades que desea realizar. Como máximo puede");
 
         jLabel16.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel16.setText(" evaluar y el tiempo de reducción ");
+        jLabel16.setText("de reducción ");
 
         jLabel17.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel17.setText("Como máximo puede elegir 3. Tenga en cuenta los criterios para  ");
+        jLabel17.setText("elegir 3. Tenga en cuenta los criterios para evaluar y el tiempo  ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -398,7 +398,7 @@ public class frmTalleres extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel16)
                     .addComponent(jLabel17))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,9 +409,9 @@ public class frmTalleres extends javax.swing.JFrame {
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel16)
-                .addGap(21, 21, 21))
+                .addGap(15, 15, 15))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
