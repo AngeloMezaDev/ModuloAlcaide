@@ -4,8 +4,10 @@
  */
 package proyectocs;
 
+import CONTROLADOR.ctrlRegistro;
 import MODELO.Actividad;
 import java.awt.Color;
+import java.util.List;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,6 +39,8 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         String[] nombresColumnas = {"ID", "Actividad", "Descripcion", "Fecha y hora"};
         modeloTabla.setColumnIdentifiers(nombresColumnas);
+        ctrlRegistro registroCtrl = new ctrlRegistro();
+        registroCtrl.cargarDatosActividades(modeloTabla);
     }
 
     /**
@@ -731,9 +735,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         String nombreActividad = txtActividad.getText();
         String descripcionActividad = jDescripcion.getText();
         Date fechaHoraActividad = jDateFechaActividad.getDate();
-
+        //Incrementa en 1 el lbl
+        incrementarLblId();
         // Crear la instancia de Actividad
         Actividad actividad = new Actividad(idActividad, nombreActividad, descripcionActividad, fechaHoraActividad);
+
+        // Guardar los datos en la base de datos
+        ctrlRegistro registro = new ctrlRegistro();
+        registro.guardarActividad(actividad);
 
         // Mostrar los datos en la tabla
         actividad.mostrarDatos(modeloTabla);
@@ -761,7 +770,22 @@ public class frmAlcaide extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_lblLogoutMouseClicked
+    private void incrementarLblId() {
+        // Obtener el valor actual de lblId
+        String idActividad = lblId.getText();
 
+        // Obtener el número de la actividad sin el prefijo "#A"
+        int numActividad = Integer.parseInt(idActividad.substring(2));
+
+        // Incrementar el número de la actividad en 1
+        numActividad++;
+
+        // Construir el nuevo valor de lblId con el formato deseado
+        String nuevoIdActividad = "#A" + String.format("%03d", numActividad);
+
+        // Actualizar el texto de lblId con el nuevo valor
+        lblId.setText(nuevoIdActividad);
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -769,6 +793,7 @@ public class frmAlcaide extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
+
 
     private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
         frmTalleresAlcaide talleres = new frmTalleresAlcaide();
