@@ -4,9 +4,13 @@
  */
 package proyectocs;
 
+import MODELO.Actividad;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,9 +21,22 @@ public class frmAlcaide extends javax.swing.JFrame {
     /**
      * Creates new form frmAlcaide
      */
+    private DefaultTableModel modeloTabla;
+
     public frmAlcaide() {
         initComponents();
         lblId.requestFocusInWindow();
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jTableActividad.setModel(modeloTabla);
+        jTableActividad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        String[] nombresColumnas = {"ID", "Actividad", "Descripcion", "Fecha y hora"};
+        modeloTabla.setColumnIdentifiers(nombresColumnas);
     }
 
     /**
@@ -60,8 +77,6 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
@@ -87,12 +102,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPFecha = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jPCampoFecha = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateFechaActividad = new com.toedter.calendar.JDateChooser();
         jPCampoNombre = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
+        txtActividad = new javax.swing.JTextField();
         jPDescripcion = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        jDescripcion = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableActividad = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -398,38 +415,6 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null}
-            },
-            new String [] {
-                "ID", "Actividad", "Descripcion", "Fecha y Hora"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
-        }
-
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 1080, 270));
-
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
@@ -517,14 +502,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jDateChooser1.setDateFormatString("yyyy/MM/dd HH:mm:ss");
-        jDateChooser1.setFocusable(false);
-        jPCampoFecha.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+        jDateFechaActividad.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDateFechaActividad.setFocusable(false);
+        jPCampoFecha.add(jDateFechaActividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
         jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPCampoNombre.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
+        jPCampoNombre.add(txtActividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
 
-        jScrollPane2.setViewportView(jTextPane1);
+        jScrollPane2.setViewportView(jDescripcion);
 
         javax.swing.GroupLayout jPDescripcionLayout = new javax.swing.GroupLayout(jPDescripcion);
         jPDescripcion.setLayout(jPDescripcionLayout);
@@ -640,6 +625,22 @@ public class frmAlcaide extends javax.swing.JFrame {
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 1080, 260));
 
+        jTableActividad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Actividad", "Descripcion", "Fecha y hora"
+            }
+        ));
+        jTableActividad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane3.setViewportView(jTableActividad);
+
+        jPanelBackGround.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 1080, 260));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -724,7 +725,21 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReclusosMouseEntered
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        // Obtener los valores de los campos de texto y jDateChooser
+        String idActividad = lblId.getText();
+        String nombreActividad = txtActividad.getText();
+        String descripcionActividad = jDescripcion.getText();
+        Date fechaHoraActividad = jDateFechaActividad.getDate();
+
+        // Crear la instancia de Actividad
+        Actividad actividad = new Actividad(idActividad, nombreActividad, descripcionActividad, fechaHoraActividad);
+
+        // Mostrar los datos en la tabla
+        actividad.mostrarDatos(modeloTabla);
+
+        // Mostrar mensaje al usuario
+        JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
@@ -813,7 +828,8 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
     private javax.swing.JPanel btnTalleres;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateFechaActividad;
+    private javax.swing.JTextPane jDescripcion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -847,17 +863,15 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableActividad;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblLogout;
@@ -865,5 +879,6 @@ public class frmAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel panelCancelar;
     private javax.swing.JPanel panelEditar;
     private javax.swing.JPanel panelEliminar;
+    private javax.swing.JTextField txtActividad;
     // End of variables declaration//GEN-END:variables
 }
