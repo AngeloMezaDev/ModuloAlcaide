@@ -2,30 +2,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyectocs;
+package VISTA;
 
+import MODELO.Actividad;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Angelo Meza
  */
-public class frmTalleresAlcaide extends javax.swing.JFrame {
+public class frmAlcaide extends javax.swing.JFrame {
 
     /**
      * Creates new form frmAlcaide
      */
-    public frmTalleresAlcaide() {
-        initComponents();
-        //Establece que el foco no este dentro del JSpinner
-        ((JSpinner.DefaultEditor) jsCantidadGrupos.getEditor()).getTextField().setEditable(false);
-        ((JSpinner.DefaultEditor) jsCantidadPersonas.getEditor()).getTextField().setEditable(false);
-        // Establece que el foco al iniciar el frm este en el ID
-        lblID.requestFocusInWindow();
+    private DefaultTableModel modeloTabla;
 
+    public frmAlcaide() {
+        initComponents();
+        lblId.requestFocusInWindow();
+        modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        jTableActividad.setModel(modeloTabla);
+        jTableActividad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        String[] nombresColumnas = {"ID", "Actividad", "Descripcion", "Fecha y hora"};
+        modeloTabla.setColumnIdentifiers(nombresColumnas);
     }
 
     /**
@@ -65,11 +76,11 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel19 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -86,23 +97,19 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         panelEliminar = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jsCantidadGrupos = new javax.swing.JSpinner();
-        jLabel24 = new javax.swing.JLabel();
-        jsCantidadPersonas = new javax.swing.JSpinner();
-        jPanel3 = new javax.swing.JPanel();
-        lblID = new javax.swing.JLabel();
         jPNombre = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jPCampoNombre = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
         jPFecha = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jPCampoFecha = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
+        jDateFechaActividad = new com.toedter.calendar.JDateChooser();
+        jPCampoNombre = new javax.swing.JPanel();
+        txtActividad = new javax.swing.JTextField();
+        jPDescripcion = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jDescripcion = new javax.swing.JTextPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableActividad = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -114,12 +121,9 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnActividades.setBackground(new java.awt.Color(64, 43, 100));
+        btnActividades.setBackground(new java.awt.Color(85, 65, 118));
         btnActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnActividadesMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnActividadesMouseEntered(evt);
             }
@@ -158,9 +162,12 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnTalleres.setBackground(new java.awt.Color(85, 65, 118));
+        btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTalleresMouseEntered(evt);
             }
@@ -359,7 +366,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO - TALLERES");
+        jLabel10.setText("SISTEMA CARCELARIO DE ACTIVIDADES");
         jPanelBanner.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 64, -1, -1));
 
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
@@ -403,47 +410,20 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
 
         jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, -1, -1));
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
-        jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/list.png"))); // NOI18N
+        jPanelBanner.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
-
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre del taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
-        }
-
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 1080, 320));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setText("ID");
+
+        lblId.setText("#A001");
+
+        jLabel18.setText("Descripción:");
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -504,51 +484,44 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
         panelEliminar.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
-        jLabel23.setText("Cantidad de grupos:");
-
-        jsCantidadGrupos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 5, 1));
-        jsCantidadGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jsCantidadGrupos.setName(""); // NOI18N
-
-        jLabel24.setText("Cantidad de personas máximas por taller:");
-
-        jsCantidadPersonas.setModel(new javax.swing.SpinnerNumberModel(0, 0, 40, 1));
-        jsCantidadPersonas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jsCantidadPersonas.setFocusable(false);
-
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblID.setBackground(new java.awt.Color(255, 255, 255));
-        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#T001");
-        jPanel3.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 43, -1));
-
         jPNombre.setBackground(new java.awt.Color(204, 204, 204));
         jPNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Nombre del taller:");
-        jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
-        jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPCampoNombre.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
+        jLabel15.setText("Nombre de la Actividad:");
+        jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         jPFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Fecha:");
-        jPFecha.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 43, -1));
+        jLabel23.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Fecha:");
+        jPFecha.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 43, -1));
 
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jDateChooser1.setDateFormatString("yyyy/MM/dd");
-        jPCampoFecha.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+        jDateFechaActividad.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDateFechaActividad.setFocusable(false);
+        jPCampoFecha.add(jDateFechaActividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+
+        jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPCampoNombre.add(txtActividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
+
+        jScrollPane2.setViewportView(jDescripcion);
+
+        javax.swing.GroupLayout jPDescripcionLayout = new javax.swing.GroupLayout(jPDescripcion);
+        jPDescripcion.setLayout(jPDescripcionLayout);
+        jPDescripcionLayout.setHorizontalGroup(
+            jPDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+        );
+        jPDescripcionLayout.setVerticalGroup(
+            jPDescripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -557,40 +530,37 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jSeparator4)
-                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jPNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jPFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator7))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPCampoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPCampoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -599,39 +569,25 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                                 .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel24)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jsCantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(715, 715, 715))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jPDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jsCantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -641,36 +597,50 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
+                        .addComponent(lblId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77))
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(62, 62, 62))
         );
 
-        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
+        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 1080, 260));
+
+        jTableActividad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Actividad", "Descripcion", "Fecha y hora"
+            }
+        ));
+        jTableActividad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane3.setViewportView(jTableActividad);
+
+        jPanelBackGround.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 1080, 260));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -701,8 +671,8 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
+        setColor(btnActividades);
+        resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
 
@@ -710,20 +680,20 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
         setColor(btnActividades);
-        setColor(btnTalleres);
+        resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnTalleresMouseExited
 
     private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
+        setColor(btnActividades);
+        resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
 
     private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
+        setColor(btnActividades);
+        resetColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
@@ -756,7 +726,21 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReclusosMouseEntered
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        // Obtener los valores de los campos de texto y jDateChooser
+        String idActividad = lblId.getText();
+        String nombreActividad = txtActividad.getText();
+        String descripcionActividad = jDescripcion.getText();
+        Date fechaHoraActividad = jDateFechaActividad.getDate();
+
+        // Crear la instancia de Actividad
+        Actividad actividad = new Actividad(idActividad, nombreActividad, descripcionActividad, fechaHoraActividad);
+
+        // Mostrar los datos en la tabla
+        actividad.mostrarDatos(modeloTabla);
+
+        // Mostrar mensaje al usuario
+        JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
@@ -786,11 +770,11 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseClicked
-        frmAlcaide Alcaide = new frmAlcaide();
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleresAlcaide talleres = new frmTalleresAlcaide();
         this.dispose();
-        Alcaide.setVisible(true);
-    }//GEN-LAST:event_btnActividadesMouseClicked
+        talleres.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -816,21 +800,20 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmTalleresAlcaide().setVisible(true);
+                new frmAlcaide().setVisible(true);
             }
         });
     }
@@ -846,7 +829,8 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
     private javax.swing.JPanel btnTalleres;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateFechaActividad;
+    private javax.swing.JTextPane jDescripcion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -862,7 +846,6 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -872,35 +855,31 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPCampoFecha;
     private javax.swing.JPanel jPCampoNombre;
+    private javax.swing.JPanel jPDescripcion;
     private javax.swing.JPanel jPFecha;
     private javax.swing.JPanel jPNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableActividad;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JSpinner jsCantidadGrupos;
-    private javax.swing.JSpinner jsCantidadPersonas;
     private javax.swing.JLabel lblExit2;
-    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JPanel panelAgregar;
     private javax.swing.JPanel panelCancelar;
     private javax.swing.JPanel panelEditar;
     private javax.swing.JPanel panelEliminar;
+    private javax.swing.JTextField txtActividad;
     // End of variables declaration//GEN-END:variables
 }

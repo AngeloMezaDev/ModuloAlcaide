@@ -1,4 +1,4 @@
-package proyectocs;
+package VISTA;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
