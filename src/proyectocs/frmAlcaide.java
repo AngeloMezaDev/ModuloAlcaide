@@ -7,6 +7,8 @@ package proyectocs;
 import CONTROLADOR.ctrlRegistro;
 import MODELO.Actividad;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -642,6 +644,11 @@ public class frmAlcaide extends javax.swing.JFrame {
             }
         ));
         jTableActividad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableActividad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableActividadMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableActividad);
 
         jPanelBackGround.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 1080, 260));
@@ -730,25 +737,44 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReclusosMouseEntered
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // Obtener los valores de los campos de texto y jDateChooser
-        String idActividad = lblId.getText();
-        String nombreActividad = txtActividad.getText();
-        String descripcionActividad = jDescripcion.getText();
-        Date fechaHoraActividad = jDateFechaActividad.getDate();
-        //Incrementa en 1 el lbl
-        incrementarLblId();
-        // Crear la instancia de Actividad
-        Actividad actividad = new Actividad(idActividad, nombreActividad, descripcionActividad, fechaHoraActividad);
+        try {
+            // Obtener los valores de los campos de texto y jDateChooser
+            String idActividad = lblId.getText();
+            String nombreActividad = txtActividad.getText();
+            String descripcionActividad = jDescripcion.getText();
+            Date fechaHoraActividad = jDateFechaActividad.getDate();
 
-        // Guardar los datos en la base de datos
-        ctrlRegistro registro = new ctrlRegistro();
-        registro.guardarActividad(actividad);
+            // Validar que se hayan ingresado valores en los campos obligatorios
+            if (nombreActividad.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre de actividad.");
+                return;
+            }
 
-        // Mostrar los datos en la tabla
-        actividad.mostrarDatos(modeloTabla);
+            if (descripcionActividad.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar una descripción de la actividad.");
+                return;
+            }
+            
+            // Crear la instancia de Actividad
+            Actividad actividad = new Actividad(idActividad, nombreActividad, descripcionActividad, fechaHoraActividad);
 
-        // Mostrar mensaje al usuario
-        JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+            // Guardar los datos en la base de datos
+            ctrlRegistro registro = new ctrlRegistro();
+            registro.guardarActividad(actividad);
+
+            // Mostrar los datos en la tabla
+            actividad.mostrarDatos(modeloTabla);
+
+            // Limpiar los campos
+            limpiarCampos();
+
+            // Mostrar mensaje al usuario
+            JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+            //Incremetar ID
+            incrementarLblId();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
+        }
 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -787,7 +813,14 @@ public class frmAlcaide extends javax.swing.JFrame {
         lblId.setText(nuevoIdActividad);
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        int opcion =JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cancelar el registro?","Cancelar",JOptionPane.YES_NO_OPTION);
+        
+        //Verifica que la opcion sea Yes para poder limpiar caso contrario no hace nada.
+        if(opcion==JOptionPane.YES_OPTION){
+            limpiarCampos();
+        }
+        
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -800,12 +833,43 @@ public class frmAlcaide extends javax.swing.JFrame {
         this.dispose();
         talleres.setVisible(true);
     }//GEN-LAST:event_btnTalleresMouseClicked
+
+    private void jTableActividadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableActividadMouseClicked
+        // Obtener el índice de la fila seleccionada
+        int filaSeleccionada = jTableActividad.getSelectedRow();
+
+        // Obtener los valores de la fila seleccionada
+        String idActividad = jTableActividad.getValueAt(filaSeleccionada, 0).toString();
+        String nombreActividad = jTableActividad.getValueAt(filaSeleccionada, 1).toString();
+        String descripcionActividad = jTableActividad.getValueAt(filaSeleccionada, 2).toString();
+        String fechaHoraActividad = jTableActividad.getValueAt(filaSeleccionada, 3).toString();
+
+        // Cargar los datos en los elementos correspondientes
+        lblId.setText(idActividad);
+        txtActividad.setText(nombreActividad);
+        jDescripcion.setText(descripcionActividad);
+
+        // Convertir la cadena de fecha en un objeto Date
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date fechaHora = formatoFecha.parse(fechaHoraActividad);
+            jDateFechaActividad.setDate(fechaHora);
+        } catch (ParseException ex) {
+            System.err.println("Error al convertir la cadena de fecha: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jTableActividadMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
 
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
+    }
+
+    private void limpiarCampos() {
+        txtActividad.setText("");
+        jDescripcion.setText("");
+        jDateFechaActividad.setDate(null);
     }
 
     /**

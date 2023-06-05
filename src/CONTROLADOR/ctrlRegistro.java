@@ -13,49 +13,51 @@ import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.internal.ResultSetCache;
 
 public class ctrlRegistro {
+
     private ConnectionBD connectionBD;
 
     public ctrlRegistro() {
         connectionBD = new ConnectionBD();
     }
+
     public void cargarDatosActividades(DefaultTableModel modeloTabla) {
-    try {
-        connectionBD.openConnection();
-
-        // Crear la sentencia SQL para obtener las actividades
-        String sql = "SELECT ID_ACTIVIDAD, NOMBRE_ACTIVIDAD, DESCRIPCION_ACTIVIDAD, FECHA_HORA_ACTIVIDAD FROM Actividades";
-
-        // Crear la declaración y ejecutar la consulta
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-
-        // Recorrer el resultado y agregar los datos al modelo de la tabla
-        while (resultSet.next()) {
-            String idActividad = resultSet.getString("ID_ACTIVIDAD");
-            String nombreActividad = resultSet.getString("NOMBRE_ACTIVIDAD");
-            String descripcionActividad = resultSet.getString("DESCRIPCION_ACTIVIDAD");
-            String fechaHoraActividad = resultSet.getString("FECHA_HORA_ACTIVIDAD");
-
-            Object[] fila = {
-                idActividad,
-                nombreActividad,
-                descripcionActividad,
-                fechaHoraActividad
-            };
-            modeloTabla.addRow(fila);
-        }
-
-        System.out.println("Datos de actividades cargados correctamente.");
-    } catch (SQLException | ClassNotFoundException e) {
-        System.err.println("Error al obtener los datos de las actividades: " + e.getMessage());
-    } finally {
         try {
-            connectionBD.closeConnection();
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener las actividades
+            String sql = "SELECT ID_ACTIVIDAD, NOMBRE_ACTIVIDAD, DESCRIPCION_ACTIVIDAD, FECHA_HORA_ACTIVIDAD FROM Actividades";
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            while (resultSet.next()) {
+                String idActividad = resultSet.getString("ID_ACTIVIDAD");
+                String nombreActividad = resultSet.getString("NOMBRE_ACTIVIDAD");
+                String descripcionActividad = resultSet.getString("DESCRIPCION_ACTIVIDAD");
+                String fechaHoraActividad = resultSet.getString("FECHA_HORA_ACTIVIDAD");
+
+                Object[] fila = {
+                    idActividad,
+                    nombreActividad,
+                    descripcionActividad,
+                    fechaHoraActividad
+                };
+                modeloTabla.addRow(fila);
+            }
+
+            System.out.println("Datos de actividades cargados correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de las actividades: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
         }
     }
-}
 
     public void guardarActividad(Actividad actividad) {
         try {
@@ -71,7 +73,7 @@ public class ctrlRegistro {
             statement.setString(1, actividad.getIdActividad());
             statement.setString(2, actividad.getNombreActividad());
             statement.setString(3, actividad.getDescripcionActividad());
-            statement.setString(4,fechaHoraActividad);
+            statement.setString(4, fechaHoraActividad);
 
             // Ejecutar la inserción
             statement.executeUpdate();
@@ -87,7 +89,57 @@ public class ctrlRegistro {
             }
         }
     }
-    
-  
-}
 
+    
+
+    public void llamarStoredProcGenerarID() {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure
+            String sql = "BEGIN sp_insertar_actividad('', ''); END;";
+
+            // Crear la declaración y ejecutar la llamada al stored procedure
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.execute();
+
+            System.out.println("Stored procedure ejecutado correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al llamar al stored procedure: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    public String obtenerUltimoIDGenerado() {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener el último ID generado
+            String sql = "SELECT MAX(ID_ACTIVIDAD) FROM Actividades";
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Obtener el resultado
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener el último ID generado: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return null;
+    }
+}
