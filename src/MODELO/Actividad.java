@@ -60,8 +60,8 @@ public class Actividad {
     // Otros métodos y lógica de negocio relacionados con la actividad
     // Ejemplo de método para mostrar los datos de la actividad
     public void mostrarDatos(DefaultTableModel modeloTabla) {
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    Object []fila = {idActividad,nombreActividad,descripcionActividad,formatoFecha.format(fechaHoraActividad)};
-    modeloTabla.addRow(fila);
-    } 
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Object[] fila = {idActividad, nombreActividad, descripcionActividad, formatoFecha.format(fechaHoraActividad)};
+        modeloTabla.addRow(fila);
+    }
 }
