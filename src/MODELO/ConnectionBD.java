@@ -47,14 +47,20 @@ public class ConnectionBD {
     }
 
     /**
-     * Cierra la conexión a la base de datos.
-     *
-     * @throws SQLException si ocurre un error al cerrar la conexión.
-     */
-    public void closeConnection() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
+ * Cierra la conexión a la base de datos.
+ *
+ * @throws SQLException si ocurre un error al cerrar la conexión.
+ */
+public void closeConnection() throws SQLException {
+    if (connection != null && !connection.isClosed()) {
+        try {
             connection.close(); // Cerrar la conexión con la base de datos
-            System.out.println("Conexión cerrada");
+            System.out.println("Conexión cerrada exitosamente");
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            throw e;
         }
     }
+}
+
 }

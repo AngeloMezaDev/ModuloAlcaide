@@ -355,7 +355,7 @@ public class Login extends javax.swing.JFrame {
         String contrasena = String.valueOf(txtContrasena.getPassword());
 
         // Validar que no sean iguales a los valores por defecto
-        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("**")) {
+        if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         } else {
             // Validar las credenciales según el rol
