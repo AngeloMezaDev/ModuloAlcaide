@@ -2,24 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package proyectocs;
+package VISTAS;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.JSpinner;
 
 /**
  *
  * @author Angelo Meza
  */
-public class frmProfesoresAlcaide extends javax.swing.JFrame {
+public class frmTalleresAlcaide extends javax.swing.JFrame {
 
     /**
      * Creates new form frmAlcaide
      */
-    public frmProfesoresAlcaide() {
+    public frmTalleresAlcaide() {
         initComponents();
+        //Establece que el foco no este dentro del JSpinner
+        ((JSpinner.DefaultEditor) jsCantidadGrupos.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) jsCantidadPersonas.getEditor()).getTextField().setEditable(false);
+        // Establece que el foco al iniciar el frm este en el ID
+        lblID.requestFocusInWindow();
+
     }
 
     /**
@@ -81,7 +87,9 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jsCantidadGrupos = new javax.swing.JSpinner();
         jLabel24 = new javax.swing.JLabel();
+        jsCantidadPersonas = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         lblID = new javax.swing.JLabel();
         jPNombre = new javax.swing.JPanel();
@@ -91,12 +99,10 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jPFecha = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jPCampoFecha = new javax.swing.JPanel();
-        CmbAsignacionDocente = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -152,7 +158,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
+        btnTalleres.setBackground(new java.awt.Color(85, 65, 118));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -193,7 +199,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        btnProfesores.setBackground(new java.awt.Color(85, 65, 118));
+        btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
         btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -353,7 +359,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO - Profesores");
+        jLabel10.setText("SISTEMA CARCELARIO - TALLERES");
         jPanelBanner.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 64, -1, -1));
 
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
@@ -397,7 +403,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, -1, -1));
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/teacher.png.png"))); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
         jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
@@ -408,7 +414,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre del Docente", "Tipo_Asignacion", "Nombre Actividad/Taller", "Grupo"
+                "ID", "Nombre del taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación"
             }
         ) {
             Class[] types = new Class [] {
@@ -498,9 +504,17 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
         panelEliminar.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
-        jLabel23.setText("Actividad o Taller:");
+        jLabel23.setText("Cantidad de grupos:");
 
-        jLabel24.setText("Grupo:");
+        jsCantidadGrupos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 5, 1));
+        jsCantidadGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jsCantidadGrupos.setName(""); // NOI18N
+
+        jLabel24.setText("Cantidad de personas máximas por taller:");
+
+        jsCantidadPersonas.setModel(new javax.swing.SpinnerNumberModel(0, 0, 40, 1));
+        jsCantidadPersonas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jsCantidadPersonas.setFocusable(false);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -508,7 +522,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         lblID.setBackground(new java.awt.Color(255, 255, 255));
         lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#P001");
+        lblID.setText("#T001");
         jPanel3.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 43, -1));
 
         jPNombre.setBackground(new java.awt.Color(204, 204, 204));
@@ -516,7 +530,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Nombre del docente:");
+        jLabel15.setText("Nombre del taller:");
         jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -527,18 +541,14 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Asignacion:");
-        jPFecha.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 80, -1));
+        jLabel19.setText("Fecha:");
+        jPFecha.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 43, -1));
 
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Actividad", "Taller" }));
-        jPCampoFecha.add(CmbAsignacionDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, -1));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jDateChooser1.setDateFormatString("yyyy/MM/dd");
+        jPCampoFecha.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -591,13 +601,15 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                                 .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24))
-                        .addGap(26, 26, 26)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jsCantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(715, 715, 715))
         );
         jPanel2Layout.setVerticalGroup(
@@ -606,11 +618,11 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jsCantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -804,30 +816,27 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmProfesoresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmProfesoresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmProfesoresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmProfesoresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmProfesoresAlcaide().setVisible(true);
+                new frmTalleresAlcaide().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
-    private javax.swing.JComboBox<String> CmbAsignacionDocente;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
     private javax.swing.JButton btnAgregar;
@@ -837,8 +846,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
     private javax.swing.JPanel btnTalleres;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -885,6 +893,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JSpinner jsCantidadGrupos;
+    private javax.swing.JSpinner jsCantidadPersonas;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLogout;
