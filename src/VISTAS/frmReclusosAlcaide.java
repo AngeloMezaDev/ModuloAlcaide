@@ -155,6 +155,9 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTalleresMouseEntered(evt);
             }
@@ -196,6 +199,9 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         btnProfesores.setBackground(new java.awt.Color(64, 43, 100));
         btnProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProfesoresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnProfesoresMouseEntered(evt);
             }
@@ -397,7 +403,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, -1, -1));
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/teacher.png.png"))); // NOI18N
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prison.png"))); // NOI18N
         jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
@@ -779,6 +785,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         this.dispose();
         Alcaide.setVisible(true);
     }//GEN-LAST:event_btnActividadesMouseClicked
+
+    private void btnProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseClicked
+       frmProfesoresAlcaide ProfesoresA = new frmProfesoresAlcaide();
+       this.dispose();
+       ProfesoresA.setVisible(true);
+   
+    }//GEN-LAST:event_btnProfesoresMouseClicked
+
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleresAlcaide TalleresA = new frmTalleresAlcaide();
+        this.dispose();
+        TalleresA.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }

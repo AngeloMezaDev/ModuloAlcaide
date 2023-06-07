@@ -155,6 +155,9 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTalleresMouseEntered(evt);
             }
@@ -237,6 +240,9 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         btnReclusos.setBackground(new java.awt.Color(64, 43, 100));
         btnReclusos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReclusos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReclusosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnReclusosMouseEntered(evt);
             }
@@ -779,6 +785,18 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         this.dispose();
         Alcaide.setVisible(true);
     }//GEN-LAST:event_btnActividadesMouseClicked
+
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleresAlcaide TalleresA = new frmTalleresAlcaide();
+        this.dispose();
+        TalleresA.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
+
+    private void btnReclusosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseClicked
+        frmReclusosAlcaide ReclusosA = new frmReclusosAlcaide();
+        this.dispose();
+        ReclusosA.setVisible(true);
+    }//GEN-LAST:event_btnReclusosMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
