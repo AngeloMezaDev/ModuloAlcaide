@@ -4,7 +4,16 @@
  */
 package VISTAS;
 
+import CONTROLADOR.Excepciones;
+import CONTROLADOR.Excepciones.CredencialesInvalidasException;
+import CONTROLADOR.Excepciones.CuentaBloqueadaException;
+import CONTROLADOR.Excepciones.UsuarioNoExistenteException;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Timer;
 import javax.swing.JOptionPane;
 
 /**
@@ -349,6 +358,8 @@ public class Login extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lblExitMouseExited
 
+    private int intentosFallidos = 0;
+
     private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
         // Obtener el usuario y la contraseña ingresados
         String usuario = txtUsuario.getText();
@@ -358,52 +369,97 @@ public class Login extends javax.swing.JFrame {
         if (usuario.equals("Ingrese su nombre de usuario") || contrasena.equals("******")) {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         } else {
-            // Validar las credenciales según el rol
-            if (validarAdmin(usuario, contrasena)) {
-                // Mostrar mensaje de inicio de sesión exitoso para el rol de Alcaide
-                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Alcaide.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                alcaide.setVisible(true);
-
-            } else if (validarProfesores(usuario, contrasena)) {
-                // Mostrar mensaje de inicio de sesión exitoso para el rol de Profesores
-                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Profesor.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                profesor.setVisible(true);
-            } else if (validarReclusos(usuario, contrasena)) {
-                // Mostrar mensaje de inicio de sesión exitoso para el rol de Reclusos
-                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Recluso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                recluso.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            try {
+                // Validar las credenciales según el rol
+                if (validarAdmin(usuario, contrasena)) {
+                    // Mostrar mensaje de inicio de sesión exitoso para el rol de Alcaide
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Alcaide.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    alcaide.setVisible(true);
+                } else if (validarProfesores(usuario, contrasena)) {
+                    // Mostrar mensaje de inicio de sesión exitoso para el rol de Profesores
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Profesor.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    profesor.setVisible(true);
+                } else if (validarReclusos(usuario, contrasena)) {
+                    // Mostrar mensaje de inicio de sesión exitoso para el rol de Reclusos
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso como Recluso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    recluso.setVisible(true);
+                } else {
+                    intentosFallidos++;
+                    if (intentosFallidos >= 3) {
+                        throw new Excepciones.CuentaBloqueadaException("Cuenta bloqueada. Ha excedido el número máximo de intentos.");
+                    } else {
+                        throw new Excepciones.CredencialesInvalidasException("Credenciales inválidas");
+                    }
+                }
+            } catch (Excepciones.CredencialesInvalidasException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            } catch (Excepciones.UsuarioNoExistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            } catch (Excepciones.CuentaBloqueadaException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
-    private boolean validarAdmin(String usuario, String contrasena) {
+//    private boolean validarAdmin(String usuario, String contrasena) {
+//        // Lógica de validación para el rol de Alcaide
+//        if (usuario.equals("Alcaide") && contrasena.equals("admin")) {
+//            return true; // Las credenciales son válidas para el rol de Alcaide
+//        } else {
+//            return false; // Las credenciales no son válidas para el rol de Alcaide
+//        }
+//    }
+//
+//    private boolean validarProfesores(String usuario, String contrasena) {
+//        // Lógica de validación para el rol de Profesores
+//        if (usuario.equals("Profesor") && contrasena.equals("profesor")) {
+//            return true; // Las credenciales son válidas para el rol de Profesores
+//        } else {
+//            return false; // Las credenciales no son válidas para el rol de Profesores
+//        }
+//    }
+//
+//    private boolean validarReclusos(String usuario, String contrasena) {
+//        // Lógica de validación para el rol de Reclusos
+//        if (usuario.equals("Recluso") && contrasena.equals("recluso")) {
+//            return true; // Las credenciales son válidas para el rol de Reclusos
+//        } else {
+//            return false; // Las credenciales no son válidas para el rol de Reclusos
+//        }
+//    }
+
+    private boolean validarAdmin(String usuario, String contrasena) throws Excepciones.UsuarioNoExistenteException, Excepciones.CredencialesInvalidasException {
         // Lógica de validación para el rol de Alcaide
         if (usuario.equals("Alcaide") && contrasena.equals("admin")) {
             return true; // Las credenciales son válidas para el rol de Alcaide
+        } else if (!usuario.equals("Alcaide")) {
+            throw new Excepciones.UsuarioNoExistenteException("El usuario no existe en el sistema");
         } else {
-            return false; // Las credenciales no son válidas para el rol de Alcaide
+            throw new Excepciones.CredencialesInvalidasException("Credenciales inválidas");
         }
     }
 
-    private boolean validarProfesores(String usuario, String contrasena) {
+    private boolean validarProfesores(String usuario, String contrasena) throws Excepciones.UsuarioNoExistenteException, Excepciones.CredencialesInvalidasException {
         // Lógica de validación para el rol de Profesores
         if (usuario.equals("Profesor") && contrasena.equals("profesor")) {
             return true; // Las credenciales son válidas para el rol de Profesores
+        } else if (!usuario.equals("Profesor")) {
+            throw new Excepciones.UsuarioNoExistenteException("El usuario no existe en el sistema");
         } else {
-            return false; // Las credenciales no son válidas para el rol de Profesores
+            throw new Excepciones.CredencialesInvalidasException("Credenciales inválidas");
         }
     }
 
-    private boolean validarReclusos(String usuario, String contrasena) {
+    private boolean validarReclusos(String usuario, String contrasena) throws Excepciones.UsuarioNoExistenteException, Excepciones.CredencialesInvalidasException {
         // Lógica de validación para el rol de Reclusos
         if (usuario.equals("Recluso") && contrasena.equals("recluso")) {
             return true; // Las credenciales son válidas para el rol de Reclusos
+        } else if (!usuario.equals("Recluso")) {
+            throw new Excepciones.UsuarioNoExistenteException("El usuario no existe en el sistema");
         } else {
-            return false; // Las credenciales no son válidas para el rol de Reclusos
+            throw new Excepciones.CredencialesInvalidasException("Credenciales inválidas");
         }
     }
 
@@ -457,16 +513,24 @@ public class Login extends javax.swing.JFrame {
                 if ("FlatLaf Dark".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

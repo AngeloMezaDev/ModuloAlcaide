@@ -35,7 +35,7 @@ public class ConnectionBDTest {
         }
     }
 
-    @Test
+    @Test 
     public void testOpenConnection() {
         System.out.println("Prueba de apertura de conexión");
         try {
