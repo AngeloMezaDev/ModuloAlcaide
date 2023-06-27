@@ -4,6 +4,9 @@ import java.util.List;
 import MODELO.Actividad;
 import MODELO.ConnectionBD;
 import java.sql.ResultSet;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -24,8 +27,8 @@ public class ctrlRegistro {
         try {
             connectionBD.openConnection();
 
-            // Crear la sentencia SQL para obtener las actividades
-            String sql = "SELECT ID_ACTIVIDAD, NOMBRE_ACTIVIDAD, DESCRIPCION_ACTIVIDAD, FECHA_HORA_ACTIVIDAD FROM Actividades";
+            // Crear la sentencia SQL para obtener las actividades ordenadas por ID_ACTIVIDAD
+            String sql = "SELECT ID_ACTIVIDAD, NOMBRE_ACTIVIDAD, DESCRIPCION_ACTIVIDAD, FECHA_HORA_ACTIVIDAD FROM Actividades ORDER BY ID_ACTIVIDAD ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -65,7 +68,7 @@ public class ctrlRegistro {
             //Obtener Fecha con el formato yyyy-MM-dd HH:mm:ss
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String fechaHoraActividad = dateFormat.format(actividad.getFechaHoraActividad());
-            // Construir la sentencia SQL de inserción
+            // Crear la sentencia SQL para obtener las actividades ordenadas por ID_ACTIVIDAD
             String sql = "INSERT INTO Actividades (ID_ACTIVIDAD, NOMBRE_ACTIVIDAD, DESCRIPCION_ACTIVIDAD, FECHA_HORA_ACTIVIDAD) VALUES (?, ?, ?, ?)";
 
             // Crear la declaración preparada y establecer los parámetros
@@ -90,7 +93,59 @@ public class ctrlRegistro {
         }
     }
 
-    
+    public void editarActividad(String idActividad, String nuevoNombre, String nuevaDescripcion) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure
+            String sql = "BEGIN sp_editar_actividad(?, ?, ?); END;";
+
+            // Crear la declaración y establecer los parámetros
+            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+            cstmt.setString(1, idActividad);
+            cstmt.setString(2, nuevoNombre);
+            cstmt.setString(3, nuevaDescripcion);
+
+            // Ejecutar el stored procedure
+            cstmt.execute();
+
+            System.out.println("Actividad editada correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al editar la actividad: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    public void eliminarActividad(String idActividad) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure
+            String sql = "BEGIN sp_eliminar_actividad(?); END;";
+
+            // Crear la declaración y establecer el parámetro
+            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+            cstmt.setString(1, idActividad);
+
+            // Ejecutar el stored procedure
+            cstmt.execute();
+
+            System.out.println("Actividad eliminada correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al eliminar la actividad: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
 
     public void llamarStoredProcGenerarID() {
         try {
