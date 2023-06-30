@@ -1,4 +1,4 @@
--- Creaci髇 de la Tabla Actividades del modulo Alcaide
+-- Creaci贸n de la Tabla Actividades del modulo Alcaide
 
 CREATE TABLE actividades (
     id_actividad          VARCHAR2(5 BYTE),
@@ -17,7 +17,7 @@ CREATE OR REPLACE PROCEDURE sp_insertar_actividad (
     v_max_id_actividad     VARCHAR2(5);
     v_fecha_hora_actividad VARCHAR2(19);
 BEGIN
-    -- Obtener el ID m醲imo actual
+    -- Obtener el ID m谩ximo actual
     SELECT
         MAX(id_actividad)
     INTO v_max_id_actividad
@@ -72,7 +72,6 @@ BEGIN
 END;
 /
 
--- Crear el stored procedure para eliminar una actividad y actualizar los IDs
 CREATE OR REPLACE PROCEDURE sp_eliminar_actividad(
     p_id_actividad IN VARCHAR2
 )
@@ -80,40 +79,34 @@ IS
     TYPE actividad_type IS TABLE OF Actividades%ROWTYPE;
     v_actividades actividad_type;
 BEGIN
---Crear eliminar taller
-CREATE OR REPLACE PROCEDURE sp_eliminar_taller(
-    p_id_taller IN VARCHAR2
-)
-IS
-    TYPE taller_type IS TABLE OF TalleresAlcaide%ROWTYPE;
-    v_talleres taller_type;
-BEGIN
-    -- Eliminar el taller seleccionado
-    DELETE FROM TalleresAlcaide WHERE ID_TALLER = p_id_taller;
+    -- Eliminar la actividad seleccionada
+    DELETE FROM Actividades WHERE ID_ACTIVIDAD = p_id_actividad;
 
-    -- Obtener la lista de talleres restantes en orden ascendente
+    -- Obtener la lista de actividades restantes en orden ascendente
     SELECT *
-    BULK COLLECT INTO v_talleres
-    FROM TalleresAlcaide
-    ORDER BY ID_TALLER ASC;
+    BULK COLLECT INTO v_actividades
+    FROM Actividades
+    ORDER BY ID_ACTIVIDAD ASC;
 
     -- Actualizar los IDs consecutivos
-    FOR i IN 1..v_talleres.COUNT LOOP
-        UPDATE TalleresAlcaide
-        SET ID_TALLER = '#T' || LPAD(i, 3, '0')
-        WHERE ID_TALLER = v_talleres(i).ID_TALLER;
+    FOR i IN 1..v_actividades.COUNT LOOP
+        UPDATE Actividades
+        SET ID_ACTIVIDAD = '#A' || LPAD(i, 3, '0')
+        WHERE ID_ACTIVIDAD = v_actividades(i).ID_ACTIVIDAD;
     END LOOP;
 
     COMMIT;
 END;
 /
 
+
+
 /*SELECT *
 FROM Actividades
 ORDER BY ID_actividad;
 DELETE FROM actividades
 DELETE FROM actividades where id_actividad ='#A002'*/
--- Creaci髇 de la Tabla Talleres del modulo Alcaide
+-- Creaci贸n de la Tabla Talleres del modulo Alcaide
 
 CREATE TABLE TalleresAlcaide (
     ID_TALLER VARCHAR2(5),
@@ -132,7 +125,7 @@ CREATE OR REPLACE PROCEDURE sp_agregar_taller(
 IS
     v_new_id VARCHAR2(5);
 BEGIN
-    -- Obtener el ID m醲imo actual
+    -- Obtener el ID m谩ximo actual
     SELECT '#' || 'T' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_TALLER, 4))), 0) + 1, 3, '0')
     INTO v_new_id
     FROM TalleresAlcaide;
@@ -168,20 +161,36 @@ END;
 /
 
 
--- Crear el stored procedure para eliminar un taller
+--Crear eliminar taller
 CREATE OR REPLACE PROCEDURE sp_eliminar_taller(
-    p_id IN NUMBER
+    p_id_taller IN VARCHAR2
 )
 IS
+    TYPE taller_type IS TABLE OF TalleresAlcaide%ROWTYPE;
+    v_talleres taller_type;
 BEGIN
-    DELETE FROM TalleresAlcaide WHERE ID_TALLER = p_id;
-    
+    -- Eliminar el taller seleccionado
+    DELETE FROM TalleresAlcaide WHERE ID_TALLER = p_id_taller;
+
+    -- Obtener la lista de talleres restantes en orden ascendente
+    SELECT *
+    BULK COLLECT INTO v_talleres
+    FROM TalleresAlcaide
+    ORDER BY ID_TALLER ASC;
+
+    -- Actualizar los IDs consecutivos
+    FOR i IN 1..v_talleres.COUNT LOOP
+        UPDATE TalleresAlcaide
+        SET ID_TALLER = '#T' || LPAD(i, 3, '0')
+        WHERE ID_TALLER = v_talleres(i).ID_TALLER;
+    END LOOP;
+
     COMMIT;
 END;
 /
 
 /*BEGIN
-  sp_agregar_taller('Programaci髇', 3, 30, SYSDATE);
+  sp_agregar_taller('Programaci贸n', 3, 30, SYSDATE);
 END;
 
 
@@ -190,6 +199,6 @@ END;
 SELECT *FROM TalleresAlcaide
 ORDER BY ID_TALLER
     DELETE FROM talleresalcaide*/
--- Creaci髇 de la Tabla Profesores del modulo Alcaide
--- Creaci髇 de la Tabla Reclusos del modulo Alcaide
+-- Creaci贸n de la Tabla Profesores del modulo Alcaide
+-- Creaci贸n de la Tabla Reclusos del modulo Alcaide
 
