@@ -3,6 +3,7 @@ package CONTROLADOR;
 import java.util.List;
 import MODELO.Actividad;
 import MODELO.ConnectionBD;
+import MODELO.Taller;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -138,6 +139,129 @@ public class ctrlRegistro {
             System.out.println("Actividad eliminada correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al eliminar la actividad: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+    // Métodos para talleres
+
+    public void cargarDatosTalleres(DefaultTableModel modeloTabla) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los talleres ordenados por ID
+            String sql = "SELECT ID_TALLER, NOMBRE_TALLER, CANTIDAD_GRUPOS, CAPACIDAD_MAXIMA, FECHA_CREACION FROM TalleresAlcaide ORDER BY ID_TALLER ASC";
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            while (resultSet.next()) {
+                String id = resultSet.getString("ID_TALLER");
+                String nombreTaller = resultSet.getString("NOMBRE_TALLER");
+                String cantidadGrupos = resultSet.getString("CANTIDAD_GRUPOS");
+                String capacidadMaxima = resultSet.getString("CAPACIDAD_MAXIMA");
+                Date fechaCreacion = resultSet.getDate("FECHA_CREACION");
+
+                // Convertir la fecha al formato deseado
+                String fechaCreacionStr = formatoFecha.format(fechaCreacion);
+
+                Object[] fila = {
+                    id,
+                    nombreTaller,
+                    cantidadGrupos,
+                    capacidadMaxima,
+                    fechaCreacionStr
+                };
+                modeloTabla.addRow(fila);
+            }
+
+            System.out.println("Datos de talleres cargados correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de los talleres: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    public void guardarTaller(Taller taller) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure de agregar taller
+            String sql = "CALL sp_agregar_taller(?, ?, ?, ?)";
+
+            // Crear la declaración y establecer los parámetros
+            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+            cstmt.setString(1, taller.getNombreTaller());
+            cstmt.setInt(2, taller.getCantidadGrupos());
+            cstmt.setInt(3, taller.getCapacidadMaxima());
+            cstmt.setDate(4, new java.sql.Date(taller.getFechaCreacion().getTime()));
+
+            // Ejecutar el stored procedure
+            cstmt.execute();
+
+            System.out.println("Taller guardado correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al guardar el taller: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    public void actualizarTaller(Taller taller) throws SQLException, ClassNotFoundException {
+        connectionBD.openConnection();
+
+        // Crear la sentencia SQL para actualizar los datos del taller
+        String sql = "UPDATE TalleresAlcaide SET NOMBRE_TALLER = ?, CANTIDAD_GRUPOS = ?, CAPACIDAD_MAXIMA = ?, FECHA_CREACION = ? WHERE ID_TALLER = ?";
+
+        // Crear la declaración y establecer los parámetros
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+        statement.setString(1, taller.getNombreTaller());
+        statement.setInt(2, taller.getCantidadGrupos());
+        statement.setInt(3, taller.getCapacidadMaxima());
+        statement.setDate(4, new java.sql.Date(taller.getFechaCreacion().getTime()));
+        statement.setString(5, taller.getIdTaller());
+
+        // Ejecutar la actualización
+        statement.executeUpdate();
+
+        System.out.println("Taller actualizado correctamente.");
+
+        connectionBD.closeConnection();
+    }
+
+    public void eliminarTaller(String idTaller) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure de eliminar taller
+            String sql = "CALL sp_eliminar_taller(?)";
+
+            // Crear la declaración y establecer el parámetro
+            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+            cstmt.setString(1, idTaller);
+
+            // Ejecutar el stored procedure
+            cstmt.execute();
+
+            System.out.println("Taller eliminado correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al eliminar el taller: " + e.getMessage());
         } finally {
             try {
                 connectionBD.closeConnection();

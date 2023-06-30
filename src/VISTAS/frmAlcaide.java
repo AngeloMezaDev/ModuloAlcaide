@@ -436,7 +436,7 @@ public class frmAlcaide extends javax.swing.JFrame {
                 btnActualizarMouseClicked(evt);
             }
         });
-        jPanelBanner.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 43, -1));
+        jPanelBanner.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 30, -1));
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
 
@@ -944,64 +944,62 @@ public class frmAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-       // Actualizar y refrescar la tabla
-    DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
-    modeloTabla.setRowCount(0); // Limpiar todos los datos actuales en la tabla
+        // Actualizar y refrescar la tabla
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
+        modeloTabla.setRowCount(0); // Limpiar todos los datos actuales en la tabla
 
-    // Volver a cargar los datos desde la base de datos
-    ctrlRegistro registro = new ctrlRegistro();
-    registro.cargarDatosActividades(modeloTabla);
+        // Volver a cargar los datos desde la base de datos
+        ctrlRegistro registro = new ctrlRegistro();
+        registro.cargarDatosActividades(modeloTabla);
 
-    // Actualizar la secuencia de los ID
-    actualizarSecuenciaID();
+        // Actualizar la secuencia de los ID
+        actualizarSecuenciaID();
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void actualizarSecuenciaID() {
-    DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
 
-    for (int i = 0; i < modeloTabla.getRowCount(); i++) {
-        String nuevoID = "#A" + String.format("%03d", i + 1);
-        modeloTabla.setValueAt(nuevoID, i, 0);
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            String nuevoID = "#A" + String.format("%03d", i + 1);
+            modeloTabla.setValueAt(nuevoID, i, 0);
+        }
     }
-}
-    
+
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Obtener el ID de la actividad a eliminar
+        String idActividad = lblId.getText();
 
-    // Obtener el ID de la actividad a eliminar
-    String idActividad = lblId.getText();
+        // Verificar que el campo no esté vacío
+        if (idActividad.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el ID de la actividad a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Detener la ejecución del método
+        }
 
-    // Verificar que el campo no esté vacío
-    if (idActividad.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Debe ingresar el ID de la actividad a eliminar", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Detener la ejecución del método
-    }
+        // Confirmar la eliminación mediante un diálogo de confirmación
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la actividad?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return; // Detener la ejecución del método si no se confirma la eliminación
+        }
 
-    // Confirmar la eliminación mediante un diálogo de confirmación
-    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar la actividad?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-    if (confirmacion != JOptionPane.YES_OPTION) {
-        return; // Detener la ejecución del método si no se confirma la eliminación
-    }
+        // Crear una instancia de la clase ctrlRegistro
+        ctrlRegistro controlador = new ctrlRegistro();
 
-    // Crear una instancia de la clase ctrlRegistro
-    ctrlRegistro controlador = new ctrlRegistro();
+        // Llamar al método eliminarActividad para realizar la eliminación
+        controlador.eliminarActividad(idActividad);
 
-    // Llamar al método eliminarActividad para realizar la eliminación
-    controlador.eliminarActividad(idActividad);
+        // Limpiar los campos después de eliminar la actividad
+        lblId.setText("");
+        limpiarCampos();
 
-    // Limpiar los campos después de eliminar la actividad
-    lblId.setText("");
-    limpiarCampos();
+        // Actualizar la tabla de actividades con los datos actualizados desde la base de datos
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosActividades(modeloTabla);
 
-    // Actualizar la tabla de actividades con los datos actualizados
-    DefaultTableModel modeloTabla = (DefaultTableModel) jTableActividad.getModel();
-    modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
-    controlador.cargarDatosActividades(modeloTabla);
-
-    // Mostrar un mensaje de éxito
-    JOptionPane.showMessageDialog(this, "Actividad eliminada correctamente", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
-
-
-
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Actividad eliminada correctamente", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
+        // Actualizar la secuencia ID
+        actualizarSecuenciaID();
     }//GEN-LAST:event_btnEliminarActionPerformed
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
