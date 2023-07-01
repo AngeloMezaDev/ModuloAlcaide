@@ -455,7 +455,6 @@ public class Login extends javax.swing.JFrame {
             intentosFallidos.remove(usuario);
         }
     }
-
     private void abrirFormulario(String usuario) throws Excepciones.UsuarioNoExistenteException {
         if (usuario.equals("Alcaide")) {
             frmAlcaide alcaide = new frmAlcaide();
