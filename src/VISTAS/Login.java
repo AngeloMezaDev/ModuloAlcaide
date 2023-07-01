@@ -461,10 +461,10 @@ public class Login extends javax.swing.JFrame {
             frmAlcaide alcaide = new frmAlcaide();
             alcaide.setVisible(true);
         } else if (usuario.equals("Profesor")) {
-            frmProfesoresAlcaide profesor = new frmProfesoresAlcaide();
+            frmProfesores profesor = new frmProfesores();
             profesor.setVisible(true);
         } else if (usuario.equals("Recluso")) {
-            frmReclusosAlcaide recluso = new frmReclusosAlcaide();
+            frmReclusos recluso = new frmReclusos();
             recluso.setVisible(true);
         } else {
             throw new Excepciones.UsuarioNoExistenteException("El usuario no existe en el sistema");
