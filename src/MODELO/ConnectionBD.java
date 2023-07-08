@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class ConnectionBD {
 
-    private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+    private static final String URL = "jdbc:oracle:thin:@localhost:1521:ORCL";
     private static final String USERNAME = "Fabrizio";
     private static final String PASSWORD = "angelito252";
 

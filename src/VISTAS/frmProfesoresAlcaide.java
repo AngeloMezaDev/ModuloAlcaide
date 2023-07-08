@@ -4,10 +4,16 @@
  */
 package VISTAS;
 
+import CONTROLADOR.ctrlRegistroNuevoProfe;
+import MODELO.AsignacionProfesor;
+import MODELO.Profesor;
+import javax.swing.JComboBox; // Importa la clase JComboBox
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,8 +24,18 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     /**
      * Creates new form frmAlcaide
      */
+    private ctrlRegistroNuevoProfe controlador;
+    private DefaultTableModel modeloTabla;
+
     public frmProfesoresAlcaide() {
         initComponents();
+        controlador = new ctrlRegistroNuevoProfe(); // Inicializar la instancia de la clase controladora
+        controlador.cargarProfesoresComboBox(CmbProfesoresExistentes);
+        controlador.cargarDatosAsignaciones((DefaultTableModel) JTableAsignacionProfesores.getModel());
+        JTableAsignacionProfesores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //elementos que solo se visualiazn para Talleres
+        lblGrupo.setVisible(false);
+        cmbGrupos.setVisible(false);
     }
 
     /**
@@ -60,12 +76,12 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JTableAsignacionProfesores = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
         panelAgregar = new javax.swing.JPanel();
@@ -80,23 +96,22 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         panelEliminar = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        lblAcTaller = new javax.swing.JLabel();
+        lblGrupo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        lblID = new javax.swing.JLabel();
         jPNombre = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
         jPCampoNombre = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
         jPFecha = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
+        CmbProfesoresExistentes = new javax.swing.JComboBox<>();
         jPCampoFecha = new javax.swing.JPanel();
-        CmbAsignacionDocente = new javax.swing.JComboBox<>();
-        jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbActividadTaller = new javax.swing.JComboBox<>();
+        cmbGrupos = new javax.swing.JComboBox<>();
+        CmbAsignacionDocente = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
+        btnRegistrarProfesor = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -406,39 +421,64 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/teacher.png.png"))); // NOI18N
         jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
-        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
-
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre del Docente", "Tipo_Asignacion", "Nombre Actividad/Taller", "Grupo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        btnActualizar.setBackground(new java.awt.Color(0, 0, 102));
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/sync.png"))); // NOI18N
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseClicked(evt);
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
+        jPanelBanner.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 30, -1));
+
+        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
+
+        JTableAsignacionProfesores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        JTableAsignacionProfesores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre del Docente", "ID_Profesor", "Tipo_Asignacion", "Nombre Actividad/Taller", "ID_Actividad/Taller", "Grupo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JTableAsignacionProfesores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        JTableAsignacionProfesores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JTableAsignacionProfesores.setGridColor(new java.awt.Color(255, 255, 255));
+        JTableAsignacionProfesores.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        JTableAsignacionProfesores.getTableHeader().setReorderingAllowed(false);
+        JTableAsignacionProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableAsignacionProfesoresMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(JTableAsignacionProfesores);
+        if (JTableAsignacionProfesores.getColumnModel().getColumnCount() > 0) {
+            JTableAsignacionProfesores.getColumnModel().getColumn(0).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(0).setPreferredWidth(75);
+            JTableAsignacionProfesores.getColumnModel().getColumn(1).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(1).setPreferredWidth(200);
+            JTableAsignacionProfesores.getColumnModel().getColumn(2).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(2).setPreferredWidth(100);
+            JTableAsignacionProfesores.getColumnModel().getColumn(3).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(3).setPreferredWidth(200);
+            JTableAsignacionProfesores.getColumnModel().getColumn(4).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(4).setPreferredWidth(150);
+            JTableAsignacionProfesores.getColumnModel().getColumn(5).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(5).setPreferredWidth(200);
+            JTableAsignacionProfesores.getColumnModel().getColumn(6).setResizable(false);
+            JTableAsignacionProfesores.getColumnModel().getColumn(6).setPreferredWidth(150);
         }
 
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 1080, 320));
+        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 1080, 290));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -499,172 +539,199 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         panelEliminar.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
         panelEliminar.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
-        jLabel23.setText("Actividad o Taller:");
+        lblAcTaller.setText("Actividad o Taller:");
 
-        jLabel24.setText("Grupo:");
+        lblGrupo.setText("Grupo:");
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblID.setBackground(new java.awt.Color(255, 255, 255));
-        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#P001");
-        jPanel3.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 43, -1));
-
         jPNombre.setBackground(new java.awt.Color(204, 204, 204));
         jPNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Nombre del docente:");
-        jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
         jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPCampoNombre.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
 
         jPFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Asignacion:");
-        jPFecha.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 80, -1));
+        CmbProfesoresExistentes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbProfesoresExistentesItemStateChanged(evt);
+            }
+        });
+        jPFecha.add(CmbProfesoresExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
 
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Actividad", "Taller" }));
-        jPCampoFecha.add(CmbAsignacionDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, -1));
+        cmbActividadTaller.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbActividadTallerItemStateChanged(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Actividad", "Taller" }));
+        CmbAsignacionDocente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbAsignacionDocenteItemStateChanged(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Asignacion:");
+
+        lblID.setBackground(new java.awt.Color(255, 255, 255));
+        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblID.setText("#P001");
+
+        btnRegistrarProfesor.setText("ADM. PROFESORES");
+        btnRegistrarProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarProfesorActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Profesor:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSeparator4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CmbAsignacionDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPCampoNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator7))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAcTaller)
+                            .addComponent(lblGrupo))
+                        .addGap(57, 57, 57)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(715, 715, 715))
+                        .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(1087, 1087, 1087))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAcTaller)
+                    .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGrupo))
+                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator5)
-                    .addComponent(jSeparator2))
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
+                    .addComponent(jSeparator2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77))
+                        .addGap(28, 28, 28)
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblID, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel19))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(CmbAsignacionDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(28, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jSeparator5)
+                .addContainerGap())
         );
 
-        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
+        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1100, 240));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -749,10 +816,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         resetColor(btnActividades);
     }//GEN-LAST:event_btnReclusosMouseEntered
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
         // Mostrar mensaje de confirmación para cerrar sesión
         int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
@@ -772,14 +835,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
     }//GEN-LAST:event_lblLogoutMouseClicked
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
-
     private void btnActividadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseClicked
         frmAlcaide Alcaide = new frmAlcaide();
         this.dispose();
@@ -797,12 +852,203 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         this.dispose();
         ReclusosA.setVisible(true);
     }//GEN-LAST:event_btnReclusosMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Obtener los datos del asigancion a editar
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
+        int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
+        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        String idDocente = lblID.getText();
+        String Nuevo_nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
+        String Nuevo_tipoAsignacion = (String) CmbAsignacionDocente.getSelectedItem();
+        String Nuevo_nombreActividadTaller = (String) cmbActividadTaller.getSelectedItem();
+        String Nuevo_nombreGrupo = (String) cmbGrupos.getSelectedItem();
+        String Nuevo_idActividadTaller = "";
+        if (Nuevo_tipoAsignacion.equals("Actividad")) {
+            Nuevo_idActividadTaller = controlador.ObtenerActividad(Nuevo_nombreActividadTaller);
+        } else if (Nuevo_tipoAsignacion.equals("Taller")) {
+            Nuevo_idActividadTaller = controlador.ObtenerTaller(Nuevo_nombreActividadTaller);
+        }
+        AsignacionProfesor asignacion = new AsignacionProfesor(idAsignacion, idDocente, Nuevo_nombreDocente,
+                Nuevo_tipoAsignacion, Nuevo_nombreActividadTaller, Nuevo_idActividadTaller, Nuevo_nombreGrupo);
+        
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas Editar la asignación con ID: " + idAsignacion + "?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarAsignacion del controlador
+            controlador.editarAsignacion(asignacion);;
+            limpiarInputs();
+        } else {
+            // Detener el evento
+            return;
+        }
+        // Actualizar la tabla de Asignaciones con los datos actualizados
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignaciones(modeloTabla);
+
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Asignacion editada correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // cuando de click se limpian los input
+        limpiarInputs();
+        //actualizar tabla
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignaciones(modeloTabla);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // Obtener los valores necesarios para la asignación desde los campos de la interfaz
+        String idDocente = lblID.getText();
+        String nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
+        String tipoAsignacion = (String) CmbAsignacionDocente.getSelectedItem();
+        String nombreActividadTaller = (String) cmbActividadTaller.getSelectedItem();
+        String nombreGrupo = (String) cmbGrupos.getSelectedItem();
+        String idActividadTaller = "";
+        if (tipoAsignacion.equals("Actividad")) {
+            idActividadTaller = controlador.ObtenerActividad(nombreActividadTaller);
+        } else if (tipoAsignacion.equals("Taller")) {
+            idActividadTaller = controlador.ObtenerTaller(nombreActividadTaller);
+        }
+        // Llamar al método en tu controlador para agregar la asignación de profesor
+        controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
+                idActividadTaller, nombreGrupo);
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnRegistrarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProfesorActionPerformed
+        frmCreateNewProfe profe = new frmCreateNewProfe();
+        profe.setVisible(true);
+    }//GEN-LAST:event_btnRegistrarProfesorActionPerformed
+
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
+        // limpiar inputs
+        limpiarInputs();
+        // Actualizar la tabla de Asignaciones con los datos actualizados
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignaciones(modeloTabla);
+    }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void CmbAsignacionDocenteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbAsignacionDocenteItemStateChanged
+        //Obtener la opcion Selecionada: Actividad o Taller.
+        String opcion = (String) CmbAsignacionDocente.getSelectedItem();
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            cmbActividadTaller.removeAllItems();
+            lblGrupo.setVisible(false);
+            cmbGrupos.setVisible(false);
+            controlador.cargarActividadesComboBox(cmbActividadTaller);
+        } else if (opcion.equals("Taller")) {
+            cmbActividadTaller.removeAllItems();
+            lblGrupo.setVisible(true);
+            cmbGrupos.setVisible(true);
+            controlador.cargarTalleresComboBox(cmbActividadTaller);
+        }
+
+    }//GEN-LAST:event_CmbAsignacionDocenteItemStateChanged
+
+    private void cmbActividadTallerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbActividadTallerItemStateChanged
+        //Obtener la opcion Selecionada: Actividad o Taller.
+        String opcion = (String) CmbAsignacionDocente.getSelectedItem();
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            lblAcTaller.setText("Actividad: ");
+        }
+        if (opcion.equals("Taller")) {
+            lblAcTaller.setText("Taller: :");
+            cmbGrupos.removeAllItems();
+            String NombreTaller = (String) cmbActividadTaller.getSelectedItem();
+            String IdTaller = controlador.ObtenerTaller(NombreTaller);
+            controlador.cargarGruposTalleres(IdTaller, cmbGrupos);
+        }
+    }//GEN-LAST:event_cmbActividadTallerItemStateChanged
+
+    private void CmbProfesoresExistentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbProfesoresExistentesItemStateChanged
+        String profe = (String) CmbProfesoresExistentes.getSelectedItem();
+        List<Profesor> profesores = controlador.cargarDatosProfesores();
+        String Idprofe = "";
+        for (Profesor profesor : profesores) {
+            if ((profesor.getNombres() + " " + profesor.getApellidos()).equalsIgnoreCase(profe)) {
+                Idprofe = profesor.getCodigoProfesor();
+                System.out.println(Idprofe);
+            }
+        }
+        lblID.setText(Idprofe);
+    }//GEN-LAST:event_CmbProfesoresExistentesItemStateChanged
+
+    private void JTableAsignacionProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAsignacionProfesoresMouseClicked
+
+        int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
+        List<AsignacionProfesor> asignaciones = controlador.cargarDatosAsignaciones((DefaultTableModel) JTableAsignacionProfesores.getModel());
+        // Obtener el profesor seleccionado de la lista
+        AsignacionProfesor asignacion = asignaciones.get(filaSeleccionada);
+
+        // Obtener los datos del profesor
+        int idAsignacion = asignacion.getIdAsignacion();
+        String idProfesor = asignacion.getIdDocente();
+        String NombreDocente = asignacion.getNombreDocente();
+        String tipoAsignacion = asignacion.getTipoAsignacion();
+        String Nombre_ActTaller = asignacion.getNombreActividadTaller();
+        String idActTaller = asignacion.getIdActividadTaller();
+        String NombreGrupo = asignacion.getNombreGrupo();
+
+        // Establecer los datos en los campos de texto
+        lblID.setText("" + idProfesor);
+        CmbProfesoresExistentes.setSelectedItem(NombreDocente);
+        CmbAsignacionDocente.setSelectedItem(tipoAsignacion);
+        cmbActividadTaller.setSelectedItem(Nombre_ActTaller);
+        cmbGrupos.setSelectedItem(NombreGrupo);
+        // Restaurar la selección después de la actualización
+        if (filaSeleccionada != -1) {
+            JTableAsignacionProfesores.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        }
+    }//GEN-LAST:event_JTableAsignacionProfesoresMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Obtener los datos del asigancion a Eliminar
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
+        int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
+        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas eliminar la asignación con ID: " + idAsignacion + "?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarAsignacion del controlador
+            controlador.eliminarAsignacion(idAsignacion);
+            limpiarInputs();
+        } else {
+            // Detener el evento
+            return;
+        }
+
+        // Actualizar la tabla de profesores (si es necesario)
+        controlador.cargarDatosAsignaciones(modeloTabla);
+    }//GEN-LAST:event_btnEliminarActionPerformed
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
 
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
+    }
+
+    void limpiarInputs() {
+        lblID.setText("#P001");
+        CmbProfesoresExistentes.setSelectedItem("--Seleccione--");
+        CmbAsignacionDocente.setSelectedItem("--Seleccione--");
+        cmbActividadTaller.setSelectedItem("--Seleccione--");
+        if (cmbGrupos.isVisible()) {
+            cmbGrupos.setSelectedItem("--Seleccione--");
+        }
     }
 
     /**
@@ -850,17 +1096,21 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JComboBox<String> CmbAsignacionDocente;
+    private javax.swing.JComboBox<String> CmbProfesoresExistentes;
+    private javax.swing.JTable JTableAsignacionProfesores;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
+    private javax.swing.JLabel btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
+    private javax.swing.JButton btnRegistrarProfesor;
     private javax.swing.JPanel btnTalleres;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cmbActividadTaller;
+    private javax.swing.JComboBox<String> cmbGrupos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -875,8 +1125,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -898,16 +1146,13 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblAcTaller;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JPanel panelAgregar;
