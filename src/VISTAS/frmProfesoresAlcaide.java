@@ -29,6 +29,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
     public frmProfesoresAlcaide() {
         initComponents();
+        CmbProfesoresExistentes.removeAllItems();
+        JTableAsignacionProfesores.removeAll();
         controlador = new ctrlRegistroNuevoProfe(); // Inicializar la instancia de la clase controladora
         controlador.cargarProfesoresComboBox(CmbProfesoresExistentes);
         controlador.cargarDatosAsignaciones((DefaultTableModel) JTableAsignacionProfesores.getModel());
@@ -112,6 +114,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         lblID = new javax.swing.JLabel();
         btnRegistrarProfesor = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        lblEdad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -607,6 +611,10 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Profesor:");
 
+        jLabel17.setText("Edad:");
+
+        lblEdad.setText("_______");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -645,16 +653,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                         .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblAcTaller)
-                            .addComponent(lblGrupo))
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -663,27 +662,22 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAcTaller)
+                            .addComponent(lblGrupo)
+                            .addComponent(jLabel17))
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEdad))))
                 .addGap(1087, 1087, 1087))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAcTaller)
-                    .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGrupo))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -726,8 +720,30 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                                 .addComponent(CmbAsignacionDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(28, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator5)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(lblEdad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblAcTaller)
+                            .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGrupo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator5)))
                 .addContainerGap())
         );
 
@@ -857,7 +873,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Obtener los datos del asigancion a editar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
-        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        String idAsignacion =modeloTabla.getValueAt(filaSeleccionada, 0).toString();
         String idDocente = lblID.getText();
         String Nuevo_nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
         String Nuevo_tipoAsignacion = (String) CmbAsignacionDocente.getSelectedItem();
@@ -879,7 +895,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Verificar la opción seleccionada
         if (opcion == JOptionPane.YES_OPTION) {
             // Llamar al método eliminarAsignacion del controlador
-            controlador.editarAsignacion(asignacion);;
+            controlador.editarAsignacion(asignacion);
             limpiarInputs();
         } else {
             // Detener el evento
@@ -916,10 +932,19 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         } else if (tipoAsignacion.equals("Taller")) {
             idActividadTaller = controlador.ObtenerTaller(nombreActividadTaller);
         }
-        // Llamar al método en tu controlador para agregar la asignación de profesor
-        controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
+        // Crear el mensaje de confirmación
+            String mensaje = "¿Deseas Registar al recluso: " + nombreDocente +" en "+nombreActividadTaller+ " ?";
+            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+            // Verificar la opción seleccionada
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Llamar al método en tu controlador para agregar la asignación de profesor
+                controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
                 idActividadTaller, nombreGrupo);
-
+                limpiarInputs();
+            } else {
+                // Detener el evento
+                return;
+            }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnRegistrarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProfesorActionPerformed
@@ -960,24 +985,27 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Verificar la opción seleccionada
         if (opcion.equals("Actividad")) {
             lblAcTaller.setText("Actividad: ");
-        }
-        if (opcion.equals("Taller")) {
-            lblAcTaller.setText("Taller: :");
+            cmbGrupos.setSelectedItem(" ");
+        }else if (opcion.equals("Taller")) {
+            lblAcTaller.setText("Taller:");
             cmbGrupos.removeAllItems();
             String NombreTaller = (String) cmbActividadTaller.getSelectedItem();
+            System.out.println(NombreTaller);
             String IdTaller = controlador.ObtenerTaller(NombreTaller);
+            System.out.println("elid taller es:"+IdTaller);
             controlador.cargarGruposTalleres(IdTaller, cmbGrupos);
         }
+        
     }//GEN-LAST:event_cmbActividadTallerItemStateChanged
 
     private void CmbProfesoresExistentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbProfesoresExistentesItemStateChanged
+
         String profe = (String) CmbProfesoresExistentes.getSelectedItem();
         List<Profesor> profesores = controlador.cargarDatosProfesores();
         String Idprofe = "";
         for (Profesor profesor : profesores) {
             if ((profesor.getNombres() + " " + profesor.getApellidos()).equalsIgnoreCase(profe)) {
                 Idprofe = profesor.getCodigoProfesor();
-                System.out.println(Idprofe);
             }
         }
         lblID.setText(Idprofe);
@@ -991,16 +1019,25 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         AsignacionProfesor asignacion = asignaciones.get(filaSeleccionada);
 
         // Obtener los datos del profesor
-        int idAsignacion = asignacion.getIdAsignacion();
         String idProfesor = asignacion.getIdDocente();
         String NombreDocente = asignacion.getNombreDocente();
         String tipoAsignacion = asignacion.getTipoAsignacion();
         String Nombre_ActTaller = asignacion.getNombreActividadTaller();
         String idActTaller = asignacion.getIdActividadTaller();
         String NombreGrupo = asignacion.getNombreGrupo();
+        String edad="";
+
+        //Para obtener la edad
+        List<Profesor> prof =controlador.cargarDatosProfesores();
+        for(Profesor profe:prof){
+            if(profe.getCodigoProfesor().equals(idProfesor)){
+                 edad=(profe.CalcularEdad(profe.getFechaNacimiento())+" años");
+            }
+        }
 
         // Establecer los datos en los campos de texto
         lblID.setText("" + idProfesor);
+        lblEdad.setText(edad);
         CmbProfesoresExistentes.setSelectedItem(NombreDocente);
         CmbAsignacionDocente.setSelectedItem(tipoAsignacion);
         cmbActividadTaller.setSelectedItem(Nombre_ActTaller);
@@ -1015,7 +1052,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Obtener los datos del asigancion a Eliminar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
-        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
+        System.out.println(idAsignacion);
         // Crear el mensaje de confirmación
         String mensaje = "¿Deseas eliminar la asignación con ID: " + idAsignacion + "?";
         int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -1119,6 +1157,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1151,6 +1190,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAcTaller;
+    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblID;

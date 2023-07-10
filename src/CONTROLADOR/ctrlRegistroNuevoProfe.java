@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.CallableStatement;
-import javax.swing.JOptionPane;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ctrlRegistroNuevoProfe {
         try {
             connectionBD.openConnection();
             // Crear la sentencia SQL para insertar el nuevo profesor
-            String sql = "INSERT INTO Profesores (id_profesor, cedula, nombres, apellidos,correo,especialidad,experiencia,usuario,contra) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+            String sql = "INSERT INTO Profesores (id_profesor, cedula, nombres, apellidos, correo, especialidad, experiencia, usuario, contra, fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -45,6 +45,8 @@ public class ctrlRegistroNuevoProfe {
             statement.setInt(7, profesor.getAñosExperiencia());
             statement.setString(8, profesor.getUser());
             statement.setString(9, profesor.getPassword());
+            java.sql.Date fechaNacimiento = new java.sql.Date(profesor.getFechaNacimiento().getTime());
+            statement.setDate(10, fechaNacimiento);
 
             // Ejecutar la inserción
             statement.executeUpdate();
@@ -67,7 +69,7 @@ public class ctrlRegistroNuevoProfe {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de los profesores
-            String sql = "SELECT id_profesor, nombres, apellidos, cedula, correo, especialidad, experiencia,usuario,contra FROM Profesores ORDER BY id_profesor ASC";
+            String sql = "SELECT * FROM Profesores ORDER BY id_profesor ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -87,7 +89,15 @@ public class ctrlRegistroNuevoProfe {
                 int experiencia = Integer.parseInt(resultSet.getString("experiencia"));
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
+                String fechaNacString = resultSet.getString("fecha_Nacimiento");
 
+                Date fechaNac = null;
+                try {
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                    fechaNac = formatoFecha.parse(fechaNacString);
+                } catch (ParseException e) {
+                    System.err.println("Error al convertir la fecha: " + e.getMessage());
+                }
                 Object[] fila = {
                     idProfesor,
                     nombres,
@@ -101,7 +111,7 @@ public class ctrlRegistroNuevoProfe {
                 };
                 modeloTabla.addRow(fila);
                 // Crear un objeto Profesor con los datos
-                Profesor profesor = new Profesor(idProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contrasena, correo);
+                Profesor profesor = new Profesor(idProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contrasena, correo, fechaNac);
 
                 // Agregar el profesor a la lista
                 profesores.add(profesor);
@@ -119,12 +129,13 @@ public class ctrlRegistroNuevoProfe {
         }
         return profesores;
     }
+
     public List<Profesor> cargarDatosProfesores() {
         List<Profesor> profesores = new ArrayList<>();
         try {
             connectionBD.openConnection();
             // Crear la sentencia SQL para obtener los datos de los profesores
-            String sql = "SELECT id_profesor, nombres, apellidos, cedula, correo, especialidad, experiencia,usuario,contra FROM Profesores ORDER BY id_profesor ASC";
+            String sql = "SELECT id_profesor, nombres, apellidos, cedula, correo, especialidad, experiencia,usuario,contra,fecha_nacimiento FROM Profesores ORDER BY id_profesor ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -141,9 +152,18 @@ public class ctrlRegistroNuevoProfe {
                 int experiencia = Integer.parseInt(resultSet.getString("experiencia"));
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
+                String fechaNacString = resultSet.getString("fecha_Nacimiento");
+
+                Date fechaNac = null;
+                try {
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+                    fechaNac = formatoFecha.parse(fechaNacString);
+                } catch (ParseException e) {
+                    System.err.println("Error al convertir la fecha: " + e.getMessage());
+                }
 
                 // Crear un objeto Profesor con los datos
-                Profesor profesor = new Profesor(idProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contrasena, correo);
+                Profesor profesor = new Profesor(idProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contrasena, correo, fechaNac);
 
                 // Agregar el profesor a la lista
                 profesores.add(profesor);
@@ -296,7 +316,7 @@ public class ctrlRegistroNuevoProfe {
         }
     }
 
-    public void editarProfesor(String idProfesor, String nuevosNombres, String nuevosApellidos, String nuevaCedula, String nuevoCorreo, String nuevaEspecialidad, int nuevaExperiencia, String nuevoUsuario, String nuevaContra) {
+    public void editarProfesor(String idProfesor, String nuevosNombres, String nuevosApellidos, String nuevaCedula, String nuevoCorreo, String nuevaEspecialidad, int nuevaExperiencia, String nuevoUsuario, String nuevaContra, Date FechaNac) {
 
         try {
             connectionBD.openConnection();
@@ -315,7 +335,8 @@ public class ctrlRegistroNuevoProfe {
             cstmt.setInt(7, nuevaExperiencia);
             cstmt.setString(8, nuevoUsuario);
             cstmt.setString(9, nuevaContra);
-
+            java.sql.Date fechaNacimiento = new java.sql.Date(FechaNac.getTime());
+            cstmt.setDate(10, fechaNacimiento);
             // Ejecutar el stored procedure
             cstmt.execute();
 
@@ -359,6 +380,7 @@ public class ctrlRegistroNuevoProfe {
 
     public void cargarGruposTalleres(String idTaller, JComboBox<String> comboBoxGrupos) {
         try {
+            String nombreGrupo = "";
             // Lógica de conexión a la base de datos
             connectionBD.openConnection();
             // Crear el modelo para el JComboBox
@@ -366,18 +388,17 @@ public class ctrlRegistroNuevoProfe {
             comboBoxModel.removeAllElements();
             comboBoxModel.addElement("--Seleccione--");
             // Consulta SQL para obtener los nombres de los grupos por ID de taller
-            String sql = "SELECT NOMBRE_GRUPO FROM Grupos WHERE ID_TALLER = ?";
-
+            String sql = "SELECT nombre_grupo FROM Grupos WHERE ID_TALLER = ?";
             PreparedStatement stmt = connectionBD.getConnection().prepareStatement(sql);
             stmt.setString(1, idTaller);
             ResultSet rs = stmt.executeQuery();
 
             // Recorrer el resultado y agregar los nombres de los grupos a la lista
             while (rs.next()) {
-                String nombreGrupo = rs.getString("NOMBRE_GRUPO");
+                nombreGrupo = rs.getString("nombre_grupo");
                 comboBoxModel.addElement(nombreGrupo);
             }
-
+            System.out.println("la consulta devuelve el grupo:" + nombreGrupo);
             comboBoxGrupos.setModel(comboBoxModel);
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al obtener nombre de Grupos: " + e.getMessage());
@@ -390,14 +411,13 @@ public class ctrlRegistroNuevoProfe {
         }
     }
 
-    public  List<AsignacionProfesor> cargarDatosAsignaciones(DefaultTableModel defaultTableModel) {
+    public List<AsignacionProfesor> cargarDatosAsignaciones(DefaultTableModel defaultTableModel) {
         List<AsignacionProfesor> asignaciones = new ArrayList<>();
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de las asignaciones
-            String sql = "SELECT id_asignacion,Id_Docente, Nombre_Docente,Tipo_Asignacion,Nombre_ActividadTaller,\n+"
-                    + "Id_ActividadTaller,Nombre_Grupo FROM AsignacionProfesor ORDER BY id_asignacion ASC";
+            String sql = "SELECT * FROM AsignacionProfesor ORDER BY id_asignacion ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -408,7 +428,7 @@ public class ctrlRegistroNuevoProfe {
 
             // Recorrer el resultado y agregar los datos al modelo de la tabla
             while (resultSet.next()) {
-                int idAsignacion = resultSet.getInt("id_asignacion");
+                String idAsignacion = resultSet.getString("id_asignacion");
                 String idProfesor = resultSet.getString("Id_Docente");
                 String NombreDocente = resultSet.getString("Nombre_Docente");
                 String tipoAsignacion = resultSet.getString("Tipo_Asignacion");
@@ -501,7 +521,8 @@ public class ctrlRegistroNuevoProfe {
             }
         }
     }
-    public void editarAsignacion(AsignacionProfesor asignacion){
+
+    public void editarAsignacion(AsignacionProfesor asignacion) {
         try {
             connectionBD.openConnection();
 
@@ -510,7 +531,7 @@ public class ctrlRegistroNuevoProfe {
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
-            cstmt.setInt(1, asignacion.getIdAsignacion());
+            cstmt.setString(1, asignacion.getIdAsignacion());
             cstmt.setString(2, asignacion.getIdDocente());
             cstmt.setString(3, asignacion.getNombreDocente());
             cstmt.setString(4, asignacion.getTipoAsignacion());
@@ -533,7 +554,7 @@ public class ctrlRegistroNuevoProfe {
         }
     }
 
-    public void eliminarAsignacion(int idAsignacion) {
+    public void eliminarAsignacion(String idAsignacion) {
         try {
             connectionBD.openConnection();
 
@@ -542,7 +563,7 @@ public class ctrlRegistroNuevoProfe {
 
             // Crear la declaración y establecer el parámetro
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
-            cstmt.setInt(1, idAsignacion);
+            cstmt.setString(1, idAsignacion);
 
             // Ejecutar el stored procedure
             cstmt.execute();
@@ -559,5 +580,4 @@ public class ctrlRegistroNuevoProfe {
         }
     }
 
-    
 }

@@ -8,25 +8,25 @@ package MODELO;
  *
  * @author Yordan
  */
-public class AsignacionProfesor {
+public class AsignacionRecluso {
     private String idAsignacion;
-    private String idDocente;
-    private String nombreDocente;
+    private String idRecluso;
+    private String nombreRecluso;
     private String tipoAsignacion;
     private String nombreActividadTaller;
     private String idActividadTaller;
     private String nombreGrupo;
 
-    public AsignacionProfesor(String idAsignacion, String idDocente, String nombreDocente, String tipoAsignacion, String nombreActividadTaller, String idActividadTaller, String nombreGrupo) {
+    public AsignacionRecluso(String idAsignacion, String idRecluso, String nombreRecluso, String tipoAsignacion, String nombreActividadTaller, String idActividadTaller, String nombreGrupo) {
         this.idAsignacion = idAsignacion;
-        this.idDocente = idDocente;
-        this.nombreDocente = nombreDocente;
+        this.idRecluso = idRecluso;
+        this.nombreRecluso = nombreRecluso;
         this.tipoAsignacion = tipoAsignacion;
         this.nombreActividadTaller = nombreActividadTaller;
         this.idActividadTaller = idActividadTaller;
         this.nombreGrupo = nombreGrupo;
     }
-
+    
     public String getIdAsignacion() {
         return idAsignacion;
     }
@@ -34,55 +34,39 @@ public class AsignacionProfesor {
     public void setIdAsignacion(String idAsignacion) {
         this.idAsignacion = idAsignacion;
     }
+    
 
-    public String getIdDocente() {
-        return idDocente;
+    public String getIdRecluso() {
+        return idRecluso;
     }
 
-    public void setIdDocente(String idDocente) {
-        this.idDocente = idDocente;
+    public void setIdRecluso(String idRecluso) {
+        this.idRecluso = idRecluso;
     }
 
-    public String getNombreDocente() {
-        return nombreDocente;
+    public String getNombreRecluso() {
+        return nombreRecluso;
     }
 
-    public void setNombreDocente(String nombreDocente) {
-        this.nombreDocente = nombreDocente;
+    public void setNombreRecluso(String nombreRecluso) {
+        this.nombreRecluso = nombreRecluso;
     }
+
 
     public String getTipoAsignacion() {
         return tipoAsignacion;
-    }
-
-    public void setTipoAsignacion(String tipoAsignacion) {
-        this.tipoAsignacion = tipoAsignacion;
     }
 
     public String getNombreActividadTaller() {
         return nombreActividadTaller;
     }
 
-    public void setNombreActividadTaller(String nombreActividadTaller) {
-        this.nombreActividadTaller = nombreActividadTaller;
-    }
-
     public String getIdActividadTaller() {
         return idActividadTaller;
-    }
-
-    public void setIdActividadTaller(String idActividadTaller) {
-        this.idActividadTaller = idActividadTaller;
     }
 
     public String getNombreGrupo() {
         return nombreGrupo;
     }
-
-    public void setNombreGrupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
-    }
-    
-   
-    
 }
+

@@ -4,10 +4,16 @@
  */
 package VISTAS;
 
+import CONTROLADOR.ctrlRegistroNuevoProfe;
+import CONTROLADOR.ctrlRegistroReclusos;
+import MODELO.AsignacionRecluso;
+import MODELO.Recluso;
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,11 +21,23 @@ import javax.swing.JPanel;
  */
 public class frmReclusosAlcaide extends javax.swing.JFrame {
 
+    private ctrlRegistroReclusos controlador;
+    private ctrlRegistroNuevoProfe ctrl;
+    private DefaultTableModel modeloTabla;
+
     /**
      * Creates new form frmAlcaide
      */
     public frmReclusosAlcaide() {
         initComponents();
+        controlador = new ctrlRegistroReclusos();
+        ctrl = new ctrlRegistroNuevoProfe();// Inicializar la instancia de la clase controladora
+        controlador.cargarReclusosComboBox(CmbReclusosExistentes);
+        controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
+        JTableAsigancionRecluso.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //elementos que solo se visualiazn para Talleres
+        lblGrupo.setVisible(false);
+        CmbGrupos.setVisible(false);
     }
 
     /**
@@ -60,8 +78,9 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JTableAsigancionRecluso = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -77,22 +96,26 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         panelEliminar = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        lblActTaller = new javax.swing.JLabel();
+        lblGrupo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPNombre = new javax.swing.JPanel();
         jPCampoNombre = new javax.swing.JPanel();
         jPCampoFecha = new javax.swing.JPanel();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        CmbActividadTaller = new javax.swing.JComboBox<>();
+        CmbGrupos = new javax.swing.JComboBox<>();
         CmbReclusosExistentes = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
-        lblID = new javax.swing.JLabel();
+        lbl_IDrecluso = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        CmbAsignacionDocente = new javax.swing.JComboBox<>();
+        CmbAsignacionRecluso = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
+        btnAdminReclusos = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        lblEdad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -402,36 +425,55 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prison.png"))); // NOI18N
         jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
-        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
-
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre Recluso", "Tipo_Asignacion", "Nombre Actividad/Taller", "Grupo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        btnActualizar.setBackground(new java.awt.Color(0, 0, 102));
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/sync.png"))); // NOI18N
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualizarMouseClicked(evt);
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(10);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
+        jPanelBanner.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 30, -1));
+
+        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
+
+        JTableAsigancionRecluso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        JTableAsigancionRecluso.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID_Asignacion", "Nombre Recluso", "ID_RECLUSO", "Tipo_Asignacion", "Nombre Actividad/Taller", "ID_ACT/TALLER", "Grupo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JTableAsigancionRecluso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JTableAsigancionRecluso.setGridColor(new java.awt.Color(255, 255, 255));
+        JTableAsigancionRecluso.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        JTableAsigancionRecluso.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableAsigancionReclusoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(JTableAsigancionRecluso);
+        if (JTableAsigancionRecluso.getColumnModel().getColumnCount() > 0) {
+            JTableAsigancionRecluso.getColumnModel().getColumn(0).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(0).setPreferredWidth(10);
+            JTableAsigancionRecluso.getColumnModel().getColumn(1).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(1).setPreferredWidth(10);
+            JTableAsigancionRecluso.getColumnModel().getColumn(2).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(3).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(3).setPreferredWidth(10);
+            JTableAsigancionRecluso.getColumnModel().getColumn(4).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(5).setResizable(false);
+            JTableAsigancionRecluso.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 1080, 320));
@@ -441,7 +483,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("ID:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 22, -1));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 22, -1));
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 10, 278));
@@ -484,7 +526,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         panelEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelEditar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Modificar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -502,6 +544,11 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         panelEliminar.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
@@ -509,11 +556,11 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jPanel2.add(panelEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 140, 140, -1));
 
-        jLabel23.setText("Actividad o Taller:");
-        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 110, -1));
+        lblActTaller.setText("Actividad o Taller:");
+        jPanel2.add(lblActTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 110, -1));
 
-        jLabel24.setText("Grupo:");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 40, -1));
+        lblGrupo.setText("Grupo:");
+        jPanel2.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 40, -1));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -533,48 +580,89 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jPanel2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 184, 420, 17));
         jPanel2.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 620, 10));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 158, -1));
+        CmbActividadTaller.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--" }));
+        CmbActividadTaller.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbActividadTallerItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(CmbActividadTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 158, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 133, -1));
+        jPanel2.add(CmbGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 100, 133, -1));
 
         CmbReclusosExistentes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
+        CmbReclusosExistentes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbReclusosExistentesItemStateChanged(evt);
+            }
+        });
         jPanel2.add(CmbReclusosExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 118, 180, -1));
 
         jLabel17.setText("Asignacion:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, -1, -1));
 
-        lblID.setBackground(new java.awt.Color(255, 255, 255));
-        lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#R001");
-        jPanel2.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 43, -1));
+        lbl_IDrecluso.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_IDrecluso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_IDrecluso.setText("#R001");
+        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, -1));
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Nombre de Recluso:");
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
 
-        CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Actividad", "Taller" }));
-        CmbAsignacionDocente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmbAsignacionDocenteActionPerformed(evt);
+        CmbAsignacionRecluso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Actividad", "Taller" }));
+        CmbAsignacionRecluso.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                CmbAsignacionReclusoItemStateChanged(evt);
             }
         });
-        jPanel2.add(CmbAsignacionDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 180, -1));
+        CmbAsignacionRecluso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CmbAsignacionReclusoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CmbAsignacionRecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 180, -1));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnAdminReclusos.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        btnAdminReclusos.setText("Administrar \nReclusos");
+        btnAdminReclusos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminReclusosActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/AdminReo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAdminReclusos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 73, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnAdminReclusos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 27, -1, -1));
+
+        jLabel19.setText("Edad:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, -1, -1));
+
+        lblEdad.setText("________");
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, -1, -1));
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
 
@@ -687,10 +775,10 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActividadesMouseClicked
 
     private void btnProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseClicked
-       frmProfesoresAlcaide ProfesoresA = new frmProfesoresAlcaide();
-       this.dispose();
-       ProfesoresA.setVisible(true);
-   
+        frmProfesoresAlcaide ProfesoresA = new frmProfesoresAlcaide();
+        this.dispose();
+        ProfesoresA.setVisible(true);
+
     }//GEN-LAST:event_btnProfesoresMouseClicked
 
     private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
@@ -699,27 +787,240 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         TalleresA.setVisible(true);
     }//GEN-LAST:event_btnTalleresMouseClicked
 
-    private void CmbAsignacionDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbAsignacionDocenteActionPerformed
+    private void CmbAsignacionReclusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CmbAsignacionDocenteActionPerformed
+    }//GEN-LAST:event_CmbAsignacionReclusoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        // Obtener los datos del asigancion a editar
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
+        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
+        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
+        String idRecluso = lbl_IDrecluso.getText();
+        String Nuevo_nombreRecluso = (String) CmbReclusosExistentes.getSelectedItem();
+        String Nuevo_tipoAsignacion = (String) CmbAsignacionRecluso.getSelectedItem();
+        String Nuevo_nombreActividadTaller = (String) CmbActividadTaller.getSelectedItem();
+        String Nuevo_nombreGrupo = (String) CmbGrupos.getSelectedItem();
+        String Nuevo_idActividadTaller = "";
+        if (Nuevo_tipoAsignacion.equals("Actividad")) {
+            Nuevo_idActividadTaller = ctrl.ObtenerActividad(Nuevo_nombreActividadTaller);
+            Nuevo_nombreGrupo = " ";
+        } else if (Nuevo_tipoAsignacion.equals("Taller")) {
+            Nuevo_idActividadTaller = ctrl.ObtenerTaller(Nuevo_nombreActividadTaller);
+        }
+        AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, Nuevo_nombreRecluso,
+                Nuevo_tipoAsignacion, Nuevo_nombreActividadTaller, Nuevo_idActividadTaller, Nuevo_nombreGrupo);
+
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas Editar la asignación con ID: " + idAsignacion + "?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarAsignacion del controlador
+            controlador.editarAsignacion(asignacion);
+            limpiarInputs();
+        } else {
+            // Detener el evento
+            return;
+        }
+        // Actualizar la tabla de Asignaciones con los datos actualizados
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignacionesReos(modeloTabla);
+
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Asignacion editada correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        // cuando de click se limpian los input
+        limpiarInputs();
+        //actualizar tabla
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignacionesReos(modeloTabla);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Obtener los valores necesarios para la asignación desde los campos de la interfaz
+            String idRecluso = lbl_IDrecluso.getText();
+            String nombreRecluso = (String) CmbReclusosExistentes.getSelectedItem();
+            String tipoAsignacion = (String) CmbAsignacionRecluso.getSelectedItem();
+            String nombreActividadTaller = (String) CmbActividadTaller.getSelectedItem();
+            String nombreGrupo = (String) CmbGrupos.getSelectedItem();
+            String idActividadTaller = "";
+            if (tipoAsignacion.equals("Actividad")) {
+                idActividadTaller = ctrl.ObtenerActividad(nombreActividadTaller);
+                nombreGrupo = " ";
+            } else if (tipoAsignacion.equals("Taller")) {
+                idActividadTaller = ctrl.ObtenerTaller(nombreActividadTaller);
+            }
+            // Crear la instancia de Recluso
+            AsignacionRecluso asigancion = new AsignacionRecluso("", idRecluso, nombreRecluso, tipoAsignacion,
+                    nombreActividadTaller, idActividadTaller, nombreGrupo);
+
+            // Crear el mensaje de confirmación
+            String mensaje = "¿Deseas Registar al recluso: " + nombreRecluso + "en " + nombreActividadTaller + "?";
+            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+            // Verificar la opción seleccionada
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Llamar al método en tu controlador para agregar la asignación de profesor
+                controlador.agregarAsignacionRecluso(asigancion);
+                limpiarInputs();
+            } else {
+                // Detener el evento
+                return;
+            }
+
+            // Mostrar mensaje al usuario
+            JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
+        }
+        // Actualizar la tabla de profesores (si es necesario)
+        controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnAdminReclusosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReclusosActionPerformed
+        frmCreateNewRecluso profe = new frmCreateNewRecluso();
+        profe.setVisible(true);
+    }//GEN-LAST:event_btnAdminReclusosActionPerformed
+
+    private void CmbReclusosExistentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbReclusosExistentesItemStateChanged
+        String Cmbrecluso = (String) CmbReclusosExistentes.getSelectedItem();
+        List<Recluso> reclusos = controlador.cargarDatosRecluso();
+        String IDrecluso = "";
+        for (Recluso reo : reclusos) {
+            if ((reo.getNombres() + " " + reo.getApellidos()).equalsIgnoreCase(Cmbrecluso)) {
+                IDrecluso = reo.getCodigoRecluso();
+            }
+        }
+        lbl_IDrecluso.setText(IDrecluso);
+    }//GEN-LAST:event_CmbReclusosExistentesItemStateChanged
+
+    private void CmbAsignacionReclusoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoItemStateChanged
+        //Obtener la opcion Selecionada: Actividad o Taller.
+        String opcion = (String) CmbAsignacionRecluso.getSelectedItem();
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            CmbActividadTaller.removeAllItems();
+            lblGrupo.setVisible(false);
+            CmbGrupos.setVisible(false);
+            ctrl.cargarActividadesComboBox(CmbActividadTaller);
+        } else if (opcion.equals("Taller")) {
+            CmbActividadTaller.removeAllItems();
+            lblGrupo.setVisible(true);
+            CmbGrupos.setVisible(true);
+            ctrl.cargarTalleresComboBox(CmbActividadTaller);
+        }
+
+
+    }//GEN-LAST:event_CmbAsignacionReclusoItemStateChanged
+
+    private void CmbActividadTallerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbActividadTallerItemStateChanged
+        //Obtener la opcion Selecionada: Actividad o Taller.
+        String opcion = (String) CmbAsignacionRecluso.getSelectedItem();
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            lblActTaller.setText("Actividad: ");
+        }
+        if (opcion.equals("Taller")) {
+            lblActTaller.setText("Taller: :");
+            CmbGrupos.removeAllItems();
+            String NombreTaller = (String) CmbActividadTaller.getSelectedItem();
+            String IdTaller = ctrl.ObtenerTaller(NombreTaller);
+            ctrl.cargarGruposTalleres(IdTaller, CmbGrupos);
+        }
+    }//GEN-LAST:event_CmbActividadTallerItemStateChanged
+
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
+        // limpiar inputs
+        limpiarInputs();
+        // Actualizar la tabla de Asignaciones con los datos actualizados
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosAsignacionesReos(modeloTabla);
+        controlador.cargarReclusosComboBox(CmbReclusosExistentes);
+    }//GEN-LAST:event_btnActualizarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // Obtener los datos del asigancion a Eliminar
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
+        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
+        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas eliminar la asignación con ID: " + idAsignacion + "?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarAsignacion del controlador
+            controlador.eliminarAsignacion(idAsignacion);
+            limpiarInputs();
+        } else {
+            // Detener el evento
+            return;
+        }
+
+        // Actualizar la tabla de profesores (si es necesario)
+        controlador.cargarDatosAsignacionesReos(modeloTabla);
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void JTableAsigancionReclusoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAsigancionReclusoMouseClicked
+        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
+        List<AsignacionRecluso> asignaciones = controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
+        // Obtener el recluso  seleccionado de la lista
+        AsignacionRecluso asignacion = asignaciones.get(filaSeleccionada);
+        CmbReclusosExistentes.removeAllItems();
+        controlador.cargarReclusosComboBox(CmbReclusosExistentes);//cargarcombobox
+        // Obtener los datos del recluso
+        String idAsignacion = asignacion.getIdAsignacion();
+        String idRecluso = asignacion.getIdRecluso();
+        String NombreReo = asignacion.getNombreRecluso();
+        String tipoAsignacion = asignacion.getTipoAsignacion();
+        String Nombre_ActTaller = asignacion.getNombreActividadTaller();
+        String NombreGrupo = asignacion.getNombreGrupo();
+        String edad = "";
+
+        //Para obtener la edad
+        List<Recluso> reo = controlador.cargarDatosRecluso();
+        for (Recluso recluso : reo) {
+            if (recluso.getCodigoRecluso().equals(idRecluso)) {
+                edad = recluso.CalcularEdad(recluso.getFechaNacimiento()) + " años";
+            }
+
+        }
+        System.out.println("la edad del recluso es: "+edad);
+        // Establecer los datos en los campos de texto
+        lbl_IDrecluso.setText("" + idRecluso);
+        lblEdad.setText(edad);
+        CmbReclusosExistentes.setSelectedItem(NombreReo);
+        CmbAsignacionRecluso.setSelectedItem(tipoAsignacion);
+        CmbActividadTaller.setSelectedItem(Nombre_ActTaller);
+        CmbGrupos.setSelectedItem(NombreGrupo);
+        // Restaurar la selección después de la actualización
+        if (filaSeleccionada != -1) {
+            JTableAsigancionRecluso.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        }
+    }//GEN-LAST:event_JTableAsigancionReclusoMouseClicked
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
 
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
+    }
+
+    private void limpiarInputs() {
+        lbl_IDrecluso.setText("#R001");
+        CmbReclusosExistentes.setSelectedIndex(0);
+        CmbAsignacionRecluso.setSelectedIndex(0);
+        CmbActividadTaller.setSelectedIndex(0);
+        if (CmbGrupos.isVisible()) {
+            CmbGrupos.setSelectedIndex(0);
+        }
     }
 
     /**
@@ -774,10 +1075,15 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
-    private javax.swing.JComboBox<String> CmbAsignacionDocente;
+    private javax.swing.JComboBox<String> CmbActividadTaller;
+    private javax.swing.JComboBox<String> CmbAsignacionRecluso;
+    private javax.swing.JComboBox<String> CmbGrupos;
     private javax.swing.JComboBox<String> CmbReclusosExistentes;
+    private javax.swing.JTable JTableAsigancionRecluso;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
+    private javax.swing.JLabel btnActualizar;
+    private javax.swing.JButton btnAdminReclusos;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
@@ -785,8 +1091,6 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
     private javax.swing.JPanel btnTalleres;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -797,12 +1101,12 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -826,14 +1130,17 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblActTaller;
+    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
-    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblLogout;
+    private javax.swing.JLabel lbl_IDrecluso;
     private javax.swing.JPanel panelAgregar;
     private javax.swing.JPanel panelCancelar;
     private javax.swing.JPanel panelEditar;
     private javax.swing.JPanel panelEliminar;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,5 +1,7 @@
 package MODELO;
 
+import java.util.Date;
+
 /**
  *
  * @author Yordan valdiviezo
@@ -10,12 +12,14 @@ public class Profesor extends Usuario {
     private String especialidad;
     private int añosExperiencia;
 
-    public Profesor(String CodigoProfesor, String especialidad, int añosExperiencia, String cedula, String Nombres, String Apellidos, String User, String password, String correo) {
-        super(cedula, Nombres, Apellidos, User, password, correo);
+    public Profesor(String CodigoProfesor, String especialidad, int añosExperiencia, String cedula, String Nombres, String Apellidos, String User, String password, String correo, Date fechaNacimiento) {
+        super(cedula, Nombres, Apellidos, User, password, correo, fechaNacimiento);
         this.CodigoProfesor = CodigoProfesor;
         this.especialidad = especialidad;
         this.añosExperiencia = añosExperiencia;
     }
+
+    
 
 
     // Getters y setters específicos de la clase Profesor
