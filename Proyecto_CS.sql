@@ -484,7 +484,6 @@ END;
 ----------------------------------------------------------------------------------------------------------
 //tabla de asignacion de Recluso a una Activiadad o Taller
 
-
 CREATE TABLE AsignacionRecluso (
   ID_Asignacion VARCHAR2(6 BYTE),
   Id_Recluso VARCHAR2(6 BYTE),
@@ -496,17 +495,6 @@ CREATE TABLE AsignacionRecluso (
   ID_Grupo VARCHAR2(7 byte)
 );
 
--- Creación de la Tabla AsignacionRecluso
-CREATE TABLE AsignacionRecluso (
-    ID_Asignacion VARCHAR2(6 BYTE),
-    Id_Recluso VARCHAR2(6 BYTE),
-    Nombre_Recluso VARCHAR2(255),
-    Tipo_Asignacion VARCHAR2(50),
-    Nombre_ActividadTaller VARCHAR2(255),
-    Id_ActividadTaller VARCHAR2(5),
-    nombre_Grupo VARCHAR2(255),
-    ID_Grupo VARCHAR2(7 BYTE)
-);
 
 -- Proc agregarAsignacionRecluso
 CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionRecluso (
