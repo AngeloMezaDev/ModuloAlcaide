@@ -37,7 +37,7 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al stored procedure
-            String sql = "BEGIN sp_RegistrarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?); END;";
+            String sql = "BEGIN sp_RegistrarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
@@ -47,12 +47,11 @@ public class ctrlRegistroReclusos {
             cstmt.setString(4, recluso.getApellidos());
             cstmt.setInt(5, recluso.getTiempo_condena());
             cstmt.setString(6, recluso.getDelito());
-            cstmt.setString(7, recluso.getConducta());
-            cstmt.setString(8, recluso.getCorreo());
-            cstmt.setString(9, recluso.getUser());
-            cstmt.setString(10, recluso.getPassword());
+            cstmt.setString(7, recluso.getCorreo());
+            cstmt.setString(8, recluso.getUser());
+            cstmt.setString(9, recluso.getPassword());
             java.sql.Date fechaNacimiento = new java.sql.Date(recluso.getFechaNacimiento().getTime());
-            cstmt.setDate(11, fechaNacimiento);
+            cstmt.setDate(10, fechaNacimiento);
 
             // Ejecutar el stored procedure
             cstmt.execute();
@@ -75,7 +74,7 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de los profesores
-            String sql = "SELECT id_recluso, cedula, nombres, apellidos,tiempo_condena,delito,conducta,correo,usuario,contra,fecha_Nacimiento FROM Reclusos ORDER BY id_recluso ASC";
+            String sql = "SELECT id_recluso, cedula, nombres, apellidos,tiempo_condena,delito,correo,usuario,contra,fecha_Nacimiento FROM Reclusos ORDER BY id_recluso ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -92,7 +91,6 @@ public class ctrlRegistroReclusos {
                 String apellidos = resultSet.getString("apellidos");
                 int condena = Integer.parseInt(resultSet.getString("tiempo_condena"));
                 String delito = resultSet.getString("delito");
-                String conducta = resultSet.getString("conducta");
                 String correo = resultSet.getString("correo");
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
@@ -117,7 +115,7 @@ public class ctrlRegistroReclusos {
                 };
                 modeloTabla.addRow(fila);
                 // Crear un objeto Profesor con los datos
-                Recluso reo = new Recluso(idRecluso, condena, delito, conducta, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
+                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
 
                 // Agregar el profesor a la lista
                 reclusos.add(reo);
@@ -142,7 +140,7 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de los profesores
-            String sql = "SELECT id_recluso, cedula, nombres, apellidos,tiempo_condena,delito,conducta,correo,usuario,contra,fecha_Nacimiento FROM Reclusos ORDER BY id_recluso ASC";
+            String sql = "SELECT id_recluso, cedula, nombres, apellidos,tiempo_condena,delito,correo,usuario,contra,fecha_Nacimiento FROM Reclusos ORDER BY id_recluso ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -156,7 +154,6 @@ public class ctrlRegistroReclusos {
                 String apellidos = resultSet.getString("apellidos");
                 int condena = Integer.parseInt(resultSet.getString("tiempo_condena"));
                 String delito = resultSet.getString("delito");
-                String conducta = resultSet.getString("conducta");
                 String correo = resultSet.getString("correo");
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
@@ -171,7 +168,7 @@ public class ctrlRegistroReclusos {
                 }
 
                 // Crear un objeto Profesor con los datos
-                Recluso reo = new Recluso(idRecluso, condena, delito, conducta, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
+                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
 
                 // Agregar el profesor a la lista
                 reclusos.add(reo);
@@ -195,7 +192,7 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al stored procedure
-            String sql = "BEGIN sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?,?); END;";
+            String sql = "BEGIN sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
@@ -205,12 +202,11 @@ public class ctrlRegistroReclusos {
             cstmt.setString(4, recluso.getApellidos());
             cstmt.setInt(5, recluso.getTiempo_condena());
             cstmt.setString(6, recluso.getDelito());
-            cstmt.setString(7, recluso.getConducta());
-            cstmt.setString(8, recluso.getCorreo());
-            cstmt.setString(9, recluso.getUser());
-            cstmt.setString(10, recluso.getPassword());
+            cstmt.setString(7, recluso.getCorreo());
+            cstmt.setString(8, recluso.getUser());
+            cstmt.setString(9, recluso.getPassword());
             java.sql.Date fechaNacimiento = new java.sql.Date(recluso.getFechaNacimiento().getTime());
-            cstmt.setDate(11, fechaNacimiento);
+            cstmt.setDate(10, fechaNacimiento);
 
             // Ejecutar el stored procedure
             cstmt.execute();

@@ -69,8 +69,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         lbl_idRecluso = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        CmbConductaReo = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtPasswordReo = new javax.swing.JPasswordField();
@@ -152,20 +150,20 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         jPanel1.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 170, -1));
 
         jLabel2.setText("Apellidos:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
-        jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 170, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+        jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 170, -1));
 
         jLabel3.setText("Cédula:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
-        jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 170, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
+        jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
 
         jLabel4.setText("Tiempo Condena (Años):");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
-        jPanel1.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 80, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+        jPanel1.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 80, -1));
 
         jLabel5.setText("Delito:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, -1, 20));
-        jPanel1.add(txtDelitoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 170, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
+        jPanel1.add(txtDelitoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, 170, -1));
 
         jSeparator1.setBackground(new java.awt.Color(153, 153, 255));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 255));
@@ -195,18 +193,12 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         lbl_idRecluso.setText("#");
         jPanel1.add(lbl_idRecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 70, -1));
 
-        jLabel14.setText("Conducta:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, -1, 20));
-
-        CmbConductaReo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Buena", "Regular", "Mala" }));
-        jPanel1.add(CmbConductaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 130, -1));
-
         jLabel15.setText("Fecha Nacimiento:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
 
         jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd HH:mm:ss");
         jDateFechaNacimiento.setFocusable(false);
-        jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 130, 140, -1));
+        jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 140, -1));
 
         txtPasswordReo.setText("jPasswordField1");
         jPanel1.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
@@ -344,11 +336,10 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
             String contra= new String(password);
             int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
             String delito = txtDelitoReo.getText();
-            String conducta = (String) CmbConductaReo.getSelectedItem();
             Date fechaNac=jDateFechaNacimiento.getDate();
 
             // Crear la instancia de Recluso
-            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, conducta, cedula, nombres, apellidos, usuario, contra, correo,fechaNac);
+            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, contra, correo,fechaNac);
             codigoRecluso = recluso.GenerarIdRecluso(cedula);
             recluso.setCodigoRecluso(codigoRecluso);//asignar el id generado
             // Crear el mensaje de confirmación
@@ -388,17 +379,16 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
             String Nuevacontra= new String(password);
             int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
             String delito = txtDelitoReo.getText();
-            String conducta = (String) CmbConductaReo.getSelectedItem();
             Date fechaNac=jDateFechaNacimiento.getDate();
 
         // Verificar que los campos no estén vacíos
         if (codigoRecluso.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || correo.isEmpty() || usuario.isEmpty()|| Nuevacontra.isEmpty()
-                || (""+TimeCondena).isEmpty()|| delito.isEmpty()|| conducta.isEmpty()) {
+                || (""+TimeCondena).isEmpty()|| delito.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener la ejecución del método
         }
         // Crear la instancia de Recluso
-            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, conducta, cedula, nombres, apellidos, usuario, Nuevacontra, correo,fechaNac);
+            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo,fechaNac);
             // Crear el mensaje de confirmación
             String mensaje = "¿Deseas Modificar al recluso: " + recluso.getNombres()+" "+ recluso.getApellidos()+ "?";
             int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
@@ -459,7 +449,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         String apellidos = reo.getApellidos();
         int condena = reo.getTiempo_condena();
         String delito = reo.getDelito();
-        String conducta = reo.getConducta();
         String correo = reo.getCorreo();
         String usuario = reo.getUser();
         String contrasena = reo.getPassword();
@@ -473,7 +462,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         txtCorreoReo.setText(correo);
         txtAniosCondena.setText(""+condena);
         txtDelitoReo.setText(delito);
-        CmbConductaReo.setSelectedItem(conducta);
         txtUsuarioReo.setText(usuario);
         txtPasswordReo.setText(contrasena);
         txtPasswConfirmReo.setText(contrasena);
@@ -488,7 +476,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         txtCorreoReo.setText("");
         txtPasswordReo.setText("");
         txtPasswConfirmReo.setText("");
-        CmbConductaReo.setSelectedIndex(0);
     }
 
     /**
@@ -536,7 +523,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbConductaReo;
     private javax.swing.JTable JTableReclusosExistentes;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditarReo;
@@ -549,7 +535,6 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;

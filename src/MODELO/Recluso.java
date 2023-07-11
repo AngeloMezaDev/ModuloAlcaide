@@ -11,16 +11,13 @@ public class Recluso extends Usuario{
     private String CodigoRecluso;
     private int Tiempo_condena;
     private String delito;
-    private String conducta;
 
-    public Recluso(String CodigoRecluso, int Tiempo_condena, String delito, String conducta, String cedula, String Nombres, String Apellidos, String User, String password, String correo, Date fechaNacimiento) {
+    public Recluso(String CodigoRecluso, int Tiempo_condena, String delito, String cedula, String Nombres, String Apellidos, String User, String password, String correo, Date fechaNacimiento) {
         super(cedula, Nombres, Apellidos, User, password, correo, fechaNacimiento);
         this.CodigoRecluso = CodigoRecluso;
         this.Tiempo_condena = Tiempo_condena;
         this.delito = delito;
-        this.conducta = conducta;
     }
-
 
     public String GenerarIdRecluso(String cedula) {
         String id = "";
@@ -53,12 +50,4 @@ public class Recluso extends Usuario{
         this.delito = delito;
     }
 
-    public String getConducta() {
-        return conducta;
-    }
-
-    public void setConducta(String conducta) {
-        this.conducta = conducta;
-    }
-    
 }
