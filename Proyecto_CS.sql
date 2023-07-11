@@ -364,6 +364,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 -- Creación de la Tabla Reclusos del modulo Alcaide
+DROP TABLE RECLUSOS;
 CREATE TABLE Reclusos (
 id_recluso VARCHAR2(6 BYTE),
 cedula VARCHAR2(255 BYTE),
@@ -371,7 +372,6 @@ nombres VARCHAR2(255 BYTE),
 apellidos VARCHAR2(255 BYTE),
 tiempo_condena INT,
 delito VARCHAR2(255 BYTE),
-conducta VARCHAR2(255 BYTE),
 correo VARCHAR2(255 BYTE),
 usuario VARCHAR2(255 BYTE),
 contra VARCHAR2(255 BYTE),
@@ -385,7 +385,6 @@ CREATE OR REPLACE PROCEDURE sp_RegistrarRecluso(
     p_apellidos IN Reclusos.apellidos%TYPE,
     p_tiempo_condena IN Reclusos.tiempo_condena%TYPE,
     p_delito IN Reclusos.delito%TYPE,
-    p_conducta IN Reclusos.conducta%TYPE,
     p_correo IN Reclusos.correo%TYPE,
     p_usuario IN Reclusos.usuario%TYPE,
     p_contra IN Reclusos.contra%TYPE,
@@ -399,7 +398,6 @@ BEGIN
         apellidos,
         tiempo_condena,
         delito,
-        conducta,
         correo,
         usuario,
         contra,
@@ -411,7 +409,6 @@ BEGIN
         p_apellidos,
         p_tiempo_condena,
         p_delito,
-        p_conducta,
         p_correo,
         p_usuario,
         p_contra,
@@ -434,7 +431,6 @@ CREATE OR REPLACE PROCEDURE sp_EditarRecluso(
     p_apellidos IN Reclusos.apellidos%TYPE,
     p_tiempo_condena IN Reclusos.tiempo_condena%TYPE,
     p_delito IN Reclusos.delito%TYPE,
-    p_conducta IN Reclusos.conducta%TYPE,
     p_correo IN Reclusos.correo%TYPE,
     p_usuario IN Reclusos.usuario%TYPE,
     p_contra IN Reclusos.contra%TYPE,
@@ -448,7 +444,6 @@ BEGIN
         apellidos = p_apellidos,
         tiempo_condena = p_tiempo_condena,
         delito = p_delito,
-        conducta = p_conducta,
         correo = p_correo,
         usuario = p_usuario,
         contra = p_contra,
