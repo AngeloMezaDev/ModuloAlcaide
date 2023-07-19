@@ -569,4 +569,56 @@ EXCEPTION
         ROLLBACK;
 END;
 /
+------------------------------------------------------------------------------------------------
+--Creacion de la tabla USUARIOS
+
+CREATE TABLE Usuarios (
+    id_usuario      VARCHAR2(9 BYTE) PRIMARY KEY,
+    nombre_usuario  VARCHAR2(255) UNIQUE,
+    contraseña      VARCHAR2(255),
+    nombre          VARCHAR2(255),
+    correo_electronico VARCHAR2(255),
+    rol             VARCHAR2(255)
+);
+
+
+INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+    VALUES ('#AlC01', 'admin', 'admin',' Alcaide adm','admin@alcaide.com','Alcaide') ;
+--DISPARARDOR PARA AGREGAR USUARIOS QUE SE VAYAN AGREANDO ALA BASE SEA PROFESOR O RECLUSO
+CREATE OR REPLACE TRIGGER trigger_insertar_usuario_profesor
+AFTER INSERT ON Profesores
+FOR EACH ROW
+BEGIN
+    INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+    VALUES (:NEW.id_profesor, :NEW.usuario, :NEW.contra, :NEW.nombres, :NEW.correo, 
+            CASE WHEN SUBSTR(:NEW.id_profesor, 2, 1) = 'P' THEN 'Profesor' END);
+END;
+/
+
+CREATE OR REPLACE TRIGGER trigger_insertar_usuario_recluso
+AFTER INSERT ON Reclusos
+FOR EACH ROW
+BEGIN
+    INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+    VALUES (:NEW.id_recluso, :NEW.usuario, :NEW.contra, :NEW.nombres, :NEW.correo, 
+            CASE WHEN SUBSTR(:NEW.id_recluso, 2, 1) = 'R' THEN 'Recluso' END);
+END;
+/
+-- Disparador para eliminar el usuario cuando se elimine un profesor
+CREATE OR REPLACE TRIGGER trigger_eliminar_usuario_profesor
+AFTER DELETE ON Profesores
+FOR EACH ROW
+BEGIN
+    DELETE FROM Usuarios WHERE id_usuario = :OLD.id_profesor;
+END;
+/
+
+-- Disparador para eliminar el usuario cuando se elimine un recluso
+CREATE OR REPLACE TRIGGER trigger_eliminar_usuario_recluso
+AFTER DELETE ON Reclusos
+FOR EACH ROW
+BEGIN
+    DELETE FROM Usuarios WHERE id_usuario = :OLD.id_recluso;
+END;
+/
 
