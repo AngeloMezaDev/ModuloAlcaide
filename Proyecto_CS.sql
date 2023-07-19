@@ -575,7 +575,7 @@ END;
 CREATE TABLE Usuarios (
     id_usuario      VARCHAR2(9 BYTE) PRIMARY KEY,
     nombre_usuario  VARCHAR2(255) UNIQUE,
-    contraseña      VARCHAR2(255),
+    contrasena      VARCHAR2(255),
     nombre          VARCHAR2(255),
     correo_electronico VARCHAR2(255),
     rol             VARCHAR2(255)
