@@ -16,6 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.JOptionPane;
+import MODELO.ConnectionBD;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -30,10 +34,12 @@ public class Login extends javax.swing.JFrame {
     frmProfesores profesor = new frmProfesores();
     frmPerfil recluso = new frmPerfil();
     private HashMap<String, Integer> intentosFallidos = new HashMap<>();
+    private ConnectionBD connectionBD;
 
     public Login() {
         initComponents();
         btnIngreso.requestFocusInWindow();
+        connectionBD = new ConnectionBD();
 
     }
 
@@ -371,67 +377,87 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, ingrese usuario y contraseña", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                validarAdmin(usuario, contrasena);
+                validarCredenciales(usuario,contrasena);
+              
+            } catch (Exception e) {
+                if (e instanceof Excepciones.CredencialesInvalidasException) {
+                    incrementarIntentosFallidos(usuario);
 
-                // Mostrar mensaje de inicio de sesión exitoso
-                JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-
-                // Abre el formulario correspondiente según el rol
-                if (usuario.equals("Alcaide")) {
-                    abrirFormulario(usuario);
-                } else if (usuario.equals("Profesor")) {
-                    abrirFormulario(usuario);
-                } else if (usuario.equals("Recluso")) {
-                    abrirFormulario(usuario);
-                }
-            } catch (Excepciones.CredencialesInvalidasException e) {
-                incrementarIntentosFallidos(usuario);
-
-                if (obtenerIntentosFallidos(usuario) >= 3) {
-                    JOptionPane.showMessageDialog(null, "Se ha bloqueado el acceso.\nPor favor, contacte al administrador.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
-                } else {
+                    if (obtenerIntentosFallidos(usuario) >= 3) {
+                        JOptionPane.showMessageDialog(null, "Se ha bloqueado el acceso.\nPor favor, contacte al administrador.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (e instanceof Excepciones.UsuarioNoExistenteException || e instanceof Excepciones.CuentaBloqueadaException) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    e.printStackTrace();
                 }
-            } catch (Excepciones.UsuarioNoExistenteException | Excepciones.CuentaBloqueadaException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
 
-    private void validarAdmin(String usuario, String contrasena) throws Excepciones.CredencialesInvalidasException, Excepciones.UsuarioNoExistenteException, Excepciones.CuentaBloqueadaException {
-        // Verificar si el usuario existe en el sistema
-        if (!(usuario.equals("Alcaide") || usuario.equals("Profesor") || usuario.equals("Recluso"))) {
-            throw new Excepciones.UsuarioNoExistenteException("Usuario no existe en el sistema");
-        }
-
-        // Lógica de validación para las credenciales
-        if (usuario.equals("Alcaide") && contrasena.equals("admin")) {
-            // Las credenciales son válidas para el rol de Alcaide
-        } else if (usuario.equals("Profesor") && contrasena.equals("profesor")) {
-            // Las credenciales son válidas para el rol de Profesor
-        } else if (usuario.equals("Recluso") && contrasena.equals("recluso")) {
-            // Las credenciales son válidas para el rol de Recluso
-        } else {
-            throw new Excepciones.CredencialesInvalidasException("Credenciales inválidas");
-        }
-
+    private void validarCredenciales(String usuario, String contrasena) throws Excepciones.CredencialesInvalidasException, Excepciones.UsuarioNoExistenteException, Excepciones.CuentaBloqueadaException {
+        
         // Verificar si se ha alcanzado el límite de intentos fallidos
         int intentosFallidos = obtenerIntentosFallidos(usuario);
         if (intentosFallidos >= 3) {
-            // Bloquear el acceso durante 30 segundos
+            // Bloquear el acceso durante 10 segundos
+            JOptionPane.showMessageDialog(null,"Se ha bloqueado el acceso debido a intentos fallidos");
             try {
-                Thread.sleep(30000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             // Reiniciar el contador de intentos fallidos
             reiniciarIntentosFallidos(usuario);
+        }
+        // Verificar si el usuario existe en el sistema
+        if(AutenticarCredenciales(usuario, contrasena)){
+            // Mostrar mensaje de inicio de sesión exitoso
+            JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            // Abre el formulario correspondiente según el rol
+            abrirFormulario(ObtenerRol(usuario, contrasena));
 
-            throw new Excepciones.CuentaBloqueadaException("Se ha bloqueado el acceso debido a intentos fallidos");
+        }else if(existeUsuario(usuario)){
+             throw new Excepciones.CredencialesInvalidasException("Verifique sus crendenciales");
+        }else{
+            throw new  Excepciones.UsuarioNoExistenteException("USUARIO NO EXISTE");
         }
     }
+    private boolean existeUsuario(String nombreUsuario) {
+    boolean existe = false;
+    try {
+        connectionBD.openConnection();
+
+        // Crear la sentencia SQL para verificar si el nombre de usuario existe
+        String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ?";
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+        statement.setString(1, nombreUsuario);
+
+        // Ejecutar la consulta
+        ResultSet rs = statement.executeQuery();
+
+        // Verificar si hay filas en el resultado
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            existe = (count > 0);
+        }
+
+    } catch (SQLException | ClassNotFoundException e) {
+        System.err.println("Error al verificar la existencia del usuario: " + e.getMessage());
+        return false;
+    } finally {
+        try {
+            connectionBD.closeConnection();
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+    return existe;
+}
 
     private int obtenerIntentosFallidos(String usuario) {
         if (intentosFallidos.containsKey(usuario)) {
@@ -455,18 +481,19 @@ public class Login extends javax.swing.JFrame {
             intentosFallidos.remove(usuario);
         }
     }
-    private void abrirFormulario(String usuario) throws Excepciones.UsuarioNoExistenteException {
-        if (usuario.equals("Alcaide")) {
+
+    private void abrirFormulario(String rol) throws Excepciones.UsuarioNoExistenteException {
+        if (rol.equals("Alcaide")) {
             frmAlcaide alcaide = new frmAlcaide();
             alcaide.setVisible(true);
-        } else if (usuario.equals("Profesor")) {
+        } else if (rol.equals("Profesor")) {
             frmProfesores profesor = new frmProfesores();
             profesor.setVisible(true);
-        } else if (usuario.equals("Recluso")) {
+        } else if (rol.equals("Recluso")) {
             frmReclusos recluso = new frmReclusos();
             recluso.setVisible(true);
         } else {
-            throw new Excepciones.UsuarioNoExistenteException("El usuario no existe en el sistema");
+            throw new Excepciones.UsuarioNoExistenteException("El rol no existe en el sistema");
         }
     }
 
@@ -506,6 +533,78 @@ public class Login extends javax.swing.JFrame {
             txtContrasena.setText("******");
             txtContrasena.setForeground(new Color(153, 153, 153)); // Cambiar el color del texto si lo deseas
         }    }//GEN-LAST:event_txtContrasenaFocusLost
+
+    private String ObtenerRol(String usuario, String contrasena) {
+        String rol = "";
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para autenticar las credenciales
+            String sql = "SELECT rol FROM Usuarios WHERE nombre_usuario = ? AND contraseña = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
+
+            // Ejecutar la consulta
+            ResultSet rs = statement.executeQuery();
+
+            // Verificar si hay filas en el resultado
+            if (rs.next()) {
+                rol = rs.getString("rol");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener el rol: " + e.getMessage());
+            return "";
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+        return rol;
+    }
+
+    private boolean AutenticarCredenciales(String usuario, String contrasena) {
+        boolean valido = false;
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para autenticar las credenciales
+            String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ? AND contraseña = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
+
+            // Ejecutar la consulta
+            ResultSet rs = statement.executeQuery();
+
+            // Verificar si hay filas en el resultado
+            boolean hasRows = rs.next();
+            if (hasRows) {
+                int count = rs.getInt(1);
+                if (count > 0) {// Si el resultado es mayor a 0, las credenciales son válidas
+                    valido = true;
+                } else {
+                    valido = false;
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al autenticar las credenciales: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al autenticar las credenciales: " + e.getMessage());
+                valido = false;
+                return valido;
+            }
+        }
+        return valido;
+    }
 
     /**
      * @param args the command line arguments
@@ -572,4 +671,5 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
 }
