@@ -49,13 +49,14 @@ public class frmProfesores extends javax.swing.JFrame {
         btnSalir = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         lblLogOut = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         JPanelEncabezado = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAsistencias = new javax.swing.JTable();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -85,6 +86,9 @@ public class frmProfesores extends javax.swing.JFrame {
         btnAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAsistencias.setPreferredSize(new java.awt.Dimension(146, 47));
         btnAsistencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAsistenciasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsistenciasMouseEntered(evt);
             }
@@ -134,6 +138,9 @@ public class frmProfesores extends javax.swing.JFrame {
         btnCalificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCalificaciones.setPreferredSize(new java.awt.Dimension(126, 50));
         btnCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCalificacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCalificacionesMouseEntered(evt);
             }
@@ -180,6 +187,9 @@ public class frmProfesores extends javax.swing.JFrame {
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInformesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
             }
@@ -231,6 +241,7 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         JPanelMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
@@ -273,6 +284,21 @@ public class frmProfesores extends javax.swing.JFrame {
         );
 
         JPanelMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
+
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("PROFESOR");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        JPanelMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, 40));
 
         jPanelFondo.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
         JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
@@ -336,7 +362,7 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAsistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -355,7 +381,7 @@ public class frmProfesores extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAsistencias);
 
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 960, 350));
         jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
@@ -390,11 +416,17 @@ public class frmProfesores extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -479,6 +511,31 @@ public class frmProfesores extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
+        // TODO add your handling code here:
+        frmProfesores Profesor = new frmProfesores();
+        this.dispose();
+        Profesor.setVisible(true);
+    }//GEN-LAST:event_btnAsistenciasMouseClicked
+
+    private void btnCalificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseClicked
+        // TODO add your handling code here:
+        frmCalificacion Calificacion = new frmCalificacion();
+        this.dispose();
+        Calificacion.setVisible(true);
+    }//GEN-LAST:event_btnCalificacionesMouseClicked
+
+    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
+        // TODO add your handling code here:
+        frmInformes Informe = new frmInformes();
+        this.dispose();
+        Informe.setVisible(true);
+    }//GEN-LAST:event_btnInformesMouseClicked
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -511,6 +568,8 @@ public class frmProfesores extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(frmProfesores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -552,7 +611,8 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAsistencias;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblLogOut;
     // End of variables declaration//GEN-END:variables

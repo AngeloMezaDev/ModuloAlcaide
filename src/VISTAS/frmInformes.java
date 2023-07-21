@@ -12,12 +12,12 @@ import javax.swing.JPanel;
  *
  * @author carel
  */
-public class frmCalificacion extends javax.swing.JFrame {
+public class frmInformes extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmCalificacion
+     * Creates new form frmInformes
      */
-    public frmCalificacion() {
+    public frmInformes() {
         initComponents();
     }
 
@@ -47,29 +47,15 @@ public class frmCalificacion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         lblLogOut = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         JPanelEncabezado = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCalificacion = new javax.swing.JTable();
-        btnAgregar = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        btnModificar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JSeparator();
+        jTableInforme = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -281,20 +267,20 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         JPanelMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
-        jTextField6.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("PROFESOR");
-        jTextField6.setBorder(null);
-        jTextField6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField6.setFocusable(false);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("PROFESOR");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                jTextField1ActionPerformed(evt);
             }
         });
-        JPanelMenu.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, 40));
+        JPanelMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, 40));
 
         JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
         JPanelEncabezado.setPreferredSize(new java.awt.Dimension(1060, 84));
@@ -303,13 +289,13 @@ public class frmCalificacion extends javax.swing.JFrame {
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("CALIFICACIÓN");
+        jLabel11.setText("INFORMES DE ASISTENCIAS");
         JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - CALIFICACIONES\"");
+        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - INFORME DE RECLUSOS\"");
         JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
@@ -349,45 +335,26 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, -1, -1));
 
-        jTableCalificacion.setModel(new javax.swing.table.DefaultTableModel(
+        jTableInforme.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "APELLIDO", "CEDULA", "TALLER", "GRUPO", "CALIFICACION"
+                "ID", "NOMBRES", "APELLIDOS", "TALLERES", "ASISTENCIAS"
             }
-        ));
-        jScrollPane1.setViewportView(jTableCalificacion);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
 
-        btnAgregar.setText("Agregar");
-
-        jLabel3.setText("ID:");
-
-        jLabel8.setText("Nombre:");
-
-        jLabel9.setText("Taller:");
-
-        jLabel15.setText("Grupo:");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-
-        jLabel16.setText("Calificación:");
-
-        btnModificar.setText("Modificar");
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModificarMouseClicked(evt);
-            }
-        });
-
-        btnGuardar.setText("Guardar");
+        jScrollPane1.setViewportView(jTableInforme);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -397,52 +364,14 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addComponent(JPanelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(JPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1060, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane1))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel8))
-                                .addGap(45, 45, 45)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(89, 89, 89)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel15)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator3))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1060, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)))
-                .addContainerGap())
+                        .addGap(118, 118, 118)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -451,32 +380,11 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(JPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(jLabel16)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnGuardar))
+                .addGap(42, 42, 42)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
 
         pack();
@@ -490,9 +398,9 @@ public class frmCalificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsistenciasMouseEntered
 
     private void btnAsistenciasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseExited
-        setColor(btnCalificaciones);
+        setColor(btnInformes);
         resetColor(btnAsistencias);
-        resetColor(btnInformes);
+        resetColor(btnCalificaciones);
     }//GEN-LAST:event_btnAsistenciasMouseExited
 
     private void btnCalificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseEntered
@@ -502,9 +410,9 @@ public class frmCalificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalificacionesMouseEntered
 
     private void btnCalificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseExited
-        setColor(btnCalificaciones);
+        setColor(btnInformes);
         resetColor(btnAsistencias);
-        resetColor(btnInformes);
+        resetColor(btnCalificaciones);
     }//GEN-LAST:event_btnCalificacionesMouseExited
 
     private void btnInformesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseEntered
@@ -514,9 +422,9 @@ public class frmCalificacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformesMouseEntered
 
     private void btnInformesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseExited
-        setColor(btnCalificaciones);
+        setColor(btnInformes);
         resetColor(btnAsistencias);
-        resetColor(btnInformes);
+        resetColor(btnCalificaciones);
     }//GEN-LAST:event_btnInformesMouseExited
 
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
@@ -551,13 +459,9 @@ public class frmCalificacion extends javax.swing.JFrame {
         jPanelExit2.setBackground(new Color(122,72,221));
     }//GEN-LAST:event_lblExit2MouseExited
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
         // TODO add your handling code here:
@@ -570,7 +474,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         // TODO add your handling code here:
         frmCalificacion Calificacion = new frmCalificacion();
         this.dispose();
-        Calificacion.setVisible(true);
+        Calificacion.setVisible(true);                                 
     }//GEN-LAST:event_btnCalificacionesMouseClicked
 
     private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
@@ -580,14 +484,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         Informe.setVisible(true);
     }//GEN-LAST:event_btnInformesMouseClicked
 
-    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        // TODO add your handling code here:
-        frmModCalificacion modcalificacion = new frmModCalificacion();
-        this.dispose();
-        modcalificacion.setVisible(true);
-    }//GEN-LAST:event_btnModificarMouseClicked
-
-    void setColor(JPanel panel) {
+     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
 
@@ -611,13 +508,13 @@ public class frmCalificacion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -625,7 +522,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCalificacion().setVisible(true);
+                new frmInformes().setVisible(true);
             }
         });
     }
@@ -634,41 +531,27 @@ public class frmCalificacion extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelEncabezado;
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
-    private javax.swing.JButton btnAgregar;
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JPanel btnCalificaciones;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.JPanel btnInformes;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JPanel btnSalir;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable jTableCalificacion;
+    private javax.swing.JTable jTableInforme;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblLogOut;
     // End of variables declaration//GEN-END:variables
