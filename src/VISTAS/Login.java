@@ -30,9 +30,10 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    String usr=""; String contr="";
     frmAlcaide alcaide = new frmAlcaide();
     frmProfesores profesor = new frmProfesores();
-    frmPerfil recluso = new frmPerfil();
+    frmPerfil recluso = new frmPerfil(usr, contr);
     private HashMap<String, Integer> intentosFallidos = new HashMap<>();
     private ConnectionBD connectionBD;
 
@@ -419,7 +420,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Inicio de Sesión exitoso.\nBienvenido: " + usuario, "Mensaje de información", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             // Abre el formulario correspondiente según el rol
-            abrirFormulario(ObtenerRol(usuario, contrasena));
+            abrirFormulario(ObtenerRol(usuario, contrasena), usuario, contrasena);
 
         }else if(existeUsuario(usuario)){
              throw new Excepciones.CredencialesInvalidasException("Verifique sus crendenciales");
@@ -482,7 +483,7 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    private void abrirFormulario(String rol) throws Excepciones.UsuarioNoExistenteException {
+    private void abrirFormulario(String rol, String user, String contra) throws Excepciones.UsuarioNoExistenteException {
         if (rol.equals("Alcaide")) {
             frmAlcaide alcaide = new frmAlcaide();
             alcaide.setVisible(true);
@@ -490,8 +491,8 @@ public class Login extends javax.swing.JFrame {
             frmProfesores profesor = new frmProfesores();
             profesor.setVisible(true);
         } else if (rol.equals("Recluso")) {
-            frmReclusos recluso = new frmReclusos();
-            recluso.setVisible(true);
+            frmPerfil perfil = new frmPerfil(user, contra);
+            perfil.setVisible(true);
         } else {
             throw new Excepciones.UsuarioNoExistenteException("El rol no existe en el sistema");
         }

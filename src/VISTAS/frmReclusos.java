@@ -17,8 +17,15 @@ public class frmReclusos extends javax.swing.JFrame {
     /**
      * Creates new form frmReclusos
      */
-    public frmReclusos() {
+    private static String usuario = ""; 
+    private static String contrasena = "";
+    
+    public frmReclusos(String usuario,String contrasena) {
         initComponents();
+        this.usuario = usuario; 
+        this.contrasena = contrasena;
+        lblUsuario.setText(usuario);
+        lblContrasena.setText(contrasena);
     }
 
     /**
@@ -35,9 +42,6 @@ public class frmReclusos extends javax.swing.JFrame {
         btnActividades = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnTalleres = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -54,14 +58,14 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        lblContrasena = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -117,51 +121,6 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
-        btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnTalleresMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnTalleresMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnTalleresMouseExited(evt);
-            }
-        });
-
-        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("TALLERES");
-
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
-
-        javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
-        btnTalleres.setLayout(btnTalleresLayout);
-        btnTalleresLayout.setHorizontalGroup(
-            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnTalleresLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel4))
-        );
-        btnTalleresLayout.setVerticalGroup(
-            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnTalleresLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(14, 14, 14))
-        );
-
-        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
-
         btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
         btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,7 +164,7 @@ public class frmReclusos extends javax.swing.JFrame {
                 .addComponent(jLabel6))
         );
 
-        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
+        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -263,7 +222,7 @@ public class frmReclusos extends javax.swing.JFrame {
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
         jTextField1.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField1.setText("PABLO ESCOBAR");
+        jTextField1.setText("RECLUSO");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTextField1.setFocusable(false);
@@ -319,53 +278,9 @@ public class frmReclusos extends javax.swing.JFrame {
             .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, -1, -1));
+        jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 0, -1, -1));
 
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
-
-        jTable1.setBackground(new java.awt.Color(225, 225, 230));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Título:", "Descripción:", "Horas de trabajo:", "Tiempo de reducción de pena:", "Requisitios:", "Criterios para evaluar:"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, 1000, -1));
 
         jPanel1.setBackground(new java.awt.Color(140, 184, 198));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -414,11 +329,22 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, -1));
 
+        lblUsuario.setText("Usuario");
+        jPanelBackGround.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, -1, -1));
+
+        lblContrasena.setText("Contrasena");
+        jPanelBackGround.add(lblContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, -1, -1));
+
+        jLabel4.setText("Usuario");
+        jPanelBackGround.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBackGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,37 +357,21 @@ public class frmReclusos extends javax.swing.JFrame {
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
         setColor(btnActividades);
-        resetColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnActividadesMouseEntered
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
         resetColor(btnActividades);
-        resetColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnActividadesMouseExited
 
-    private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
-        setColor(btnTalleres);
-        resetColor(btnActividades);
-        resetColor(btnPerfil);
-    }//GEN-LAST:event_btnTalleresMouseEntered
-
-    private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        resetColor(btnActividades);
-        resetColor(btnTalleres);
-        resetColor(btnPerfil);
-    }//GEN-LAST:event_btnTalleresMouseExited
-
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
         setColor(btnPerfil);
-        resetColor(btnTalleres);
         resetColor(btnActividades);
     }//GEN-LAST:event_btnPerfilMouseEntered
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
         resetColor(btnActividades);
-        resetColor(btnTalleres);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 
@@ -478,14 +388,8 @@ public class frmReclusos extends javax.swing.JFrame {
         jPanelExit2.setBackground(new Color(122,72,221));
     }//GEN-LAST:event_lblExit2MouseExited
 
-    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
-        frmTalleres tall= new frmTalleres();
-        this.dispose();
-        tall.setVisible(true);
-    }//GEN-LAST:event_btnTalleresMouseClicked
-
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        frmPerfil perfil=new frmPerfil();
+        frmPerfil perfil=new frmPerfil (usuario, contrasena);
         this.dispose();
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
@@ -548,7 +452,7 @@ public class frmReclusos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmReclusos().setVisible(true);
+                new frmReclusos(usuario, contrasena).setVisible(true);
             }
         });
     }
@@ -558,11 +462,9 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
     private javax.swing.JPanel btnPerfil;
-    private javax.swing.JPanel btnTalleres;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -576,15 +478,14 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblContrasena;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }
