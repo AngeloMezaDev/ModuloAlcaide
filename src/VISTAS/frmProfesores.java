@@ -5,6 +5,8 @@
  */
 package VISTAS;
 
+import CONTROLADOR.ctrlRegistroNuevoProfe;
+import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,8 +20,11 @@ public class frmProfesores extends javax.swing.JFrame {
     /**
      * Creates new form fmrProfesores
      */
+    
+    private ctrlRegistroNuevoProfe controlador;
     public frmProfesores() {
         initComponents();
+        controlador = new ctrlRegistroNuevoProfe();
     }
 
     /**
@@ -60,10 +65,10 @@ public class frmProfesores extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbTalleres = new javax.swing.JComboBox<>();
+        lblTalleres = new javax.swing.JLabel();
+        lblGrupo = new javax.swing.JLabel();
+        cmbGrupo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -400,17 +405,22 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelFondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 300, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
+        cmbTalleres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
+        cmbTalleres.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTalleresItemStateChanged(evt);
+            }
+        });
+        jPanelFondo.add(cmbTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
 
-        jLabel8.setText("TALLERES:");
-        jPanelFondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
+        lblTalleres.setText("TALLERES:");
+        jPanelFondo.add(lblTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
 
-        jLabel9.setText("GRUPO:");
-        jPanelFondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
+        lblGrupo.setText("GRUPO:");
+        jPanelFondo.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+        cmbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
+        jPanelFondo.add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -536,6 +546,20 @@ public class frmProfesores extends javax.swing.JFrame {
         Informe.setVisible(true);
     }//GEN-LAST:event_btnInformesMouseClicked
 
+    private void cmbTalleresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTalleresItemStateChanged
+        // TODO add your handling code here:
+        String opcion = (String) cmbTalleres.getSelectedItem();
+        
+        if (opcion.equals("Taller")) {
+            cmbGrupo.removeAllItems();
+            String NombreTaller = (String) cmbTalleres.getSelectedItem();
+            System.out.println(NombreTaller);
+            String IdTaller = controlador.ObtenerTaller(NombreTaller);
+            System.out.println("elid taller es:"+IdTaller);
+            controlador.cargarGruposTalleres(IdTaller, cmbGrupo);
+        }
+    }//GEN-LAST:event_cmbTalleresItemStateChanged
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -589,9 +613,9 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel btnCalificaciones;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnSalir;
+    private javax.swing.JComboBox<String> cmbGrupo;
+    private javax.swing.JComboBox<String> cmbTalleres;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -605,8 +629,6 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
@@ -614,6 +636,8 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JTable jTableAsistencias;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblLogOut;
+    private javax.swing.JLabel lblTalleres;
     // End of variables declaration//GEN-END:variables
 }

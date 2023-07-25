@@ -174,7 +174,7 @@ public class frmModCalificacion extends javax.swing.JFrame {
 
         jLabel14.setText("Grupo:");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, -1, -1));
-        jPanel1.add(txtAnioExp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 93, -1));
+        jPanel1.add(txtAnioExp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 93, 20));
 
         btnEditarCalificacion.setBackground(new java.awt.Color(255, 0, 0));
         btnEditarCalificacion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
