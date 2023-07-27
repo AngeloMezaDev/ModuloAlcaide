@@ -6,6 +6,8 @@
 package VISTAS;
 
 import CONTROLADOR.ctrlRegistroNuevoProfe;
+import MODELO.AsignacionRecluso;
+import MODELO.Recluso;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -63,12 +65,15 @@ public class frmProfesores extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAsistencias = new javax.swing.JTable();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        btnRegistraDatos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        cmbTalleres = new javax.swing.JComboBox<>();
-        lblTalleres = new javax.swing.JLabel();
+        cmbAsignacion = new javax.swing.JComboBox<>();
+        lblAsignacion = new javax.swing.JLabel();
         lblGrupo = new javax.swing.JLabel();
         cmbGrupo = new javax.swing.JComboBox<>();
+        lblTalleres1 = new javax.swing.JLabel();
+        cmbTalleres1 = new javax.swing.JComboBox<>();
+        btnCargarDatos1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -369,17 +374,14 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jTableAsistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NOMBRE", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
+                "ID_RECLUSO", "NOMBRE", "ID_TALLER", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -391,36 +393,56 @@ public class frmProfesores extends javax.swing.JFrame {
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 960, 350));
         jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("CARGAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistraDatos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRegistraDatos.setText("REGISTRAR");
+        btnRegistraDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistraDatosActionPerformed(evt);
             }
         });
-        jPanelFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+        jPanelFondo.add(btnRegistraDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 590, 140, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("REGISTRO DE ASISTENCIA");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelFondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 300, 40));
 
-        cmbTalleres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
-        cmbTalleres.addItemListener(new java.awt.event.ItemListener() {
+        cmbAsignacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--", "Actividad", "Taller" }));
+        cmbAsignacion.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbTalleresItemStateChanged(evt);
+                cmbAsignacionItemStateChanged(evt);
             }
         });
-        jPanelFondo.add(cmbTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
+        jPanelFondo.add(cmbAsignacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 230, -1));
 
-        lblTalleres.setText("TALLERES:");
-        jPanelFondo.add(lblTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
+        lblAsignacion.setText("ASIGNACION:");
+        jPanelFondo.add(lblAsignacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, -1));
 
         lblGrupo.setText("GRUPO:");
-        jPanelFondo.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
+        jPanelFondo.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, -1, -1));
 
         cmbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
-        jPanelFondo.add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+        jPanelFondo.add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 230, -1));
+
+        lblTalleres1.setText("TALLERES:");
+        jPanelFondo.add(lblTalleres1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+
+        cmbTalleres1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
+        cmbTalleres1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTalleres1ItemStateChanged(evt);
+            }
+        });
+        jPanelFondo.add(cmbTalleres1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 230, -1));
+
+        btnCargarDatos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargarDatos1.setText("CARGAR");
+        btnCargarDatos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarDatos1ActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(btnCargarDatos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -517,9 +539,9 @@ public class frmProfesores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblLogOutMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistraDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistraDatosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistraDatosActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -546,19 +568,32 @@ public class frmProfesores extends javax.swing.JFrame {
         Informe.setVisible(true);
     }//GEN-LAST:event_btnInformesMouseClicked
 
-    private void cmbTalleresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTalleresItemStateChanged
+    private void cmbAsignacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAsignacionItemStateChanged
         // TODO add your handling code here:
-        String opcion = (String) cmbTalleres.getSelectedItem();
+        String opcion = (String) cmbAsignacion.getSelectedItem();
+        
+        if (opcion.equals("Taller")) {
+            cmbAsignacion.removeAllItems();
+            controlador.cargarTalleresComboBox(cmbAsignacion);
+        }
         
         if (opcion.equals("Taller")) {
             cmbGrupo.removeAllItems();
-            String NombreTaller = (String) cmbTalleres.getSelectedItem();
+            String NombreTaller = (String) cmbAsignacion.getSelectedItem();
             System.out.println(NombreTaller);
             String IdTaller = controlador.ObtenerTaller(NombreTaller);
             System.out.println("elid taller es:"+IdTaller);
             controlador.cargarGruposTalleres(IdTaller, cmbGrupo);
         }
-    }//GEN-LAST:event_cmbTalleresItemStateChanged
+    }//GEN-LAST:event_cmbAsignacionItemStateChanged
+
+    private void cmbTalleres1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTalleres1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTalleres1ItemStateChanged
+
+    private void btnCargarDatos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCargarDatos1ActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -611,11 +646,13 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JPanel btnCalificaciones;
+    private javax.swing.JButton btnCargarDatos1;
     private javax.swing.JPanel btnInformes;
+    private javax.swing.JButton btnRegistraDatos;
     private javax.swing.JPanel btnSalir;
+    private javax.swing.JComboBox<String> cmbAsignacion;
     private javax.swing.JComboBox<String> cmbGrupo;
-    private javax.swing.JComboBox<String> cmbTalleres;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> cmbTalleres1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -635,9 +672,10 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableAsistencias;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblAsignacion;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblLogOut;
-    private javax.swing.JLabel lblTalleres;
+    private javax.swing.JLabel lblTalleres1;
     // End of variables declaration//GEN-END:variables
 }
