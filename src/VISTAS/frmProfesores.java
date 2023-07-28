@@ -71,8 +71,8 @@ public class frmProfesores extends javax.swing.JFrame {
         lblAsignacion = new javax.swing.JLabel();
         lblGrupo = new javax.swing.JLabel();
         cmbGrupo = new javax.swing.JComboBox<>();
-        lblTalleres1 = new javax.swing.JLabel();
-        cmbTalleres1 = new javax.swing.JComboBox<>();
+        lblTalleres = new javax.swing.JLabel();
+        cmbTalleres = new javax.swing.JComboBox<>();
         btnCargarDatos1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -424,16 +424,16 @@ public class frmProfesores extends javax.swing.JFrame {
         cmbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
         jPanelFondo.add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, 230, -1));
 
-        lblTalleres1.setText("TALLERES:");
-        jPanelFondo.add(lblTalleres1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
+        lblTalleres.setText("TALLERES:");
+        jPanelFondo.add(lblTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 150, -1, -1));
 
-        cmbTalleres1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
-        cmbTalleres1.addItemListener(new java.awt.event.ItemListener() {
+        cmbTalleres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
+        cmbTalleres.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbTalleres1ItemStateChanged(evt);
+                cmbTalleresItemStateChanged(evt);
             }
         });
-        jPanelFondo.add(cmbTalleres1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 230, -1));
+        jPanelFondo.add(cmbTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 230, -1));
 
         btnCargarDatos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCargarDatos1.setText("CARGAR");
@@ -569,27 +569,38 @@ public class frmProfesores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformesMouseClicked
 
     private void cmbAsignacionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAsignacionItemStateChanged
-        // TODO add your handling code here:
+        //Obtener la opcion Selecionada: Actividad o Taller.
         String opcion = (String) cmbAsignacion.getSelectedItem();
-        
-        if (opcion.equals("Taller")) {
-            cmbAsignacion.removeAllItems();
-            controlador.cargarTalleresComboBox(cmbAsignacion);
-        }
-        
-        if (opcion.equals("Taller")) {
-            cmbGrupo.removeAllItems();
-            String NombreTaller = (String) cmbAsignacion.getSelectedItem();
-            System.out.println(NombreTaller);
-            String IdTaller = controlador.ObtenerTaller(NombreTaller);
-            System.out.println("elid taller es:"+IdTaller);
-            controlador.cargarGruposTalleres(IdTaller, cmbGrupo);
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            cmbTalleres.removeAllItems();
+            lblGrupo.setVisible(false);
+            cmbGrupo.setVisible(false);
+            controlador.cargarActividadesComboBox(cmbTalleres);
+        } else if (opcion.equals("Taller")) {
+            cmbTalleres.removeAllItems();
+            lblGrupo.setVisible(true);
+            cmbGrupo.setVisible(true);
+            controlador.cargarTalleresComboBox(cmbTalleres);
         }
     }//GEN-LAST:event_cmbAsignacionItemStateChanged
 
-    private void cmbTalleres1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTalleres1ItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTalleres1ItemStateChanged
+    private void cmbTalleresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTalleresItemStateChanged
+         //Obtener la opcion Selecionada: Actividad o Taller.
+        String opcion = (String) cmbAsignacion.getSelectedItem();
+        // Verificar la opción seleccionada
+        if (opcion.equals("Actividad")) {
+            lblTalleres.setText("Actividad: ");
+        }
+        if (opcion.equals("Taller")) {
+            lblTalleres.setText("Taller: :");
+            cmbGrupo.removeAllItems();
+            String NombreTaller = (String) cmbTalleres.getSelectedItem();
+            String IdTaller = controlador.ObtenerTaller(NombreTaller);
+            controlador.cargarGruposTalleres(IdTaller, cmbGrupo);
+        }
+        
+    }//GEN-LAST:event_cmbTalleresItemStateChanged
 
     private void btnCargarDatos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatos1ActionPerformed
         // TODO add your handling code here:
@@ -652,7 +663,7 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel btnSalir;
     private javax.swing.JComboBox<String> cmbAsignacion;
     private javax.swing.JComboBox<String> cmbGrupo;
-    private javax.swing.JComboBox<String> cmbTalleres1;
+    private javax.swing.JComboBox<String> cmbTalleres;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -676,6 +687,6 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblLogOut;
-    private javax.swing.JLabel lblTalleres1;
+    private javax.swing.JLabel lblTalleres;
     // End of variables declaration//GEN-END:variables
 }
