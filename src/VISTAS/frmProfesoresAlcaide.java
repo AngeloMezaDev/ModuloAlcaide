@@ -598,7 +598,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         lblID.setBackground(new java.awt.Color(255, 255, 255));
         lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#P001");
 
         btnRegistrarProfesor.setText("ADM. PROFESORES");
         btnRegistrarProfesor.addActionListener(new java.awt.event.ActionListener() {
@@ -612,8 +611,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel15.setText("Profesor:");
 
         jLabel17.setText("Edad:");
-
-        lblEdad.setText("_______");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -632,7 +629,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                             .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15)
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -870,6 +867,24 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReclusosMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int asignaciones=controlador.consultarAsignacionesProfesor(lblID.getText());
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                    || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                    || lblEdad.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        }else if(asignaciones==0){
+                JOptionPane.showMessageDialog(this,
+                        "No existen Asignaciones aun\n"
+                         + "Cree primero un asignacion para poder eliminar.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        }
+            
         // Obtener los datos del asigancion a editar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
@@ -920,6 +935,16 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                    || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                    || lblEdad.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Existen campos vacios,\npor favor seleccione los datos correctos.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        }
         // Obtener los valores necesarios para la asignación desde los campos de la interfaz
         String idDocente = lblID.getText();
         String nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
@@ -1003,12 +1028,18 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         String profe = (String) CmbProfesoresExistentes.getSelectedItem();
         List<Profesor> profesores = controlador.cargarDatosProfesores();
         String Idprofe = "";
+        int edad=0;
         for (Profesor profesor : profesores) {
             if ((profesor.getNombres() + " " + profesor.getApellidos()).equalsIgnoreCase(profe)) {
                 Idprofe = profesor.getCodigoProfesor();
+                edad=profesor.CalcularEdad(profesor.getFechaNacimiento());
             }
         }
         lblID.setText(Idprofe);
+        if(edad==0){
+            lblEdad.setText("");
+        }else{
+        lblEdad.setText(edad+" años");}
     }//GEN-LAST:event_CmbProfesoresExistentesItemStateChanged
 
     private void JTableAsignacionProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAsignacionProfesoresMouseClicked
@@ -1049,6 +1080,24 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableAsignacionProfesoresMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int asignaciones=controlador.consultarAsignacionesProfesor(lblID.getText());
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                    || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                    || lblEdad.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        }else if(asignaciones==0){
+                JOptionPane.showMessageDialog(this,
+                        "No existen Asignaciones aun\n"
+                         + "Cree primero un asignacion para poder eliminar.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+        }
+          
         // Obtener los datos del asigancion a Eliminar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
@@ -1080,7 +1129,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }
 
     void limpiarInputs() {
-        lblID.setText("#P001");
+        lblID.setText("");
         CmbProfesoresExistentes.setSelectedItem("--Seleccione--");
         CmbAsignacionDocente.setSelectedItem("--Seleccione--");
         cmbActividadTaller.setSelectedItem("--Seleccione--");

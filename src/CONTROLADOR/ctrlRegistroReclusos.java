@@ -94,7 +94,7 @@ public class ctrlRegistroReclusos {
                 String correo = resultSet.getString("correo");
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
-                 String fechaNacString = resultSet.getString("fecha_Nacimiento");
+                String fechaNacString = resultSet.getString("fecha_Nacimiento");
 
                 Date fechaNac = null;
                 try {
@@ -115,7 +115,7 @@ public class ctrlRegistroReclusos {
                 };
                 modeloTabla.addRow(fila);
                 // Crear un objeto Profesor con los datos
-                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
+                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo, fechaNac);
 
                 // Agregar el profesor a la lista
                 reclusos.add(reo);
@@ -157,7 +157,7 @@ public class ctrlRegistroReclusos {
                 String correo = resultSet.getString("correo");
                 String usuario = resultSet.getString("usuario");
                 String contrasena = resultSet.getString("contra");
-                 String fechaNacString = resultSet.getString("fecha_Nacimiento");
+                String fechaNacString = resultSet.getString("fecha_Nacimiento");
 
                 Date fechaNac = null;
                 try {
@@ -168,7 +168,7 @@ public class ctrlRegistroReclusos {
                 }
 
                 // Crear un objeto Profesor con los datos
-                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo,fechaNac);
+                Recluso reo = new Recluso(idRecluso, condena, delito, cedula, nombres, apellidos, usuario, contrasena, correo, fechaNac);
 
                 // Agregar el profesor a la lista
                 reclusos.add(reo);
@@ -223,6 +223,72 @@ public class ctrlRegistroReclusos {
         }
     }
 
+    public boolean existeRecluso(String idRecluso) {
+        boolean existe = false;
+
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para consultar el recluso por su ID
+            String sql = "SELECT 1 FROM Reclusos WHERE id_recluso = ?";
+
+            // Crear la declaración y establecer el parámetro
+            PreparedStatement pstmt = connectionBD.getConnection().prepareStatement(sql);
+            pstmt.setString(1, idRecluso);
+
+            // Ejecutar la consulta
+            ResultSet rs = pstmt.executeQuery();
+
+            // Si se encuentra un registro, significa que el recluso existe
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al consultar si el recluso existe: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return existe;
+    }
+
+    public int consultarAsignacionesRecluso(String idRecluso) {
+        int cantidadAsignaciones = 0;
+
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para consultar las asignaciones del recluso
+            String sql = "SELECT COUNT(*) AS cantidad FROM AsignacionRecluso WHERE Id_Recluso = ?";
+
+            // Crear la declaración y establecer el parámetro
+            PreparedStatement pstmt = connectionBD.getConnection().prepareStatement(sql);
+            pstmt.setString(1, idRecluso);
+
+            // Ejecutar la consulta
+            ResultSet rs = pstmt.executeQuery();
+
+            // Obtener la cantidad de asignaciones del resultado
+            if (rs.next()) {
+                cantidadAsignaciones = rs.getInt("cantidad");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al consultar las asignaciones del recluso: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return cantidadAsignaciones;
+    }
+
     public void eliminarRecluso(String idRecluso) {
         try {
             connectionBD.openConnection();
@@ -253,11 +319,11 @@ public class ctrlRegistroReclusos {
         CmbReclusosExistentes.removeAllItems();
         List<Recluso> reclusos = cargarDatosRecluso();
         CmbReclusosExistentes.addItem(("--Seleccione--"));
-            for (Recluso recluso : reclusos) {
-                // Accede a los atributos del objeto Recluso
-                String nombresReclusos = (recluso.getNombres() + " " + recluso.getApellidos());
-                CmbReclusosExistentes.addItem((nombresReclusos));
-            }
+        for (Recluso recluso : reclusos) {
+            // Accede a los atributos del objeto Recluso
+            String nombresReclusos = (recluso.getNombres() + " " + recluso.getApellidos());
+            CmbReclusosExistentes.addItem((nombresReclusos));
+        }
 
         return reclusos;
     }
@@ -314,7 +380,7 @@ public class ctrlRegistroReclusos {
         }
         return asignaciones;
     }
-    
+
     public List<AsignacionRecluso> Lista_AsignacionesReos() {
         List<AsignacionRecluso> asignaciones = new ArrayList<>();
         try {
@@ -356,43 +422,44 @@ public class ctrlRegistroReclusos {
         }
         return asignaciones;
     }
+
     public void agregarAsignacionRecluso(AsignacionRecluso asigancion) {
-    try {
-        connectionBD.openConnection();
-
-        // Crear la sentencia SQL para llamar al procedimiento almacenado
-        String sql = "{call sp_AgregarAsignacionRecluso(?, ?, ?, ?, ?, ?)}";
-        //obtener los datos:
-        String IdRecluso = asigancion.getIdRecluso();
-        String nombreRecluso = asigancion.getNombreRecluso();
-        String tipoAsignacion = asigancion.getTipoAsignacion();
-        String nombreActividadTaller = asigancion.getNombreActividadTaller();
-        String idActividadTaller = asigancion.getIdActividadTaller();
-        String nombreGrupo = asigancion.getNombreGrupo();
-
-        // Crear el objeto CallableStatement
-        CallableStatement stmt = connectionBD.getConnection().prepareCall(sql);
-        stmt.setString(1, IdRecluso);
-        stmt.setString(2, nombreRecluso);
-        stmt.setString(3, tipoAsignacion);
-        stmt.setString(4, nombreActividadTaller);
-        stmt.setString(5, idActividadTaller);
-        stmt.setString(6, nombreGrupo);
-
-        // Ejecutar el procedimiento almacenado
-        stmt.execute();
-
-        System.out.println("Asignación de profesor agregada correctamente.");
-    } catch (SQLException | ClassNotFoundException e) {
-        System.err.println("Error al agregar la asignación de profesor: " + e.getMessage());
-    } finally {
         try {
-            connectionBD.closeConnection();
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al procedimiento almacenado
+            String sql = "{call sp_AgregarAsignacionRecluso(?, ?, ?, ?, ?, ?)}";
+            //obtener los datos:
+            String IdRecluso = asigancion.getIdRecluso();
+            String nombreRecluso = asigancion.getNombreRecluso();
+            String tipoAsignacion = asigancion.getTipoAsignacion();
+            String nombreActividadTaller = asigancion.getNombreActividadTaller();
+            String idActividadTaller = asigancion.getIdActividadTaller();
+            String nombreGrupo = asigancion.getNombreGrupo();
+
+            // Crear el objeto CallableStatement
+            CallableStatement stmt = connectionBD.getConnection().prepareCall(sql);
+            stmt.setString(1, IdRecluso);
+            stmt.setString(2, nombreRecluso);
+            stmt.setString(3, tipoAsignacion);
+            stmt.setString(4, nombreActividadTaller);
+            stmt.setString(5, idActividadTaller);
+            stmt.setString(6, nombreGrupo);
+
+            // Ejecutar el procedimiento almacenado
+            stmt.execute();
+
+            System.out.println("Asignación de profesor agregada correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al agregar la asignación de profesor: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
         }
     }
-}
 
     public void editarAsignacion(AsignacionRecluso asignacion) {
         try {

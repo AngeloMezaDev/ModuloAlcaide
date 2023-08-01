@@ -4,9 +4,11 @@
  */
 package VISTAS;
 
+import CONTROLADOR.Validaciones;
 import CONTROLADOR.ctrlRegistroNuevoProfe;
 import MODELO.Profesor;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -23,10 +25,11 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
      * Creates new form frmCreateNewProfe
      */
     private ctrlRegistroNuevoProfe controlador;
-
+    private Validaciones valido;
     public frmCreateNewProfe() {
         initComponents();
         controlador = new ctrlRegistroNuevoProfe(); // Inicializar la instancia de la clase controladora
+        valido= new Validaciones();
         controlador.cargarDatosProfesores((DefaultTableModel) JTableProfesoresExistentes.getModel());
         JTableProfesoresExistentes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -65,12 +68,12 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         txtCorreoProf = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtPasswConfirm = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         lblidProfesor = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtPasswordProf = new javax.swing.JPasswordField();
+        txtPasswordConfirm = new javax.swing.JPasswordField();
         btnCancelar = new javax.swing.JButton();
         btnRegistrarProfeNuevo = new javax.swing.JButton();
         btnEditarProfe = new javax.swing.JButton();
@@ -145,22 +148,52 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
 
         jLabel1.setText("Nombres:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+
+        txtNombresProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNombresProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 170, -1));
 
         jLabel2.setText("Apellidos:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+
+        txtApellidosProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtApellidosProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 170, -1));
 
         jLabel3.setText("Cédula:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+
+        txtCedulaProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtCedulaProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 170, -1));
 
         jLabel4.setText("Especialidad:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+
+        txtEspecialidadProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEspecialidadProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtEspecialidadProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 170, -1));
 
         jLabel5.setText("Años de Experiencia:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, -1));
+
+        txtAnioExp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAnioExpKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtAnioExp, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 93, -1));
 
         jSeparator1.setBackground(new java.awt.Color(153, 153, 255));
@@ -169,6 +202,12 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
 
         jLabel6.setText("Usuario:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, -1));
+
+        txtUsuarioProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtUsuarioProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 18)); // NOI18N
@@ -177,6 +216,12 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
 
         jLabel8.setText("Correo Electronico:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, -1, -1));
+
+        txtCorreoProf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoProfKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtCorreoProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 170, -1));
 
         jLabel9.setText("Contraseña:");
@@ -184,7 +229,6 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
 
         jLabel12.setText("Confirme su contraseña:");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
-        jPanel1.add(txtPasswConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 170, -1));
 
         jLabel13.setText("ID:");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
@@ -199,6 +243,7 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         jDateFechaNacimiento.setFocusable(false);
         jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 140, -1));
         jPanel1.add(txtPasswordProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 170, -1));
+        jPanel1.add(txtPasswordConfirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 570, 330));
 
@@ -220,7 +265,7 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegistrarProfeNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, 115, 45));
 
-        btnEditarProfe.setText("EDITAR");
+        btnEditarProfe.setText("MODIFICAR");
         btnEditarProfe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarProfeActionPerformed(evt);
@@ -300,38 +345,68 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmProfesoresAlcaide profeAlc = new frmProfesoresAlcaide();
+        frmReclusosAlcaide reoAlc = new frmReclusosAlcaide();
         this.dispose();
-        profeAlc.setVisible(true);
+        reoAlc.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarProfeNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProfeNuevoActionPerformed
 
         try {
             // Obtener los valores de los campos de texto
-            String cedulaProf = txtCedulaProf.getText();
             String codigoProfesor = "#P0001";
             String cedula = txtCedulaProf.getText();
             String nombres = txtNombresProf.getText();
             String apellidos = txtApellidosProf.getText();
-            String correo = txtCorreoProf.getText();
-            String usuario = txtUsuarioProf.getText();
+            String correo = valido.validarCorreoElectronico(txtCorreoProf.getText());
+            String usuario = valido.validarNombreUsuario(txtUsuarioProf.getText());
             char[] password = txtPasswordProf.getPassword();
-            String contra= new String(password);
+            char[] passwordConfirm = txtPasswordConfirm.getPassword();
+            String contra= valido.validadContrasena(new String(password));
+            String contraConfirm= new String(passwordConfirm);
             String especialidad = txtEspecialidadProf.getText();
             int experiencia = Integer.parseInt(txtAnioExp.getText());
             Date FechaNac=jDateFechaNacimiento.getDate();
-
-            // Crear la instancia de Profesor
-            Profesor profesor = new Profesor(codigoProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contra, correo,FechaNac);
-            codigoProfesor = profesor.GenerarIdProfesor(cedula);
-            profesor.setCodigoProfesor(codigoProfesor);//asignar el id generado
-            // Guardar los datos en la base de datos
-            ctrlRegistroNuevoProfe registro = new ctrlRegistroNuevoProfe();
-            registro.RegistrarNuevoProfe(profesor);
-
-            // Mostrar mensaje al usuario
-            JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+            if(cedula.isEmpty()||nombres.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || txtAnioExp.getText().isEmpty()
+                   || usuario.isEmpty()|| contra.isEmpty() || contraConfirm.isEmpty() || especialidad.isEmpty() || FechaNac==null){
+                JOptionPane.showMessageDialog(this,
+                    "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if(!contra.equals(contraConfirm)){
+                    JOptionPane.showMessageDialog(this,
+                    "La contraseña no coincide con la confirmacion, por favor verifique sean iguales",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+                    // Detener el evento
+                    return;
+            }else{
+                // Crear el mensaje de confirmación
+                String mensaje = "¿Deseas Registar al Profesor: " + nombres+" "+apellidos +" ?"
+                        + "\n OJO: Verifique que su numero de cedula sea correcto"
+                        + " \nporque este valor, no es modificable";
+                int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+                // Verificar la opción seleccionada
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Crear la instancia de Profesor
+                    Profesor profesor = new Profesor(codigoProfesor, especialidad, experiencia, cedula, nombres, apellidos, usuario, contra, correo,FechaNac);
+                    codigoProfesor = profesor.GenerarIdProfesor(cedula);
+                    profesor.setCodigoProfesor(codigoProfesor);//asignar el id generado
+                    // Guardar los datos en la base de datos
+                    ctrlRegistroNuevoProfe registro = new ctrlRegistroNuevoProfe();
+                    registro.RegistrarNuevoProfe(profesor);
+                    
+                    // Mostrar mensaje al usuario
+                    JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+                    limpiarInputs();
+                } else {
+                    // Detener el evento
+                    return;
+                }
+            }
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
         }
@@ -343,26 +418,58 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
     private void btnEditarProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProfeActionPerformed
         // Obtener los datos del profesor a editar
         String idProfesor = lblidProfesor.getText();
+        if(!controlador.existeProfesor(idProfesor)){
+            JOptionPane.showMessageDialog(this,
+            "El profesor con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un profesor/a .",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String nuevosNombres = txtNombresProf.getText();
         String nuevosApellidos = txtApellidosProf.getText();
         String nuevaCedula = txtCedulaProf.getText();
-        String nuevoCorreo = txtCorreoProf.getText();
+        String nuevoCorreo = valido.validarCorreoElectronico(txtCorreoProf.getText());
         String nuevaEspecialidad = txtEspecialidadProf.getText();
-        String nuevoUsuario=txtUsuarioProf.getText();
+        String nuevoUsuario=valido.validarNombreUsuario(txtUsuarioProf.getText());
         char[] password = txtPasswordProf.getPassword();
-        String NuevaContra= new String(password);
+        String NuevaContra= valido.validadContrasena(new String(password));
+        char[] passwordConf = txtPasswordConfirm.getPassword();
+        String NuevaContraConf= new String(passwordConf);
         int nuevaExperiencia = Integer.parseInt(txtAnioExp.getText());
         Date FechaNac=jDateFechaNacimiento.getDate();
 
-    // Verificar que los campos no estén vacíos
-        if (idProfesor.isEmpty() || nuevosNombres.isEmpty() || nuevosApellidos.isEmpty() || nuevaCedula.isEmpty() || nuevoCorreo.isEmpty() || nuevaEspecialidad.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // Detener la ejecución del método
+        if(nuevaCedula.isEmpty()||nuevosNombres.isEmpty() || nuevosApellidos.isEmpty() || nuevoCorreo.isEmpty() || txtAnioExp.getText().isEmpty()||NuevaContraConf.isEmpty()
+                 || nuevoUsuario.isEmpty()|| NuevaContra.isEmpty() || NuevaContraConf.isEmpty() || txtEspecialidadProf.getText().isEmpty() || FechaNac==null){
+            JOptionPane.showMessageDialog(this,
+             "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+             "Advertencia",
+             JOptionPane.WARNING_MESSAGE);
+            return;
         }
-
-    // Llamar al método editarProfesor para realizar la edición
-        controlador.editarProfesor(idProfesor, nuevosNombres, nuevosApellidos, nuevaCedula, nuevoCorreo, nuevaEspecialidad, nuevaExperiencia,nuevoUsuario,NuevaContra,FechaNac);
-
+        if(!NuevaContra.equals(NuevaContraConf)){
+                    JOptionPane.showMessageDialog(this,
+                    "La contraseña no coincide con la confirmacion, por favor verifique sean iguales",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+                    // Detener el evento
+                    return;
+            }else{
+                
+                String mensaje = "¿Deseas Modificar al Profesor/a: " + nuevosApellidos+"\nCon Id: "+ idProfesor+ " ?";
+                int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+                // Verificar la opción seleccionada
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Llamar al método editarProfesor para realizar la edición
+                    controlador.editarProfesor(idProfesor,nuevaCedula, nuevosNombres, nuevosApellidos, nuevoCorreo, 
+                   nuevaEspecialidad, nuevaExperiencia,nuevoUsuario,NuevaContra,FechaNac);  
+                } else {
+                    // Detener el evento
+                    return;
+                }
+            limpiarInputs();
+        }
+        
     // Actualizar la tabla de profesores con los datos actualizados
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableProfesoresExistentes.getModel();
         modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
@@ -376,9 +483,38 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
     private void btnEliminarProfeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProfeActionPerformed
         // Obtener el ID del profesor seleccionado
         String idProfesor = lblidProfesor.getText();
-        // Llamar al método eliminarProfesor del controlador
-        controlador.eliminarProfesor(idProfesor);
-        limpiarInputs();
+        if(!controlador.existeProfesor(idProfesor)){
+            JOptionPane.showMessageDialog(this,
+            "El profesor con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un profesor/a .",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombreProf=txtNombresProf.getText()+" "+ txtApellidosProf.getText();
+        int asignaciones=controlador.consultarAsignacionesProfesor(idProfesor);
+       
+            //Verificar si tiene asiganciones hechas
+            if(asignaciones>=1){
+                 JOptionPane.showMessageDialog(this,
+             " "+nombreProf+"tiene "+asignaciones+ " Asigancion/es"
+                     + "\nSi elimina este Profesor/a tambien se"
+                     + "\neliminaran sus asiganciones",
+             "Advertencia",
+             JOptionPane.WARNING_MESSAGE);       
+            }
+             // Crear el mensaje de confirmación
+            String mensaje = "¿Está seguro de Eliminar al Profesor/a: " + nombreProf+ " ?";
+            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Eliminacion", JOptionPane.YES_NO_OPTION);
+            // Verificar la opción seleccionada
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Llamar al método eliminarProfesor del controlador
+                controlador.eliminarProfesor(idProfesor);
+            } else {
+                // Detener el evento
+                return;
+            }
+            limpiarInputs();
         // Actualizar la tabla de profesores (si es necesario)
         controlador.cargarDatosProfesores((DefaultTableModel) JTableProfesoresExistentes.getModel());
     }//GEN-LAST:event_btnEliminarProfeActionPerformed
@@ -403,7 +539,7 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         int experiencia = profesor.getAñosExperiencia();
         String usuario = profesor.getUser();
         String contrasena = profesor.getPassword();
-
+        Date fechaNac=profesor.getFechaNacimiento();
         // Establecer los datos en los campos de texto
         lblidProfesor.setText(idProfesor);
         txtNombresProf.setText(nombres);
@@ -415,18 +551,99 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         txtAnioExp.setText("" + experiencia);
         txtUsuarioProf.setText(usuario);
         txtPasswordProf.setText(contrasena);
-        txtPasswConfirm.setText(contrasena);
+        txtPasswordConfirm.setText(contrasena);
+        jDateFechaNacimiento.setDate(fechaNac);
+        // Restaurar la selección después de la actualización
+        if (filaSeleccionada != -1) {
+            JTableProfesoresExistentes.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        }
     }//GEN-LAST:event_JTableProfesoresExistentesMouseClicked
+
+    private void txtNombresProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresProfKeyTyped
+         valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtNombresProfKeyTyped
+
+    private void txtApellidosProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosProfKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtApellidosProfKeyTyped
+
+    private void txtEspecialidadProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecialidadProfKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtEspecialidadProfKeyTyped
+
+    private void txtCedulaProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaProfKeyTyped
+        valido.validarCedula(evt, txtCedulaProf.getText());
+    }//GEN-LAST:event_txtCedulaProfKeyTyped
+
+    private void txtAnioExpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAnioExpKeyTyped
+        char c = evt.getKeyChar();
+        // Verificar si la tecla presionada es un número y si ya hay 10 dígitos en el campo.
+        if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE|| txtAnioExp.getText().length() >= 2 ) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten números y máximo 2 dígitos.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtAnioExpKeyTyped
+
+    private void txtCorreoProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoProfKeyTyped
+        //
+        String texto=txtCorreoProf.getText();
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE
+                && c != '@' && c != '.' && c != '+' && c != '_') {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(null,
+                    "El correo electrónico solo puede contener letras, números, '@', '.', '+', '_' y espacios.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (c == '@' && texto.contains("@")) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(null,
+                    "El correo electrónico solo puede contener un símbolo '@'.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (c == '.' && texto.contains(".") && texto.lastIndexOf('.') > texto.lastIndexOf('@')) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(null,
+                    "El correo electrónico solo puede contener un símbolo '.' después del '@'.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtCorreoProfKeyTyped
+
+    private void txtUsuarioProfKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioProfKeyTyped
+         char c = evt.getKeyChar();
+        // Permitir letras, números y la tecla "Borrar"
+        if (!Character.isLetterOrDigit(c) && c != KeyEvent.VK_BACK_SPACE ) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten letras y números en el usuario.\nRecuerde tambien que NO se admiten espacios",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtUsuarioProfKeyTyped
+   
+    
     private void limpiarInputs() {
         txtNombresProf.setText("");
         txtApellidosProf.setText("");
         txtCedulaProf.setText("");
+        txtCedulaProf.setEditable(true);
         txtEspecialidadProf.setText("");
         txtAnioExp.setText("");
         txtUsuarioProf.setText("");
         txtCorreoProf.setText("");
         txtPasswordProf.setText("");
-        txtPasswConfirm.setText("");
+        txtPasswordConfirm.setText("");
+        jDateFechaNacimiento.setDate(null);
+        JTableProfesoresExistentes.clearSelection();
     }
 
     /**
@@ -508,7 +725,7 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreoProf;
     private javax.swing.JTextField txtEspecialidadProf;
     private javax.swing.JTextField txtNombresProf;
-    private javax.swing.JTextField txtPasswConfirm;
+    private javax.swing.JPasswordField txtPasswordConfirm;
     private javax.swing.JPasswordField txtPasswordProf;
     private javax.swing.JTextField txtUsuarioProf;
     // End of variables declaration//GEN-END:variables
