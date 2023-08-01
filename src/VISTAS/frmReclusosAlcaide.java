@@ -603,8 +603,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         lbl_IDrecluso.setBackground(new java.awt.Color(255, 255, 255));
         lbl_IDrecluso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_IDrecluso.setText("#R001");
-        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, -1));
+        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, 20));
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -660,9 +659,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jLabel19.setText("Edad:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, -1, -1));
-
-        lblEdad.setText("________");
-        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, -1, -1));
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 60, 20));
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
 

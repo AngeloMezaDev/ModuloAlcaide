@@ -1130,11 +1130,10 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="#R001"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="260" y="90" width="70" height="-1"/>
+                  <AbsoluteConstraints x="260" y="90" width="70" height="20"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1243,12 +1242,9 @@
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="lblEdad">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="________"/>
-              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="630" y="40" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="620" y="40" width="60" height="20"/>
                 </Constraint>
               </Constraints>
             </Component>

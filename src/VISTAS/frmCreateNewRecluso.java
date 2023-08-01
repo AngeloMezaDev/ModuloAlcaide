@@ -336,7 +336,9 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
+        frmReclusosAlcaide reclu = new frmReclusosAlcaide();
         this.dispose();
+        reclu.setVisible(true);
     }//GEN-LAST:event_lblExit2MouseClicked
 
     private void lblExit2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseEntered
@@ -349,9 +351,9 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmProfesoresAlcaide profeAlc = new frmProfesoresAlcaide();
+        frmReclusosAlcaide reclu = new frmReclusosAlcaide();
         this.dispose();
-        profeAlc.setVisible(true);
+        reclu.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarReclusoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarReclusoNuevoActionPerformed

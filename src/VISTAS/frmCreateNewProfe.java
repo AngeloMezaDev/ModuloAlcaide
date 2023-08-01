@@ -345,9 +345,9 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmReclusosAlcaide reoAlc = new frmReclusosAlcaide();
+        frmProfesoresAlcaide profeAlc = new frmProfesoresAlcaide();
         this.dispose();
-        reoAlc.setVisible(true);
+        profeAlc.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarProfeNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProfeNuevoActionPerformed
