@@ -315,6 +315,58 @@ public class ctrlRegistroReclusos {
         return asignaciones;
     }
     
+    public List<AsignacionRecluso> cargarDatosAsistenciasReclusos(DefaultTableModel modeloTabla) {
+        List<AsignacionRecluso> asignaciones = new ArrayList<>();
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los datos de las asignaciones
+            String sql = "SELECT * FROM AsignacionRecluso ORDER BY id_asignacion ASC";
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Limpiar el modelo de tabla existente
+            modeloTabla.setRowCount(0);
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            while (resultSet.next()) {
+                String idAsignacion = resultSet.getString("ID_Asignacion");
+                String idRecluso = resultSet.getString("Id_Recluso");
+                String NombreRecluso = resultSet.getString("Nombre_Recluso");
+                String tipoAsignacion = resultSet.getString("Tipo_Asignacion");
+                String Nombre_ActTaller = resultSet.getString("Nombre_ActividadTaller");
+                String idActTaller = resultSet.getString("Id_ActividadTaller");
+                String NombreGrupo = resultSet.getString("Nombre_Grupo");
+                Object[] fila = {
+                    idRecluso,
+                    NombreRecluso,
+                    idActTaller,
+                    Nombre_ActTaller,
+                    NombreGrupo,};
+                modeloTabla.addRow(fila);
+                // Crear un objeto AsignacionProfesor con los datos
+                AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, NombreRecluso, tipoAsignacion, Nombre_ActTaller, idActTaller, NombreGrupo);
+
+                // Agregar el profesor a la lista
+                asignaciones.add(asignacion);
+            }
+
+            System.out.println("Datos de asignaciones cargados correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de las asignaciones: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+        return asignaciones;
+    }
+    
+    
     public List<AsignacionRecluso> Lista_AsignacionesReos() {
         List<AsignacionRecluso> asignaciones = new ArrayList<>();
         try {

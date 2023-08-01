@@ -6,12 +6,15 @@
 package VISTAS;
 
 import CONTROLADOR.ctrlRegistroNuevoProfe;
+import CONTROLADOR.ctrlRegistroReclusos;
 import MODELO.AsignacionRecluso;
 import MODELO.Recluso;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -24,9 +27,19 @@ public class frmProfesores extends javax.swing.JFrame {
      */
     
     private ctrlRegistroNuevoProfe controlador;
+    private ctrlRegistroReclusos ctrl;
+    private DefaultTableModel modeloTabla;
+    
     public frmProfesores() {
         initComponents();
         controlador = new ctrlRegistroNuevoProfe();
+        ctrl = new ctrlRegistroReclusos();
+         // Crear el modelo de tabla
+        modeloTabla = (DefaultTableModel) jTableAsistencias.getModel();
+
+        // Llamar al método cargarDatosAsignacionesReos para cargar los datos en la tabla
+        ctrl.cargarDatosAsistenciasReclusos(modeloTabla);
+        //ctrl.cargarDatosAsignacionesReos((DefaultTableModel) jTableAsistencias.getModel());
     }
 
     /**
@@ -61,7 +74,7 @@ public class frmProfesores extends javax.swing.JFrame {
         lblExit2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAsistencias = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
         btnRegistraDatos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cmbAsignacion = new javax.swing.JComboBox<>();
@@ -70,7 +83,7 @@ public class frmProfesores extends javax.swing.JFrame {
         cmbGrupo = new javax.swing.JComboBox<>();
         lblTalleres = new javax.swing.JLabel();
         cmbTalleres = new javax.swing.JComboBox<>();
-        btnCargarDatos1 = new javax.swing.JButton();
+        btnCargarDatos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -339,7 +352,7 @@ public class frmProfesores extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableAsistencias);
 
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 960, 350));
-        jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
+        jPanelFondo.add(jDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
 
         btnRegistraDatos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnRegistraDatos.setText("REGISTRAR");
@@ -383,14 +396,14 @@ public class frmProfesores extends javax.swing.JFrame {
         });
         jPanelFondo.add(cmbTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, 230, -1));
 
-        btnCargarDatos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnCargarDatos1.setText("CARGAR");
-        btnCargarDatos1.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarDatos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargarDatos.setText("CARGAR");
+        btnCargarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarDatos1ActionPerformed(evt);
+                btnCargarDatosActionPerformed(evt);
             }
         });
-        jPanelFondo.add(btnCargarDatos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+        jPanelFondo.add(btnCargarDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -527,9 +540,10 @@ public class frmProfesores extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmbTalleresItemStateChanged
 
-    private void btnCargarDatos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatos1ActionPerformed
+    private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCargarDatos1ActionPerformed
+        ctrl.cargarDatosAsistenciasReclusos(modeloTabla);
+    }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -581,14 +595,14 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
-    private javax.swing.JButton btnCargarDatos1;
+    private javax.swing.JButton btnCargarDatos;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JButton btnRegistraDatos;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JComboBox<String> cmbAsignacion;
     private javax.swing.JComboBox<String> cmbGrupo;
     private javax.swing.JComboBox<String> cmbTalleres;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
