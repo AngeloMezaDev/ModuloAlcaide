@@ -19,21 +19,22 @@ public class frmReclusos extends javax.swing.JFrame {
     /**
      * Creates new form frmReclusos
      */
-
     private ctrlReclusos controlador;
-    private static String usuario = ""; 
+    private static String usuario = "";
     private static String contrasena = "";
+
     //Date fechaRegistrada = controlador.cargarFecha();
-    public frmReclusos(String usuario,String contrasena) {
+    public frmReclusos(String usuario, String contrasena) {
         initComponents();
-        this.usuario = usuario; 
+        lblHandle.setText("@" + usuario);
+        this.usuario = usuario;
         this.contrasena = contrasena;
         controlador = new ctrlReclusos();
         // Deshabilita la interacción del usuario con el JCalendar
-    
+
         controlador.cargarDatosTalleres(cldAgenda);
         cldAgenda.setEnabled(false);
-       
+
     }
 
     /**
@@ -53,7 +54,7 @@ public class frmReclusos extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
@@ -172,11 +173,13 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHandle.setText("USER");
+        lblHandle.setToolTipText("");
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 180, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -223,11 +226,15 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
         jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("RECLUSO");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -394,11 +401,11 @@ public class frmReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseEntered
 
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(122,72,221));
+        jPanelExit2.setBackground(new Color(122, 72, 221));
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        frmPerfil perfil=new frmPerfil (usuario, contrasena);
+        frmPerfil perfil = new frmPerfil(usuario, contrasena);
         this.dispose();
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
@@ -423,67 +430,67 @@ public class frmReclusos extends javax.swing.JFrame {
 
     private void cldAgendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseClicked
         // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
+        java.util.Date selectedDate = cldAgenda.getDate();
 
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
+        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+        java.util.Date targetDate = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            targetDate = sdf.parse("2023-07-31");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
 
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
+        if (selectedDate != null && selectedDate.equals(targetDate)) {
+            // Mostrar el mensaje para la fecha seleccionada
+            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+            System.out.println("Si vale");
+        }
 
     }//GEN-LAST:event_cldAgendaMouseClicked
 
     private void cldAgendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseEntered
-            // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
+        // Obtener la fecha seleccionada del calendario
+        java.util.Date selectedDate = cldAgenda.getDate();
 
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
+        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+        java.util.Date targetDate = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            targetDate = sdf.parse("2023-07-31");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
 
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
+        if (selectedDate != null && selectedDate.equals(targetDate)) {
+            // Mostrar el mensaje para la fecha seleccionada
+            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+            System.out.println("Si vale");
+        }
 
     }//GEN-LAST:event_cldAgendaMouseEntered
 
     private void cldAgendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMousePressed
-               // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
+        // Obtener la fecha seleccionada del calendario
+        java.util.Date selectedDate = cldAgenda.getDate();
 
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
+        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+        java.util.Date targetDate = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            targetDate = sdf.parse("2023-07-31");
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
 
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
+        if (selectedDate != null && selectedDate.equals(targetDate)) {
+            // Mostrar el mensaje para la fecha seleccionada
+            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+            System.out.println("Si vale");
+        }
     }//GEN-LAST:event_cldAgendaMousePressed
 
     void setColor(JPanel panel) {
@@ -493,6 +500,7 @@ public class frmReclusos extends javax.swing.JFrame {
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
     }
+
     /**
      * @param args the command line arguments
      */
@@ -544,7 +552,6 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -559,5 +566,6 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblHandle;
     // End of variables declaration//GEN-END:variables
 }

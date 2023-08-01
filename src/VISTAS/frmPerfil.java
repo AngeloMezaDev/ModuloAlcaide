@@ -13,6 +13,7 @@ public class frmPerfil extends javax.swing.JFrame {
     
     public frmPerfil(String usuario, String contrasena) {
         initComponents();
+        lblHandle.setText("@" + usuario);
         this.usuario = usuario;
         this.contrasena = contrasena;
         controlador = new ctrlReclusos();
@@ -37,7 +38,7 @@ public class frmPerfil extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
@@ -186,11 +187,13 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHandle.setText("USER");
+        lblHandle.setToolTipText("");
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 180, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -237,6 +240,7 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
@@ -245,7 +249,7 @@ public class frmPerfil extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(204, 204, 204));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Recluso");
+        jTextField1.setText("RECLUSO");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTextField1.setFocusable(false);
@@ -311,7 +315,6 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/preso.png"))); // NOI18N
 
         lblApellidos.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblApellidos.setText("Apellidos del recluso");
 
         jLabel12.setFont(new java.awt.Font("Sitka Subheading", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(54, 33, 89));
@@ -324,13 +327,11 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel22.setText("Nombres");
 
         lblCedula.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblCedula.setText("09*******");
 
         jLabel24.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel24.setText("C.I.");
 
         lblNombres.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblNombres.setText("Nombres del recluso");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -369,11 +370,11 @@ public class frmPerfil extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblNombres)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel24)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCedula)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 100, 430, 280));
@@ -388,13 +389,13 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel20.setText("Tipo de asignación");
 
         lblTipoAsig.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblTipoAsig.setText("Asignación");
+        lblTipoAsig.setText("Sin Asignación");
 
         jLabel30.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel30.setText("Nombre de actividad o taller");
 
         lblActTaller.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblActTaller.setText("Act / Taler");
+        lblActTaller.setText("Sin Asignar");
 
         jLabel37.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel37.setText("Grupo");
@@ -445,7 +446,6 @@ public class frmPerfil extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         lblCorreo.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblCorreo.setText("ejemplo@gmail.com");
 
         jLabel17.setFont(new java.awt.Font("Sitka Subheading", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(54, 33, 89));
@@ -458,13 +458,11 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel26.setText("Edad");
 
         lblFechaNac.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblFechaNac.setText("Fecha de nacimiento");
 
         jLabel28.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel28.setText("Fecha de nacimiento");
 
         lblEdad.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblEdad.setText("Edad");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -500,7 +498,7 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaNac)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, 430, 260));
@@ -515,13 +513,11 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel33.setText("Delito");
 
         lblDelito.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblDelito.setText("Delito");
 
         jLabel35.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel35.setText("Tiempo de condena");
 
         lblTiempoCondena.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblTiempoCondena.setText("Tiempo en años");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -551,7 +547,7 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTiempoCondena)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jPanelBackGround.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 430, 200));
@@ -692,7 +688,6 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
@@ -727,6 +722,7 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblTiempoCondena;

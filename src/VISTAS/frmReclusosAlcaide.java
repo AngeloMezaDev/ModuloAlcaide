@@ -30,6 +30,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
      */
     public frmReclusosAlcaide() {
         initComponents();
+        lblHandle.setText("admin");
         controlador = new ctrlRegistroReclusos();
         ctrl = new ctrlRegistroNuevoProfe();// Inicializar la instancia de la clase controladora
         controlador.cargarReclusosComboBox(CmbReclusosExistentes);
@@ -63,7 +64,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         btnReclusos = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -300,11 +301,11 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jPanelSide.add(btnReclusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 290, 50));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setText("USER");
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -1155,7 +1156,6 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1188,6 +1188,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogout;
     private javax.swing.JLabel lbl_IDrecluso;
     private javax.swing.JPanel panelAgregar;
