@@ -4,11 +4,17 @@
  */
 package VISTAS;
 
+import CONTROLADOR.Validaciones;
 import CONTROLADOR.ctrlRegistro;
 import MODELO.Taller;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,13 +32,17 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
      * Creates new form frmAlcaide
      */
     private DefaultTableModel modeloTabla;
+    private Validaciones validacion; // Instancia de la clase Validaciones
 
     public frmTalleresAlcaide() {
         initComponents();
+
         lblHandle.setText("admin");
         //Establece que el foco no este dentro del JSpinner
         ((JSpinner.DefaultEditor) jsCantidadGrupos.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor) jsCantidadPersonas.getEditor()).getTextField().setEditable(false);
+        ((JSpinner.DefaultEditor) jsCantidadTiempoCondena.getEditor()).getTextField().setEditable(false);
+
         // Establece que el foco al iniciar el frm este en el ID
         lblID.requestFocusInWindow();
         modeloTabla = new DefaultTableModel() {
@@ -44,11 +54,17 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jTableTalleresAlcaide.setModel(modeloTabla);
         jTableTalleresAlcaide.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        String[] nombresColumnas = {"ID", "Nombre de taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación"};
+        String[] nombresColumnas = {"ID", "Nombre de taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación", "Fecha de vencimiento", "Reduccion de condena (meses)"};
         modeloTabla.setColumnIdentifiers(nombresColumnas);
 
         ctrlRegistro registro = new ctrlRegistro();
         registro.cargarDatosTalleres(modeloTabla);
+
+        // Establecer el ancho deseado para cada columna (en píxeles)
+        jTableTalleresAlcaide.getColumnModel().getColumn(0).setPreferredWidth(10); // Columna 0 tendrá un ancho de 10 píxeles
+        jTableTalleresAlcaide.getColumnModel().getColumn(1).setPreferredWidth(10); // Columna 1 tendrá un ancho de 10 píxeles
+        jTableTalleresAlcaide.getColumnModel().getColumn(2).setPreferredWidth(10); // Columna 2 tendrá un ancho de 10 píxeles
+
     }
 
     /**
@@ -121,13 +137,17 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jPCampoNombre = new javax.swing.JPanel();
         txtNombreTaller = new javax.swing.JTextField();
         jPFecha = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
         jPCampoFecha = new javax.swing.JPanel();
         jDateTalleresAlcaide = new com.toedter.calendar.JDateChooser();
-        jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
         btnNuevo = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jsCantidadTiempoCondena = new javax.swing.JSpinner();
+        jDateFechaVencimiento = new com.toedter.calendar.JDateChooser();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -452,23 +472,24 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jTableTalleresAlcaide.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTableTalleresAlcaide.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nombre del taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación"
+                "ID", "Nombre del taller", "Cantidad de grupos", "Capacidad máxima", "Fecha de creación", "Fecha de vencimiento", "Tiempo de condena (meses)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        jTableTalleresAlcaide.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTableTalleresAlcaide.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableTalleresAlcaide.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableTalleresAlcaide.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        jTableTalleresAlcaide.setIntercellSpacing(new java.awt.Dimension(2, 2));
         jTableTalleresAlcaide.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableTalleresAlcaideMouseClicked(evt);
@@ -484,7 +505,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             jTableTalleresAlcaide.getColumnModel().getColumn(2).setPreferredWidth(10);
         }
 
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 1080, 300));
+        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 1080, 240));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -582,24 +603,25 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Nombre del taller:");
-        jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
+        jPNombre.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, -1));
 
         jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPCampoNombre.add(txtNombreTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 0, 220, 30));
+        jPCampoNombre.add(txtNombreTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 30));
 
         jPFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPFecha.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 221, 17));
 
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Fecha:");
-        jPFecha.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 43, -1));
+        jLabel25.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Fecha de Creación:");
+        jPFecha.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 110, -1));
 
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jDateTalleresAlcaide.setDateFormatString("yyyy/MM/dd ");
-        jPCampoFecha.add(jDateTalleresAlcaide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 40));
+        jPCampoFecha.add(jDateTalleresAlcaide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 220, 40));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/plus.png"))); // NOI18N
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -609,55 +631,74 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             }
         });
 
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel17.setText("Tiempo de reduccion  de condena (meses) :");
+        jLabel17.setToolTipText("");
+
+        jsCantidadTiempoCondena.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
+        jsCantidadTiempoCondena.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jDateFechaVencimiento.setDateFormatString("yyyy/MM/dd ");
+        jDateFechaVencimiento.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateFechaVencimientoPropertyChange(evt);
+            }
+        });
+
+        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Fecha de Finalización:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jSeparator4))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator4)
-                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGap(52, 52, 52)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jSeparator7))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPCampoNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSeparator7))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jDateFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -669,8 +710,16 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                                 .addComponent(jLabel23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(348, 348, 348)
-                                .addComponent(btnNuevo)))))
+                                .addGap(341, 341, 341)
+                                .addComponent(btnNuevo))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jsCantidadTiempoCondena, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(715, 715, 715))
         );
         jPanel2Layout.setVerticalGroup(
@@ -678,18 +727,22 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
+                        .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
                             .addComponent(jsCantidadGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(21, 21, 21)
                         .addComponent(btnNuevo)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(jsCantidadPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsCantidadTiempoCondena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -712,7 +765,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -720,20 +773,22 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
+                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateFechaVencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel19)))
+                .addGap(177, 177, 177))
         );
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 290));
@@ -816,9 +871,11 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             int cantidadGrupos = (int) jsCantidadGrupos.getValue();
             int capacidadMaxima = (int) jsCantidadPersonas.getValue();
             Date fechaCreacion = jDateTalleresAlcaide.getDate();
+            Date fechaVencimiento = jDateFechaVencimiento.getDate();
+            int reduccionCondena = (int) jsCantidadTiempoCondena.getValue();
 
             // Crear una instancia de la clase Taller con los datos obtenidos
-            Taller taller = new Taller(idTaller, nombreTaller, cantidadGrupos, capacidadMaxima, fechaCreacion);
+            Taller taller = new Taller(idTaller, nombreTaller, cantidadGrupos, capacidadMaxima, fechaCreacion, fechaVencimiento, reduccionCondena);
 
             // Guardar los datos en la base de datos
             ctrlRegistro registro = new ctrlRegistro();
@@ -838,6 +895,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         } catch (Exception e) {
             // Mostrar mensaje de error
             JOptionPane.showMessageDialog(this, "Error al agregar el taller: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -870,6 +928,8 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jsCantidadGrupos.setValue(0);
         jsCantidadPersonas.setValue(0);
         jDateTalleresAlcaide.setDate(null);
+        jsCantidadTiempoCondena.setValue(1);
+        jDateFechaVencimiento.setDate(null);
     }
 
     // Método para incrementar el ID del taller
@@ -911,10 +971,12 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         int cantidadGrupos = (int) jsCantidadGrupos.getValue();
         int capacidadMaxima = (int) jsCantidadPersonas.getValue();
         Date fechaCreacion = jDateTalleresAlcaide.getDate();
+        Date fechaVencimiento = jDateFechaVencimiento.getDate();
+        int reduccionCondena = (int) jsCantidadTiempoCondena.getValue();
 
         try {
             // Crear una instancia de la clase Taller con los datos obtenidos
-            Taller taller = new Taller(idTaller, nombreTaller, cantidadGrupos, capacidadMaxima, fechaCreacion);
+            Taller taller = new Taller(idTaller, nombreTaller, cantidadGrupos, capacidadMaxima, fechaCreacion, fechaVencimiento, reduccionCondena);
 
             // Actualizar los datos en la base de datos
             ctrlRegistro registro = new ctrlRegistro();
@@ -1003,16 +1065,22 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
             int cantidadGrupos = Integer.parseInt(jTableTalleresAlcaide.getValueAt(filaSeleccionada, 2).toString());
             int capacidadMaxima = Integer.parseInt(jTableTalleresAlcaide.getValueAt(filaSeleccionada, 3).toString());
             String fechaCreacionStr = jTableTalleresAlcaide.getValueAt(filaSeleccionada, 4).toString();
+            String fechaVencimientoStr = jTableTalleresAlcaide.getValueAt(filaSeleccionada, 5).toString();
+            int reduccionCondena = Integer.parseInt(jTableTalleresAlcaide.getValueAt(filaSeleccionada, 6).toString());
 
             try {
                 SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
                 Date fechaCreacion = formatoFecha.parse(fechaCreacionStr);
+                Date fechaVencimiento = formatoFecha.parse(fechaVencimientoStr);
 
                 lblID.setText(idTaller);
                 txtNombreTaller.setText(nombreTaller);
                 jsCantidadGrupos.setValue(cantidadGrupos);
                 jsCantidadPersonas.setValue(capacidadMaxima);
                 jDateTalleresAlcaide.setDate(fechaCreacion);
+                jDateFechaVencimiento.setDate(fechaVencimiento);
+                jsCantidadTiempoCondena.setValue(reduccionCondena);
+
             } catch (ParseException e) {
                 e.printStackTrace();
                 // Manejar el error al convertir la fecha
@@ -1042,6 +1110,8 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         jsCantidadGrupos.setValue(0);
         jsCantidadPersonas.setValue(0);
         jDateTalleresAlcaide.setDate(null);
+        jDateFechaVencimiento.setDate(null);
+        jsCantidadTiempoCondena.setValue(1);
         incrementarLblId();
 
     }//GEN-LAST:event_btnNuevoMouseClicked
@@ -1059,6 +1129,55 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         resetColor(btnProfesores);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnReclusosMouseExited
+
+    private void jDateFechaVencimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFechaVencimientoPropertyChange
+        // Agregar PropertyChangeListener al jDateTalleresAlcaide
+jDateTalleresAlcaide.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("date".equals(evt.getPropertyName())) {
+            // Obtener la fecha seleccionada en jDateTalleresAlcaide
+            Date fechaTalleresAlcaide = jDateTalleresAlcaide.getDate();
+
+            // Verificar que la fecha seleccionada no sea nula
+            if (fechaTalleresAlcaide != null) {
+                // Crear un calendario con la fecha seleccionada en jDateTalleresAlcaide
+                Calendar calFechaTalleresAlcaide = Calendar.getInstance();
+                calFechaTalleresAlcaide.setTime(fechaTalleresAlcaide);
+
+                // Calcular la fecha de vencimiento sumando 3 meses a la fecha de Talleres Alcaide
+                Calendar calFechaVencimiento = (Calendar) calFechaTalleresAlcaide.clone();
+                calFechaVencimiento.add(Calendar.MONTH, 3);
+
+                // Obtener la fecha mínima permitida (3 meses después de la fecha de Talleres Alcaide)
+                Date fechaMinima = calFechaVencimiento.getTime();
+
+                // Calcular la fecha máxima permitida (6 meses después de la fecha de Talleres Alcaide)
+                calFechaVencimiento.add(Calendar.MONTH, 3);
+                calFechaVencimiento.add(Calendar.DATE, 0); // no restar ni un día para que sea menor o igual a 6 meses
+                Date fechaMaxima = calFechaVencimiento.getTime();
+
+                // Establecer las fechas mínima y máxima en el jDateFechaVencimiento
+                jDateFechaVencimiento.setMinSelectableDate(fechaMinima);
+                jDateFechaVencimiento.setMaxSelectableDate(fechaMaxima);
+
+                // Verificar si la fecha actual de jDateFechaVencimiento está dentro del rango permitido
+                Date fechaVencimientoActual = jDateFechaVencimiento.getDate();
+                if (fechaVencimientoActual != null) {
+                    if (fechaVencimientoActual.before(fechaMinima) || fechaVencimientoActual.after(fechaMaxima)) {
+                        // La fecha de vencimiento actual no cumple con los requisitos, mostrar un mensaje de advertencia
+                        JOptionPane.showMessageDialog(null,
+                                "La fecha de vencimiento debe estar entre 3 y 6 meses después de la fecha de Talleres Alcaide.",
+                                "Advertencia",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        }
+    }
+});
+
+    }//GEN-LAST:event_jDateFechaVencimientoPropertyChange
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1107,16 +1226,24 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleresAlcaide.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -1142,6 +1269,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
     private javax.swing.JPanel btnTalleres;
+    private com.toedter.calendar.JDateChooser jDateFechaVencimiento;
     private com.toedter.calendar.JDateChooser jDateTalleresAlcaide;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1151,6 +1279,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
@@ -1158,6 +1287,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1189,6 +1319,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JSpinner jsCantidadGrupos;
     private javax.swing.JSpinner jsCantidadPersonas;
+    private javax.swing.JSpinner jsCantidadTiempoCondena;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblID;

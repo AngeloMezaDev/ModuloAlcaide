@@ -149,12 +149,12 @@ public class ctrlRegistro {
     }
     // Métodos para talleres
 
-    public void cargarDatosTalleres(DefaultTableModel modeloTabla) {
+   public void cargarDatosTalleres(DefaultTableModel modeloTabla) {
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los talleres ordenados por ID
-            String sql = "SELECT ID_TALLER, NOMBRE_TALLER, CANTIDAD_GRUPOS, CAPACIDAD_MAXIMA, FECHA_CREACION FROM TalleresAlcaide ORDER BY ID_TALLER ASC";
+            String sql = "SELECT ID_TALLER, NOMBRE_TALLER, CANTIDAD_GRUPOS, CAPACIDAD_MAXIMA, FECHA_CREACION, FECHA_VENCIMIENTO, REDUCCION_CONDENA FROM TalleresAlcaide ORDER BY ID_TALLER ASC";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -168,16 +168,21 @@ public class ctrlRegistro {
                 String cantidadGrupos = resultSet.getString("CANTIDAD_GRUPOS");
                 String capacidadMaxima = resultSet.getString("CAPACIDAD_MAXIMA");
                 Date fechaCreacion = resultSet.getDate("FECHA_CREACION");
+                Date fechaVencimiento = resultSet.getDate("FECHA_VENCIMIENTO");
+                String reduccionCondena = resultSet.getString("REDUCCION_CONDENA");
 
                 // Convertir la fecha al formato deseado
                 String fechaCreacionStr = formatoFecha.format(fechaCreacion);
+                String fechaVencimientoStr = formatoFecha.format(fechaVencimiento);
 
                 Object[] fila = {
                     id,
                     nombreTaller,
                     cantidadGrupos,
                     capacidadMaxima,
-                    fechaCreacionStr
+                    fechaCreacionStr,
+                    fechaVencimientoStr,
+                    reduccionCondena
                 };
                 modeloTabla.addRow(fila);
             }
@@ -199,7 +204,7 @@ public class ctrlRegistro {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al stored procedure de agregar taller
-            String sql = "CALL sp_agregar_taller(?, ?, ?, ?)";
+            String sql = "CALL sp_agregar_taller(?, ?, ?, ?, ?, ?)";
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
@@ -207,6 +212,8 @@ public class ctrlRegistro {
             cstmt.setInt(2, taller.getCantidadGrupos());
             cstmt.setInt(3, taller.getCapacidadMaxima());
             cstmt.setDate(4, new java.sql.Date(taller.getFechaCreacion().getTime()));
+            cstmt.setDate(5, new java.sql.Date(taller.getFechaVencimiento().getTime()));
+            cstmt.setInt(6, taller.getReduccionCondena());
 
             // Ejecutar el stored procedure
             cstmt.execute();
@@ -227,7 +234,7 @@ public class ctrlRegistro {
         connectionBD.openConnection();
 
         // Crear la sentencia SQL para actualizar los datos del taller
-        String sql = "UPDATE TalleresAlcaide SET NOMBRE_TALLER = ?, CANTIDAD_GRUPOS = ?, CAPACIDAD_MAXIMA = ?, FECHA_CREACION = ? WHERE ID_TALLER = ?";
+        String sql = "UPDATE TalleresAlcaide SET NOMBRE_TALLER = ?, CANTIDAD_GRUPOS = ?, CAPACIDAD_MAXIMA = ?, FECHA_CREACION = ?, FECHA_VENCIMIENTO = ?, REDUCCION_CONDENA= ? WHERE ID_TALLER = ?";
 
         // Crear la declaración y establecer los parámetros
         PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -235,7 +242,9 @@ public class ctrlRegistro {
         statement.setInt(2, taller.getCantidadGrupos());
         statement.setInt(3, taller.getCapacidadMaxima());
         statement.setDate(4, new java.sql.Date(taller.getFechaCreacion().getTime()));
-        statement.setString(5, taller.getIdTaller());
+        statement.setDate(5, new java.sql.Date(taller.getFechaVencimiento().getTime()));
+        statement.setInt(6, taller.getReduccionCondena());
+        statement.setString(7, taller.getIdTaller());
 
         // Ejecutar la actualización
         statement.executeUpdate();
@@ -270,6 +279,7 @@ public class ctrlRegistro {
             }
         }
     }
+
 
     public void llamarStoredProcGenerarID() {
         try {

@@ -4,7 +4,10 @@
  */
 package CONTROLADOR;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -14,9 +17,30 @@ import javax.swing.JOptionPane;
  * @author Yordan
  */
 public class Validaciones {
+    //Método para validar usuarios
+
+    public String validarNombreUsuario(String nombre) {
+        // Verificar que el nombre de usuario no exceda el límite de 12 caracteres
+        if (nombre.length() > 12) {
+            JOptionPane.showMessageDialog(null,
+                    "El nombre de usuario excede el límite de 12 caracteres.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return ""; // Detener el evento o la función si el nombre es demasiado largo
+        }
+        // Verificar que el nombre de usuario tenga al menos 8 caracteres
+        if (nombre.length() < 8) {
+            JOptionPane.showMessageDialog(null,
+                    "El nombre de usuario debe tener al menos 8 caracteres.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return ""; // Detener el evento o la función si el nombre es demasiado corto
+        }
+        return nombre;
+    }
     // Método para validar que solo se ingresen letras
 
-    public void validarSoloLetras(java.awt.event.KeyEvent evt) {
+    public void validarSoloLetras(KeyEvent evt) {
         char c = evt.getKeyChar();
         if (!Character.isLetter(c) && c != KeyEvent.VK_BACK_SPACE && c != ' ') {
             evt.consume();
@@ -28,7 +52,8 @@ public class Validaciones {
         }
     }
 
-    public void validarCedula(java.awt.event.KeyEvent evt, String cedula) {
+    // Método para validar que solo se ingresen números y un máximo de 10 dígitos
+    public void validarCedula(KeyEvent evt, String cedula) {
         char c = evt.getKeyChar();
         // Verificar si la tecla presionada es un número y si ya hay 10 dígitos en el campo.
         if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE || cedula.length() >= 10) {
@@ -41,6 +66,7 @@ public class Validaciones {
         }
     }
 
+    // Método para validar que la contraseña cumpla con ciertas condiciones
     public String validadContrasena(String contrasena) {
         // Verificar que la contraseña tenga al menos 8 caracteres
         if (contrasena.length() < 8) {
@@ -94,23 +120,4 @@ public class Validaciones {
         }
     }
 
-    public String validarNombreUsuario(String nombre) {
-        // Verificar que el nombre de usuario no exceda el límite de 255 caracteres
-        if (nombre.length() > 65) {
-            JOptionPane.showMessageDialog(null,
-                    "El nombre de usuario excede el límite de 65 caracteres.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return ""; // Detener el evento o la función si el nombre es demasiado largo
-        }
-        // Verificar que el nombre de usuario tenga al menos 8 caracteres
-        if (nombre.length() < 8) {
-            JOptionPane.showMessageDialog(null,
-                    "El nombre de usuario debe tener al menos 8 caracteres.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return ""; // Detener el evento o la función si el nombre es demasiado corto
-        }
-        return nombre;
-    }
 }

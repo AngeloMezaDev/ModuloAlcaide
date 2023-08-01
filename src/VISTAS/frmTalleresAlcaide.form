@@ -656,7 +656,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="290" y="300" width="1080" height="300"/>
+              <AbsoluteConstraints x="290" y="360" width="1080" height="240"/>
             </Constraint>
           </Constraints>
 
@@ -672,14 +672,17 @@
                   </Border>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="1">
+                  <Table columnCount="7" rowCount="1">
                     <Column editable="true" title="ID" type="java.lang.Object"/>
                     <Column editable="true" title="Nombre del taller" type="java.lang.String"/>
                     <Column editable="true" title="Cantidad de grupos" type="java.lang.String"/>
                     <Column editable="true" title="Capacidad m&#xe1;xima" type="java.lang.String"/>
                     <Column editable="true" title="Fecha de creaci&#xf3;n" type="java.lang.Object"/>
+                    <Column editable="true" title="Fecha de vencimiento" type="java.lang.Object"/>
+                    <Column editable="true" title="Tiempo de condena (meses)" type="java.lang.String"/>
                   </Table>
                 </Property>
+                <Property name="autoResizeMode" type="int" value="4"/>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="false">
@@ -706,7 +709,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[5, 5]"/>
+                  <Dimension value="[2, 2]"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -735,67 +738,68 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="jLabel16" min="-2" pref="22" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="jPFecha" min="-2" pref="215" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jSeparator4" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jPNombre" alignment="1" min="-2" pref="210" max="-2" attributes="0"/>
+                                      <Component id="jSeparator3" min="-2" pref="227" max="-2" attributes="0"/>
+                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jPNombre" alignment="1" min="-2" pref="210" max="-2" attributes="0"/>
-                                          <Component id="jSeparator3" min="-2" pref="227" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                                      <Component id="jLabel16" min="-2" pref="22" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="jPFecha" min="-2" pref="215" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jSeparator4" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jSeparator6" alignment="1" max="32767" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                                      <Component id="jLabel19" min="-2" pref="129" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="14" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPCampoNombre" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jPCampoFecha" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jSeparator7" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jPCampoNombre" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jPCampoFecha" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jSeparator7" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jDateFechaVencimiento" min="-2" pref="220" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Component id="jSeparator5" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jSeparator8" min="-2" pref="576" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="panelAgregar" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="panelCancelar" min="-2" pref="138" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="panelEditar" min="-2" pref="140" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="panelEliminar" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="panelAgregar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="panelCancelar" min="-2" pref="138" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="panelEditar" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="panelEliminar" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jsCantidadPersonas" min="-2" max="-2" attributes="0"/>
@@ -804,9 +808,20 @@
                                       <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jsCantidadGrupos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="348" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="341" max="-2" attributes="0"/>
                                       <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jsCantidadTiempoCondena" min="-2" pref="49" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jSeparator8" min="-2" pref="576" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -819,14 +834,14 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jsCantidadGrupos" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Component id="btnNuevo" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -835,7 +850,12 @@
                           <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jsCantidadPersonas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel17" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="jsCantidadTiempoCondena" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -865,7 +885,7 @@
                               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -873,25 +893,28 @@
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="jSeparator4" min="-2" pref="17" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPFecha" min="-2" pref="35" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="jPFecha" min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="jPCampoNombre" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jPCampoFecha" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jPCampoFecha" min="-2" pref="38" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jSeparator7" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                              <Component id="jSeparator6" min="-2" pref="17" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jDateFechaVencimiento" min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jSeparator7" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1166,7 +1189,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="40" y="10" width="-1" height="-1"/>
+                      <AbsoluteConstraints x="40" y="0" width="-1" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1181,7 +1204,7 @@
                 <Component class="javax.swing.JTextField" name="txtNombreTaller">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="-2" y="0" width="220" height="30"/>
+                      <AbsoluteConstraints x="0" y="0" width="220" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1198,17 +1221,24 @@
                 <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel19">
+                <Component class="javax.swing.JSeparator" name="jSeparator6">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                      <AbsoluteConstraints x="0" y="30" width="221" height="17"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel25">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Fecha:"/>
+                    <Property name="text" type="java.lang.String" value="Fecha de Creaci&#xf3;n:"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="40" y="10" width="43" height="-1"/>
+                      <AbsoluteConstraints x="40" y="0" width="110" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -1231,14 +1261,12 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="220" height="40"/>
+                      <AbsoluteConstraints x="0" y="10" width="220" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JSeparator" name="jSeparator6">
-            </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator7">
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator8">
@@ -1255,6 +1283,40 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNuevoMouseClicked"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel17">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="text" type="java.lang.String" value="Tiempo de reduccion  de condena (meses) :"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSpinner" name="jsCantidadTiempoCondena">
+              <Properties>
+                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                  <SpinnerModel initial="1" maximum="6" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="jDateFechaVencimiento">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd "/>
+              </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jDateFechaVencimientoPropertyChange"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel19">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Fecha de Finalizaci&#xf3;n:"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
