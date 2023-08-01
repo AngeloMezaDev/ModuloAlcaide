@@ -1,10 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package VISTAS;
 
+import CONTROLADOR.ctrlReclusos;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -17,15 +19,21 @@ public class frmReclusos extends javax.swing.JFrame {
     /**
      * Creates new form frmReclusos
      */
+
+    private ctrlReclusos controlador;
     private static String usuario = ""; 
     private static String contrasena = "";
-    
+    //Date fechaRegistrada = controlador.cargarFecha();
     public frmReclusos(String usuario,String contrasena) {
         initComponents();
         this.usuario = usuario; 
         this.contrasena = contrasena;
-        lblUsuario.setText(usuario);
-        lblContrasena.setText(contrasena);
+        controlador = new ctrlReclusos();
+        // Deshabilita la interacción del usuario con el JCalendar
+    
+        controlador.cargarDatosTalleres(cldAgenda);
+        cldAgenda.setEnabled(false);
+       
     }
 
     /**
@@ -63,9 +71,7 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        lblUsuario = new javax.swing.JLabel();
-        lblContrasena = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        cldAgenda = new com.toedter.calendar.JCalendar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -300,43 +306,46 @@ public class frmReclusos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel7)
-                .addGap(31, 31, 31)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addGap(160, 160, 160)
+                .addComponent(jLabel7)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, -1, -1));
+        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 860, -1));
 
-        lblUsuario.setText("Usuario");
-        jPanelBackGround.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, -1, -1));
-
-        lblContrasena.setText("Contrasena");
-        jPanelBackGround.add(lblContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, -1, -1));
-
-        jLabel4.setText("Usuario");
-        jPanelBackGround.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, -1));
+        cldAgenda.setBackground(new java.awt.Color(153, 255, 153));
+        cldAgenda.setDecorationBordersVisible(true);
+        cldAgenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cldAgendaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cldAgendaMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cldAgendaMousePressed(evt);
+            }
+        });
+        jPanelBackGround.add(cldAgenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 930, 330));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -412,6 +421,71 @@ public class frmReclusos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel14MouseClicked
 
+    private void cldAgendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseClicked
+        // Obtener la fecha seleccionada del calendario
+    java.util.Date selectedDate = cldAgenda.getDate();
+
+    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+    java.util.Date targetDate = null;
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        targetDate = sdf.parse("2023-07-31");
+    } catch (ParseException ex) {
+        ex.printStackTrace();
+    }
+
+    if (selectedDate != null && selectedDate.equals(targetDate)) {
+        // Mostrar el mensaje para la fecha seleccionada
+        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+        System.out.println("Si vale");
+    }
+
+    }//GEN-LAST:event_cldAgendaMouseClicked
+
+    private void cldAgendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseEntered
+            // Obtener la fecha seleccionada del calendario
+    java.util.Date selectedDate = cldAgenda.getDate();
+
+    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+    java.util.Date targetDate = null;
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        targetDate = sdf.parse("2023-07-31");
+    } catch (ParseException ex) {
+        ex.printStackTrace();
+    }
+
+    if (selectedDate != null && selectedDate.equals(targetDate)) {
+        // Mostrar el mensaje para la fecha seleccionada
+        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+        System.out.println("Si vale");
+    }
+
+    }//GEN-LAST:event_cldAgendaMouseEntered
+
+    private void cldAgendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMousePressed
+               // Obtener la fecha seleccionada del calendario
+    java.util.Date selectedDate = cldAgenda.getDate();
+
+    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
+    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
+    java.util.Date targetDate = null;
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        targetDate = sdf.parse("2023-07-31");
+    } catch (ParseException ex) {
+        ex.printStackTrace();
+    }
+
+    if (selectedDate != null && selectedDate.equals(targetDate)) {
+        // Mostrar el mensaje para la fecha seleccionada
+        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
+        System.out.println("Si vale");
+    }
+    }//GEN-LAST:event_cldAgendaMousePressed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -462,6 +536,7 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
     private javax.swing.JPanel btnPerfil;
+    private com.toedter.calendar.JCalendar cldAgenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -471,7 +546,6 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -484,8 +558,6 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblContrasena;
     private javax.swing.JLabel lblExit2;
-    private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }

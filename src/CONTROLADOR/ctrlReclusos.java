@@ -7,6 +7,10 @@ package CONTROLADOR;
 import MODELO.AsignacionRecluso;
 import MODELO.ConnectionBD;
 import MODELO.Recluso;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDayChooser;
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +20,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -111,8 +117,83 @@ public class ctrlReclusos {
             }
         }
     }
-    
-       // Método para calcular la edad a partir de la fecha de nacimiento
+public void cargarDatosTalleres(JCalendar cldAgenda) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL 
+            String sql = "SELECT r.id_recluso, r.nombres || ' ' || r.apellidos AS nombre_recluso, a.tipo_asignacion, CASE WHEN a.tipo_asignacion = 'Actividad' THEN" +
+            " act.fecha_hora_actividad  WHEN a.tipo_asignacion = 'Taller' THEN TO_CHAR(t.FECHA_CREACION, 'YYYY-MM-DD HH24:MI:SS')" +
+            " ELSE NULL END AS fecha_asignacion FROM Reclusos r" +
+            " JOIN AsignacionRecluso a ON r.id_recluso = a.id_recluso" +
+            " LEFT JOIN actividades act ON a.Id_ActividadTaller = act.id_actividad" +
+            " LEFT JOIN TalleresAlcaide t ON a.Id_ActividadTaller = t.ID_TALLER" +
+            " WHERE r.id_recluso = ?";
+
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, id_recluso);
+            ResultSet resultSet = statement.executeQuery();           
+            // Recorrer el resultado           
+            while (resultSet.next()) {
+                String fechaCreacion =resultSet.getString("fecha_asignacion");
+                // Setear el JCalendar con la fecha de creación
+                cldAgenda.setDate(fecha(fechaCreacion));
+                
+            }
+            System.out.println("Datos de talleres cargados correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de los talleres: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+     public Date cargarFecha() {
+         String fechaCreacion = ""; 
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL 
+            String sql = "SELECT r.id_recluso, r.nombres || ' ' || r.apellidos AS nombre_recluso, a.tipo_asignacion, CASE WHEN a.tipo_asignacion = 'Actividad' THEN" +
+            " act.fecha_hora_actividad  WHEN a.tipo_asignacion = 'Taller' THEN TO_CHAR(t.FECHA_CREACION, 'YYYY-MM-DD HH24:MI:SS')" +
+            " ELSE NULL END AS fecha_asignacion FROM Reclusos r" +
+            " JOIN AsignacionRecluso a ON r.id_recluso = a.id_recluso" +
+            " LEFT JOIN actividades act ON a.Id_ActividadTaller = act.id_actividad" +
+            " LEFT JOIN TalleresAlcaide t ON a.Id_ActividadTaller = t.ID_TALLER" +
+            " WHERE r.id_recluso = ?";
+
+
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, id_recluso);
+            ResultSet resultSet = statement.executeQuery();           
+            // Recorrer el resultado           
+            while (resultSet.next()) {
+                fechaCreacion =resultSet.getString("fecha_asignacion");
+                // Setear el JCalendar con la fecha de creación
+              
+            }
+            System.out.println("Datos de talleres cargados correctamente.");
+            
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de los talleres: " + e.getMessage());
+            
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+        return  fecha(fechaCreacion);
+    }
+
+// Método para calcular la edad a partir de la fecha de nacimiento
      public String calcularEdad(String fechaNacimiento) {
         try {
 
@@ -150,6 +231,18 @@ public String obtenerSoloFecha(String fechaNac) {
             return "Error"; // O cualquier otra cadena que desees devolver en caso de error
         }
     }
-   
+  public Date fecha(String columnName) {
+    try {
+        String dateString = columnName;
+        if (dateString != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return dateFormat.parse(dateString);
+        }
+    } catch (ParseException e) {
+        // Aquí puedes decidir cómo manejar la excepción, por ejemplo, imprimir un mensaje de error.
+        System.err.println("Error al obtener o formatear la fecha: " + e.getMessage());
+    }
+    return null; // En caso de error o valor nulo, devuelve null.
+} 
 
 }
