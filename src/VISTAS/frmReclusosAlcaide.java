@@ -364,6 +364,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
@@ -692,31 +693,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
+        resetColor(btnTalleres);
         resetColor(btnActividades);
-        setColor(btnTalleres);
         resetColor(btnProfesores);
-        resetColor(btnReclusos);
+        setColor(btnReclusos);
 
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        setColor(btnActividades);
-        setColor(btnTalleres);
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
         resetColor(btnProfesores);
-        resetColor(btnReclusos);
+        setColor(btnReclusos);
     }//GEN-LAST:event_btnTalleresMouseExited
-
-    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
-
-    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
         setColor(btnActividades);
@@ -789,23 +778,23 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_CmbAsignacionReclusoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-         List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
-        if(asignaciones.isEmpty()){
-                JOptionPane.showMessageDialog(this,
-                        "No existen Asignaciones aun\n"
-                                + "Cree primero un asignacion para poder editar.",
-                        "Advertencia",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-        }else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
-                    || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
-                    || lblEdad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
-                        "Advertencia",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
+        if (asignaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder editar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
+                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         // Obtener los datos del asigancion a editar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
@@ -917,18 +906,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         String Cmbrecluso = (String) CmbReclusosExistentes.getSelectedItem();
         List<Recluso> reclusos = controlador.cargarDatosRecluso();
         String IDrecluso = "";
-        int edad=0;
+        int edad = 0;
         for (Recluso reo : reclusos) {
             if ((reo.getNombres() + " " + reo.getApellidos()).equalsIgnoreCase(Cmbrecluso)) {
                 IDrecluso = reo.getCodigoRecluso();
-                edad=reo.CalcularEdad(reo.getFechaNacimiento());
+                edad = reo.CalcularEdad(reo.getFechaNacimiento());
             }
         }
         lbl_IDrecluso.setText(IDrecluso);
-        if(edad==0){
+        if (edad == 0) {
             lblEdad.setText("");
-        }else{
-        lblEdad.setText(edad+" años");}
+        } else {
+            lblEdad.setText(edad + " años");
+        }
     }//GEN-LAST:event_CmbReclusosExistentesItemStateChanged
 
     private void CmbAsignacionReclusoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoItemStateChanged
@@ -977,23 +967,23 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
-        if(asignaciones.isEmpty()){
-                JOptionPane.showMessageDialog(this,
-                        "No existen Asignaciones aun\n"
-                                + "Cree primero un asignacion para poder eliminar.",
-                        "Advertencia",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-        }else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
-                    || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
-                    || lblEdad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
-                        "Advertencia",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
+        if (asignaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder eliminar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
+                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         // Obtener los datos del asigancion a Eliminar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
@@ -1053,6 +1043,20 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             JTableAsigancionRecluso.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
         }
     }//GEN-LAST:event_JTableAsigancionReclusoMouseClicked
+
+    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnProfesores);
+        setColor(btnReclusos);
+    }//GEN-LAST:event_btnReclusosMouseExited
+
+    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnProfesores);
+        setColor(btnReclusos);
+    }//GEN-LAST:event_btnProfesoresMouseExited
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }

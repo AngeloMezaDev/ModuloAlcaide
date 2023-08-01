@@ -233,7 +233,7 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         jLabel15.setText("Fecha Nacimiento:");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
 
-        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd");
         jDateFechaNacimiento.setFocusable(false);
         jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 140, -1));
         jPanel1.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));

@@ -391,7 +391,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jDateFechaNacimiento">
           <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd HH:mm:ss"/>
+            <Property name="dateFormatString" type="java.lang.String" value="yyyy/MM/dd"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Constraints>

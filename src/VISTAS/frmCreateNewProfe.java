@@ -239,7 +239,7 @@ public class frmCreateNewProfe extends javax.swing.JFrame {
         jLabel14.setText("Fecha Nacimiento:");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
 
-        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd");
         jDateFechaNacimiento.setFocusable(false);
         jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, 140, -1));
         jPanel1.add(txtPasswordProf, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 170, -1));
