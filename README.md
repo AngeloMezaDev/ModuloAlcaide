@@ -10,15 +10,3 @@ User: Alcaide
 
 Password: admin
 
-Branch Profesores
-
-User: Profesor
-
-Password: profesor
-
-
-Branch Reclusos
-
-User: Recluso
-
-Password: recluso
