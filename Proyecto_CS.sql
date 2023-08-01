@@ -108,6 +108,10 @@ CREATE TABLE TalleresAlcaide (
     CAPACIDAD_MAXIMA NUMBER,
     FECHA_CREACION DATE
 );
+--Añadir dos nuevas columnas a la tabla TalleresAlcaide
+ALTER TABLE TalleresAlcaide
+ADD (FECHA_VENCIMIENTO DATE, REDUCCION_CONDENA NUMBER);
+
 ----------------------------------------------------------------------------------------------------------
 
 //Creacion de Tabla Grupos Talleres
@@ -122,7 +126,9 @@ CREATE OR REPLACE PROCEDURE sp_agregar_taller(
     p_nombre IN VARCHAR2,
     p_cantidad_grupos IN NUMBER,
     p_capacidad_maxima IN NUMBER,
-    p_fecha_creacion IN DATE
+    p_fecha_creacion IN DATE,
+    p_fecha_vencimiento IN DATE,
+    p_reduccion_condena IN NUMBER
 )
 AS
     v_new_id VARCHAR2(5);
@@ -135,8 +141,8 @@ BEGIN
     FROM TalleresAlcaide;
 
     -- Insertar el nuevo taller
-    INSERT INTO TalleresAlcaide(ID_TALLER, NOMBRE_TALLER, CANTIDAD_GRUPOS, CAPACIDAD_MAXIMA, FECHA_CREACION)
-    VALUES (v_new_id, p_nombre, p_cantidad_grupos, p_capacidad_maxima, p_fecha_creacion);
+    INSERT INTO TalleresAlcaide(ID_TALLER, NOMBRE_TALLER, CANTIDAD_GRUPOS, CAPACIDAD_MAXIMA, FECHA_CREACION, FECHA_VENCIMIENTO, REDUCCION_CONDENA)
+    VALUES (v_new_id, p_nombre, p_cantidad_grupos, p_capacidad_maxima, p_fecha_creacion, p_fecha_vencimiento, p_reduccion_condena);
 
     -- Obtener la cantidad de grupos del taller
     SELECT p_cantidad_grupos INTO v_cantidad_grupos FROM DUAL;
@@ -170,11 +176,13 @@ END;
 
 -- Crear el stored procedure para editar un taller
 CREATE OR REPLACE PROCEDURE sp_editar_taller(
-    p_id IN NUMBER,
+    p_id IN VARCHAR2,
     p_nombre IN VARCHAR2,
     p_cantidad_grupos IN NUMBER,
     p_capacidad_maxima IN NUMBER,
-    p_fecha_creacion IN DATE
+    p_fecha_creacion IN DATE,
+    p_fecha_vencimiento IN DATE,
+    p_reduccion_condena IN NUMBER
 )
 IS
 BEGIN
@@ -182,12 +190,15 @@ BEGIN
     SET NOMBRE_TALLER = p_nombre,
         CANTIDAD_GRUPOS = p_cantidad_grupos,
         CAPACIDAD_MAXIMA = p_capacidad_maxima,
-        FECHA_CREACION = p_fecha_creacion
+        FECHA_CREACION = p_fecha_creacion,
+        FECHA_VENCIMIENTO = p_fecha_vencimiento,
+        REDUCCION_CONDENA = p_reduccion_condena
     WHERE ID_TALLER = p_id;
     
     COMMIT;
 END;
 /
+
 
 
 --Crear eliminar taller
@@ -215,8 +226,9 @@ BEGIN
     END LOOP;
 
     COMMIT;
-END;
+END;    
 /
+
 ----------------------------------------------------------------------------------------------------------
 -- Creación de la Tabla Profesores del modulo Alcaide
 
@@ -632,5 +644,3 @@ BEGIN
     DELETE FROM AsignacionProfesor WHERE id_docente = :OLD.id_profesor;
 END;
 /
-
-
