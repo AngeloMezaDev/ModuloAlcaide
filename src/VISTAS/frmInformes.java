@@ -34,9 +34,6 @@ public class frmInformes extends javax.swing.JFrame {
         btnAsistencias = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        btnCalificaciones = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         btnInformes = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -116,55 +113,6 @@ public class frmInformes extends javax.swing.JFrame {
 
         JPanelMenu.add(btnAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnCalificaciones.setBackground(new java.awt.Color(64, 43, 100));
-        btnCalificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCalificaciones.setPreferredSize(new java.awt.Dimension(126, 50));
-        btnCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCalificacionesMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCalificacionesMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCalificacionesMouseExited(evt);
-            }
-        });
-
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("CALIFICACIONES");
-        jLabel5.setName(""); // NOI18N
-
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/calificaciones1.png"))); // NOI18N
-        jLabel13.setMaximumSize(new java.awt.Dimension(32, 32));
-        jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
-        jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
-
-        javax.swing.GroupLayout btnCalificacionesLayout = new javax.swing.GroupLayout(btnCalificaciones);
-        btnCalificaciones.setLayout(btnCalificacionesLayout);
-        btnCalificacionesLayout.setHorizontalGroup(
-            btnCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel5))
-        );
-        btnCalificacionesLayout.setVerticalGroup(
-            btnCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel5))
-        );
-
-        JPanelMenu.add(btnCalificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
-
         btnInformes.setBackground(new java.awt.Color(64, 43, 100));
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
@@ -208,7 +156,7 @@ public class frmInformes extends javax.swing.JFrame {
                 .addComponent(jLabel7))
         );
 
-        JPanelMenu.add(btnInformes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
+        JPanelMenu.add(btnInformes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
         JPanelMenu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
@@ -393,38 +341,22 @@ public class frmInformes extends javax.swing.JFrame {
 
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
-        resetColor(btnCalificaciones);
         resetColor(btnInformes);
     }//GEN-LAST:event_btnAsistenciasMouseEntered
 
     private void btnAsistenciasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseExited
         setColor(btnInformes);
         resetColor(btnAsistencias);
-        resetColor(btnCalificaciones);
     }//GEN-LAST:event_btnAsistenciasMouseExited
-
-    private void btnCalificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseEntered
-        setColor(btnCalificaciones);
-        resetColor(btnAsistencias);
-        resetColor(btnInformes);
-    }//GEN-LAST:event_btnCalificacionesMouseEntered
-
-    private void btnCalificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseExited
-        setColor(btnInformes);
-        resetColor(btnAsistencias);
-        resetColor(btnCalificaciones);
-    }//GEN-LAST:event_btnCalificacionesMouseExited
 
     private void btnInformesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseEntered
         setColor(btnInformes);
-        resetColor(btnCalificaciones);
         resetColor(btnAsistencias);
     }//GEN-LAST:event_btnInformesMouseEntered
 
     private void btnInformesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseExited
         setColor(btnInformes);
         resetColor(btnAsistencias);
-        resetColor(btnCalificaciones);
     }//GEN-LAST:event_btnInformesMouseExited
 
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
@@ -469,13 +401,6 @@ public class frmInformes extends javax.swing.JFrame {
         this.dispose();
         Profesor.setVisible(true);
     }//GEN-LAST:event_btnAsistenciasMouseClicked
-
-    private void btnCalificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseClicked
-        // TODO add your handling code here:
-        frmCalificacion Calificacion = new frmCalificacion();
-        this.dispose();
-        Calificacion.setVisible(true);                                 
-    }//GEN-LAST:event_btnCalificacionesMouseClicked
 
     private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
         // TODO add your handling code here:
@@ -532,7 +457,6 @@ public class frmInformes extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
-    private javax.swing.JPanel btnCalificaciones;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnSalir;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -540,11 +464,9 @@ public class frmInformes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanelExit2;
