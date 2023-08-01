@@ -1,5 +1,7 @@
 package CONTROLADOR;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Angelo Meza
@@ -39,5 +41,6 @@ public class Excepciones {
         public CuentaBloqueadaException(String message) {
             super(message);
         }
+        
     }
 }

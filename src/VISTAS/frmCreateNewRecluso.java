@@ -4,9 +4,8 @@
  */
 package VISTAS;
 
-
+import CONTROLADOR.Validaciones;
 import CONTROLADOR.ctrlRegistroReclusos;
-import MODELO.Actividad;
 import MODELO.Recluso;
 import java.awt.Color;
 import java.util.Date;
@@ -25,10 +24,12 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
      * Creates new form frmCreateNewProfe
      */
     private ctrlRegistroReclusos controlador;
+    private Validaciones valido;
 
     public frmCreateNewRecluso() {
         initComponents();
         controlador = new ctrlRegistroReclusos(); // Inicializar la instancia de la clase controladora
+        valido = new Validaciones();
         controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
         JTableReclusosExistentes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -147,22 +148,52 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
 
         jLabel1.setText("Nombres:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+
+        txtNombresReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresReoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 170, -1));
 
         jLabel2.setText("Apellidos:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+
+        txtApellidosReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosReoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 170, -1));
 
         jLabel3.setText("Cédula:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
+
+        txtCedulaReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaReoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
 
         jLabel4.setText("Tiempo Condena (Años):");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+
+        txtAniosCondena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAniosCondenaKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 80, -1));
 
         jLabel5.setText("Delito:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
+
+        txtDelitoReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDelitoReoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtDelitoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, 170, -1));
 
         jSeparator1.setBackground(new java.awt.Color(153, 153, 255));
@@ -171,6 +202,12 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
 
         jLabel6.setText("Usuario:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
+
+        txtUsuarioReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioReoKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtUsuarioReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 18)); // NOI18N
@@ -196,14 +233,10 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         jLabel15.setText("Fecha Nacimiento:");
         jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
 
-        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd");
         jDateFechaNacimiento.setFocusable(false);
         jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 140, -1));
-
-        txtPasswordReo.setText("jPasswordField1");
         jPanel1.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
-
-        txtPasswConfirmReo.setText("jPasswordField1");
         jPanel1.add(txtPasswConfirmReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 650, 350));
@@ -303,7 +336,9 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
+        frmReclusosAlcaide reclu = new frmReclusosAlcaide();
         this.dispose();
+        reclu.setVisible(true);
     }//GEN-LAST:event_lblExit2MouseClicked
 
     private void lblExit2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseEntered
@@ -316,48 +351,68 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmProfesoresAlcaide profeAlc = new frmProfesoresAlcaide();
+        frmReclusosAlcaide reclu = new frmReclusosAlcaide();
         this.dispose();
-        profeAlc.setVisible(true);
+        reclu.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarReclusoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarReclusoNuevoActionPerformed
 
         try {
             // Obtener los valores de los campos de texto
-            String cedulaRecluso= txtCedulaReo.getText();
             String codigoRecluso = "#R0001";
             String cedula = txtCedulaReo.getText();
             String nombres = txtNombresReo.getText();
             String apellidos = txtApellidosReo.getText();
-            String correo = txtCorreoReo.getText();
-            String usuario = txtUsuarioReo.getText();
+            String correo = valido.validarCorreoElectronico(txtCorreoReo.getText());
+            String usuario = valido.validarNombreUsuario(txtUsuarioReo.getText());
             char[] password = txtPasswordReo.getPassword();
-            String contra= new String(password);
+            char[] passwordConfirm = txtPasswConfirmReo.getPassword();
+            String contraConfirm = new String(passwordConfirm);
+            String contra = valido.validadContrasena(new String(password));
             int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
             String delito = txtDelitoReo.getText();
-            Date fechaNac=jDateFechaNacimiento.getDate();
+            Date fechaNac = jDateFechaNacimiento.getDate();
 
-            // Crear la instancia de Recluso
-            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, contra, correo,fechaNac);
-            codigoRecluso = recluso.GenerarIdRecluso(cedula);
-            recluso.setCodigoRecluso(codigoRecluso);//asignar el id generado
-            // Crear el mensaje de confirmación
-            String mensaje = "¿Deseas Registar al recluso: " + recluso.getNombres()+" "+ recluso.getApellidos()+ "?";
-            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
-            // Verificar la opción seleccionada
-            if (opcion == JOptionPane.YES_OPTION) {
-                // Guardar los datos en la base de datos
-                 controlador.RegistrarNuevoRecluso(recluso);
-                limpiarInputs();
-            } else {
-                // Detener el evento
+            //validar campos vacios
+            if (txtCedulaReo.getText().isEmpty() || txtNombresReo.getText().isEmpty() || txtApellidosReo.getText().isEmpty() 
+                    || txtCorreoReo.getText().isEmpty() || txtAniosCondena.getText().isEmpty()
+                    || txtUsuarioReo.getText().isEmpty() || password.length==0 || passwordConfirm.length==0|| txtDelitoReo.getText().isEmpty() || fechaNac == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
+            } else {
+                if (!contra.equals(contraConfirm)) {
+                    JOptionPane.showMessageDialog(this,
+                            "La contraseña no coincide con la confirmacion, por favor verifique sean iguales",
+                            "Advertencia",
+                            JOptionPane.WARNING_MESSAGE);
+                    // Detener el evento
+                    return;
+                } else {
+                    // Crear la instancia de Recluso
+                    Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, contra, correo, fechaNac);
+                    codigoRecluso = recluso.GenerarIdRecluso(cedula);
+                    recluso.setCodigoRecluso(codigoRecluso);//asignar el id generado
+                    // Crear el mensaje de confirmación
+                    String mensaje = "¿Deseas Registar al recluso: " + recluso.getNombres() + " " + recluso.getApellidos() + "?";
+                    int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+                    // Verificar la opción seleccionada
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        // Guardar los datos en la base de datos
+                        controlador.RegistrarNuevoRecluso(recluso);
+                        limpiarInputs();
+                    } else {
+                        // Detener el evento
+                        return;
+                    }
+                }
+                // Mostrar mensaje al usuario
+                JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
             }
-            
 
-            // Mostrar mensaje al usuario
-            JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
         }
@@ -368,66 +423,95 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
 
     private void btnEditarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarReoActionPerformed
         // Obtener los datos del profesor a editar
-            String cedulaRecluso= txtCedulaReo.getText();
-            String codigoRecluso = lbl_idRecluso.getText();
-            String cedula = txtCedulaReo.getText();
-            String nombres = txtNombresReo.getText();
-            String apellidos = txtApellidosReo.getText();
-            String correo = txtCorreoReo.getText();
-            String usuario = txtUsuarioReo.getText();
-            char[] password = txtPasswordReo.getPassword();
-            String Nuevacontra= new String(password);
-            int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
-            String delito = txtDelitoReo.getText();
-            Date fechaNac=jDateFechaNacimiento.getDate();
-
-        // Verificar que los campos no estén vacíos
-        if (codigoRecluso.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || correo.isEmpty() || usuario.isEmpty()|| Nuevacontra.isEmpty()
-                || (""+TimeCondena).isEmpty()|| delito.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // Detener la ejecución del método
+        String codigoRecluso = lbl_idRecluso.getText();
+        if (!controlador.existeRecluso(codigoRecluso)) {
+            JOptionPane.showMessageDialog(this,
+                    "El recluso con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un Recluso/a .",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        // Crear la instancia de Recluso
-            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo,fechaNac);
+        String cedula = txtCedulaReo.getText();
+        String nombres = txtNombresReo.getText();
+        String apellidos = txtApellidosReo.getText();
+        String correo = valido.validarCorreoElectronico(txtCorreoReo.getText());
+        String usuario = valido.validarNombreUsuario(txtUsuarioReo.getText());
+        char[] password = txtPasswordReo.getPassword();
+        String Nuevacontra = new String(password);
+        char[] passwordConf = txtPasswConfirmReo.getPassword();
+        String NuevaContraConf = new String(passwordConf);
+        int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
+        String delito = txtDelitoReo.getText();
+        Date fechaNac = jDateFechaNacimiento.getDate();
+
+        if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || txtAniosCondena.getText().isEmpty() || NuevaContraConf.isEmpty()
+                || usuario.isEmpty() || NuevaContraConf.isEmpty() || delito.isEmpty() || fechaNac == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Crear la instancia de Recluso
+            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo, fechaNac);
             // Crear el mensaje de confirmación
-            String mensaje = "¿Deseas Modificar al recluso: " + recluso.getNombres()+" "+ recluso.getApellidos()+ "?";
+            String mensaje = "¿Deseas Modificar al recluso: " + recluso.getNombres() + " " + recluso.getApellidos() + " ?";
             int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
             // Verificar la opción seleccionada
             if (opcion == JOptionPane.YES_OPTION) {
                 // Guardar los datos en la base de datos
-                 controlador.EditarRecluso(recluso);
+                controlador.EditarRecluso(recluso);
                 limpiarInputs();
             } else {
                 // Detener el evento
                 return;
             }
+        }
         // Actualizar la tabla de profesores con los datos actualizados
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableReclusosExistentes.getModel();
         modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
         controlador.cargarDatosRecluso(modeloTabla);
 
         // Mostrar un mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Profesor editado correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Recluso editado correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_btnEditarReoActionPerformed
 
     private void btnEliminarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarReoActionPerformed
         // Obtener el ID del profesor seleccionado
         String idRecluso = lbl_idRecluso.getText();
-        String nombreReo=txtNombresReo.getText()+" "+ txtApellidosReo.getText();
-        limpiarInputs();
+        if (!controlador.existeRecluso(idRecluso)) {
+            JOptionPane.showMessageDialog(this,
+                    "El recluso con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un Recluso/a .",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombreReo = txtNombresReo.getText() + " " + txtApellidosReo.getText();
+        int asignaciones = controlador.consultarAsignacionesRecluso(idRecluso);
+
+        //Verificar si tiene asiganciones hechas
+        if (asignaciones >= 1) {
+            JOptionPane.showMessageDialog(this,
+                    " " + nombreReo + "tiene " + asignaciones + " Asigancion/es"
+                    + "\nSi elimina este Recluso/a tambien se"
+                    + "\neliminaran sus asiganciones",
+                    "Advertencia Eliminacion",
+                    JOptionPane.WARNING_MESSAGE);
+        }
         // Crear el mensaje de confirmación
-            String mensaje = "¿Deseas Eliminar al recluso: " + nombreReo+ " ?";
-            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
-            // Verificar la opción seleccionada
-            if (opcion == JOptionPane.YES_OPTION) {
-                // Llamar al método eliminarProfesor del controlador
-                controlador.eliminarRecluso(idRecluso);
-                limpiarInputs();
-            } else {
-                // Detener el evento
-                return;
-            }
+        String mensaje = "¿Deseas Eliminar al recluso: " + nombreReo + " ?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarProfesor del controlador
+            controlador.eliminarRecluso(idRecluso);
+        } else {
+            // Detener el evento
+            return;
+        }
+        limpiarInputs();
         // Actualizar la tabla de profesores (si es necesario)
         controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
     }//GEN-LAST:event_btnEliminarReoActionPerformed
@@ -452,7 +536,7 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         String correo = reo.getCorreo();
         String usuario = reo.getUser();
         String contrasena = reo.getPassword();
-
+        Date fechaNac = reo.getFechaNacimiento();
         // Establecer los datos en los campos de texto
         lbl_idRecluso.setText(idRecluso);
         txtNombresReo.setText(nombres);
@@ -460,22 +544,81 @@ public class frmCreateNewRecluso extends javax.swing.JFrame {
         txtCedulaReo.setText(cedula);
         txtCedulaReo.setEditable(false);
         txtCorreoReo.setText(correo);
-        txtAniosCondena.setText(""+condena);
+        txtAniosCondena.setText("" + condena);
         txtDelitoReo.setText(delito);
         txtUsuarioReo.setText(usuario);
         txtPasswordReo.setText(contrasena);
         txtPasswConfirmReo.setText(contrasena);
+        jDateFechaNacimiento.setDate(fechaNac);
+        // Restaurar la selección después de la actualización
+        if (filaSeleccionada != -1) {
+            JTableReclusosExistentes.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        }
     }//GEN-LAST:event_JTableReclusosExistentesMouseClicked
+
+    private void txtNombresReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtNombresReoKeyTyped
+
+    private void txtApellidosReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtApellidosReoKeyTyped
+
+    private void txtDelitoReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDelitoReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtDelitoReoKeyTyped
+
+    private void txtCedulaReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaReoKeyTyped
+        valido.validarCedula(evt, txtCedulaReo.getText());
+    }//GEN-LAST:event_txtCedulaReoKeyTyped
+
+    private void txtAniosCondenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAniosCondenaKeyTyped
+        char c = evt.getKeyChar();
+        String texto = txtAniosCondena.getText() + c;
+
+        // Permitir solo dígitos y la tecla "Borrar"
+        if (!Character.isDigit(c) && c != evt.VK_BACK_SPACE) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten números en los años de condena.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Verificar que no se ingresen más de dos dígitos
+            if (texto.length() > 2) {
+                evt.consume(); // Consumir la tecla si ya hay más de dos dígitos
+            }
+        }
+    }//GEN-LAST:event_txtAniosCondenaKeyTyped
+
+    private void txtUsuarioReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioReoKeyTyped
+
+        char c = evt.getKeyChar();
+        // Permitir letras, números y la tecla "Borrar"
+        if (!Character.isLetterOrDigit(c) && c != evt.VK_BACK_SPACE ) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten letras y números en el usuario.\nRecuerde tambien que NO se admiten espacios",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtUsuarioReoKeyTyped
     private void limpiarInputs() {
+        lbl_idRecluso.setText("");
         txtNombresReo.setText("");
         txtApellidosReo.setText("");
         txtCedulaReo.setText("");
+        txtCedulaReo.setEditable(true);
         txtAniosCondena.setText("");
         txtDelitoReo.setText("");
         txtUsuarioReo.setText("");
         txtCorreoReo.setText("");
         txtPasswordReo.setText("");
         txtPasswConfirmReo.setText("");
+        jDateFechaNacimiento.setDate(null);
+        JTableReclusosExistentes.clearSelection();
     }
 
     /**

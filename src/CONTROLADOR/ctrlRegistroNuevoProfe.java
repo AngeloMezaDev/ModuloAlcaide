@@ -316,20 +316,20 @@ public class ctrlRegistroNuevoProfe {
         }
     }
 
-    public void editarProfesor(String idProfesor, String nuevosNombres, String nuevosApellidos, String nuevaCedula, String nuevoCorreo, String nuevaEspecialidad, int nuevaExperiencia, String nuevoUsuario, String nuevaContra, Date FechaNac) {
+    public void editarProfesor(String idProfesor, String nuevaCedula, String nuevosNombres, String nuevosApellidos, String nuevoCorreo, String nuevaEspecialidad, int nuevaExperiencia, String nuevoUsuario, String nuevaContra, Date FechaNac) {
 
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al stored procedure
-            String sql = "BEGIN sp_editar_profesor(?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
+            String sql = "BEGIN sp_editar_profesor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
             cstmt.setString(1, idProfesor);
             cstmt.setString(2, nuevosNombres);
             cstmt.setString(3, nuevosApellidos);
-            cstmt.setString(4, nuevaCedula);
+            cstmt.setString(4, nuevaCedula); // Corregir el orden del parámetro aquí
             cstmt.setString(5, nuevoCorreo);
             cstmt.setString(6, nuevaEspecialidad);
             cstmt.setInt(7, nuevaExperiencia);
@@ -350,6 +350,72 @@ public class ctrlRegistroNuevoProfe {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
+    }
+
+    public boolean existeProfesor(String idProfesor) {
+        boolean existe = false;
+
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para consultar el profesor por su ID
+            String sql = "SELECT 1 FROM Profesores WHERE id_profesor = ?";
+
+            // Crear la declaración y establecer el parámetro
+            PreparedStatement pstmt = connectionBD.getConnection().prepareStatement(sql);
+            pstmt.setString(1, idProfesor);
+
+            // Ejecutar la consulta
+            ResultSet rs = pstmt.executeQuery();
+
+            // Si se encuentra un registro, significa que el profesor existe
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al consultar si el profesor existe: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return existe;
+    }
+
+    public int consultarAsignacionesProfesor(String idProfesor) {
+        int cantidadAsignaciones = 0;
+
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para consultar las asignaciones del profesor
+            String sql = "SELECT COUNT(*) AS cantidad FROM AsignacionProfesor WHERE id_docente = ?";
+
+            // Crear la declaración y establecer el parámetro
+            PreparedStatement pstmt = connectionBD.getConnection().prepareStatement(sql);
+            pstmt.setString(1, idProfesor);
+
+            // Ejecutar la consulta
+            ResultSet rs = pstmt.executeQuery();
+
+            // Obtener la cantidad de asignaciones del resultado
+            if (rs.next()) {
+                cantidadAsignaciones = rs.getInt("cantidad");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al consultar las asignaciones del profesor: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+        return cantidadAsignaciones;
     }
 
     public String ObtenerTaller(String NombreTaller) {

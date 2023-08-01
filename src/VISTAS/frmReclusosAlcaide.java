@@ -364,6 +364,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
@@ -603,8 +604,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         lbl_IDrecluso.setBackground(new java.awt.Color(255, 255, 255));
         lbl_IDrecluso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_IDrecluso.setText("#R001");
-        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, -1));
+        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, 20));
 
         jLabel15.setBackground(new java.awt.Color(0, 0, 0));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -660,9 +660,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
         jLabel19.setText("Edad:");
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, -1, -1));
-
-        lblEdad.setText("________");
-        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, -1, -1));
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 60, 20));
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
 
@@ -695,31 +693,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
+        resetColor(btnTalleres);
         resetColor(btnActividades);
-        setColor(btnTalleres);
         resetColor(btnProfesores);
-        resetColor(btnReclusos);
+        setColor(btnReclusos);
 
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        setColor(btnActividades);
-        setColor(btnTalleres);
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
         resetColor(btnProfesores);
-        resetColor(btnReclusos);
+        setColor(btnReclusos);
     }//GEN-LAST:event_btnTalleresMouseExited
-
-    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
-
-    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
         setColor(btnActividades);
@@ -792,6 +778,23 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_CmbAsignacionReclusoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
+        if (asignaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder editar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
+                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         // Obtener los datos del asigancion a editar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
@@ -857,25 +860,36 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             } else if (tipoAsignacion.equals("Taller")) {
                 idActividadTaller = ctrl.ObtenerTaller(nombreActividadTaller);
             }
-            // Crear la instancia de Recluso
-            AsignacionRecluso asigancion = new AsignacionRecluso("", idRecluso, nombreRecluso, tipoAsignacion,
-                    nombreActividadTaller, idActividadTaller, nombreGrupo);
-
-            // Crear el mensaje de confirmación
-            String mensaje = "¿Deseas Registar al recluso: " + nombreRecluso + "en " + nombreActividadTaller + "?";
-            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
-            // Verificar la opción seleccionada
-            if (opcion == JOptionPane.YES_OPTION) {
-                // Llamar al método en tu controlador para agregar la asignación de profesor
-                controlador.agregarAsignacionRecluso(asigancion);
-                limpiarInputs();
-            } else {
-                // Detener el evento
+            if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
+                    || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
+                    || lblEdad.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Existen campos vacios, por favor seleccione que los datos correctos.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
+            } else {
+                // Crear la instancia de Recluso
+                AsignacionRecluso asigancion = new AsignacionRecluso("", idRecluso, nombreRecluso, tipoAsignacion,
+                        nombreActividadTaller, idActividadTaller, nombreGrupo);
+
+                // Crear el mensaje de confirmación
+                String mensaje = "¿Deseas Registar al recluso: " + nombreRecluso + " en " + nombreActividadTaller + " ?";
+                int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+                // Verificar la opción seleccionada
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Llamar al método en tu controlador para agregar la asignación de recluso
+                    controlador.agregarAsignacionRecluso(asigancion);
+                    limpiarInputs();
+                } else {
+                    // Detener el evento
+                    return;
+                }
+
+                // Mostrar mensaje al usuario
+                JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
             }
 
-            // Mostrar mensaje al usuario
-            JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
         }
@@ -892,12 +906,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         String Cmbrecluso = (String) CmbReclusosExistentes.getSelectedItem();
         List<Recluso> reclusos = controlador.cargarDatosRecluso();
         String IDrecluso = "";
+        int edad = 0;
         for (Recluso reo : reclusos) {
             if ((reo.getNombres() + " " + reo.getApellidos()).equalsIgnoreCase(Cmbrecluso)) {
                 IDrecluso = reo.getCodigoRecluso();
+                edad = reo.CalcularEdad(reo.getFechaNacimiento());
             }
         }
         lbl_IDrecluso.setText(IDrecluso);
+        if (edad == 0) {
+            lblEdad.setText("");
+        } else {
+            lblEdad.setText(edad + " años");
+        }
     }//GEN-LAST:event_CmbReclusosExistentesItemStateChanged
 
     private void CmbAsignacionReclusoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoItemStateChanged
@@ -946,6 +967,23 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
+        if (asignaciones.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder eliminar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
+                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         // Obtener los datos del asigancion a Eliminar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
@@ -992,7 +1030,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             }
 
         }
-        System.out.println("la edad del recluso es: "+edad);
+        System.out.println("la edad del recluso es: " + edad);
         // Establecer los datos en los campos de texto
         lbl_IDrecluso.setText("" + idRecluso);
         lblEdad.setText(edad);
@@ -1005,6 +1043,20 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             JTableAsigancionRecluso.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
         }
     }//GEN-LAST:event_JTableAsigancionReclusoMouseClicked
+
+    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnProfesores);
+        setColor(btnReclusos);
+    }//GEN-LAST:event_btnReclusosMouseExited
+
+    private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnActividades);
+        resetColor(btnProfesores);
+        setColor(btnReclusos);
+    }//GEN-LAST:event_btnProfesoresMouseExited
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1014,7 +1066,8 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }
 
     private void limpiarInputs() {
-        lbl_IDrecluso.setText("#R001");
+        lbl_IDrecluso.setText("");
+        lblEdad.setText("");
         CmbReclusosExistentes.setSelectedIndex(0);
         CmbAsignacionRecluso.setSelectedIndex(0);
         CmbActividadTaller.setSelectedIndex(0);
