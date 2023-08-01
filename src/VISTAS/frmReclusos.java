@@ -377,7 +377,7 @@ public class frmReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActividadesMouseEntered
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnActividadesMouseExited
 
@@ -387,7 +387,7 @@ public class frmReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilMouseEntered
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
-        resetColor(btnActividades);
+        setColor(btnActividades);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 

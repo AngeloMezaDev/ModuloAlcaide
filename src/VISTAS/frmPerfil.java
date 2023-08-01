@@ -575,7 +575,7 @@ public class frmPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNotificacionesMouseEntered
 
     private void btnNotificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseExited
-        resetColor(btnNotificaciones);
+        setColor(btnNotificaciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnNotificacionesMouseExited
 
@@ -585,7 +585,7 @@ public class frmPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilMouseEntered
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
-        resetColor(btnNotificaciones);
+        setColor(btnNotificaciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 
