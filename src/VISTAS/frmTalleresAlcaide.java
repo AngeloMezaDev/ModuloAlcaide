@@ -375,6 +375,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
@@ -773,7 +774,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        setColor(btnActividades);
+        resetColor(btnActividades);
         setColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);
@@ -784,12 +785,6 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         setColor(btnTalleres);
         resetColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
-
-    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
-        resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
         setColor(btnActividades);
@@ -811,13 +806,6 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         resetColor(btnActividades);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnProfesoresMouseEntered
-
-    private void btnReclusosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseEntered
-        setColor(btnReclusos);
-        resetColor(btnTalleres);
-        resetColor(btnProfesores);
-        resetColor(btnActividades);
-    }//GEN-LAST:event_btnReclusosMouseEntered
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
@@ -1056,6 +1044,20 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         incrementarLblId();
 
     }//GEN-LAST:event_btnNuevoMouseClicked
+
+    private void btnReclusosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseEntered
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnProfesores);
+        setColor(btnReclusos);
+    }//GEN-LAST:event_btnReclusosMouseEntered
+
+    private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
+        resetColor(btnActividades);
+        setColor(btnTalleres);
+        resetColor(btnProfesores);
+        resetColor(btnReclusos);
+    }//GEN-LAST:event_btnReclusosMouseExited
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }

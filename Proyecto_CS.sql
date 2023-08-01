@@ -261,14 +261,10 @@ CREATE OR REPLACE PROCEDURE sp_editar_profesor(
     p_fecha_Nacimiento IN DATE -- FECHA NACIMIENTO
 )
 IS
-    v_new_id_profesor VARCHAR2(10); -- Variable para almacenar el nuevo ID del profesor
 BEGIN
-    -- Generar el nuevo ID del profesor
-    v_new_id_profesor := '#P' || SUBSTR(p_cedula, -4);
-
     -- Actualizar los datos del profesor
     UPDATE Profesores
-    SET id_profesor = v_new_id_profesor, -- Actualizar el ID del profesor
+    SET 
         nombres = p_nombres,
         apellidos = p_apellidos,
         cedula = p_cedula,
@@ -364,7 +360,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 -- Creación de la Tabla Reclusos del modulo Alcaide
-DROP TABLE RECLUSOS;
+
 CREATE TABLE Reclusos (
 id_recluso VARCHAR2(6 BYTE),
 cedula VARCHAR2(255 BYTE),
@@ -478,7 +474,6 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 //tabla de asignacion de Recluso a una Activiadad o Taller
-
 CREATE TABLE AsignacionRecluso (
   ID_Asignacion VARCHAR2(6 BYTE),
   Id_Recluso VARCHAR2(6 BYTE),
@@ -575,7 +570,7 @@ END;
 CREATE TABLE Usuarios (
     id_usuario      VARCHAR2(9 BYTE) PRIMARY KEY,
     nombre_usuario  VARCHAR2(255) UNIQUE,
-    contrasena      VARCHAR2(255),
+    contraseña      VARCHAR2(255),
     nombre          VARCHAR2(255),
     correo_electronico VARCHAR2(255),
     rol             VARCHAR2(255)
@@ -621,4 +616,21 @@ BEGIN
     DELETE FROM Usuarios WHERE id_usuario = :OLD.id_recluso;
 END;
 /
+--Trigger para eliminar las asignaciones del recluso cuando se elimine el recluso:
+CREATE OR REPLACE TRIGGER trigger_eliminar_asignaciones_recluso
+AFTER DELETE ON Reclusos
+FOR EACH ROW
+BEGIN
+    DELETE FROM AsignacionRecluso WHERE Id_Recluso = :OLD.Id_Recluso;
+END;
+/
+--Trigger para eliminar las asignaciones del profesor cuando se elimine el profesor
+CREATE OR REPLACE TRIGGER trigger_eliminar_asignaciones_profesor
+AFTER DELETE ON Profesores
+FOR EACH ROW
+BEGIN
+    DELETE FROM AsignacionProfesor WHERE id_docente = :OLD.id_profesor;
+END;
+/
+
 

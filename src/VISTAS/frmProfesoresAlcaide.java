@@ -29,6 +29,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
     public frmProfesoresAlcaide() {
         initComponents();
+        CmbProfesoresExistentes.removeAllItems();
+        JTableAsignacionProfesores.removeAll();
         controlador = new ctrlRegistroNuevoProfe(); // Inicializar la instancia de la clase controladora
         controlador.cargarProfesoresComboBox(CmbProfesoresExistentes);
         controlador.cargarDatosAsignaciones((DefaultTableModel) JTableAsignacionProfesores.getModel());
@@ -83,7 +85,6 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
         panelAgregar = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
@@ -104,14 +105,18 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jPFecha = new javax.swing.JPanel();
         CmbProfesoresExistentes = new javax.swing.JComboBox<>();
         jPCampoFecha = new javax.swing.JPanel();
-        jSeparator7 = new javax.swing.JSeparator();
         cmbActividadTaller = new javax.swing.JComboBox<>();
         cmbGrupos = new javax.swing.JComboBox<>();
         CmbAsignacionDocente = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
-        btnRegistrarProfesor = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        lblEdad = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        btnRegistrarProfesor = new javax.swing.JButton();
+        jSeparator6 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -360,6 +365,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
@@ -481,13 +487,15 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 1080, 290));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("ID");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 22, -1));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 14, 220));
+        jPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 217, 400, 10));
 
         panelAgregar.setBackground(new java.awt.Color(204, 204, 204));
         panelAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -504,6 +512,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/diskette.png"))); // NOI18N
         panelAgregar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
+        jPanel2.add(panelAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, -1, -1));
+
         panelCancelar.setBackground(new java.awt.Color(204, 204, 204));
         panelCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -518,6 +528,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/cancel.png"))); // NOI18N
         panelCancelar.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
+
+        jPanel2.add(panelCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 138, -1));
 
         panelEditar.setBackground(new java.awt.Color(204, 204, 204));
         panelEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -534,6 +546,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
         panelEditar.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
+        jPanel2.add(panelEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 180, -1, -1));
+
         panelEliminar.setBackground(new java.awt.Color(204, 204, 204));
         panelEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -549,18 +563,25 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
         panelEliminar.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
 
+        jPanel2.add(panelEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 180, -1, -1));
+
         lblAcTaller.setText("Actividad o Taller:");
+        jPanel2.add(lblAcTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 77, -1, -1));
 
         lblGrupo.setText("Grupo:");
+        jPanel2.add(lblGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(529, 105, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 21, -1, -1));
 
         jPNombre.setBackground(new java.awt.Color(204, 204, 204));
         jPNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 56, 210, -1));
 
         jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPCampoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 49, -1, -1));
 
         jPFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -572,14 +593,20 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         });
         jPFecha.add(CmbProfesoresExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
 
+        jPanel2.add(jPFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(189, 137, 215, 35));
+
         jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
         jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPCampoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 78, -1, 38));
 
         cmbActividadTaller.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbActividadTallerItemStateChanged(evt);
             }
         });
+        jPanel2.add(cmbActividadTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 74, 158, -1));
+
+        jPanel2.add(cmbGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 102, 133, -1));
 
         CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Actividad", "Taller" }));
         CmbAsignacionDocente.addItemListener(new java.awt.event.ItemListener() {
@@ -587,149 +614,62 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                 CmbAsignacionDocenteItemStateChanged(evt);
             }
         });
+        jPanel2.add(CmbAsignacionDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 190, 180, -1));
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Asignacion:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 186, 80, -1));
 
         lblID.setBackground(new java.awt.Color(255, 255, 255));
         lblID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblID.setText("#P001");
+        jPanel2.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 43, 20));
 
+        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Profesor:");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 137, -1, 17));
+
+        jLabel17.setText("Edad:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 46, -1, -1));
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 46, -1, -1));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/AdminReo.png"))); // NOI18N
+
+        btnRegistrarProfesor.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btnRegistrarProfesor.setText("ADM. PROFESORES");
+        btnRegistrarProfesor.setMaximumSize(new java.awt.Dimension(149, 23));
+        btnRegistrarProfesor.setMinimumSize(new java.awt.Dimension(149, 23));
         btnRegistrarProfesor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarProfesorActionPerformed(evt);
             }
         });
 
-        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Profesor:");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSeparator4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CmbAsignacionDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblAcTaller)
-                            .addComponent(lblGrupo))
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(1087, 1087, 1087))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAcTaller)
-                    .addComponent(cmbActividadTaller, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGrupo))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPCampoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPCampoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jPNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblID, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel19))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(CmbAsignacionDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(28, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator5)
-                .addContainerGap())
         );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRegistrarProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 230, 70));
+        jPanel2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 167, 670, 10));
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1100, 240));
 
@@ -763,29 +703,29 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
     private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
         resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnTalleres);
+        setColor(btnProfesores);
         resetColor(btnReclusos);
 
     }//GEN-LAST:event_btnActividadesMouseExited
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        setColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnActividades);
+        resetColor(btnTalleres);
+        setColor(btnProfesores);
         resetColor(btnReclusos);
     }//GEN-LAST:event_btnTalleresMouseExited
 
     private void btnProfesoresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProfesoresMouseExited
         resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnTalleres);
+        setColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnProfesoresMouseExited
 
     private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
         resetColor(btnActividades);
-        setColor(btnTalleres);
-        resetColor(btnProfesores);
+        resetColor(btnTalleres);
+        setColor(btnProfesores);
         resetColor(btnReclusos);    }//GEN-LAST:event_btnReclusosMouseExited
 
     private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
@@ -854,10 +794,28 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReclusosMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int asignaciones = controlador.consultarAsignacionesProfesor(lblID.getText());
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (asignaciones == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder eliminar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         // Obtener los datos del asigancion a editar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
-        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
         String idDocente = lblID.getText();
         String Nuevo_nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
         String Nuevo_tipoAsignacion = (String) CmbAsignacionDocente.getSelectedItem();
@@ -871,7 +829,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         }
         AsignacionProfesor asignacion = new AsignacionProfesor(idAsignacion, idDocente, Nuevo_nombreDocente,
                 Nuevo_tipoAsignacion, Nuevo_nombreActividadTaller, Nuevo_idActividadTaller, Nuevo_nombreGrupo);
-        
+
         // Crear el mensaje de confirmación
         String mensaje = "¿Deseas Editar la asignación con ID: " + idAsignacion + "?";
         int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -879,7 +837,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Verificar la opción seleccionada
         if (opcion == JOptionPane.YES_OPTION) {
             // Llamar al método eliminarAsignacion del controlador
-            controlador.editarAsignacion(asignacion);;
+            controlador.editarAsignacion(asignacion);
             limpiarInputs();
         } else {
             // Detener el evento
@@ -904,6 +862,16 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Existen campos vacios,\npor favor seleccione los datos correctos.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         // Obtener los valores necesarios para la asignación desde los campos de la interfaz
         String idDocente = lblID.getText();
         String nombreDocente = (String) CmbProfesoresExistentes.getSelectedItem();
@@ -916,10 +884,19 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         } else if (tipoAsignacion.equals("Taller")) {
             idActividadTaller = controlador.ObtenerTaller(nombreActividadTaller);
         }
-        // Llamar al método en tu controlador para agregar la asignación de profesor
-        controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
-                idActividadTaller, nombreGrupo);
-
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas Registar al Profesor: " + nombreDocente + " en " + nombreActividadTaller + " ?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método en tu controlador para agregar la asignación de profesor
+            controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
+                    idActividadTaller, nombreGrupo);
+            limpiarInputs();
+        } else {
+            // Detener el evento
+            return;
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnRegistrarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProfesorActionPerformed
@@ -960,27 +937,37 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         // Verificar la opción seleccionada
         if (opcion.equals("Actividad")) {
             lblAcTaller.setText("Actividad: ");
-        }
-        if (opcion.equals("Taller")) {
-            lblAcTaller.setText("Taller: :");
+            cmbGrupos.setSelectedItem(" ");
+        } else if (opcion.equals("Taller")) {
+            lblAcTaller.setText("Taller:");
             cmbGrupos.removeAllItems();
             String NombreTaller = (String) cmbActividadTaller.getSelectedItem();
+            System.out.println(NombreTaller);
             String IdTaller = controlador.ObtenerTaller(NombreTaller);
+            System.out.println("elid taller es:" + IdTaller);
             controlador.cargarGruposTalleres(IdTaller, cmbGrupos);
         }
+
     }//GEN-LAST:event_cmbActividadTallerItemStateChanged
 
     private void CmbProfesoresExistentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbProfesoresExistentesItemStateChanged
+
         String profe = (String) CmbProfesoresExistentes.getSelectedItem();
         List<Profesor> profesores = controlador.cargarDatosProfesores();
         String Idprofe = "";
+        int edad = 0;
         for (Profesor profesor : profesores) {
             if ((profesor.getNombres() + " " + profesor.getApellidos()).equalsIgnoreCase(profe)) {
                 Idprofe = profesor.getCodigoProfesor();
-                System.out.println(Idprofe);
+                edad = profesor.CalcularEdad(profesor.getFechaNacimiento());
             }
         }
         lblID.setText(Idprofe);
+        if (edad == 0) {
+            lblEdad.setText("");
+        } else {
+            lblEdad.setText(edad + " años");
+        }
     }//GEN-LAST:event_CmbProfesoresExistentesItemStateChanged
 
     private void JTableAsignacionProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAsignacionProfesoresMouseClicked
@@ -991,16 +978,25 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         AsignacionProfesor asignacion = asignaciones.get(filaSeleccionada);
 
         // Obtener los datos del profesor
-        int idAsignacion = asignacion.getIdAsignacion();
         String idProfesor = asignacion.getIdDocente();
         String NombreDocente = asignacion.getNombreDocente();
         String tipoAsignacion = asignacion.getTipoAsignacion();
         String Nombre_ActTaller = asignacion.getNombreActividadTaller();
         String idActTaller = asignacion.getIdActividadTaller();
         String NombreGrupo = asignacion.getNombreGrupo();
+        String edad = "";
+
+        //Para obtener la edad
+        List<Profesor> prof = controlador.cargarDatosProfesores();
+        for (Profesor profe : prof) {
+            if (profe.getCodigoProfesor().equals(idProfesor)) {
+                edad = (profe.CalcularEdad(profe.getFechaNacimiento()) + " años");
+            }
+        }
 
         // Establecer los datos en los campos de texto
         lblID.setText("" + idProfesor);
+        lblEdad.setText(edad);
         CmbProfesoresExistentes.setSelectedItem(NombreDocente);
         CmbAsignacionDocente.setSelectedItem(tipoAsignacion);
         cmbActividadTaller.setSelectedItem(Nombre_ActTaller);
@@ -1012,10 +1008,29 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_JTableAsignacionProfesoresMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int asignaciones = controlador.consultarAsignacionesProfesor(lblID.getText());
+        if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
+                || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
+                || lblEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else if (asignaciones == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "No existen Asignaciones aun\n"
+                    + "Cree primero un asignacion para poder eliminar.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         // Obtener los datos del asigancion a Eliminar
         DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();//modelo para obetner IDasignacion
         int filaSeleccionada = JTableAsignacionProfesores.getSelectedRow();
-        int idAsignacion = Integer.parseInt(modeloTabla.getValueAt(filaSeleccionada, 0).toString());
+        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
+        System.out.println(idAsignacion);
         // Crear el mensaje de confirmación
         String mensaje = "¿Deseas eliminar la asignación con ID: " + idAsignacion + "?";
         int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -1042,7 +1057,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }
 
     void limpiarInputs() {
-        lblID.setText("#P001");
+        lblID.setText("");
         CmbProfesoresExistentes.setSelectedItem("--Seleccione--");
         CmbAsignacionDocente.setSelectedItem("--Seleccione--");
         cmbActividadTaller.setSelectedItem("--Seleccione--");
@@ -1119,12 +1134,14 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1139,6 +1156,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
@@ -1147,10 +1165,10 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAcTaller;
+    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblID;
