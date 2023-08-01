@@ -67,7 +67,6 @@ public class Login extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jPanelExit = new javax.swing.JPanel();
         lblExit = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
@@ -160,7 +159,6 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("CONTRASEÑA");
 
-        btnIngreso.setBackground(new java.awt.Color(255, 255, 255));
         btnIngreso.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         btnIngreso.setForeground(new java.awt.Color(0, 102, 0));
         btnIngreso.setText("INGRESAR");
@@ -195,14 +193,6 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/user (2).png"))); // NOI18N
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/lock-outlined-padlock-symbol-for-security-interface_icon-icons.com_57803.png"))); // NOI18N
-
-        jCheckBox1.setBackground(new java.awt.Color(33, 45, 62));
-        jCheckBox1.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Recuérdame");
-        jCheckBox1.setBorder(null);
-        jCheckBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jCheckBox1.setFocusPainted(false);
 
         jPanelExit.setBackground(new java.awt.Color(33, 45, 62));
 
@@ -280,10 +270,6 @@ public class Login extends javax.swing.JFrame {
                 .addGap(87, 87, 87)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jCheckBox1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -338,9 +324,7 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
-                .addGap(28, 28, 28)
+                .addGap(58, 58, 58)
                 .addComponent(btnIngreso)
                 .addGap(113, 113, 113))
         );
@@ -651,7 +635,6 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngreso;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
