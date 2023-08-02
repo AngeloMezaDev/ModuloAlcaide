@@ -17,8 +17,8 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         this.usuario = usuario;
         this.contrasena = contrasena;
         controlador = new ctrlProfesores();
-        controlador.cargarDatosRecluso(usuario, contrasena, lblApellidos, lblNombres, lblCedula, lblTiempoCondena, lblDelito, lblCorreo, lblEdad, lblFechaNac);
-        controlador.cargarDatosAsignacionesReos(lblTipoAsig, lblActTaller, lblGrupo);
+        controlador.cargarDatosProfesor(usuario, contrasena, lblApellidos, lblNombres, lblCedula, lblAñosExperiencia, lblEspecialidad, lblCorreo, lblEdad, lblFechaNac);
+        controlador.cargarDatosAsignacionesProfe(lblTipoAsig, lblActTaller, lblGrupo);
     }
 
     /**
@@ -82,9 +82,9 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        lblDelito = new javax.swing.JLabel();
+        lblEspecialidad = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        lblTiempoCondena = new javax.swing.JLabel();
+        lblAñosExperiencia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -565,12 +565,12 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jLabel33.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel33.setText("Especialidad");
 
-        lblDelito.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        lblEspecialidad.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
         jLabel35.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel35.setText("Años de Experiencia");
 
-        lblTiempoCondena.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        lblAñosExperiencia.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -582,8 +582,8 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel33)
                         .addComponent(jLabel35)
-                        .addComponent(lblTiempoCondena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblAñosExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel32))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
@@ -595,11 +595,11 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel33)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDelito)
+                .addComponent(lblEspecialidad)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTiempoCondena)
+                .addComponent(lblAñosExperiencia)
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
@@ -795,17 +795,17 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblActTaller;
     private javax.swing.JLabel lblApellidos;
+    private javax.swing.JLabel lblAñosExperiencia;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblDelito;
     private javax.swing.JLabel lblEdad;
+    private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
-    private javax.swing.JLabel lblTiempoCondena;
     private javax.swing.JLabel lblTipoAsig;
     // End of variables declaration//GEN-END:variables
 }

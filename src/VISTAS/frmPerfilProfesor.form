@@ -957,8 +957,8 @@
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblTiempoCondena" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblDelito" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="lblAñosExperiencia" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblEspecialidad" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -974,11 +974,11 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblDelito" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEspecialidad" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblTiempoCondena" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblAñosExperiencia" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="74" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -1004,7 +1004,7 @@
                 <Property name="text" type="java.lang.String" value="Especialidad"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblDelito">
+            <Component class="javax.swing.JLabel" name="lblEspecialidad">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century" size="14" style="0"/>
@@ -1019,7 +1019,7 @@
                 <Property name="text" type="java.lang.String" value="A&#xf1;os de Experiencia"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTiempoCondena">
+            <Component class="javax.swing.JLabel" name="lblA&#xf1;osExperiencia">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century" size="14" style="0"/>

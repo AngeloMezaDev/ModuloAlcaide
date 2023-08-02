@@ -5,8 +5,10 @@
 package CONTROLADOR;
 
 import MODELO.AsignacionRecluso;
+import MODELO.AsignacionProfesor;
 import MODELO.ConnectionBD;
 import MODELO.Recluso;
+import MODELO.Profesor;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
 import java.awt.Color;
@@ -35,18 +37,18 @@ import javax.swing.table.DefaultTableModel;
 public class ctrlProfesores {
 
     private ConnectionBD connectionBD;
-    private static String id_recluso="";
+    private static String id_profesor="";
     
     public ctrlProfesores() {
         connectionBD = new ConnectionBD();
     }
 
-    public void cargarDatosRecluso(String usuario, String contra, JLabel lblApellidos, JLabel lblNombres, JLabel lblCedula, JLabel lblTiempoCond, JLabel lblDelito, JLabel lblCorreo, JLabel lbledad, JLabel lblFechaNacs) {
+    public void cargarDatosProfesor(String usuario, String contra, JLabel lblApellidos, JLabel lblNombres, JLabel lblCedula, JLabel lblAñosExperiencia, JLabel lblEspecialidad, JLabel lblCorreo, JLabel lbledad, JLabel lblFechaNacs) {
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
-            String sql = "SELECT id_recluso, cedula, apellidos, nombres, tiempo_condena, delito, correo, fecha_nacimiento FROM Reclusos where usuario = ? AND contra = ?";
+            String sql = "SELECT id_profesor, cedula, apellidos, nombres, experiencia, especialidad, correo, fecha_nacimiento FROM Profesores where usuario = ? AND contra = ?";
 
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -57,12 +59,12 @@ public class ctrlProfesores {
 
             // Recorrer el resultado y agregar los datos al modelo de la tabla
             while (resultSet.next()) {
-                this.id_recluso = resultSet.getString("id_recluso");
+                this.id_profesor = resultSet.getString("id_recluso");
                 lblCedula.setText(resultSet.getString("cedula"));
                 lblApellidos.setText(resultSet.getString("apellidos"));
                 lblNombres.setText(resultSet.getString("nombres"));
-                lblTiempoCond.setText(resultSet.getString("tiempo_condena")+" años");
-                lblDelito.setText(resultSet.getString("delito"));
+                lblAñosExperiencia.setText(resultSet.getString("experiencia")+" años");
+                lblEspecialidad.setText(resultSet.getString("especialidad"));
                 lblCorreo.setText(resultSet.getString("correo"));
                 lblFechaNacs.setText(obtenerSoloFecha(resultSet.getString("fecha_nacimiento")));
                 lbledad.setText(calcularEdad(resultSet.getString("fecha_nacimiento"))+" años");
@@ -87,23 +89,23 @@ public class ctrlProfesores {
             }
         }
     }
-    public void cargarDatosAsignacionesReos(JLabel lblTipoAsig, JLabel lblNomActTall, JLabel lblGrupo) {
+    public void cargarDatosAsignacionesProfe(JLabel lblTipoAsig, JLabel lblNomActTall, JLabel lblGrupo) {
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de las asignaciones
-            String sql = "SELECT Tipo_Asignacion, Nombre_ActividadTaller, nombre_Grupo FROM AsignacionRecluso where id_recluso= ?";
+            String sql = "SELECT Tipo_Asignacion, Nombre_ActividadTaller, Nombre_Grupo FROM AsignacionProfesor where id_profesor= ?";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, id_recluso);
+            statement.setString(1, id_profesor);
             ResultSet resultSet = statement.executeQuery();
 
             // Recorrer el resultado y agregar los datos a los labels
             while (resultSet.next()) {
                 lblTipoAsig.setText(resultSet.getString("Tipo_Asignacion"));
                 lblNomActTall.setText(resultSet.getString("Nombre_ActividadTaller"));
-                lblGrupo.setText(resultSet.getString("nombre_Grupo"));
+                lblGrupo.setText(resultSet.getString("Nombre_Grupo"));
             }
 
             System.out.println("Datos de asignaciones cargados correctamente.");
@@ -133,7 +135,7 @@ public void cargarDatosTalleres(JCalendar cldAgenda) {
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, id_recluso);
+            statement.setString(1, id_profesor);
             ResultSet resultSet = statement.executeQuery();           
             // Recorrer el resultado           
             while (resultSet.next()) {
@@ -170,7 +172,7 @@ public void cargarDatosTalleres(JCalendar cldAgenda) {
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, id_recluso);
+            statement.setString(1, id_profesor);
             ResultSet resultSet = statement.executeQuery();           
             // Recorrer el resultado           
             while (resultSet.next()) {
