@@ -692,7 +692,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
     private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
         // TODO add your handling code here:
-        frmInformes Informe = new frmInformes();
+        frmInformes Informe = new frmInformes(usuario, contrasena);
         this.dispose();
         Informe.setVisible(true);
     }//GEN-LAST:event_btnInformesMouseClicked

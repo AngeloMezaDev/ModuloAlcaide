@@ -7,6 +7,7 @@ package VISTAS;
 
 import CONTROLADOR.ctrlRegistroNuevoProfe;
 import CONTROLADOR.ctrlRegistroReclusos;
+import CONTROLADOR.ctrlProfesores;
 import MODELO.AsignacionRecluso;
 import MODELO.Recluso;
 import javax.swing.JComboBox;
@@ -22,16 +23,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmProfesores extends javax.swing.JFrame {
 
-    /**
-     * Creates new form fmrProfesores
-     */
-    
+    private ctrlProfesores controlador1;
+    private static String usuario="";
+    private static String contrasena="";
     private ctrlRegistroNuevoProfe controlador;
     private ctrlRegistroReclusos ctrl;
     private DefaultTableModel modeloTabla;
     
     public frmProfesores() {
         initComponents();
+        lblHandle.setText("@" + usuario);
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        controlador1 = new ctrlProfesores();
         controlador = new ctrlRegistroNuevoProfe();
         ctrl = new ctrlRegistroReclusos();
          // Crear el modelo de tabla
@@ -64,7 +68,7 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         LlbIconUser = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -252,11 +256,11 @@ public class frmProfesores extends javax.swing.JFrame {
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
         JPanelMenu.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        JPanelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setText("USER");
+        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -317,7 +321,7 @@ public class frmProfesores extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-        JPanelMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, 40));
+        JPanelMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 100, 40));
 
         jPanelFondo.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
         JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
@@ -553,7 +557,7 @@ public class frmProfesores extends javax.swing.JFrame {
 
     private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
         // TODO add your handling code here:
-        frmInformes Informe = new frmInformes();
+        frmInformes Informe = new frmInformes(usuario, contrasena);
         this.dispose();
         Informe.setVisible(true);
     }//GEN-LAST:event_btnInformesMouseClicked
@@ -598,9 +602,9 @@ public class frmProfesores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-       // frmPerfilProfesor perfil=new frmPerfilProfesor(usuario, contrasena);
-        this.dispose();
-       // perfil.setVisible(true);
+       frmPerfilProfesor perfil=new frmPerfilProfesor(usuario, contrasena);
+       this.dispose();
+       perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
@@ -679,7 +683,6 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -695,6 +698,7 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel lblAsignacion;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblTalleres;
     // End of variables declaration//GEN-END:variables
