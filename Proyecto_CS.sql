@@ -501,7 +501,7 @@ CREATE TABLE AsignacionRecluso (
 
 
 -- Proc agregarAsignacionRecluso
-CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionRecluso (
+CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionTaller_Recluso (
     p_IdRecluso IN VARCHAR2,
     p_NombreRecluso IN VARCHAR2,
     p_TipoAsignacion IN VARCHAR2,
@@ -529,10 +529,38 @@ EXCEPTION
         ROLLBACK;
 END;
 /
+--Proc agregar Actividad a un recluso
+CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionActividad_Recluso (
+    p_IdRecluso IN VARCHAR2,
+    p_NombreRecluso IN VARCHAR2,
+    p_TipoAsignacion IN VARCHAR2,
+    p_NombreActividadTaller IN VARCHAR2,
+    p_IdActividadTaller IN VARCHAR2
+)
+AS
+    v_new_id VARCHAR2(9);
+BEGIN
+    -- Obtener el ID máximo actual
+    SELECT 'AR' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_Asignacion, 3))), 0) + 1, 3, '0')
+    INTO v_new_id
+    FROM AsignacionRecluso;
+
+    -- Insertar la nueva asignación
+    INSERT INTO AsignacionRecluso (ID_Asignacion, Id_Recluso, Nombre_Recluso, Tipo_Asignacion, Nombre_ActividadTaller, Id_ActividadTaller, nombre_Grupo)
+    VALUES (v_new_id, p_IdRecluso, p_NombreRecluso, p_TipoAsignacion, p_NombreActividadTaller, p_IdActividadTaller, '');
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de excepciones
+        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignación: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
 
 
 -- Proc Editar una asignación
-CREATE OR REPLACE PROCEDURE sp_EditarAsignacionRecluso (
+CREATE OR REPLACE PROCEDURE sp_EditarAsignacionTallerRecluso (
     p_IDAsignacion IN VARCHAR2,
     p_IdRecluso IN VARCHAR2,
     p_NombreRecluso IN VARCHAR2,
@@ -550,6 +578,34 @@ BEGIN
         Nombre_ActividadTaller = p_NombreActividadTaller,
         Id_ActividadTaller = p_IdActividadTaller,
         nombre_Grupo = p_NombreGrupo
+    WHERE ID_Asignacion = p_IDAsignacion;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de excepciones
+        DBMS_OUTPUT.PUT_LINE('Error al editar la asignación: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+---PROC PARA editar una asignacion Actividad a un recluso
+CREATE OR REPLACE PROCEDURE sp_EditarAsignacionActividad_Recluso (
+    p_IDAsignacion IN VARCHAR2,
+    p_IdRecluso IN VARCHAR2,
+    p_NombreRecluso IN VARCHAR2,
+    p_TipoAsignacion IN VARCHAR2,
+    p_NombreActividadTaller IN VARCHAR2,
+    p_IdActividadTaller IN VARCHAR2
+)
+AS
+BEGIN
+    UPDATE AsignacionRecluso
+    SET Id_Recluso = p_IdRecluso,
+        Nombre_Recluso = p_NombreRecluso,
+        Tipo_Asignacion = p_TipoAsignacion,
+        Nombre_ActividadTaller = p_NombreActividadTaller,
+        Id_ActividadTaller = p_IdActividadTaller,
+        nombre_Grupo = ''
     WHERE ID_Asignacion = p_IDAsignacion;
 
     COMMIT;
@@ -646,4 +702,3 @@ BEGIN
     DELETE FROM AsignacionProfesor WHERE id_docente = :OLD.id_profesor;
 END;
 /
-
