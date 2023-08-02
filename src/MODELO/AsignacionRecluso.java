@@ -17,14 +17,13 @@ public class AsignacionRecluso {
     private String idActividadTaller;
     private String nombreGrupo;
 
-    public AsignacionRecluso(String idAsignacion, String idRecluso, String nombreRecluso, String tipoAsignacion, String nombreActividadTaller, String idActividadTaller, String nombreGrupo) {
+    public AsignacionRecluso(String idAsignacion, String idRecluso, String nombreRecluso, String tipoAsignacion, String nombreActividadTaller, String idActividadTaller) {
         this.idAsignacion = idAsignacion;
         this.idRecluso = idRecluso;
         this.nombreRecluso = nombreRecluso;
         this.tipoAsignacion = tipoAsignacion;
         this.nombreActividadTaller = nombreActividadTaller;
         this.idActividadTaller = idActividadTaller;
-        this.nombreGrupo = nombreGrupo;
     }
     
     public String getIdAsignacion() {
@@ -63,10 +62,6 @@ public class AsignacionRecluso {
 
     public String getIdActividadTaller() {
         return idActividadTaller;
-    }
-
-    public String getNombreGrupo() {
-        return nombreGrupo;
     }
 }
 

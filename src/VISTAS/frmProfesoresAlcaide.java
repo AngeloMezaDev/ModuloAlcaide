@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -605,9 +606,9 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
                 cmbActividadTallerItemStateChanged(evt);
             }
         });
-        jPanel2.add(cmbActividadTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 74, 158, -1));
+        jPanel2.add(cmbActividadTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 158, -1));
 
-        jPanel2.add(cmbGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 102, 133, -1));
+        jPanel2.add(cmbGrupos, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 133, -1));
 
         CmbAsignacionDocente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Actividad", "Taller" }));
         CmbAsignacionDocente.addItemListener(new java.awt.event.ItemListener() {
@@ -633,7 +634,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
 
         jLabel17.setText("Edad:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 46, -1, -1));
-        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(622, 46, -1, -1));
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 50, 10));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -937,10 +938,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         String opcion = (String) CmbAsignacionDocente.getSelectedItem();
         // Verificar la opción seleccionada
         if (opcion.equals("Actividad")) {
-            lblAcTaller.setText("Actividad: ");
             cmbGrupos.setSelectedItem(" ");
         } else if (opcion.equals("Taller")) {
-            lblAcTaller.setText("Taller:");
             cmbGrupos.removeAllItems();
             String NombreTaller = (String) cmbActividadTaller.getSelectedItem();
             System.out.println(NombreTaller);

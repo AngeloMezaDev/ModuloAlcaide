@@ -675,14 +675,13 @@
                   </Border>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="1">
+                  <Table columnCount="6" rowCount="1">
                     <Column editable="false" title="ID_Asignacion" type="java.lang.Object"/>
                     <Column editable="false" title="Nombre Recluso" type="java.lang.Object"/>
                     <Column editable="false" title="ID_RECLUSO" type="java.lang.Object"/>
                     <Column editable="false" title="Tipo_Asignacion" type="java.lang.Object"/>
                     <Column editable="false" title="Nombre Actividad/Taller" type="java.lang.Object"/>
-                    <Column editable="false" title="ID_ACT/TALLER" type="java.lang.Object"/>
-                    <Column editable="false" title="Grupo" type="java.lang.Object"/>
+                    <Column editable="false" title="ID_ACTIVIDAD" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -703,11 +702,6 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="false">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -968,21 +962,11 @@
             </Container>
             <Component class="javax.swing.JLabel" name="lblActTaller">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Actividad o Taller:"/>
+                <Property name="text" type="java.lang.String" value="Actividad:"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="510" y="70" width="110" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblGrupo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Grupo:"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="540" y="100" width="40" height="-1"/>
+                  <AbsoluteConstraints x="490" y="70" width="70" height="20"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1072,28 +1056,14 @@
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="CmbActividadTallerItemStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CmbActividadTallerActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="620" y="70" width="158" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="CmbGrupos">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="0"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="620" y="100" width="133" height="-1"/>
+                  <AbsoluteConstraints x="560" y="70" width="158" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -1160,7 +1130,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="--Seleccione--"/>
                     <StringItem index="1" value="Actividad"/>
-                    <StringItem index="2" value="Taller"/>
+                    <StringItem index="2" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -1240,14 +1210,14 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="570" y="40" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="510" y="40" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
             <Component class="javax.swing.JLabel" name="lblEdad">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="620" y="40" width="60" height="20"/>
+                  <AbsoluteConstraints x="560" y="40" width="60" height="20"/>
                 </Constraint>
               </Constraints>
             </Component>

@@ -525,7 +525,7 @@ public class Login extends javax.swing.JFrame {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para autenticar las credenciales
-            String sql = "SELECT rol FROM Usuarios WHERE nombre_usuario = ? AND contraseña = ?";
+            String sql = "SELECT rol FROM Usuarios WHERE nombre_usuario = ? AND contrasena = ?";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
             statement.setString(1, usuario);
             statement.setString(2, contrasena);
@@ -557,7 +557,7 @@ public class Login extends javax.swing.JFrame {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para autenticar las credenciales
-            String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ? AND contraseña = ?";
+            String sql = "SELECT COUNT(*) FROM Usuarios WHERE nombre_usuario = ? AND contrasena = ?";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
             statement.setString(1, usuario);
             statement.setString(2, contrasena);

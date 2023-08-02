@@ -362,7 +362,7 @@ public class ctrlRegistroReclusos {
                     NombreGrupo,};
                 modeloTabla.addRow(fila);
                 // Crear un objeto AsignacionProfesor con los datos
-                AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, NombreRecluso, tipoAsignacion, Nombre_ActTaller, idActTaller, NombreGrupo);
+                AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, NombreRecluso, tipoAsignacion, Nombre_ActTaller, idActTaller);
 
                 // Agregar el profesor a la lista
                 asignaciones.add(asignacion);
@@ -401,10 +401,9 @@ public class ctrlRegistroReclusos {
                 String tipoAsignacion = resultSet.getString("Tipo_Asignacion");
                 String Nombre_ActTaller = resultSet.getString("Nombre_ActividadTaller");
                 String idActTaller = resultSet.getString("Id_ActividadTaller");
-                String NombreGrupo = resultSet.getString("Nombre_Grupo");
 
                 // Crear un objeto AsignacionProfesor con los datos
-                AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, NombreRecluso, tipoAsignacion, Nombre_ActTaller, idActTaller, NombreGrupo);
+                AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, NombreRecluso, tipoAsignacion, Nombre_ActTaller, idActTaller);
 
                 // Agregar el profesor a la lista
                 asignaciones.add(asignacion);
@@ -428,14 +427,13 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al procedimiento almacenado
-            String sql = "{call sp_AgregarAsignacionRecluso(?, ?, ?, ?, ?, ?)}";
+            String sql = "{call sp_AgregarAsignacionActividad_Recluso(?, ?, ?, ?, ?)}";
             //obtener los datos:
             String IdRecluso = asigancion.getIdRecluso();
             String nombreRecluso = asigancion.getNombreRecluso();
             String tipoAsignacion = asigancion.getTipoAsignacion();
             String nombreActividadTaller = asigancion.getNombreActividadTaller();
             String idActividadTaller = asigancion.getIdActividadTaller();
-            String nombreGrupo = asigancion.getNombreGrupo();
 
             // Crear el objeto CallableStatement
             CallableStatement stmt = connectionBD.getConnection().prepareCall(sql);
@@ -444,7 +442,6 @@ public class ctrlRegistroReclusos {
             stmt.setString(3, tipoAsignacion);
             stmt.setString(4, nombreActividadTaller);
             stmt.setString(5, idActividadTaller);
-            stmt.setString(6, nombreGrupo);
 
             // Ejecutar el procedimiento almacenado
             stmt.execute();
@@ -466,7 +463,7 @@ public class ctrlRegistroReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para llamar al stored procedure
-            String sql = "BEGIN sp_EditarAsignacionProfesor(?, ?, ?, ?, ?, ?, ?); END;";
+            String sql = "BEGIN sp_EditarAsignacionActividad_Recluso(?, ?, ?, ?, ?, ?); END;";
 
             // Crear la declaración y establecer los parámetros
             CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
@@ -475,7 +472,6 @@ public class ctrlRegistroReclusos {
             cstmt.setString(4, asignacion.getTipoAsignacion());
             cstmt.setString(5, asignacion.getNombreActividadTaller());
             cstmt.setString(6, asignacion.getIdActividadTaller());
-            cstmt.setString(7, asignacion.getNombreGrupo());
 
             // Ejecutar el stored procedure
             cstmt.execute();
