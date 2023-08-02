@@ -1100,7 +1100,7 @@ public class frmTalleresAlcaide extends javax.swing.JFrame {
         registro.cargarDatosTalleres(modeloTabla);
 
         // Actualizar la secuencia de los ID
-        actualizarSecuenciaID();
+        actualizarSecuenciaIDTalleres();
 
     }//GEN-LAST:event_btnActualizarMouseClicked
 
@@ -1208,6 +1208,14 @@ jDateTalleresAlcaide.getDateEditor().addPropertyChangeListener(new PropertyChang
 
         for (int i = 0; i < modeloTabla.getRowCount(); i++) {
             String nuevoID = "#A" + String.format("%03d", i + 1);
+            modeloTabla.setValueAt(nuevoID, i, 0);
+        }
+    }
+    private void actualizarSecuenciaIDTalleres() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTableTalleresAlcaide.getModel();
+
+        for (int i = 0; i < modeloTabla.getRowCount(); i++) {
+            String nuevoID = "#T" + String.format("%03d", i + 1);
             modeloTabla.setValueAt(nuevoID, i, 0);
         }
     }
