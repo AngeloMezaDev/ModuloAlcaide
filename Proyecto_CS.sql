@@ -1,5 +1,5 @@
 -- Creación de la Tabla Actividades del modulo Alcaide
-
+Drop Table actividades;
 CREATE TABLE actividades (
     id_actividad          VARCHAR2(5 BYTE),
     nombre_actividad      VARCHAR2(255 BYTE),
@@ -100,7 +100,7 @@ END;
 ----------------------------------------------------------------------------------------------------------
 
 -- Creación de la Tabla Talleres del modulo Alcaide
-
+Drop table TalleresAlcaide;
 CREATE TABLE TalleresAlcaide (
     ID_TALLER VARCHAR2(5),
     NOMBRE_TALLER VARCHAR2(100),
@@ -113,7 +113,7 @@ ALTER TABLE TalleresAlcaide
 ADD (FECHA_VENCIMIENTO DATE, REDUCCION_CONDENA NUMBER);
 
 ----------------------------------------------------------------------------------------------------------
-
+Drop table Grupos;
 //Creacion de Tabla Grupos Talleres
 CREATE TABLE Grupos (
     ID_Grupo VARCHAR2(7 byte),
@@ -231,7 +231,7 @@ END;
 
 ----------------------------------------------------------------------------------------------------------
 -- Creación de la Tabla Profesores del modulo Alcaide
-
+Drop table Profesores;
 CREATE TABLE Profesores (
     id_profesor         VARCHAR2(6 BYTE),
     cedula     VARCHAR2(255 BYTE),
@@ -293,6 +293,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 //tabla de asignacion de Profersor a una Activiadad o Taller
+Drop Table AsignacionProfesor;
 CREATE TABLE AsignacionProfesor (
   ID_Asignacion VARCHAR2(6 BYTE),
   Id_Docente VARCHAR2(6 BYTE),
@@ -372,7 +373,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 -- Creación de la Tabla Reclusos del modulo Alcaide
-
+Drop Table Reclusos;
 CREATE TABLE Reclusos (
 id_recluso VARCHAR2(6 BYTE),
 cedula VARCHAR2(255 BYTE),
@@ -486,6 +487,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 //tabla de asignacion de Recluso a una Activiadad o Taller
+Drop table AsignacionRecluso;
 CREATE TABLE AsignacionRecluso (
   ID_Asignacion VARCHAR2(6 BYTE),
   Id_Recluso VARCHAR2(6 BYTE),
@@ -578,25 +580,25 @@ END;
 /
 ------------------------------------------------------------------------------------------------
 --Creacion de la tabla USUARIOS
-
+DROP Table Usuarios;
 CREATE TABLE Usuarios (
     id_usuario      VARCHAR2(9 BYTE) PRIMARY KEY,
     nombre_usuario  VARCHAR2(255) UNIQUE,
-    contraseña      VARCHAR2(255),
+    contrasena      VARCHAR2(255),
     nombre          VARCHAR2(255),
     correo_electronico VARCHAR2(255),
     rol             VARCHAR2(255)
 );
 
 
-INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+INSERT INTO Usuarios (id_usuario, nombre_usuario, contrasena, nombre, correo_electronico, rol)
     VALUES ('#AlC01', 'admin', 'admin',' Alcaide adm','admin@alcaide.com','Alcaide') ;
 --DISPARARDOR PARA AGREGAR USUARIOS QUE SE VAYAN AGREANDO ALA BASE SEA PROFESOR O RECLUSO
 CREATE OR REPLACE TRIGGER trigger_insertar_usuario_profesor
 AFTER INSERT ON Profesores
 FOR EACH ROW
 BEGIN
-    INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+    INSERT INTO Usuarios (id_usuario, nombre_usuario, contrasena, nombre, correo_electronico, rol)
     VALUES (:NEW.id_profesor, :NEW.usuario, :NEW.contra, :NEW.nombres, :NEW.correo, 
             CASE WHEN SUBSTR(:NEW.id_profesor, 2, 1) = 'P' THEN 'Profesor' END);
 END;
@@ -606,7 +608,7 @@ CREATE OR REPLACE TRIGGER trigger_insertar_usuario_recluso
 AFTER INSERT ON Reclusos
 FOR EACH ROW
 BEGIN
-    INSERT INTO Usuarios (id_usuario, nombre_usuario, contraseña, nombre, correo_electronico, rol)
+    INSERT INTO Usuarios (id_usuario, nombre_usuario, contrasena, nombre, correo_electronico, rol)
     VALUES (:NEW.id_recluso, :NEW.usuario, :NEW.contra, :NEW.nombres, :NEW.correo, 
             CASE WHEN SUBSTR(:NEW.id_recluso, 2, 1) = 'R' THEN 'Recluso' END);
 END;
@@ -644,3 +646,4 @@ BEGIN
     DELETE FROM AsignacionProfesor WHERE id_docente = :OLD.id_profesor;
 END;
 /
+
