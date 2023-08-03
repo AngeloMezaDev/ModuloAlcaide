@@ -4,13 +4,13 @@
  */
 package CONTROLADOR;
 
-import MODELO.AsignacionRecluso;
 import MODELO.ConnectionBD;
 import MODELO.Recluso;
+import com.sun.jdi.connect.spi.Connection;
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
-import java.awt.Color;
-import java.awt.Component;
+import java.beans.Statement;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,6 +37,9 @@ public class ctrlReclusos {
 
     private ConnectionBD connectionBD;
     private static String id_recluso="";
+    private static int tiemp_condena=0;
+    private static String delit="";
+    
     
     public ctrlReclusos() {
         connectionBD = new ConnectionBD();
@@ -66,7 +70,8 @@ public class ctrlReclusos {
                 lblCorreo.setText(resultSet.getString("correo"));
                 lblFechaNacs.setText(obtenerSoloFecha(resultSet.getString("fecha_nacimiento")));
                 lbledad.setText(calcularEdad(resultSet.getString("fecha_nacimiento"))+" años");
-                
+                this.tiemp_condena = resultSet.getInt("tiempo_condena");
+                this.delit = resultSet.getString("delito");
                 
                 Date fechaNac = null;
                 try {
@@ -87,6 +92,7 @@ public class ctrlReclusos {
             }
         }
     }
+   
     public void cargarDatosAsignacionesReos(JLabel lblTipoAsig, JLabel lblNomActTall, JLabel lblGrupo) {
         try {
             connectionBD.openConnection();
@@ -109,6 +115,78 @@ public class ctrlReclusos {
             System.out.println("Datos de asignaciones cargados correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al obtener los datos de las asignaciones: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+    public void DatosRecluso(String usuario, String contra, JTextField lblApellidos, JTextField lblNombres, JTextField lblCedula, int tiempo_condena, String delito, JTextField lblCorreo, JDateChooser jDateFechaNac) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
+            String sql = "SELECT id_recluso, cedula, apellidos, nombres, tiempo_condena, delito, correo, fecha_nacimiento FROM Reclusos where usuario = ? AND contra = ?";
+
+            // Crear la declaración preparada y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, usuario);
+            statement.setString(2, contra);
+            
+            ResultSet resultSet = statement.executeQuery();
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            while (resultSet.next()) {
+                this.id_recluso = resultSet.getString("id_recluso");
+                System.out.println("IDDDD: "+ id_recluso);
+                lblCedula.setText(resultSet.getString("cedula"));
+                lblApellidos.setText(resultSet.getString("apellidos"));
+                lblNombres.setText(resultSet.getString("nombres"));
+                lblCorreo.setText(resultSet.getString("correo"));
+                jDateFechaNac.setDate(fecha(resultSet.getString("fecha_nacimiento")));
+                tiempo_condena = resultSet.getInt("tiempo_condena");
+                delito = resultSet.getString("delito");
+            }
+            System.out.println("Datos de reclusos cargados correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos de los reclusos: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+    public void EditarRecluso(Recluso recluso) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para llamar al stored procedure
+            String sql = "BEGIN sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
+
+            // Crear la declaración y establecer los parámetros
+            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+            cstmt.setString(1, recluso.getCodigoRecluso());
+            cstmt.setString(2, recluso.getCedula());
+            cstmt.setString(3, recluso.getNombres());
+            cstmt.setString(4, recluso.getApellidos());
+            cstmt.setInt(5, recluso.getTiempo_condena());
+            cstmt.setString(6, recluso.getDelito());
+            cstmt.setString(7, recluso.getCorreo());
+            cstmt.setString(8, recluso.getUser());
+            cstmt.setString(9, recluso.getPassword());
+            java.sql.Date fechaNacimiento = new java.sql.Date(recluso.getFechaNacimiento().getTime());
+            cstmt.setDate(10, fechaNacimiento);
+
+            // Ejecutar el stored procedure
+            cstmt.execute();
+
+            System.out.println("Recluso editado correctamente.");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al editar el recluso: " + e.getMessage());
         } finally {
             try {
                 connectionBD.closeConnection();
@@ -244,5 +322,48 @@ public String obtenerSoloFecha(String fechaNac) {
     }
     return null; // En caso de error o valor nulo, devuelve null.
 } 
+    public void cargarDatosTalleres(DefaultTableModel modeloTabla) throws ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+            // Establecer la conexión a la base de datos (debes reemplazar los valores apropiados)           
+            // Escribir la consulta SQL
+            String sql = "SELECT ID_TALLER, NOMBRE_TALLER, REDUCCION_CONDENA, FECHA_CREACION, FECHA_VENCIMIENTO, NOMBRE_GRUPO, CAPACIDAD FROM TALLERESGRUPOS";
 
+            // Crear la declaración y ejecutar la consulta
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery(); 
+
+            // Procesar el resultado
+            while (resultSet.next()) {
+                String idTaller = resultSet.getString("ID_TALLER");
+                String nombreTaller = resultSet.getString("NOMBRE_TALLER");
+                int reduccion = resultSet.getInt("REDUCCION_CONDENA");
+                Date fechaCreacion = resultSet.getDate("FECHA_CREACION");
+                Date fechaVencimiento = resultSet.getDate("FECHA_VENCIMIENTO");
+                String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
+                int capacidadGrupo = resultSet.getInt("CAPACIDAD");
+
+                // Realizar las operaciones necesarias con los datos obtenidos
+                // (por ejemplo, imprimirlos o almacenarlos en objetos Java)
+                Object[] fila = {
+                    idTaller,
+                    nombreTaller,
+                    nombreGrupo,
+                    reduccion,
+                    fechaCreacion,
+                    fechaVencimiento,
+                    capacidadGrupo
+                };
+                modeloTabla.addRow(fila);
+            }
+           
+            // Cerrar recursos
+            resultSet.close();
+            statement.close();
+            connectionBD.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
