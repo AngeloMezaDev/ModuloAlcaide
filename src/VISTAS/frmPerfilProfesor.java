@@ -82,6 +82,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         lblPass = new javax.swing.JLabel();
         lblContra = new javax.swing.JLabel();
+        btnEditarPerfil = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
@@ -536,6 +537,18 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
         lblContra.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
+        btnEditarPerfil.setBackground(new java.awt.Color(37, 150, 190));
+        btnEditarPerfil.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditarPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
+        btnEditarPerfil.setText("Editar Perfil");
+        btnEditarPerfil.setBorder(null);
+        btnEditarPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarPerfilActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -548,23 +561,30 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblPass))
                     .addComponent(jLabel21)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel18)
-                        .addComponent(jLabel26)
-                        .addComponent(jLabel28)
-                        .addComponent(lblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel17))
-                .addContainerGap(180, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel18)
+                                .addComponent(jLabel26)
+                                .addComponent(jLabel28)
+                                .addComponent(lblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addComponent(btnEditarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel17)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel18))
+                    .addComponent(btnEditarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCorreo)
                 .addGap(24, 24, 24)
@@ -752,6 +772,11 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         lblContra.setText(contrasena);
     }//GEN-LAST:event_lblPassMousePressed
 
+    private void btnEditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPerfilActionPerformed
+ //       frmEditarPerfilProfesor editar=new frmEditarPerfilProfesor(usuario, contrasena);
+ //       editar.setVisible(true);
+    }//GEN-LAST:event_btnEditarPerfilActionPerformed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -798,6 +823,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
+    private javax.swing.JButton btnEditarPerfil;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JLabel jLabel1;
