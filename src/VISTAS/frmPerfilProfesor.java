@@ -79,6 +79,9 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         lblFechaNac = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         lblEdad = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        lblPass = new javax.swing.JLabel();
+        lblContra = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
@@ -517,6 +520,22 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
         lblEdad.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
+        jLabel21.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        jLabel21.setText("Contraseña");
+
+        lblPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/eye.png"))); // NOI18N
+        lblPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblPassMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblPassMousePressed(evt);
+            }
+        });
+
+        lblContra.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -524,6 +543,11 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lblContra, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPass))
+                    .addComponent(jLabel21)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel18)
                         .addComponent(jLabel26)
@@ -551,7 +575,17 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                 .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaNac)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblContra)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, 430, 260));
@@ -560,7 +594,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
         jLabel32.setFont(new java.awt.Font("Sitka Subheading", 1, 14)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(54, 33, 89));
-        jLabel32.setText("INFORMACIÓN PENAL");
+        jLabel32.setText("INFORMACIÓN LABORAL EXTERNA");
 
         jLabel33.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel33.setText("Especialidad");
@@ -585,7 +619,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                         .addComponent(lblAñosExperiencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel32))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,6 +743,15 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         resetColor(btnInformes);
     }//GEN-LAST:event_btnInformesMouseExited
 
+    private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
+        String asterisks = "*".repeat(contrasena.length());
+        lblContra.setText(asterisks);
+    }//GEN-LAST:event_lblPassMouseExited
+
+    private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
+        lblContra.setText(contrasena);
+    }//GEN-LAST:event_lblPassMousePressed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -769,6 +812,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
@@ -797,6 +841,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblAñosExperiencia;
     private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblContra;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblEspecialidad;
@@ -806,6 +851,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
+    private javax.swing.JLabel lblPass;
     private javax.swing.JLabel lblTipoAsig;
     // End of variables declaration//GEN-END:variables
 }

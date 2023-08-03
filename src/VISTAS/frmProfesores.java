@@ -91,6 +91,7 @@ public class frmProfesores extends javax.swing.JFrame {
         lblTalleres = new javax.swing.JLabel();
         cmbTalleres = new javax.swing.JComboBox<>();
         btnCargarDatos = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -413,7 +414,7 @@ public class frmProfesores extends javax.swing.JFrame {
                 btnRegistraDatosActionPerformed(evt);
             }
         });
-        jPanelFondo.add(btnRegistraDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 590, 140, 20));
+        jPanelFondo.add(btnRegistraDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 590, 140, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("REGISTRO DE ASISTENCIA");
@@ -456,6 +457,15 @@ public class frmProfesores extends javax.swing.JFrame {
             }
         });
         jPanelFondo.add(btnCargarDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+
+        btnConsultar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 590, 140, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -619,6 +629,10 @@ public class frmProfesores extends javax.swing.JFrame {
         resetColor(btnInformes);
     }//GEN-LAST:event_btnPerfilMouseExited
 
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -670,6 +684,7 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JButton btnCargarDatos;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JButton btnRegistraDatos;
