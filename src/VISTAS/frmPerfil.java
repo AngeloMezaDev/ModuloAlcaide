@@ -19,7 +19,7 @@ public class frmPerfil extends javax.swing.JFrame {
         this.contrasena = contrasena;
         controlador = new ctrlReclusos();
         controlador.cargarDatosRecluso(usuario, contrasena, lblApellidos, lblNombres, lblCedula, lblTiempoCondena, lblDelito, lblCorreo, lblEdad, lblFechaNac);
-        controlador.cargarDatosAsignacionesReos(lblTipoAsig, lblActTaller, lblGrupo);
+        controlador.cargarNombresTalleres(lblTaller1, lblTaller2, lblTaller3, lblGrupo1, lblGrupo2, lblGrupo3);
         lblUsuario.setText(usuario); 
         String asterisks = "*".repeat(contrasena.length());
         lblContrasena.setText(asterisks);
@@ -77,13 +77,13 @@ public class frmPerfil extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        lblTipoAsig = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        lblActTaller = new javax.swing.JLabel();
+        lblTaller1 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
-        lblGrupo = new javax.swing.JLabel();
-        lblTipoAsig1 = new javax.swing.JLabel();
-        lblTipoAsig2 = new javax.swing.JLabel();
+        lblGrupo1 = new javax.swing.JLabel();
+        lblTaller2 = new javax.swing.JLabel();
+        lblTaller3 = new javax.swing.JLabel();
+        lblGrupo3 = new javax.swing.JLabel();
+        lblGrupo2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
@@ -439,8 +439,8 @@ public class frmPerfil extends javax.swing.JFrame {
                             .addComponent(jLabel28)
                             .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel26)
-                            .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(121, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,26 +515,20 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel20.setText("Nombre del/los talleres:");
 
-        lblTipoAsig.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblTipoAsig.setText("T1");
-
-        jLabel30.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        jLabel30.setText("Nombre de actividad o taller");
-
-        lblActTaller.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblActTaller.setText("Act / Taler");
+        lblTaller1.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
         jLabel37.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel37.setText("Grupo");
 
-        lblGrupo.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblGrupo.setText("G1");
+        lblGrupo1.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
-        lblTipoAsig1.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblTipoAsig1.setText("T2");
+        lblTaller2.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
-        lblTipoAsig2.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        lblTipoAsig2.setText("T3");
+        lblTaller3.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+
+        lblGrupo3.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+
+        lblGrupo2.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -544,22 +538,21 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
-                    .addComponent(lblTipoAsig, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
-                    .addComponent(jLabel37)
-                    .addComponent(lblGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTipoAsig1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTipoAsig2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(180, Short.MAX_VALUE)
+                    .addComponent(lblTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblActTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(152, 152, 152))
+                        .addComponent(jLabel37)
+                        .addGap(74, 74, 74))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel30)
-                        .addGap(51, 51, 51))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGrupo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGrupo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGrupo3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,22 +560,26 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTipoAsig)
-                .addGap(18, 18, 18)
-                .addComponent(lblTipoAsig1)
-                .addGap(18, 18, 18)
-                .addComponent(lblTipoAsig2)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel37)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblGrupo)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblActTaller)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel37))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTaller1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblGrupo1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTaller2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGrupo2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(lblGrupo3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 290, 430, 340));
@@ -831,6 +828,8 @@ public class frmPerfil extends javax.swing.JFrame {
     private void btnEditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPerfilActionPerformed
         frmEditarRecluso editar=new frmEditarRecluso(usuario, contrasena);
         editar.setVisible(true);
+        controlador.cargarDatosRecluso(usuario, contrasena, lblApellidos, lblNombres, lblCedula, lblTiempoCondena, lblDelito, lblCorreo, lblEdad, lblFechaNac);
+
     }//GEN-LAST:event_btnEditarPerfilActionPerformed
 
     void setColor(JPanel panel) {
@@ -901,7 +900,6 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
@@ -921,7 +919,6 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblActTaller;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblContrasena;
@@ -930,14 +927,16 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblFechaNac;
-    private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblGrupo1;
+    private javax.swing.JLabel lblGrupo2;
+    private javax.swing.JLabel lblGrupo3;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPass;
+    private javax.swing.JLabel lblTaller1;
+    private javax.swing.JLabel lblTaller2;
+    private javax.swing.JLabel lblTaller3;
     private javax.swing.JLabel lblTiempoCondena;
-    private javax.swing.JLabel lblTipoAsig;
-    private javax.swing.JLabel lblTipoAsig1;
-    private javax.swing.JLabel lblTipoAsig2;
     private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }
