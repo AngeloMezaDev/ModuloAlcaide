@@ -1,8 +1,16 @@
 package VISTAS;
 
 import CONTROLADOR.ctrlReclusos;
-import CONTROLADOR.ctrlRegistro;
+import MODELO.ConnectionBD;
+import MODELO.Inscripcion;
+import MODELO.Recluso;
 import java.awt.Color;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,9 +25,16 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     private DefaultTableModel modeloTabla;
     private static String usuario = ""; 
     private static String contrasena ="";
-            
+    ctrlReclusos controlador = new ctrlReclusos();
+    private ConnectionBD connectionBD;
+    public static String nombreR = "";
+    public static String apellidosR = "";
+    public static String correo = "";
+    public static String idRecluso = "";
+    
     public frmInscripcionReclusos(String usuario, String contrasena) throws ClassNotFoundException {
         initComponents();
+        connectionBD = new ConnectionBD();
         lblHandle.setText("@" + usuario);
         this.usuario = usuario; 
         this.contrasena = contrasena;
@@ -28,12 +43,13 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jTable1.setModel(modeloTabla);
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        String[] nombresColumnas = {"ID Taller", "Nombre de taller", "Grupo","Tiempo de Reducción", "Fecha de inicio", "Fecha de finalización", "Cupos"};
-        modeloTabla.setColumnIdentifiers(nombresColumnas);
+        String[] nombresColumnas = {"ID Taller", "Nombre de taller", "Grupo","Tiempo de Reducción", "Fecha de inicio", "Fecha de finalización", "Cupos", "Inscribirse"};
         modeloTabla.setColumnIdentifiers(nombresColumnas);
 
-        controlador.cargarDatosTalleres(modeloTabla);
-        
+        controlador.cargarDatosTalleresG(modeloTabla);
+        TableColumn tc = jTable1.getColumnModel().getColumn(7); 
+        tc.setCellEditor(jTable1.getDefaultEditor(Boolean.class)); 
+        tc.setCellRenderer(jTable1.getDefaultRenderer(Boolean.class));
         
         
     }
@@ -394,13 +410,13 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         btnEnviar.setBackground(new java.awt.Color(65, 39, 111));
         btnEnviar.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
         btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEnviar.setText("Enviar postulaciones");
+        btnEnviar.setText("Inscribirse");
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnviarActionPerformed(evt);
             }
         });
-        jPanelBackGround.add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 610, -1, -1));
+        jPanelBackGround.add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 600, -1, -1));
 
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -434,7 +450,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         tc.setCellRenderer(jTable1.getDefaultRenderer(Boolean.class));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 1070, 300));
+        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 1070, 290));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -452,7 +468,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnNotificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseEntered
         setColor(btnNotificaciones);
         resetColor(btnTalleres);
@@ -513,7 +529,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         this.dispose();
         noti.setVisible(true);
     }//GEN-LAST:event_btnNotificacionesMouseClicked
-
+    
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // Mostrar mensaje de confirmación para cerrar sesión
         int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
@@ -531,23 +547,43 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
             loginForm.setVisible(true);
         }
     }//GEN-LAST:event_jLabel14MouseClicked
-
+    private void obtener(){
+    
+    }
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        int c = 0;
-        for(int i = 0 ; i < jTable1.getRowCount();i++){
-            Boolean b = ((Boolean)jTable1.getModel().getValueAt(i, 6));
-            if(b!=null && b){
-                c++;
-            }
-            if(c>3){
-                JOptionPane.showMessageDialog(null, "Seleccion 3 postulaciones como maximo");
-                return;
-            }
+    int maxPostulaciones = 3;
+    int seleccionadas = 0;
+    for (int i = 0; i < jTable1.getRowCount(); i++) {
+        Boolean b = (Boolean) jTable1.getModel().getValueAt(i, 7);
+        if (b != null && b) {        
+        String idTaller = (String) jTable1.getModel().getValueAt(i, 0);
+        String nombreTaller = (String) jTable1.getModel().getValueAt(i, 1);
+        String nombreGrupo = (String) jTable1.getModel().getValueAt(i, 2);
+        int reduccion = (int) jTable1.getModel().getValueAt(i, 3);
+        Date fechaCreacion = (Date) jTable1.getModel().getValueAt(i, 4);
+        Date fechaVencimiento = (Date) jTable1.getModel().getValueAt(i, 5);       
+        int cupos = (int) jTable1.getModel().getValueAt(i, 6);
+        System.out.println("Nombre del grupo: "+ nombreGrupo);
+        Inscripcion inscripcion = new Inscripcion(nombreR, apellidosR, correo, idRecluso, nombreGrupo, cupos, idTaller, nombreTaller, 0, cupos, fechaCreacion, fechaVencimiento, reduccion);
+        controlador.cargarIdGrupo(idTaller);
+        controlador.guardarTaller(inscripcion);    
+            System.out.println("DATOS DEL OBJETO: " + inscripcion.toString());
+            seleccionadas++;
         }
-        if(c==0)JOptionPane.showMessageDialog(null, "Seleccion al menos una");
-        else JOptionPane.showMessageDialog(null, "Postulaciones enviadas con exito");
-    }//GEN-LAST:event_btnEnviarActionPerformed
+        if (seleccionadas > maxPostulaciones) {
+            JOptionPane.showMessageDialog(null, "Seleccione " + maxPostulaciones + " postulaciones como máximo");
+            return;
+        }
+    }
+    if (seleccionadas == 0) {
+        JOptionPane.showMessageDialog(null, "Seleccione al menos una postulación");
+    } else {
+        JOptionPane.showMessageDialog(null, "Postulaciones enviadas con éxito");
+    }
 
+
+    }//GEN-LAST:event_btnEnviarActionPerformed
+    
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -628,4 +664,6 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel lblHandle;
     private javax.swing.JTextField lblRol;
     // End of variables declaration//GEN-END:variables
+
+    
 }
