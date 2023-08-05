@@ -705,6 +705,7 @@ END;
 /
 
 -- Creacion de tabla Inscripcion
+Drop table Inscripcion;
 CREATE TABLE Inscripcion (
   ID_Inscripcion VARCHAR2(6 BYTE),
   Id_Recluso VARCHAR2(6 BYTE),
@@ -785,3 +786,15 @@ BEGIN
     DELETE FROM Inscripcion WHERE Id_Recluso = :OLD.Id_Recluso;
 END;
 /
+
+--MODULO PROFESOR}
+Drop table Asistencias
+CREATE TABLE Asistencias (
+    Id_asistencia VARCHAR(20) PRIMARY KEY,
+    Id_recluso VARCHAR(20),
+    Nombre_recluso VARCHAR(255),
+    taller VARCHAR(255),
+    grupo VARCHAR(255),
+    fecha DATE,
+    asistencia VARCHAR(10)
+);
