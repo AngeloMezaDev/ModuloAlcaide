@@ -195,6 +195,9 @@ public class frmProfesores extends javax.swing.JFrame {
         btnCalificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCalificaciones.setPreferredSize(new java.awt.Dimension(126, 50));
         btnCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCalificacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCalificacionesMouseEntered(evt);
             }
@@ -644,6 +647,12 @@ public class frmProfesores extends javax.swing.JFrame {
     }
         
     }//GEN-LAST:event_btnConsultarAsistenciasActionPerformed
+
+    private void btnCalificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseClicked
+        frmCalificacion cal = new frmCalificacion(usuario,contraseña);
+        cal.setVisible(true);
+        
+    }//GEN-LAST:event_btnCalificacionesMouseClicked
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
