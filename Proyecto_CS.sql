@@ -1,4 +1,4 @@
--- Creación de la Tabla Actividades del modulo Alcaide
+-- CreaciÃ³n de la Tabla Actividades del modulo Alcaide
 Drop Table actividades;
 CREATE TABLE actividades (
     id_actividad          VARCHAR2(5 BYTE),
@@ -16,7 +16,7 @@ CREATE OR REPLACE PROCEDURE sp_insertar_actividad (
     v_max_id_actividad     VARCHAR2(5);
     v_fecha_hora_actividad VARCHAR2(19);
 BEGIN
-    -- Obtener el ID máximo actual
+    -- Obtener el ID mÃ¡ximo actual
     SELECT
         MAX(id_actividad)
     INTO v_max_id_actividad
@@ -99,7 +99,7 @@ END;
 /
 ----------------------------------------------------------------------------------------------------------
 
--- Creación de la Tabla Talleres del modulo Alcaide
+-- CreaciÃ³n de la Tabla Talleres del modulo Alcaide
 Drop table TalleresAlcaide;
 CREATE TABLE TalleresAlcaide (
     ID_TALLER VARCHAR2(5),
@@ -108,7 +108,7 @@ CREATE TABLE TalleresAlcaide (
     CAPACIDAD_MAXIMA NUMBER,
     FECHA_CREACION DATE
 );
---Añadir dos nuevas columnas a la tabla TalleresAlcaide
+--AÃ±adir dos nuevas columnas a la tabla TalleresAlcaide
 ALTER TABLE TalleresAlcaide
 ADD (FECHA_VENCIMIENTO DATE, REDUCCION_CONDENA NUMBER);
 
@@ -135,7 +135,7 @@ AS
     v_cantidad_grupos NUMBER;
     v_new_grupo_id VARCHAR2(10);
 BEGIN
-    -- Obtener el ID máximo actual
+    -- Obtener el ID mÃ¡ximo actual
     SELECT '#' || 'T' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_TALLER, 4))), 0) + 1, 3, '0')
     INTO v_new_id
     FROM TalleresAlcaide;
@@ -230,7 +230,7 @@ END;
 /
 
 ----------------------------------------------------------------------------------------------------------
--- Creación de la Tabla Profesores del modulo Alcaide
+-- CreaciÃ³n de la Tabla Profesores del modulo Alcaide
 Drop table Profesores;
 CREATE TABLE Profesores (
     id_profesor         VARCHAR2(6 BYTE),
@@ -316,12 +316,12 @@ CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionProfesor (
 AS
   v_new_id VARCHAR2(9);
 BEGIN
-  -- Obtener el ID máximo actual
+  -- Obtener el ID mÃ¡ximo actual
   SELECT 'AP' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_Asignacion, 3))), 0) + 1, 3, '0')
   INTO v_new_id
   FROM AsignacionProfesor;
 
-  -- Insertar la nueva asignación
+  -- Insertar la nueva asignaciÃ³n
   INSERT INTO AsignacionProfesor (ID_Asignacion, Id_Docente, Nombre_Docente, Tipo_Asignacion, Nombre_ActividadTaller, Id_ActividadTaller, Nombre_Grupo)
   VALUES (v_new_id, p_IdDocente, p_NombreDocente, p_TipoAsignacion, p_NombreActividadTaller, p_IdActividadTaller, p_NombreGrupo);
 
@@ -329,7 +329,7 @@ BEGIN
 EXCEPTION
   WHEN OTHERS THEN
     -- Manejo de excepciones
-    DBMS_OUTPUT.PUT_LINE('Error al agregar la asignación: ' || SQLERRM);
+    DBMS_OUTPUT.PUT_LINE('Error al agregar la asignaciÃ³n: ' || SQLERRM);
     ROLLBACK;
 END;
 /
@@ -364,15 +364,15 @@ CREATE OR REPLACE PROCEDURE sp_eliminar_asignacion(
 BEGIN
     DELETE FROM AsignacionProfesor WHERE ID_Asignacion = p_id_asignacion;
     COMMIT;
-    DBMS_OUTPUT.PUT_LINE('La asignación con ID ' || p_id_asignacion || ' ha sido eliminada.');
+    DBMS_OUTPUT.PUT_LINE('La asignaciÃ³n con ID ' || p_id_asignacion || ' ha sido eliminada.');
 EXCEPTION
     WHEN OTHERS THEN
         ROLLBACK;
-        DBMS_OUTPUT.PUT_LINE('Error al eliminar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al eliminar la asignaciÃ³n: ' || SQLERRM);
 END;
 /
 ----------------------------------------------------------------------------------------------------------
--- Creación de la Tabla Reclusos del modulo Alcaide
+-- CreaciÃ³n de la Tabla Reclusos del modulo Alcaide
 Drop Table Reclusos;
 CREATE TABLE Reclusos (
 id_recluso VARCHAR2(6 BYTE),
@@ -462,12 +462,13 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('El recluso ha sido actualizado exitosamente.');
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('No se encontró el recluso con el ID especificado.');
+        DBMS_OUTPUT.PUT_LINE('No se encontrÃ³ el recluso con el ID especificado.');
     WHEN OTHERS THEN
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('Error al actualizar el recluso: ' || SQLERRM);
 END;
 /
+
 
 --CREACION DE PROCEDURE ELIMINAR UN RECLUSO
 CREATE OR REPLACE PROCEDURE sp_EliminarRecluso(
@@ -479,7 +480,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('El recluso ha sido eliminado exitosamente.');
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('No se encontró el recluso con el ID especificado.');
+        DBMS_OUTPUT.PUT_LINE('No se encontrÃ³ el recluso con el ID especificado.');
     WHEN OTHERS THEN
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('Error al eliminar el recluso: ' || SQLERRM);
@@ -512,12 +513,12 @@ CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionTaller_Recluso (
 AS
     v_new_id VARCHAR2(9);
 BEGIN
-    -- Obtener el ID máximo actual
+    -- Obtener el ID mÃ¡ximo actual
     SELECT 'AR' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_Asignacion, 3))), 0) + 1, 3, '0')
     INTO v_new_id
     FROM AsignacionRecluso;
 
-    -- Insertar la nueva asignación
+    -- Insertar la nueva asignaciÃ³n
     INSERT INTO AsignacionRecluso (ID_Asignacion, Id_Recluso, Nombre_Recluso, Tipo_Asignacion, Nombre_ActividadTaller, Id_ActividadTaller, nombre_Grupo)
     VALUES (v_new_id, p_IdRecluso, p_NombreRecluso, p_TipoAsignacion, p_NombreActividadTaller, p_IdActividadTaller, p_NombreGrupo);
 
@@ -525,7 +526,7 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
         -- Manejo de excepciones
-        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignaciÃ³n: ' || SQLERRM);
         ROLLBACK;
 END;
 /
@@ -540,12 +541,12 @@ CREATE OR REPLACE PROCEDURE sp_AgregarAsignacionActividad_Recluso (
 AS
     v_new_id VARCHAR2(9);
 BEGIN
-    -- Obtener el ID máximo actual
+    -- Obtener el ID mÃ¡ximo actual
     SELECT 'AR' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_Asignacion, 3))), 0) + 1, 3, '0')
     INTO v_new_id
     FROM AsignacionRecluso;
 
-    -- Insertar la nueva asignación
+    -- Insertar la nueva asignaciÃ³n
     INSERT INTO AsignacionRecluso (ID_Asignacion, Id_Recluso, Nombre_Recluso, Tipo_Asignacion, Nombre_ActividadTaller, Id_ActividadTaller, nombre_Grupo)
     VALUES (v_new_id, p_IdRecluso, p_NombreRecluso, p_TipoAsignacion, p_NombreActividadTaller, p_IdActividadTaller, '');
 
@@ -553,13 +554,13 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
         -- Manejo de excepciones
-        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignaciÃ³n: ' || SQLERRM);
         ROLLBACK;
 END;
 /
 
 
--- Proc Editar una asignación
+-- Proc Editar una asignaciÃ³n
 CREATE OR REPLACE PROCEDURE sp_EditarAsignacionTallerRecluso (
     p_IDAsignacion IN VARCHAR2,
     p_IdRecluso IN VARCHAR2,
@@ -584,7 +585,7 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
         -- Manejo de excepciones
-        DBMS_OUTPUT.PUT_LINE('Error al editar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al editar la asignaciÃ³n: ' || SQLERRM);
         ROLLBACK;
 END;
 /
@@ -612,12 +613,12 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
         -- Manejo de excepciones
-        DBMS_OUTPUT.PUT_LINE('Error al editar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al editar la asignaciÃ³n: ' || SQLERRM);
         ROLLBACK;
 END;
 /
 
--- Proc eliminar una asignación
+-- Proc eliminar una asignaciÃ³n
 CREATE OR REPLACE PROCEDURE sp_eliminar_asignacionRecluso(
     p_id_asignacion IN VARCHAR2
 )
@@ -626,11 +627,11 @@ BEGIN
     DELETE FROM AsignacionRecluso WHERE ID_Asignacion = p_id_asignacion;
 
     COMMIT;
-    DBMS_OUTPUT.PUT_LINE('La asignación con ID ' || p_id_asignacion || ' ha sido eliminada.');
+    DBMS_OUTPUT.PUT_LINE('La asignaciÃ³n con ID ' || p_id_asignacion || ' ha sido eliminada.');
 EXCEPTION
     WHEN OTHERS THEN
         -- Manejo de excepciones
-        DBMS_OUTPUT.PUT_LINE('Error al eliminar la asignación: ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('Error al eliminar la asignaciÃ³n: ' || SQLERRM);
         ROLLBACK;
 END;
 /
@@ -700,5 +701,87 @@ AFTER DELETE ON Profesores
 FOR EACH ROW
 BEGIN
     DELETE FROM AsignacionProfesor WHERE id_docente = :OLD.id_profesor;
+END;
+/
+
+-- Creacion de tabla Inscripcion
+CREATE TABLE Inscripcion (
+  ID_Inscripcion VARCHAR2(6 BYTE),
+  Id_Recluso VARCHAR2(6 BYTE),
+  ID_Grupo VARCHAR2(7 byte),
+  Nombre_Recluso VARCHAR2(255),
+  Apellidos_Recluso VARCHAR2(255 BYTE),
+  Correo VARCHAR2(255 BYTE),
+  Id_Taller VARCHAR2(5),
+  Nombre_Taller VARCHAR2(100),
+  Reduccion_Condena NUMBER,
+  FECHA_CREACION DATE,
+  FECHA_VENCIMIENTO DATE,
+  NOMBRE_GRUPO VARCHAR2(10),
+  CAPACIDAD NUMBER
+);
+
+-----------------------------------------------------------------------------------------
+
+-- Proc agregarInscripcionRecluso
+CREATE OR REPLACE PROCEDURE sp_Inscribir_Recluso (
+    p_IdRecluso IN VARCHAR2,
+    p_IdGrupo IN VARCHAR2,
+    p_NombreRecluso IN VARCHAR2,
+    p_ApellidosRecluso IN VARCHAR2,
+    p_Correo IN VARCHAR2,
+    p_IdTaller IN VARCHAR2,
+    p_NombreTaller IN VARCHAR2,
+    p_ReduccionCondena IN NUMBER,
+    p_Fecha_creacion IN DATE,
+    p_Fecha_Vencimiento IN DATE,
+    p_NombreGrupo IN VARCHAR2,
+    p_Capacidad IN NUMBER
+) AS
+    v_new_id VARCHAR2(9);
+BEGIN
+    -- Obtener el ID maximo actual
+    SELECT 'TR' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ID_INSCRIPCION, 3))), 0) + 1, 3, '0')
+    INTO v_new_id
+    FROM INSCRIPCION;
+
+    -- Insertar la nueva inscripcion
+    INSERT INTO INSCRIPCION (ID_INSCRIPCION, Id_RECLUSO, Id_Grupo, Nombre_Recluso, Apellidos_Recluso, Correo, Id_Taller, Nombre_Taller, Reduccion_Condena, Fecha_Creacion, Fecha_Vencimiento, nombre_Grupo, Capacidad)
+    VALUES (v_new_id, p_IdRecluso, p_IdGrupo, p_NombreRecluso, p_ApellidosRecluso, p_Correo, p_IdTaller, p_NombreTaller, p_ReduccionCondena, p_Fecha_creacion, p_Fecha_Vencimiento, p_NombreGrupo, p_Capacidad);
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de excepciones
+        DBMS_OUTPUT.PUT_LINE('Error al agregar la asignacion: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+
+-- Proc eliminar una inscripcion
+CREATE OR REPLACE PROCEDURE sp_eliminar_inscripcionRecluso(
+    p_id_inscripcion IN VARCHAR2
+)
+AS
+BEGIN
+    DELETE FROM INSCRIPCION WHERE ID_INSCRIPCION = p_id_inscripcion;
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('La inscripcion con ID ' || p_id_inscripcion || ' ha sido eliminada.');
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de excepciones
+        DBMS_OUTPUT.PUT_LINE('Error al eliminar la asignacion: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+
+
+--Trigger para eliminar las asignaciones del recluso cuando se elimine el recluso:
+CREATE OR REPLACE TRIGGER trigger_eliminar_inscripcion_recluso
+AFTER DELETE ON Reclusos
+FOR EACH ROW
+BEGIN
+    DELETE FROM Inscripcion WHERE Id_Recluso = :OLD.Id_Recluso;
 END;
 /

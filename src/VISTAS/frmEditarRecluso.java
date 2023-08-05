@@ -33,8 +33,6 @@ public class frmEditarRecluso extends javax.swing.JFrame {
     
     public frmEditarRecluso(String usuario, String contrasena) {
         initComponents();
-        String delito="";
-        int tiempo_condena=0;
         controlador = new ctrlReclusos();
         controlador.DatosRecluso(usuario, contrasena, txtApellidosReo, txtNombresReo, txtCedulaReo,  tiempo_condena, delito, txtCorreoReo, jDateFechaNacimiento);
         txtUsuarioReo.setText(usuario);
@@ -42,7 +40,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         txtPasswConfirmReo.setText(contrasena);
         this.usuario = usuario;
         this.contrasena = contrasena;        
-        System.out.println("Tiempo: " + tiempo_condena);
+        
     }
 
     /**
@@ -239,7 +237,6 @@ public class frmEditarRecluso extends javax.swing.JFrame {
 
     private void btnEditarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarReoActionPerformed
         // Obtener los datos del profesor a editar
-            String cedulaRecluso= txtCedulaReo.getText();
             String codigoRecluso = lbl_idRecluso.getText();
             String cedula = txtCedulaReo.getText();
             String nombres = txtNombresReo.getText();
@@ -248,23 +245,18 @@ public class frmEditarRecluso extends javax.swing.JFrame {
             String usuario = txtUsuarioReo.getText();
             char[] password = txtPasswordReo.getPassword();
             String Nuevacontra= new String(password);
-            Date fechaNac=jDateFechaNacimiento.getDate();
-            System.out.println("Tiempo condena: " + tiempo_condena);
-            System.out.println("Delito" + delito );
         // Verificar que los campos no estén vacíos
         if (codigoRecluso.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || correo.isEmpty() || usuario.isEmpty()|| Nuevacontra.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener la ejecución del método
         }
-        // Crear la instancia de Recluso
-            Recluso recluso = new Recluso(codigoRecluso, tiempo_condena , delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo,fechaNac);
-            // Crear el mensaje de confirmación
-            String mensaje = "¿Deseas Modificar tus datos personales: " + recluso.getNombres()+" "+ recluso.getApellidos()+ "?";
+           // Crear el mensaje de confirmación
+            String mensaje = "¿Deseas Modificar tus datos personales: " + nombres+" "+ apellidos+ "?";
             int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar cambios", JOptionPane.YES_NO_OPTION);
             // Verificar la opción seleccionada
             if (opcion == JOptionPane.YES_OPTION) {
                 // Guardar los datos en la base de datos
-                 controlador.EditarRecluso(recluso);
+                 controlador.EditarRecluso(nombres, apellidos, usuario, correo, password);
                 limpiarInputs();
                 
             } else {

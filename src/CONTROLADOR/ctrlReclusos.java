@@ -10,8 +10,6 @@ import MODELO.Recluso;
 import com.sun.jdi.connect.spi.Connection;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JDayChooser;
-import java.awt.Checkbox;
 import java.beans.Statement;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -22,15 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -43,9 +36,12 @@ public class ctrlReclusos {
     private static int tiemp_condena=0;
     private static String delit="";
     private static String idGrupo="";
-    public static String nombreR = "";
-    public static String apellidosR = "";
-    public static String correo = "";
+    private static String nombreR = "";
+    private static String apellidosR = "";
+    private static String correo = "";
+    private static String cedulaR= "";
+    private static Date fechaNacimiento = null;
+    
 
     public ctrlReclusos() {
         connectionBD = new ConnectionBD();
@@ -100,6 +96,10 @@ public class ctrlReclusos {
                 this.nombreR = resultSet.getString("Nombres");
                 this.apellidosR = resultSet.getString("apellidos");
                 this.correo = resultSet.getString("correo");
+                this.tiemp_condena = resultSet.getInt("tiempo_condena");
+                this.delit = resultSet.getString("delito");
+                this.cedulaR = resultSet.getString("cedula");
+                this.fechaNacimiento = resultSet.getDate("fecha_nacimiento");
                 lblCedula.setText(resultSet.getString("cedula"));
                 lblApellidos.setText(resultSet.getString("apellidos"));
                 lblNombres.setText(resultSet.getString("nombres"));
@@ -108,8 +108,6 @@ public class ctrlReclusos {
                 lblCorreo.setText(resultSet.getString("correo"));
                 lblFechaNacs.setText(obtenerSoloFecha(resultSet.getString("fecha_nacimiento")));
                 lbledad.setText(calcularEdad(resultSet.getString("fecha_nacimiento"))+" años");
-                this.tiemp_condena = resultSet.getInt("tiempo_condena");
-                this.delit = resultSet.getString("delito");
                 
                 Date fechaNac = null;
                 try {
@@ -131,23 +129,37 @@ public class ctrlReclusos {
         }
     }
    
-    public void cargarDatosAsignacionesReos(JLabel lblTipoAsig, JLabel lblNomActTall, JLabel lblGrupo) {
+    public void cargarNombresTalleres(JLabel lblTaller1, JLabel lblTaller2, JLabel lblTaller3, JLabel lblGrupo1, JLabel lblGrupo2, JLabel lblGrupo3) {
         try {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos de las asignaciones
-            String sql = "SELECT Tipo_Asignacion, Nombre_ActividadTaller, nombre_Grupo FROM AsignacionRecluso where id_recluso= ?";
+            String sql = "Select nombre_taller, nombre_grupo from inscripcion where id_recluso = ?";
 
             // Crear la declaración y ejecutar la consulta
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
             statement.setString(1, id_recluso);
             ResultSet resultSet = statement.executeQuery();
 
+            int contador = 0; // Para llevar un registro de los JLabels
+
             // Recorrer el resultado y agregar los datos a los labels
-            while (resultSet.next()) {
-                lblTipoAsig.setText(resultSet.getString("Tipo_Asignacion"));
-                lblNomActTall.setText(resultSet.getString("Nombre_ActividadTaller"));
-                lblGrupo.setText(resultSet.getString("nombre_Grupo"));
+            while (resultSet.next() && contador < 3) {
+                String nombreTaller = resultSet.getString("nombre_taller");
+                String nombreGrupo = resultSet.getString("nombre_grupo");
+                // Distribuir los nombres de taller en los JLabels correspondientes
+                if (contador == 0) {
+                    lblTaller1.setText(nombreTaller);
+                    lblGrupo1.setText(nombreGrupo);
+                } else if (contador == 1) {
+                    lblTaller2.setText(nombreTaller);
+                    lblGrupo2.setText(nombreGrupo);
+                } else if (contador == 2) {
+                    lblTaller3.setText(nombreTaller);
+                    lblGrupo2.setText(nombreGrupo);
+                }
+
+                contador++;
             }
 
             System.out.println("Datos de asignaciones cargados correctamente.");
@@ -186,7 +198,6 @@ public class ctrlReclusos {
                 jDateFechaNac.setDate(fecha(resultSet.getString("fecha_nacimiento")));
                 tiempo_condena = resultSet.getInt("tiempo_condena");
                 delito = resultSet.getString("delito");
-                System.out.println("Tiempo de condena: "+ tiempo_condena);
             }
             System.out.println("Datos de reclusos cargados correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
@@ -199,30 +210,30 @@ public class ctrlReclusos {
             }
         }
     }
-    public void EditarRecluso(Recluso recluso) {
+    public void EditarRecluso(String nombre, String apellidos, String usuario, String correo, char[] contrasena) {
         try {
             connectionBD.openConnection();
 
-            // Crear la sentencia SQL para llamar al stored procedure
-            String sql = "BEGIN sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?); END;";
+             String sql = "{CALL sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
-            // Crear la declaración y establecer los parámetros
-            CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
-            cstmt.setString(1, recluso.getCodigoRecluso());
-            cstmt.setString(2, recluso.getCedula());
-            cstmt.setString(3, recluso.getNombres());
-            cstmt.setString(4, recluso.getApellidos());
-            cstmt.setInt(5, recluso.getTiempo_condena());
-            cstmt.setString(6, recluso.getDelito());
-            cstmt.setString(7, recluso.getCorreo());
-            cstmt.setString(8, recluso.getUser());
-            cstmt.setString(9, recluso.getPassword());
-            java.sql.Date fechaNacimiento = new java.sql.Date(recluso.getFechaNacimiento().getTime());
-            cstmt.setDate(10, fechaNacimiento);
+        // Crear la declaración y establecer los parámetros
+        CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
+        cstmt.setString(1, id_recluso);
+        cstmt.setString(2, cedulaR);
+        cstmt.setString(3, nombre);
+        cstmt.setString(4, apellidos);
+        cstmt.setInt(5, tiemp_condena);
+        cstmt.setString(6, delit);
+        cstmt.setString(7, correo);
+        cstmt.setString(8, usuario);
+        String contrasenaString = new String(contrasena);
+        cstmt.setString(9, contrasenaString);
+        
+        java.sql.Date fechaN = new java.sql.Date(fechaNacimiento.getTime());
+        cstmt.setDate(10, fechaN);
 
-            // Ejecutar el stored procedure
-            cstmt.execute();
-
+        // Ejecutar el stored procedure
+        cstmt.execute();
             System.out.println("Recluso editado correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al editar el recluso: " + e.getMessage());
@@ -269,45 +280,6 @@ public void cargarDatosTalleres(JCalendar cldAgenda) {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
-    }
-     public Date cargarFecha() {
-         String fechaCreacion = ""; 
-        try {
-            connectionBD.openConnection();
-
-            // Crear la sentencia SQL 
-            String sql = "SELECT r.id_recluso, r.nombres || ' ' || r.apellidos AS nombre_recluso, a.tipo_asignacion, CASE WHEN a.tipo_asignacion = 'Actividad' THEN" +
-            " act.fecha_hora_actividad  WHEN a.tipo_asignacion = 'Taller' THEN TO_CHAR(t.FECHA_CREACION, 'YYYY-MM-DD HH24:MI:SS')" +
-            " ELSE NULL END AS fecha_asignacion FROM Reclusos r" +
-            " JOIN AsignacionRecluso a ON r.id_recluso = a.id_recluso" +
-            " LEFT JOIN actividades act ON a.Id_ActividadTaller = act.id_actividad" +
-            " LEFT JOIN TalleresAlcaide t ON a.Id_ActividadTaller = t.ID_TALLER" +
-            " WHERE r.id_recluso = ?";
-
-
-            // Crear la declaración y ejecutar la consulta
-            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, id_recluso);
-            ResultSet resultSet = statement.executeQuery();           
-            // Recorrer el resultado           
-            while (resultSet.next()) {
-                fechaCreacion =resultSet.getString("fecha_asignacion");
-                // Setear el JCalendar con la fecha de creación
-              
-            }
-            System.out.println("Datos de talleres cargados correctamente.");
-            
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println("Error al obtener los datos de los talleres: " + e.getMessage());
-            
-        } finally {
-            try {
-                connectionBD.closeConnection();
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión: " + e.getMessage());
-            }
-        }
-        return  fecha(fechaCreacion);
     }
 
 // Método para calcular la edad a partir de la fecha de nacimiento

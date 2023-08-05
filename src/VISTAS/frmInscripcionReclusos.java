@@ -547,9 +547,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
             loginForm.setVisible(true);
         }
     }//GEN-LAST:event_jLabel14MouseClicked
-    private void obtener(){
-    
-    }
+
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
     int maxPostulaciones = 3;
     int seleccionadas = 0;
@@ -563,11 +561,10 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         Date fechaCreacion = (Date) jTable1.getModel().getValueAt(i, 4);
         Date fechaVencimiento = (Date) jTable1.getModel().getValueAt(i, 5);       
         int cupos = (int) jTable1.getModel().getValueAt(i, 6);
-        System.out.println("Nombre del grupo: "+ nombreGrupo);
         Inscripcion inscripcion = new Inscripcion(nombreR, apellidosR, correo, idRecluso, nombreGrupo, cupos, idTaller, nombreTaller, 0, cupos, fechaCreacion, fechaVencimiento, reduccion);
         controlador.cargarIdGrupo(idTaller);
         controlador.guardarTaller(inscripcion);    
-            System.out.println("DATOS DEL OBJETO: " + inscripcion.toString());
+
             seleccionadas++;
         }
         if (seleccionadas > maxPostulaciones) {
