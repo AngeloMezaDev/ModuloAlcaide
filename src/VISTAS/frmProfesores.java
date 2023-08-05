@@ -5,10 +5,34 @@
  */
 package VISTAS;
 
+import CONTROLADOR.ctrlProfesores;
 import MODELO.Usuario;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.EventObject;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,14 +43,39 @@ public class frmProfesores extends javax.swing.JFrame {
     /**
      * Creates new form fmrProfesores
      */
-        private static String usuario = "";
-        private static String contraseña="";
-    public frmProfesores(String usuario,String contraseña) {
-          this.usuario = usuario;
-          this.contraseña = contraseña;
+    private static String usuario = "";
+    private static String contraseña = "";
+    private ctrlProfesores ctrlProf;
+
+    public frmProfesores(String usuario, String contraseña) {
+        this.usuario = usuario;
+        this.contraseña = contraseña;
         initComponents();
 
         lblHandle.setText("@" + usuario);
+        ctrlProf = new ctrlProfesores();
+        try {
+            String idProfesor = ctrlProf.getIdProfesor(usuario);
+            ctrlProf.cargarTalleresDocente(cmbTallerAsistencias, idProfesor); // Cargar talleres al abrir el formulario
+            ctrlProf.cargarGruposDocente(cmbGrupoAsistencias, idProfesor); // Cargar grupos al abrir el formulario
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejar la excepción según sea necesario
+        }
+
+        TableColumn tc = jTableAsistencias.getColumnModel().getColumn(6);
+        tc.setCellEditor(jTableAsistencias.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(jTableAsistencias.getDefaultRenderer(Boolean.class));
+        cmbTallerAsistencias.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String nombreTallerSeleccionado = cmbTallerAsistencias.getSelectedItem().toString();
+                try {
+                    ctrlProf.cargarFechaCreacionTallerSeleccionado(nombreTallerSeleccionado, jDateFecha);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmProfesores.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     /**
@@ -65,14 +114,16 @@ public class frmProfesores extends javax.swing.JFrame {
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        jTableAsistencias = new javax.swing.JTable();
+        jDateFecha = new com.toedter.calendar.JDateChooser();
+        btnConsultarAsistencias = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbTallerAsistencias = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbGrupoAsistencias = new javax.swing.JComboBox<>();
+        btnCargar = new javax.swing.JButton();
+        BtnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -393,46 +444,42 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAsistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NOMBRE", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
+                "ID_ASISTENCIA", "ID_RECLUSO", "NOMBRE", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAsistencias);
 
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 960, 350));
-        jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
+        jPanelFondo.add(jDateFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("CARGAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarAsistencias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnConsultarAsistencias.setText("CONSULTAR");
+        btnConsultarAsistencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConsultarAsistenciasActionPerformed(evt);
             }
         });
-        jPanelFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+        jPanelFondo.add(btnConsultarAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("REGISTRO DE ASISTENCIA");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelFondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 300, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
+        jPanelFondo.add(cmbTallerAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
 
         jLabel8.setText("TALLERES:");
         jPanelFondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
@@ -440,8 +487,25 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel9.setText("GRUPO:");
         jPanelFondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+        jPanelFondo.add(cmbGrupoAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+
+        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargar.setText("CARGAR");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+
+        BtnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnGuardar.setText("GUARDAR");
+        BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGuardarActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(BtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 190, 140, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -457,6 +521,7 @@ public class frmProfesores extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
@@ -526,10 +591,6 @@ public class frmProfesores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblLogOutMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnInformes1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformes1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInformes1MouseEntered
@@ -543,6 +604,46 @@ public class frmProfesores extends javax.swing.JFrame {
         perfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInformes1MouseClicked
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        ctrlProf.agregarFilaAsistencia(jTableAsistencias, cmbTallerAsistencias, cmbGrupoAsistencias, jDateFecha);
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+
+    if (model.getRowCount() > 0) {
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Desea guardar las asistencias?", "Guardar Asistencias", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            ctrlProf.guardarAsistencias(jTableAsistencias);
+            JOptionPane.showMessageDialog(this, "Asistencias guardadas exitosamente.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Limpia la tabla después de guardar
+            model.setRowCount(0);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "No hay datos para guardar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+
+    }//GEN-LAST:event_BtnGuardarActionPerformed
+
+    private void btnConsultarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistenciasActionPerformed
+      try {
+        boolean existenRegistros = ctrlProf.verificarExistenciaRegistrosAsistencias();
+        
+        if (existenRegistros) {
+            frmConsultarAsistenciasProfe consulta = new frmConsultarAsistenciasProfe(usuario, contraseña);
+            consulta.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No existen registros de asistencias.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        // Manejar la excepción según sea necesario
+    }
+        
+    }//GEN-LAST:event_btnConsultarAsistenciasActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -583,24 +684,26 @@ public class frmProfesores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmProfesores(usuario,contraseña).setVisible(true);
+                new frmProfesores(usuario, contraseña).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnGuardar;
     private javax.swing.JPanel JPanelEncabezado;
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JPanel btnCalificaciones;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnConsultarAsistencias;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnInformes1;
     private javax.swing.JPanel btnSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JComboBox<String> cmbGrupoAsistencias;
+    private javax.swing.JComboBox<String> cmbTallerAsistencias;
+    private com.toedter.calendar.JDateChooser jDateFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -620,7 +723,7 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAsistencias;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;

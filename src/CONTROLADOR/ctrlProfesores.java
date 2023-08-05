@@ -10,6 +10,7 @@ import MODELO.ConnectionBD;
 import MODELO.Recluso;
 import MODELO.Profesor;
 import VISTAS.frmPerfilProfesor;
+import VISTAS.frmProfesores;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
@@ -27,9 +28,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -45,7 +48,6 @@ public class ctrlProfesores {
     public ctrlProfesores() {
         connectionBD = new ConnectionBD();
     }
-    
 
     public void cargarDatosProfesor(JLabel lblId, String usuario, String contra, JLabel lblApellidos, JLabel lblNombres, JLabel lblCedula, JLabel lblAñosExperiencia, JLabel lblEspecialidad, JLabel lblCorreo, JLabel lbledad, JLabel lblFechaNacs) {
         try {
@@ -334,68 +336,66 @@ public class ctrlProfesores {
         return profesor;
     }
 
-  public boolean actualizarDatosProfesor(String nuevosNombres, String nuevosApellidos, String nuevoUsuario, String nuevoCorreo, String nuevaContrasena) {
-    try {
-        connectionBD.openConnection();
-
-        // Crear la sentencia SQL para realizar la actualización
-        String sql = "UPDATE Profesores SET nombres = ?, apellidos = ?, correo = ? WHERE id_profesor = ?";
-
-        // Crear la declaración y establecer los parámetros
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-        statement.setString(1, nuevosNombres);
-        statement.setString(2, nuevosApellidos);
-        statement.setString(3, nuevoCorreo);
-        statement.setString(4, id_profesor); // Asegúrate de definir id_profesor en tu clase
-
-        // Ejecutar la consulta de actualización
-        int filasActualizadas = statement.executeUpdate();
-
-        if (filasActualizadas > 0) {
-            if (!nuevoUsuario.isEmpty() && !nuevaContrasena.isEmpty()) {
-                // Actualizar también el nombre de usuario y contraseña en la tabla Usuarios
-                actualizarCredencialesUsuario(nuevoUsuario, nuevaContrasena);
-            }
-
-            JOptionPane.showMessageDialog(null, "Datos del profesor actualizados correctamente.", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró ningún profesor con el ID especificado.", "Error de actualización", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    } catch (SQLException | ClassNotFoundException e) {
-        JOptionPane.showMessageDialog(null, "Error al actualizar los datos del profesor: " + e.getMessage(), "Error de actualización", JOptionPane.ERROR_MESSAGE);
-        return false;
-    } finally {
+    public boolean actualizarDatosProfesor(String nuevosNombres, String nuevosApellidos, String nuevoUsuario, String nuevoCorreo, String nuevaContrasena) {
         try {
-            connectionBD.closeConnection();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para realizar la actualización
+            String sql = "UPDATE Profesores SET nombres = ?, apellidos = ?, correo = ? WHERE id_profesor = ?";
+
+            // Crear la declaración y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, nuevosNombres);
+            statement.setString(2, nuevosApellidos);
+            statement.setString(3, nuevoCorreo);
+            statement.setString(4, id_profesor); // Asegúrate de definir id_profesor en tu clase
+
+            // Ejecutar la consulta de actualización
+            int filasActualizadas = statement.executeUpdate();
+
+            if (filasActualizadas > 0) {
+                if (!nuevoUsuario.isEmpty() && !nuevaContrasena.isEmpty()) {
+                    // Actualizar también el nombre de usuario y contraseña en la tabla Usuarios
+                    actualizarCredencialesUsuario(nuevoUsuario, nuevaContrasena);
+                }
+
+                JOptionPane.showMessageDialog(null, "Datos del profesor actualizados correctamente.", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún profesor con el ID especificado.", "Error de actualización", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar los datos del profesor: " + e.getMessage(), "Error de actualización", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-}
 
+    private void actualizarCredencialesUsuario(String nuevoUsuario, String nuevaContrasena) {
+        try {
+            // Crear la sentencia SQL para actualizar las credenciales en la tabla Usuarios
+            String sql = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ? WHERE nombre_usuario = ?";
 
-private void actualizarCredencialesUsuario(String nuevoUsuario, String nuevaContrasena) {
-    try {
-        // Crear la sentencia SQL para actualizar las credenciales en la tabla Usuarios
-        String sql = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ? WHERE nombre_usuario = ?";
-        
-        // Crear la declaración y establecer los parámetros
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-        statement.setString(1, nuevoUsuario);
-        statement.setString(2, nuevaContrasena);
-        statement.setString(3, nuevoUsuario);
+            // Crear la declaración y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, nuevoUsuario);
+            statement.setString(2, nuevaContrasena);
+            statement.setString(3, nuevoUsuario);
 
-        // Ejecutar la consulta de actualización
-        statement.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("Error al actualizar las credenciales del usuario: " + e.getMessage());
+            // Ejecutar la consulta de actualización
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar las credenciales del usuario: " + e.getMessage());
+        }
     }
-}
 
     // Método para convertir la cadena de fecha a objeto Date
-
     private Date obtenerFecha(String fechaStr) {
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -405,34 +405,360 @@ private void actualizarCredencialesUsuario(String nuevoUsuario, String nuevaCont
             return null;
         }
     }
-public boolean actualizarDatosUsuario(String nuevoUsuario, String nuevaContrasena, String usuarioAnterior) {
+
+    public void cargarTalleresDocente(JComboBox<String> cmbTallerAsistencias, String idDocente) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT DISTINCT NOMBRE_ACTIVIDADTALLER FROM ASIGNACIONPROFESOR WHERE ID_DOCENTE = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, idDocente);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreTaller = resultSet.getString("NOMBRE_ACTIVIDADTALLER");
+                cmbTallerAsistencias.addItem(nombreTaller);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar talleres: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
+    public void cargarGruposDocente(JComboBox<String> cmbGrupoAsistencias, String idDocente) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT DISTINCT NOMBRE_GRUPO FROM ASIGNACIONPROFESOR WHERE ID_DOCENTE = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, idDocente);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
+                cmbGrupoAsistencias.addItem(nombreGrupo);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar grupos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
+    public boolean actualizarDatosUsuario(String nuevoUsuario, String nuevaContrasena, String usuarioAnterior) {
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para actualizar las credenciales en la tabla Usuarios
+            String sql = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ? WHERE nombre_usuario = ?";
+
+            // Crear la declaración y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, nuevoUsuario);
+            statement.setString(2, nuevaContrasena);
+            statement.setString(3, usuarioAnterior);
+
+            // Ejecutar la consulta de actualización
+            int filasActualizadas = statement.executeUpdate();
+
+            return filasActualizadas > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al actualizar las credenciales del usuario: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    public void agregarFilaAsistencia(JTable jTableAsistencias, JComboBox<String> cmbTalleresAsistencias, JComboBox<String> cmbGruposAsistencias, JDateChooser jDateFecha) {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT Id_Recluso, Nombre_Recluso, Nombre_Taller, NOMBRE_GRUPO FROM Inscripcion WHERE Nombre_Taller = ? AND NOMBRE_GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+
+            String tallerSeleccionado = cmbTalleresAsistencias.getSelectedItem().toString();
+            String grupoSeleccionado = cmbGruposAsistencias.getSelectedItem().toString();
+
+            statement.setString(1, tallerSeleccionado);
+            statement.setString(2, grupoSeleccionado);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String idRecluso = resultSet.getString("Id_Recluso");
+                String nombreRecluso = resultSet.getString("Nombre_Recluso");
+                String nombreTaller = resultSet.getString("Nombre_Taller");
+                String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
+
+                // Generar el nuevo ID de asistencia
+                String nuevoId = generarIdAsistencia();
+
+                // Obtener la fecha seleccionada del jDateFecha
+                Date fechaSeleccionada = jDateFecha.getDate();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha = dateFormat.format(fechaSeleccionada);
+
+                // Crear un Vector con los datos para agregar a la tabla
+                Vector<Object> row = new Vector<>();
+                row.add(nuevoId);
+                row.add(idRecluso);
+                row.add(nombreRecluso);
+                row.add(nombreTaller);
+                row.add(nombreGrupo);
+                row.add(fecha);
+                row.add(Boolean.FALSE); // Por defecto, asistencia "No"
+
+                // Agregar la fila al modelo de la tabla
+                DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+                model.addRow(row);
+            }
+
+            resultSet.close();
+            statement.close();
+            connectionBD.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean validarCoincidencias(JComboBox<String> cmbTalleres, JComboBox<String> cmbGrupos) {
+        String tallerSeleccionado = cmbTalleres.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupos.getSelectedItem().toString();
+
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT Id_Recluso, Nombre_Recluso FROM Inscripcion WHERE Nombre_Taller = ? AND NOMBRE_GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, tallerSeleccionado);
+            statement.setString(2, grupoSeleccionado);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Verificar si hay resultados en la consulta
+            boolean coincidenciasEncontradas = resultSet.next();
+
+            resultSet.close();
+            statement.close();
+            connectionBD.closeConnection();
+
+            return coincidenciasEncontradas;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+            return false;
+        }
+    }
+
+    public String getIdProfesor(String usuario) throws ClassNotFoundException, SQLException {
+        // Realiza una consulta a la base de datos para obtener el ID del profesor
+        String idProfesor = ""; // Inicializa con un valor por defecto
+
+        try {
+            connectionBD.openConnection();
+
+            // Consulta para obtener el ID del profesor basado en el nombre de usuario
+            String queryIdProfesor = "SELECT id_profesor FROM Profesores WHERE usuario = ?";
+            PreparedStatement statementIdProfesor = connectionBD.getConnection().prepareStatement(queryIdProfesor);
+            statementIdProfesor.setString(1, usuario);
+
+            ResultSet resultSetIdProfesor = statementIdProfesor.executeQuery();
+
+            if (resultSetIdProfesor.next()) {
+                idProfesor = resultSetIdProfesor.getString("id_profesor");
+
+                // Consulta para obtener el ID_DOCENTE basado en el ID del profesor
+                String query = "SELECT ID_DOCENTE FROM AsignacionProfesor WHERE ID_DOCENTE = ?";
+                PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+                statement.setString(1, idProfesor);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    idProfesor = resultSet.getString("ID_DOCENTE");
+                }
+
+                resultSet.close();
+                statement.close();
+            }
+
+            resultSetIdProfesor.close();
+            statementIdProfesor.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+            connectionBD.closeConnection();
+        }
+
+        return idProfesor;
+    }
+
+    public void cargarFechaCreacionTallerSeleccionado(String nombreTaller, JDateChooser jDateFecha) throws SQLException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT FECHA_CREACION FROM TalleresAlcaide WHERE NOMBRE_TALLER = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String fechaCreacion = resultSet.getString("FECHA_CREACION");
+                jDateFecha.setDate(fecha(fechaCreacion)); // Suponiendo que fecha es un método para convertir la cadena a un objeto Date
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
+    //Método para guardar las asistencias
+    public void guardarAsistencias(JTable jTableAsistencias) {
+        try {
+            connectionBD.openConnection();
+            DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+
+            String query = "INSERT INTO Asistencias (Id_asistencia, Id_recluso, Nombre_recluso, taller, grupo, fecha, asistencia) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                statement.setString(1, model.getValueAt(i, 0).toString());
+                statement.setString(2, model.getValueAt(i, 1).toString());
+                statement.setString(3, model.getValueAt(i, 2).toString());
+                statement.setString(4, model.getValueAt(i, 3).toString());
+                statement.setString(5, model.getValueAt(i, 4).toString());
+
+                Object fechaObjeto = model.getValueAt(i, 5);
+                String fechaString = fechaObjeto.toString();
+                Date fecha = new SimpleDateFormat("yyyy-MM-dd").parse(fechaString);
+                statement.setDate(6, new java.sql.Date(fecha.getTime()));
+
+                // Convertir el valor de asistencia a "Presente" o "Ausente"
+                boolean asistenciaBoolean = (boolean) model.getValueAt(i, 6);
+                String asistencia = asistenciaBoolean ? "Presente" : "Ausente";
+                statement.setString(7, asistencia);
+
+                statement.executeUpdate();
+            }
+
+            statement.close();
+            connectionBD.closeConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+   public void cargarAsistencias(JComboBox<String> cmbTallerConsulta, JComboBox<String> cmbGrupoConsulta, JDateChooser jDateConsulta, JTable jTableAsistencias) throws SQLException {
     try {
         connectionBD.openConnection();
 
-        // Crear la sentencia SQL para actualizar las credenciales en la tabla Usuarios
-        String sql = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ? WHERE nombre_usuario = ?";
-        
-        // Crear la declaración y establecer los parámetros
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-        statement.setString(1, nuevoUsuario);
-        statement.setString(2, nuevaContrasena);
-        statement.setString(3, usuarioAnterior);
+        String tallerSeleccionado = cmbTallerConsulta.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupoConsulta.getSelectedItem().toString();
+        Date fechaSeleccionada = jDateConsulta.getDate();
+        java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
 
-        // Ejecutar la consulta de actualización
-        int filasActualizadas = statement.executeUpdate();
+        String query = "SELECT Id_asistencia, Id_recluso, Nombre_recluso, taller, grupo, fecha, asistencia FROM Asistencias WHERE taller = ? AND grupo = ? AND fecha = ?";
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+        statement.setString(1, tallerSeleccionado);
+        statement.setString(2, grupoSeleccionado);
+        statement.setDate(3, fechaSQL);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
         
-        return filasActualizadas > 0;
-    } catch (SQLException | ClassNotFoundException e) {
-        System.err.println("Error al actualizar las credenciales del usuario: " + e.getMessage());
+            boolean registrosEncontrados = false;
+
+        while (resultSet.next()) {
+            String idAsistencia = resultSet.getString("Id_asistencia");
+            String idRecluso = resultSet.getString("Id_recluso");
+            String nombreRecluso = resultSet.getString("Nombre_recluso");
+            String nombreTaller = resultSet.getString("taller");
+            String nombreGrupo = resultSet.getString("grupo");
+            Date fecha = resultSet.getDate("fecha");
+            String asistenciaTexto = resultSet.getString("asistencia");
+
+            // Mostrar un visto (checkmark) para "Presente" y nada para "Ausente"
+            String asistenciaRenderizada = asistenciaTexto.equals("Presente") ? "✓" : "";
+
+            // Agregar los datos a la tabla
+            Object[] rowData = {idAsistencia, idRecluso, nombreRecluso, nombreTaller, nombreGrupo, fecha, asistenciaRenderizada};
+            model.addRow(rowData);
+                    registrosEncontrados = true;
+
+        }
+
+        resultSet.close();
+        statement.close();
+         if (!registrosEncontrados) {
+        JOptionPane.showMessageDialog(null, "No existen registros.", "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Manejo de la excepción
+    } finally {
+        
+        connectionBD.closeConnection();
+    }
+}
+   public boolean verificarExistenciaRegistrosAsistencias() throws SQLException {
+    try {
+        connectionBD.openConnection();
+
+        String query = "SELECT COUNT(*) FROM Asistencias";
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.next();
+
+        int count = resultSet.getInt(1);
+
+        resultSet.close();
+        statement.close();
+
+        return count > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Manejo de la excepción
         return false;
     } finally {
-        try {
-            connectionBD.closeConnection();
-        } catch (SQLException e) {
-            System.err.println("Error al cerrar la conexión: " + e.getMessage());
-        }
+        connectionBD.closeConnection();
     }
 }
 
+
+    private String generarIdAsistencia() {
+        // Obtener el último ID de asistencia desde la tabla (reemplaza con tu lógica)
+        int ultimoId = 1; // Ejemplo, reemplaza con el último ID real
+
+        // Generar el nuevo ID de asistencia
+        String nuevoId = String.format("#AS%03d", ultimoId);
+
+        return nuevoId;
+    }
 
 }
