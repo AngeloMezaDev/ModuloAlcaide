@@ -800,6 +800,7 @@ CREATE TABLE Asistencias (
 );
 
 --TABLA ASIGNACION PARA LA SUBIDA DE ASIGNACIONES POR PARTE DEL PROFESOR
+Drop Table Asignacion;
 CREATE TABLE Asignacion (
     Id_Asignacion VARCHAR(255) PRIMARY KEY,
     Titulo VARCHAR(255),
@@ -807,4 +808,18 @@ CREATE TABLE Asignacion (
     Grupo VARCHAR(255),
     Descripcion VARCHAR(255),
     Fecha_Limite DATE
+);
+Drop table Deber;
+CREATE TABLE Deber (
+    Id_Deber VARCHAR(255) PRIMARY KEY,
+    Id_Asignacion VARCHAR(255),
+    Titulo VARCHAR(255),
+    Curso VARCHAR(255),
+    Grupo VARCHAR(255),
+    Descripcion VARCHAR(255),
+    Respuesta VARCHAR(255),
+    Fecha_Limite DATE,
+    Nombre_Autor VARCHAR(255),
+    Apellido_Autor VARCHAR(255),
+    Id_Autor VARCHAR(255)
 );
