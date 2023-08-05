@@ -787,7 +787,7 @@ BEGIN
 END;
 /
 
---MODULO PROFESOR}
+--MODULO PROFESOR
 Drop table Asistencias
 CREATE TABLE Asistencias (
     Id_asistencia VARCHAR(20) PRIMARY KEY,
@@ -797,4 +797,14 @@ CREATE TABLE Asistencias (
     grupo VARCHAR(255),
     fecha DATE,
     asistencia VARCHAR(10)
+);
+
+--TABLA ASIGNACION PARA LA SUBIDA DE ASIGNACIONES POR PARTE DEL PROFESOR
+CREATE TABLE Asignacion (
+    Id_Asignacion VARCHAR(255) PRIMARY KEY,
+    Titulo VARCHAR(255),
+    Curso VARCHAR(255),
+    Grupo VARCHAR(255),
+    Descripcion VARCHAR(255),
+    Fecha_Limite DATE
 );
