@@ -262,7 +262,7 @@ public class ctrlReclusos {
                 ResultSet resultSet = statement.executeQuery();           
                 // Recorrer el resultado           
                 while (resultSet.next()) {
-                    String fechaCreacion =resultSet.getString("fecha_creacion");
+                    String fechaCreacion =resultSet.getString("fecha_vencimiento");
                     // Setear el JCalendar con la fecha de creación
                     cldAgenda.setDate(fecha(fechaCreacion));
 
