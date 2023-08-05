@@ -705,6 +705,7 @@ END;
 /
 
 -- Creacion de tabla Inscripcion
+Drop table Inscripcion;
 CREATE TABLE Inscripcion (
   ID_Inscripcion VARCHAR2(6 BYTE),
   Id_Recluso VARCHAR2(6 BYTE),
@@ -786,7 +787,8 @@ BEGIN
 END;
 /
 
---MODULO PROFESOR
+--MODULO PROFESOR}
+Drop table Asistencias
 CREATE TABLE Asistencias (
     Id_asistencia VARCHAR(20) PRIMARY KEY,
     Id_recluso VARCHAR(20),
