@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -46,7 +46,7 @@ public class ctrlReclusos {
     public ctrlReclusos() {
         connectionBD = new ConnectionBD();
     }
-    
+    // Método para obtener el ID del Grupo y asignarlo a la bariable global
     public void cargarIdGrupo(String Id_Taller) {
         try {
             connectionBD.openConnection();
@@ -75,7 +75,7 @@ public class ctrlReclusos {
             }
         }
     }
-    
+    // Método para cargar todos los datos del recluso en perfil
     public void cargarDatosRecluso(String usuario, String contra, JLabel lblApellidos, JLabel lblNombres, JLabel lblCedula, JLabel lblTiempoCond, JLabel lblDelito, JLabel lblCorreo, JLabel lbledad, JLabel lblFechaNacs) {
         try {
             connectionBD.openConnection();
@@ -128,7 +128,7 @@ public class ctrlReclusos {
             }
         }
     }
-   
+   // Método para cargar los nombres y grupos correspondientes de los talleres inscritos
     public void cargarNombresTalleres(JLabel lblTaller1, JLabel lblTaller2, JLabel lblTaller3, JLabel lblGrupo1, JLabel lblGrupo2, JLabel lblGrupo3) {
         try {
             connectionBD.openConnection();
@@ -173,7 +173,8 @@ public class ctrlReclusos {
             }
         }
     }
-    public void DatosRecluso(String usuario, String contra, JTextField lblApellidos, JTextField lblNombres, JTextField lblCedula, int tiempo_condena, String delito, JTextField lblCorreo, JDateChooser jDateFechaNac) {
+    // Método para cargar los datos del recluso en la interfaz de edición 
+    public void CargasDatosReclusoEdit(String usuario, String contra, JTextField lblApellidos, JTextField lblNombres, JTextField lblCedula, int tiempo_condena, String delito, JTextField lblCorreo, JDateChooser jDateFechaNac) {
         try {
             connectionBD.openConnection();
 
@@ -210,6 +211,7 @@ public class ctrlReclusos {
             }
         }
     }
+    // Método que contiene la consulta para editar los datos del recluso
     public void EditarRecluso(String nombre, String apellidos, String usuario, String correo, char[] contrasena) {
         try {
             connectionBD.openConnection();
@@ -245,44 +247,39 @@ public class ctrlReclusos {
             }
         }
     }
-public void cargarDatosTalleres(JCalendar cldAgenda) {
-        try {
-            connectionBD.openConnection();
-
-            // Crear la sentencia SQL 
-            String sql = "SELECT r.id_recluso, r.nombres || ' ' || r.apellidos AS nombre_recluso, a.tipo_asignacion, CASE WHEN a.tipo_asignacion = 'Actividad' THEN" +
-            " act.fecha_hora_actividad  WHEN a.tipo_asignacion = 'Taller' THEN TO_CHAR(t.FECHA_CREACION, 'YYYY-MM-DD HH24:MI:SS')" +
-            " ELSE NULL END AS fecha_asignacion FROM Reclusos r" +
-            " JOIN AsignacionRecluso a ON r.id_recluso = a.id_recluso" +
-            " LEFT JOIN actividades act ON a.Id_ActividadTaller = act.id_actividad" +
-            " LEFT JOIN TalleresAlcaide t ON a.Id_ActividadTaller = t.ID_TALLER" +
-            " WHERE r.id_recluso = ?";
-
-
-            // Crear la declaración y ejecutar la consulta
-            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, id_recluso);
-            ResultSet resultSet = statement.executeQuery();           
-            // Recorrer el resultado           
-            while (resultSet.next()) {
-                String fechaCreacion =resultSet.getString("fecha_asignacion");
-                // Setear el JCalendar con la fecha de creación
-                cldAgenda.setDate(fecha(fechaCreacion));
-                
-            }
-            System.out.println("Datos de talleres cargados correctamente.");
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println("Error al obtener los datos de los talleres: " + e.getMessage());
-        } finally {
+    // Método para cargar la fecha de los talleres y colocarlos en el calendario de la interfaz de notificaciones
+    public void cargarFechaTalleres(JCalendar cldAgenda) {
             try {
-                connectionBD.closeConnection();
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+                connectionBD.openConnection();
+
+                // Crear la sentencia SQL 
+                String sql = "Select fecha_creacion, fecha_vencimiento from inscripcion" +
+                " WHERE id_recluso = ?";
+
+                // Crear la declaración y ejecutar la consulta
+                PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+                statement.setString(1, id_recluso);
+                ResultSet resultSet = statement.executeQuery();           
+                // Recorrer el resultado           
+                while (resultSet.next()) {
+                    String fechaCreacion =resultSet.getString("fecha_creacion");
+                    // Setear el JCalendar con la fecha de creación
+                    cldAgenda.setDate(fecha(fechaCreacion));
+
+                }
+                System.out.println("Fecha de talleres cargados con éxito");
+            } catch (SQLException | ClassNotFoundException e) {
+                System.err.println("Error al obtener la fecha de los talleres: " + e.getMessage());
+            } finally {
+                try {
+                    connectionBD.closeConnection();
+                } catch (SQLException e) {
+                    System.err.println("Error al cerrar la conexión: " + e.getMessage());
+                }
             }
-        }
     }
 
-// Método para calcular la edad a partir de la fecha de nacimiento
+    // Método para calcular la edad a partir de la fecha de nacimiento
      public String calcularEdad(String fechaNacimiento) {
         try {
 
@@ -306,33 +303,36 @@ public void cargarDatosTalleres(JCalendar cldAgenda) {
         }
         
     }   
-public String obtenerSoloFecha(String fechaNac) {
-        try {
-            SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date dateTime = sdfDateTime.parse(fechaNac);
+     // Método String para formatear la fecha de un String
+    public String obtenerSoloFecha(String fechaNac) {
+            try {
+                SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date dateTime = sdfDateTime.parse(fechaNac);
 
-            // Formato para solo la fecha
-            SimpleDateFormat sdfFecha = new SimpleDateFormat("yyyy-MM-dd");
-            return sdfFecha.format(dateTime);
-        } catch (ParseException e) {
-            // Manejar cualquier excepción si ocurre algún error al parsear la fecha
-            e.printStackTrace();
-            return "Error"; // O cualquier otra cadena que desees devolver en caso de error
+                // Formato para solo la fecha
+                SimpleDateFormat sdfFecha = new SimpleDateFormat("yyyy-MM-dd");
+                return sdfFecha.format(dateTime);
+            } catch (ParseException e) {
+                // Manejar cualquier excepción si ocurre algún error al parsear la fecha
+                e.printStackTrace();
+                return "Error"; // O cualquier otra cadena que desees devolver en caso de error
+            }
         }
-    }
-  public Date fecha(String columnName) {
-    try {
-        String dateString = columnName;
-        if (dateString != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return dateFormat.parse(dateString);
-        }
-    } catch (ParseException e) {
-        // Aquí puedes decidir cómo manejar la excepción, por ejemplo, imprimir un mensaje de error.
-        System.err.println("Error al obtener o formatear la fecha: " + e.getMessage());
-    }
-    return null; // En caso de error o valor nulo, devuelve null.
-} 
+    // Método de tipo DATE para formatear la fecha de un String
+    public Date fecha(String columnName) {
+      try {
+          String dateString = columnName;
+          if (dateString != null) {
+              SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+              return dateFormat.parse(dateString);
+          }
+      } catch (ParseException e) {
+          // Aquí puedes decidir cómo manejar la excepción, por ejemplo, imprimir un mensaje de error.
+          System.err.println("Error al obtener o formatear la fecha: " + e.getMessage());
+      }
+      return null; // En caso de error o valor nulo, devuelve null.
+  } 
+    // Método para cargar los datos de los talleres en la tabla de Inscripciones
     public void cargarDatosTalleresG(DefaultTableModel modeloTabla) throws ClassNotFoundException {
         try {
             connectionBD.openConnection();
@@ -357,8 +357,6 @@ public String obtenerSoloFecha(String fechaNac) {
                 String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
                 int capacidadGrupo = resultSet.getInt("CAPACIDAD");
                 
-                
-                
                 Object[] fila = {
                     idTaller,
                     nombreTaller,
@@ -369,10 +367,8 @@ public String obtenerSoloFecha(String fechaNac) {
                     capacidadGrupo,
                     
                 };
-                modeloTabla.addRow(fila);
-                
-            }
-           
+                modeloTabla.addRow(fila);               
+            }          
             // Cerrar recursos
             resultSet.close();
             statement.close();
@@ -381,6 +377,7 @@ public String obtenerSoloFecha(String fechaNac) {
             e.printStackTrace();
         }
     }
+    // Método para guardar las inscripciones 
     public void guardarTaller(Inscripcion inscripcion) {
         try {
             connectionBD.openConnection();
@@ -401,8 +398,6 @@ public String obtenerSoloFecha(String fechaNac) {
             cstmt.setDate(9, new java.sql.Date(inscripcion.getFechaCreacion().getTime()));
             cstmt.setDate(10, new java.sql.Date(inscripcion.getFechaVencimiento().getTime()));
             cstmt.setString(11, inscripcion.getNombreGrupo());
-            System.out.println("Nombre del grupo: "+ inscripcion.getNombreGrupo());
-
             cstmt.setInt(12, inscripcion.getCapacidadMaxima());
             
             

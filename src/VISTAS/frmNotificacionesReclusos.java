@@ -33,8 +33,8 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         controlador = new ctrlReclusos();
        
     
-        controlador.cargarDatosTalleres(cldAgenda);
-        cldAgenda.setEnabled(false);
+        controlador.cargarFechaTalleres(cldAgenda);
+
        
     }
 

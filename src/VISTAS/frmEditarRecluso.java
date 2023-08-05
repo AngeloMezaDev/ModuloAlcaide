@@ -34,7 +34,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
     public frmEditarRecluso(String usuario, String contrasena) {
         initComponents();
         controlador = new ctrlReclusos();
-        controlador.DatosRecluso(usuario, contrasena, txtApellidosReo, txtNombresReo, txtCedulaReo,  tiempo_condena, delito, txtCorreoReo, jDateFechaNacimiento);
+        controlador.CargasDatosReclusoEdit(usuario, contrasena, txtApellidosReo, txtNombresReo, txtCedulaReo,  tiempo_condena, delito, txtCorreoReo, jDateFechaNacimiento);
         txtUsuarioReo.setText(usuario);
         txtPasswordReo.setText(contrasena);
         txtPasswConfirmReo.setText(contrasena);
