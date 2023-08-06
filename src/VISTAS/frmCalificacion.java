@@ -227,9 +227,6 @@ public class frmCalificacion extends javax.swing.JFrame {
         btnAsignaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAsignaciones.setPreferredSize(new java.awt.Dimension(126, 50));
         btnAsignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAsignacionesMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsignacionesMouseEntered(evt);
             }
@@ -695,13 +692,6 @@ public class frmCalificacion extends javax.swing.JFrame {
         resetColor(btnCalificar);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnAsistenciasMouseExited
-
-    private void btnAsignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseClicked
-        frmCalificacion cal = new frmCalificacion(usuario, contraseña);
-        cal.setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_btnAsignacionesMouseClicked
 
     private void btnAsignacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseEntered
         resetColor(btnAsistencias);

@@ -28,6 +28,7 @@ public class ctrlAsignacionProfe {
 
     private ConnectionBD connectionBD;
     private static String id_profesor = "";
+    private static String idAsignacion = "";
 
     public ctrlAsignacionProfe() {
         connectionBD = new ConnectionBD();
@@ -308,7 +309,7 @@ public class ctrlAsignacionProfe {
     }
     // Método para cargar los datos de deberes en los componentes del formulario
 
-   public void cargarDatosDeberes(JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JLabel lblTitulo, JTextArea txtDescripcion, JTextArea txtRespuesta,
+    public void cargarDatosDeberes(JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JLabel lblTitulo, JTextArea txtDescripcion, JTextArea txtRespuesta,
             JComboBox<String> cmbCurso, JComboBox<String> cmbGrupo, JDateChooser jDateFechaLimite) throws ClassNotFoundException, SQLException {
         try {
             connectionBD.openConnection();
@@ -361,6 +362,134 @@ public class ctrlAsignacionProfe {
         }
     }
 
+    public String generarIdNuevaAsignacion() throws ClassNotFoundException, SQLException {
+        String nuevoId = "";
+        try {
+            connectionBD.openConnection();
 
+            String sql = "SELECT MAX(ID_ASIGNACION) FROM DEBER";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            int maxId = 0;
+            if (resultSet.next()) {
+                maxId = resultSet.getInt(1);
+            }
+            maxId++; // Incrementar el último ID obtenido
+
+            nuevoId = String.format("#AP%03d", maxId); // Formatear el nuevo ID
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
+
+        return nuevoId;
+    }
+
+    public void insertarTarea(JLabel lblCurso, JLabel lblGrupo, JDateChooser jDateFechaLimite,
+            JLabel lblTitulo, JTextArea txtDescripcion, JTextArea txtRespuesta,
+            int nota, JTextField txtObservacion) throws ClassNotFoundException, SQLException {
+        String curso = lblCurso.getText();
+        String grupo = lblGrupo.getText();
+        Date fechaLimite = jDateFechaLimite.getDate();
+        String titulo = lblTitulo.getText();
+        String descripcion = txtDescripcion.getText();
+        String respuesta = txtRespuesta.getText();
+        String[] datosAutorYDeber = obtenerDatosRecluso(curso, grupo, fechaLimite);
+        String nombreAutor = datosAutorYDeber[0];
+        String apellidoAutor = datosAutorYDeber[1];
+        String idAutor = datosAutorYDeber[2];
+        String idDeber = datosAutorYDeber[3];
+        String observacion = txtObservacion.getText();
+        // Generar nuevo ID de asignación
+        String idAsignacion = this.idAsignacion;
+
+        try {
+            connectionBD.openConnection();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+            String fechaLimiteStr = dateFormat.format(fechaLimite).toUpperCase(); // Convertir la fecha a mayúsculas
+
+            // Crear la sentencia SQL para insertar una tarea en la tabla Tareas
+            String sql = "INSERT INTO TAREAS (ID_DEBER, ID_ASIGNACION, TITULO, FECHA_LIMITE, CURSO, GRUPO, DESCRIPCION, RESPUESTA, NOMBRE_AUTOR, APELLIDO_AUTOR, ID_AUTOR, NOTA, OBSERVACION) VALUES (?, ?, ?, TO_DATE(?, 'DD-MON-RR'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            // Crear la declaración preparada y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, idDeber);
+            statement.setString(2, idAsignacion);
+            System.out.println("EL ID DE LA ASGINACION ES: " + idAsignacion);
+            statement.setString(3, titulo);
+            statement.setString(4, fechaLimiteStr);
+            statement.setString(5, curso);
+            statement.setString(6, grupo);
+            statement.setString(7, descripcion);
+            statement.setString(8, respuesta);
+            statement.setString(9, nombreAutor);
+            statement.setString(10, apellidoAutor);
+            statement.setString(11, idAutor);
+            statement.setInt(12, nota);
+            statement.setString(13, observacion);
+
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
+    public String[] obtenerDatosRecluso(String curso, String grupo, Date fechaLimite) throws ClassNotFoundException, SQLException {
+        String[] datosAutorYDeber = new String[4]; // Arreglo para almacenar los datos del autor y el ID_DEBER
+
+        try {
+            connectionBD.openConnection();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
+            String fechaLimiteStr = dateFormat.format(fechaLimite).toUpperCase(); // Convertir la fecha a mayúsculas
+
+            // Crear la sentencia SQL para obtener los datos del autor y el ID_DEBER con los parámetros proporcionados
+            String sql = "SELECT ID_ASIGNACION, NOMBRE_AUTOR, APELLIDO_AUTOR, ID_AUTOR, ID_DEBER FROM DEBER WHERE CURSO = ? AND GRUPO = ? AND FECHA_LIMITE = TO_DATE(?, 'DD-MON-RR')";
+
+            // Crear la declaración preparada y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, curso);
+            statement.setString(2, grupo);
+            statement.setString(3, fechaLimiteStr);
+            System.out.println("curso obtenido: " + curso);
+            System.out.println("grupo obtenido: " + grupo);
+            System.out.println("fechalimite obtenida: " + fechaLimiteStr);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Verificar si se encontraron datos y obtener los valores del autor y el ID_DEBER
+            if (resultSet.next()) {
+                datosAutorYDeber[0] = resultSet.getString("NOMBRE_AUTOR");
+                datosAutorYDeber[1] = resultSet.getString("APELLIDO_AUTOR");
+                datosAutorYDeber[2] = resultSet.getString("ID_AUTOR");
+                datosAutorYDeber[3] = resultSet.getString("ID_DEBER");
+                idAsignacion = resultSet.getString("ID_ASIGNACION"); // Mover esta línea aquí
+                System.out.println("La asignacion tiene el id:" + idAsignacion);
+                System.out.println("nombre obtenido: " + datosAutorYDeber[0]);
+                System.out.println("Apellido obtenido: " + datosAutorYDeber[1]);
+                System.out.println("autor obtenido: " + datosAutorYDeber[2]);
+                System.out.println("deber obtenido: " + datosAutorYDeber[3]);
+
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
+
+        return datosAutorYDeber;
+    }
 
 }
