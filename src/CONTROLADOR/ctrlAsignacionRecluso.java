@@ -32,11 +32,12 @@ public class ctrlAsignacionRecluso {
     private static String nombreTaller = "";
     private static String nombreGrupo = "";
     private static String idAsignacion = "";
+
     public ctrlAsignacionRecluso() {
         connectionBD = new ConnectionBD();
     }
-    
-    public void datosGlobalesRecluso(String user, String contra){
+
+    public void datosGlobalesRecluso(String user, String contra) {
         try {
             connectionBD.openConnection();
 
@@ -46,7 +47,7 @@ public class ctrlAsignacionRecluso {
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
             statement.setString(1, user);
             statement.setString(2, contra);
-            
+
             ResultSet resultSet = statement.executeQuery();
 
             // Recorrer el resultado y agregar los datos al modelo de la tabla
@@ -65,9 +66,10 @@ public class ctrlAsignacionRecluso {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
-    
+
     }
-    public void datosGlobalesInscripcion(){
+
+    public void datosGlobalesInscripcion() {
         try {
             connectionBD.openConnection();
 
@@ -76,7 +78,7 @@ public class ctrlAsignacionRecluso {
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
             statement.setString(1, idR);
-            
+
             ResultSet resultSet = statement.executeQuery();
 
             // Recorrer el resultado y agregar los datos al modelo de la tabla
@@ -93,15 +95,16 @@ public class ctrlAsignacionRecluso {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
-    
-    }
-public void cargarAsignacion( JLabel lblTitulo, JLabel lblfecha, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion) throws SQLException, ClassNotFoundException {
-    ConnectionBD connectionBD = new ConnectionBD();
-    
-    try {
-        connectionBD.openConnection();
 
-        // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
+    }
+
+    public void cargarAsignacion(JLabel lblTitulo, JLabel lblfecha, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion) throws SQLException, ClassNotFoundException {
+        ConnectionBD connectionBD = new ConnectionBD();
+
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
             String sql = "SELECT ID_ASIGNACION, TITULO, CURSO, GRUPO, DESCRIPCION, FECHA_LIMITE FROM ASIGNACION where CURSO = ?  AND GRUPO = ? ";
 
             // Crear la declaración preparada y establecer los parámetros
@@ -118,62 +121,63 @@ public void cargarAsignacion( JLabel lblTitulo, JLabel lblfecha, JLabel lblCurso
                 java.sql.Date fechaLimite = resultSet.getDate("FECHA_LIMITE");
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String fechaTexto = dateFormat.format(fechaLimite);
-                lblfecha.setText( fechaTexto);
+                lblfecha.setText(fechaTexto);
                 lblCurso.setText(resultSet.getString("CURSO"));
                 lblGrupo.setText(resultSet.getString("GRUPO"));
                 txtDescripcion.setText(resultSet.getString("DESCRIPCION"));
             }
             System.out.println("Datos de Asignacion cargados correctamente");
-        
-          
+
             statement.close();
 
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        connectionBD.closeConnection();
-    }
-}
-  public void guardarDeber(JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, JTextArea txtRespuesta) throws SQLException, ClassNotFoundException {
-    ConnectionBD connectionBD = new ConnectionBD();
-    String nuevoId = generarIdAsignacion();
-    try {
-        connectionBD.openConnection();
-
-        String query = "INSERT INTO Deber (Id_Deber, Id_Asignacion, Titulo, Curso, Grupo, Descripcion, Respuesta, Fecha_Limite, Nombre_Autor, Apellido_Autor, Id_Autor) VALUES (?, ?, ?, ?, ?, ?, ?, TO_DATE(?, 'dd-MM-yyyy'), ?, ?, ?)";
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
-        statement.setString(1, nuevoId);
-        statement.setString(2, idAsignacion);
-        statement.setString(3, lblTitulo.getText());
-        statement.setString(4, lblCurso.getText());
-        statement.setString(5, lblGrupo.getText());
-        statement.setString(6, txtDescripcion.getText());
-        statement.setString(7, txtRespuesta.getText());
-        try {
-            String fechaTexto = lblFechaLimite.getText();
-            Date fechaSql = convertirTextoADate(fechaTexto);
-            statement.setDate(8, new java.sql.Date( fechaSql.getTime()));
-        } catch (ParseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
         }
-
-        
-
-        statement.setString(9, nombresR);
-        statement.setString(10, apellidosR);
-        statement.setString(11, idR);
-        statement.executeUpdate();
-        statement.close();
-
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        connectionBD.closeConnection();
     }
-}
 
-public String generarIdAsignacion() throws ClassNotFoundException, SQLException {
+    public void guardarDeber(JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, JTextArea txtRespuesta) throws SQLException, ClassNotFoundException {
+        ConnectionBD connectionBD = new ConnectionBD();
+        String nuevoId = generarIdAsignacion();
+        try {
+            connectionBD.openConnection();
+
+            String query = "INSERT INTO Deber (Id_Deber, Id_Asignacion, Titulo, Curso, Grupo, Descripcion, Respuesta, Fecha_Limite, Nombre_Autor, Apellido_Autor, Id_Autor) VALUES (?, ?, ?, ?, ?, ?, ?, TO_DATE(?, 'DD-MM-YYYY'), ?, ?, ?)";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nuevoId);
+            statement.setString(2, idAsignacion);
+            statement.setString(3, lblTitulo.getText());
+            statement.setString(4, lblCurso.getText());
+            statement.setString(5, lblGrupo.getText());
+            statement.setString(6, txtDescripcion.getText());
+            statement.setString(7, txtRespuesta.getText());
+
+            try {
+                String fechaTexto = lblFechaLimite.getText();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+                Date fechaSql = dateFormat.parse(fechaTexto);
+                SimpleDateFormat oracleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String fechaFormateada = oracleDateFormat.format(fechaSql);
+                statement.setString(8, fechaFormateada);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            statement.setString(9, nombresR);
+            statement.setString(10, apellidosR);
+            statement.setString(11, idR);
+            statement.executeUpdate();
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
+    public String generarIdAsignacion() throws ClassNotFoundException, SQLException {
         try {
             connectionBD.openConnection();
 

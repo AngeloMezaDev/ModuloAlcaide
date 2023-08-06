@@ -35,7 +35,6 @@ public class frmConsultarAsistenciasProfe extends javax.swing.JFrame {
             ctrlProf.cargarGruposDocente(cmbGrupoConsulta, idProfesor); // Cargar grupos al abrir el formulario
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            // Manejar la excepción según sea necesario
         }
 
 //        TableColumn tc = jTableConsultaAsis.getColumnModel().getColumn(6);

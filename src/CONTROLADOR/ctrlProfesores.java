@@ -44,6 +44,7 @@ public class ctrlProfesores {
 
     private ConnectionBD connectionBD;
     private static String id_profesor = "";
+    private static String id_Asignacion = "";
 
     public ctrlProfesores() {
         connectionBD = new ConnectionBD();
@@ -456,6 +457,31 @@ public class ctrlProfesores {
         }
     }
 
+    public void cargarTitulo(JComboBox<String> cmbGrupoAsistencias, String idAsignacion) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT DISTINCT TITUTLO FROM DEBER WHERE ID_ASIGNACION = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, idAsignacion);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String titulo = resultSet.getString("TITULO");
+                cmbGrupoAsistencias.addItem(titulo);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar grupos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+
     public boolean actualizarDatosUsuario(String nuevoUsuario, String nuevaContrasena, String usuarioAnterior) {
         try {
             connectionBD.openConnection();
@@ -610,6 +636,37 @@ public class ctrlProfesores {
         return idProfesor;
     }
 
+    public String getIdAsignacion() throws ClassNotFoundException, SQLException {
+    String idAsignacion = ""; // Inicializa con un valor por defecto
+    ConnectionBD connectionBD = new ConnectionBD();
+
+    try {
+        connectionBD.openConnection();
+
+        // Consulta para obtener el idAsignacion de algún deber existente
+        String queryIdAsignacion = "SELECT Id_Asignacion FROM DEBER FETCH FIRST 1 ROWS ONLY";
+        PreparedStatement statementIdAsignacion = connectionBD.getConnection().prepareStatement(queryIdAsignacion);
+
+        ResultSet resultSetIdAsignacion = statementIdAsignacion.executeQuery();
+
+        if (resultSetIdAsignacion.next()) {
+            idAsignacion = resultSetIdAsignacion.getString("Id_Asignacion");
+        }
+
+        resultSetIdAsignacion.close();
+        statementIdAsignacion.close();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Manejo de la excepción
+    } finally {
+        connectionBD.closeConnection();
+    }
+
+    return idAsignacion;
+}
+
+
     public void cargarFechaCreacionTallerSeleccionado(String nombreTaller, JDateChooser jDateFecha) throws SQLException {
         try {
             connectionBD.openConnection();
@@ -671,85 +728,85 @@ public class ctrlProfesores {
         }
     }
 
-   public void cargarAsistencias(JComboBox<String> cmbTallerConsulta, JComboBox<String> cmbGrupoConsulta, JDateChooser jDateConsulta, JTable jTableAsistencias) throws SQLException {
-    try {
-        connectionBD.openConnection();
+    public void cargarAsistencias(JComboBox<String> cmbTallerConsulta, JComboBox<String> cmbGrupoConsulta, JDateChooser jDateConsulta, JTable jTableAsistencias) throws SQLException {
+        try {
+            connectionBD.openConnection();
 
-        String tallerSeleccionado = cmbTallerConsulta.getSelectedItem().toString();
-        String grupoSeleccionado = cmbGrupoConsulta.getSelectedItem().toString();
-        Date fechaSeleccionada = jDateConsulta.getDate();
-        java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
+            String tallerSeleccionado = cmbTallerConsulta.getSelectedItem().toString();
+            String grupoSeleccionado = cmbGrupoConsulta.getSelectedItem().toString();
+            Date fechaSeleccionada = jDateConsulta.getDate();
+            java.sql.Date fechaSQL = new java.sql.Date(fechaSeleccionada.getTime());
 
-        String query = "SELECT Id_asistencia, Id_recluso, Nombre_recluso, taller, grupo, fecha, asistencia FROM Asistencias WHERE taller = ? AND grupo = ? AND fecha = ?";
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
-        statement.setString(1, tallerSeleccionado);
-        statement.setString(2, grupoSeleccionado);
-        statement.setDate(3, fechaSQL);
+            String query = "SELECT Id_asistencia, Id_recluso, Nombre_recluso, taller, grupo, fecha, asistencia FROM Asistencias WHERE taller = ? AND grupo = ? AND fecha = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, tallerSeleccionado);
+            statement.setString(2, grupoSeleccionado);
+            statement.setDate(3, fechaSQL);
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
-        
+            DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+            model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
+
             boolean registrosEncontrados = false;
 
-        while (resultSet.next()) {
-            String idAsistencia = resultSet.getString("Id_asistencia");
-            String idRecluso = resultSet.getString("Id_recluso");
-            String nombreRecluso = resultSet.getString("Nombre_recluso");
-            String nombreTaller = resultSet.getString("taller");
-            String nombreGrupo = resultSet.getString("grupo");
-            Date fecha = resultSet.getDate("fecha");
-            String asistenciaTexto = resultSet.getString("asistencia");
+            while (resultSet.next()) {
+                String idAsistencia = resultSet.getString("Id_asistencia");
+                String idRecluso = resultSet.getString("Id_recluso");
+                String nombreRecluso = resultSet.getString("Nombre_recluso");
+                String nombreTaller = resultSet.getString("taller");
+                String nombreGrupo = resultSet.getString("grupo");
+                Date fecha = resultSet.getDate("fecha");
+                String asistenciaTexto = resultSet.getString("asistencia");
 
-            // Mostrar un visto (checkmark) para "Presente" y nada para "Ausente"
-            String asistenciaRenderizada = asistenciaTexto.equals("Presente") ? "✓" : "";
+                // Mostrar un visto (checkmark) para "Presente" y nada para "Ausente"
+                String asistenciaRenderizada = asistenciaTexto.equals("Presente") ? "✓" : "";
 
-            // Agregar los datos a la tabla
-            Object[] rowData = {idAsistencia, idRecluso, nombreRecluso, nombreTaller, nombreGrupo, fecha, asistenciaRenderizada};
-            model.addRow(rowData);
-                    registrosEncontrados = true;
+                // Agregar los datos a la tabla
+                Object[] rowData = {idAsistencia, idRecluso, nombreRecluso, nombreTaller, nombreGrupo, fecha, asistenciaRenderizada};
+                model.addRow(rowData);
+                registrosEncontrados = true;
 
+            }
+
+            resultSet.close();
+            statement.close();
+            if (!registrosEncontrados) {
+                JOptionPane.showMessageDialog(null, "No existen registros.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+
+            connectionBD.closeConnection();
         }
-
-        resultSet.close();
-        statement.close();
-         if (!registrosEncontrados) {
-        JOptionPane.showMessageDialog(null, "No existen registros.", "Información", JOptionPane.INFORMATION_MESSAGE);
     }
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Manejo de la excepción
-    } finally {
-        
-        connectionBD.closeConnection();
+
+    public boolean verificarExistenciaRegistrosAsistencias() throws SQLException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT COUNT(*) FROM Asistencias";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            int count = resultSet.getInt(1);
+
+            resultSet.close();
+            statement.close();
+
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+            return false;
+        } finally {
+            connectionBD.closeConnection();
+        }
     }
-}
-   public boolean verificarExistenciaRegistrosAsistencias() throws SQLException {
-    try {
-        connectionBD.openConnection();
-
-        String query = "SELECT COUNT(*) FROM Asistencias";
-        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
-
-        ResultSet resultSet = statement.executeQuery();
-        resultSet.next();
-
-        int count = resultSet.getInt(1);
-
-        resultSet.close();
-        statement.close();
-
-        return count > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Manejo de la excepción
-        return false;
-    } finally {
-        connectionBD.closeConnection();
-    }
-}
-
 
     private String generarIdAsistencia() {
         // Obtener el último ID de asistencia desde la tabla (reemplaza con tu lógica)
