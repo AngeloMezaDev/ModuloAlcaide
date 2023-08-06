@@ -65,6 +65,11 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelBackGround = new javax.swing.JPanel();
+        JPanelEncabezado = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanelExit5 = new javax.swing.JPanel();
+        lblExit5 = new javax.swing.JLabel();
         jPanelSide = new javax.swing.JPanel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -72,7 +77,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         lblLogOut = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         JPanelMenu = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         LlbIconUser1 = new javax.swing.JLabel();
@@ -96,11 +100,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jPanelBanner = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jPanelExit2 = new javax.swing.JPanel();
-        lblExit2 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lblApellidos = new javax.swing.JLabel();
@@ -150,11 +150,64 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jPanelBackGround.setRequestFocusEnabled(false);
         jPanelBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
+        JPanelEncabezado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel11.setText("PROFESORES");
+        JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
+
+        jLabel10.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - PERFIL");
+        JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, 350, 20));
+
+        jPanelExit5.setBackground(new java.awt.Color(122, 72, 210));
+
+        lblExit5.setBackground(new java.awt.Color(122, 72, 221));
+        lblExit5.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
+        lblExit5.setForeground(new java.awt.Color(255, 255, 255));
+        lblExit5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblExit5.setText("X");
+        lblExit5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblExit5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblExit5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblExit5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblExit5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblExit5MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelExit5Layout = new javax.swing.GroupLayout(jPanelExit5);
+        jPanelExit5.setLayout(jPanelExit5Layout);
+        jPanelExit5Layout.setHorizontalGroup(
+            jPanelExit5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExit5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblExit5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelExit5Layout.setVerticalGroup(
+            jPanelExit5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblExit5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
+        JPanelEncabezado.add(jPanelExit5, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, 50, 40));
+
+        jPanelBackGround.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 980, -1));
+
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
-        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
+        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/PerfilProfe.png"))); // NOI18N
         jPanelSide.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
         jPanelSide.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
@@ -203,16 +256,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
-        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Profesor");
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.setFocusable(false);
-        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
-
         JPanelMenu.setBackground(new java.awt.Color(54, 33, 89));
         JPanelMenu.setName(""); // NOI18N
         JPanelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -223,10 +266,11 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         JPanelMenu.add(LlbIconUser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
 
         lblHandle.setBackground(new java.awt.Color(204, 204, 204));
-        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(255, 255, 255));
+        lblHandle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblHandle.setText("USER");
-        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 160, -1));
 
         jLabel3.setBackground(new java.awt.Color(54, 33, 89));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -277,6 +321,9 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         btnAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAsistencias.setPreferredSize(new java.awt.Dimension(146, 47));
         btnAsistencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAsistenciasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsistenciasMouseEntered(evt);
             }
@@ -502,61 +549,15 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
         JPanelMenu.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 50));
 
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setText("PROFESOR");
+        JPanelMenu.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 130, -1));
+
         jPanelSide.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
 
         jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
-
-        jPanelBanner.setBackground(new java.awt.Color(122, 72, 221));
-        jPanelBanner.setRequestFocusEnabled(false);
-        jPanelBanner.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel10.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL\" - PERFIL");
-        jPanelBanner.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 64, -1, -1));
-
-        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("Profesores");
-        jPanelBanner.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 24, -1, -1));
-
-        jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
-
-        javax.swing.GroupLayout jPanelExit2Layout = new javax.swing.GroupLayout(jPanelExit2);
-        jPanelExit2.setLayout(jPanelExit2Layout);
-        jPanelExit2Layout.setHorizontalGroup(
-            jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-        jPanelExit2Layout.setVerticalGroup(
-            jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
-        );
-
-        jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 0, -1, -1));
-
-        lblExit2.setBackground(new java.awt.Color(33, 45, 62));
-        lblExit2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
-        lblExit2.setForeground(new java.awt.Color(255, 255, 255));
-        lblExit2.setText("X");
-        lblExit2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblExit2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblExit2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblExit2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblExit2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblExit2MouseExited(evt);
-            }
-        });
-        jPanelBanner.add(lblExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 0, 33, 34));
-
-        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
         jPanel1.setBackground(new java.awt.Color(230, 240, 243));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -889,9 +890,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1267, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -908,19 +907,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         editarProfe.setPerfilProfesor(this);
         editarProfe.setVisible(true);
     }
-    private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_lblExit2MouseClicked
-
-    private void lblExit2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseEntered
-        jPanelExit2.setBackground(Color.red);
-        lblExit2.setBackground(Color.white);
-    }//GEN-LAST:event_lblExit2MouseEntered
-
-    private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(122, 72, 221));
-    }//GEN-LAST:event_lblExit2MouseExited
-
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
         // Mostrar mensaje de confirmación para cerrar sesión
         int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
@@ -1071,6 +1057,26 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         resetColor(btnCalificar);
     }//GEN-LAST:event_btnPerfilMouseExited
 
+    private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
+        frmProfesores profe = new frmProfesores(usuario, contrasena);
+        profe.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAsistenciasMouseClicked
+
+    private void lblExit5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit5MouseClicked
+        this.dispose();
+
+    }//GEN-LAST:event_lblExit5MouseClicked
+
+    private void lblExit5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit5MouseEntered
+        jPanelExit5.setBackground(Color.red);
+        lblExit5.setBackground(Color.white);
+    }//GEN-LAST:event_lblExit5MouseEntered
+
+    private void lblExit5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit5MouseExited
+        jPanelExit5.setBackground(new Color(122, 72, 221));
+    }//GEN-LAST:event_lblExit5MouseExited
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1116,6 +1122,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
+    private javax.swing.JPanel JPanelEncabezado;
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JLabel LlbIconUser1;
@@ -1152,6 +1159,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
@@ -1166,12 +1174,13 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelBackGround;
-    private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
+    private javax.swing.JPanel jPanelExit3;
+    private javax.swing.JPanel jPanelExit4;
+    private javax.swing.JPanel jPanelExit5;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblActTaller;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblAñosExperiencia;
@@ -1181,6 +1190,9 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblExit3;
+    private javax.swing.JLabel lblExit4;
+    private javax.swing.JLabel lblExit5;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblGrupo;
     private javax.swing.JLabel lblHandle;

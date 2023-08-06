@@ -40,6 +40,7 @@ public class frmCalificar extends javax.swing.JFrame {
         System.out.println(usuario);
         ctrlProf = new ctrlProfesores();
         ctrlAsig = new ctrlAsignacionProfe(); // Inicializar ctrlAsig aquí
+        lblHandle.setText("@"+usuario);
 
         try {
             String idProfesor = ctrlProf.getIdProfesor(usuario);
@@ -115,7 +116,6 @@ public class frmCalificar extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         LlbIconUser = new javax.swing.JLabel();
-        lblHandle = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
@@ -126,6 +126,8 @@ public class frmCalificar extends javax.swing.JFrame {
         btnCalificar = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -145,7 +147,7 @@ public class frmCalificar extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - ASIGNACIONES\"");
+        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - CALIFICAR\"");
         JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
@@ -173,9 +175,7 @@ public class frmCalificar extends javax.swing.JFrame {
         jPanelExit2.setLayout(jPanelExit2Layout);
         jPanelExit2Layout.setHorizontalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExit2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblExit2, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
         jPanelExit2Layout.setVerticalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +184,7 @@ public class frmCalificar extends javax.swing.JFrame {
                 .addComponent(lblExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 0, -1, -1));
+        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 0, 50, -1));
 
         getContentPane().add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 1120, -1));
 
@@ -472,6 +472,9 @@ public class frmCalificar extends javax.swing.JFrame {
         btnAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAsistencias.setPreferredSize(new java.awt.Dimension(146, 47));
         btnAsistencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAsistenciasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsistenciasMouseEntered(evt);
             }
@@ -610,14 +613,8 @@ public class frmCalificar extends javax.swing.JFrame {
         JPanelMenu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
-        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
+        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/PerfilProfe.png"))); // NOI18N
         JPanelMenu.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
-
-        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
-        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
-        lblHandle.setText("USER");
-        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         jLabel21.setBackground(new java.awt.Color(54, 33, 89));
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -756,6 +753,19 @@ public class frmCalificar extends javax.swing.JFrame {
         );
 
         JPanelMenu.add(btnCalificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 290, 50));
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("PROFESOR");
+        JPanelMenu.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 130, -1));
+
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(255, 255, 255));
+        lblHandle.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblHandle.setText("USER");
+        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 160, 30));
 
         getContentPane().add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 770));
 
@@ -983,6 +993,12 @@ public class frmCalificar extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
+        frmProfesores profe = new frmProfesores(usuario, contraseña);
+        profe.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAsistenciasMouseClicked
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1070,6 +1086,7 @@ public class frmCalificar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
