@@ -811,7 +811,6 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
             String delito = txtDelitoReo.getText();
             Date fechaNac = valido.ValidarFecha(jDateFechaNacimiento.getDate());
-
             //validar campos vacios
             if (txtCedulaReo.getText().isEmpty() || txtNombresReo.getText().isEmpty() || txtApellidosReo.getText().isEmpty()
                     || txtCorreoReo.getText().isEmpty() || txtAniosCondena.getText().isEmpty()
