@@ -66,6 +66,23 @@ public class Validaciones {
         }
     }
 
+    public Date ValidarFecha(Date fecha) {
+        Calendar calFechaNacimiento = Calendar.getInstance();
+        calFechaNacimiento.setTime(fecha);
+
+        // Calcular la fecha mínima permitida (18 años después de la fecha actual)
+        Calendar calFechaMinima = Calendar.getInstance();
+        calFechaMinima.add(Calendar.YEAR, -18);
+
+        // Verificar si la fecha de nacimiento es mayor a 18 años
+        if (calFechaNacimiento.before(calFechaMinima)) {
+            return null;
+        }
+
+        // Si la fecha es válida, retornarla
+        return fecha;
+    }
+
     // Método para validar que la contraseña cumpla con ciertas condiciones
     public String validadContrasena(String contrasena) {
         // Verificar que la contraseña tenga al menos 8 caracteres
