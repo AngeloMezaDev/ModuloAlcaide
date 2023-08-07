@@ -4,9 +4,9 @@
  */
 package CONTROLADOR;
 
-import com.toedter.calendar.JDateChooser;
 import java.awt.event.KeyEvent;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -66,21 +66,22 @@ public class Validaciones {
         }
     }
 
-    public Date ValidarFecha(Date fecha) {
-        Calendar calFechaNacimiento = Calendar.getInstance();
-        calFechaNacimiento.setTime(fecha);
+    public  Date ValidarFecha(Date _date) {
+        // Convertir Date a LocalDate
+        LocalDate fechaNacimiento = _date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
-        // Calcular la fecha mínima permitida (18 años después de la fecha actual)
-        Calendar calFechaMinima = Calendar.getInstance();
-        calFechaMinima.add(Calendar.YEAR, -18);
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
 
-        // Verificar si la fecha de nacimiento es mayor a 18 años
-        if (calFechaNacimiento.before(calFechaMinima)) {
+        // Calcular la diferencia entre las fechas
+        Period periodo = Period.between(fechaNacimiento, fechaActual);
+
+        // Comprobar si la edad es mayor o igual a 18 años
+        if (periodo.getYears() > 18 || (periodo.getYears() == 18 && periodo.getMonths() >= 0 && periodo.getDays() >= 0)) {
+            return _date;
+        } else {
             return null;
         }
-
-        // Si la fecha es válida, retornarla
-        return fecha;
     }
 
     // Método para validar que la contraseña cumpla con ciertas condiciones
