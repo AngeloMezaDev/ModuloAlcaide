@@ -416,12 +416,11 @@ public class frmPerfil extends javax.swing.JFrame {
         lblFechaNac.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
         lblFechaNac.setText("Fecha de nacimiento");
 
-        btnEditarPerfil.setBackground(new java.awt.Color(37, 150, 190));
+        btnEditarPerfil.setBackground(new java.awt.Color(255, 102, 51));
         btnEditarPerfil.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditarPerfil.setForeground(new java.awt.Color(255, 255, 255));
         btnEditarPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
         btnEditarPerfil.setText("Editar Perfil");
-        btnEditarPerfil.setBorder(null);
         btnEditarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarPerfilActionPerformed(evt);
@@ -463,7 +462,7 @@ public class frmPerfil extends javax.swing.JFrame {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(23, 23, 23))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnEditarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEditarPerfil)
                                 .addContainerGap())))))
         );
         jPanel1Layout.setVerticalGroup(

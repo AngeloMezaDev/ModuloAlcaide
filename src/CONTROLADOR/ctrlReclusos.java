@@ -213,7 +213,7 @@ public class ctrlReclusos {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
-            String sql = "SELECT id_recluso, cedula, apellidos, nombres, tiempo_condena, delito, correo, fecha_nacimiento FROM Reclusos where usuario = ? AND contra = ?";
+            String sql = "SELECT * FROM Reclusos where usuario = ? AND contra = ?";
 
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -247,41 +247,59 @@ public class ctrlReclusos {
         }
     }
     // Método que contiene la consulta para editar los datos del recluso
-    public void EditarRecluso(String nombre, String apellidos, String usuario, String correo, char[] contrasena) {
+    public void EditarRecluso(String IdRecluso, String nombre, String apellidos, String usuario, String correo, char[] contrasena) {
+    String Nuevacontra = new String(contrasena);
+    
+    try {
+        connectionBD.openConnection();
+
+        // Actualización en la tabla Reclusos
+        String sqlReclusos = "UPDATE Reclusos SET nombres = ?, apellidos = ?, correo = ?, usuario = ?, contra = ? WHERE id_recluso = ?";
+
+        // Crear la declaración y establecer los parámetros para la tabla Reclusos
+        PreparedStatement pstmtReclusos = connectionBD.getConnection().prepareStatement(sqlReclusos);
+        pstmtReclusos.setString(1, nombre);
+        pstmtReclusos.setString(2, apellidos);
+        pstmtReclusos.setString(3, correo);
+        pstmtReclusos.setString(4, usuario);
+        pstmtReclusos.setString(5, Nuevacontra);     
+        pstmtReclusos.setString(6, IdRecluso);
+
+        // Ejecutar la actualización en la tabla Reclusos
+        int rowsAffectedReclusos = pstmtReclusos.executeUpdate();
+
+        // Actualización en la tabla Usuarios
+        String sqlUsuarios = "UPDATE Usuarios SET nombre_usuario = ?, contrasena = ?, nombre = ?, correo_electronico = ? WHERE id_usuario = ?";
+
+        // Crear la declaración y establecer los parámetros para la tabla Usuarios
+        PreparedStatement pstmtUsuarios = connectionBD.getConnection().prepareStatement(sqlUsuarios);
+        pstmtUsuarios.setString(1, usuario);
+        pstmtUsuarios.setString(2, Nuevacontra);
+        pstmtUsuarios.setString(3, nombre);
+        pstmtUsuarios.setString(4, correo);
+        pstmtUsuarios.setString(5, IdRecluso);
+
+        // Ejecutar la actualización en la tabla Usuarios
+        int rowsAffectedUsuarios = pstmtUsuarios.executeUpdate();
+
+        // Verificar y mostrar mensajes según las filas afectadas en ambas tablas
+        if (rowsAffectedReclusos > 0 && rowsAffectedUsuarios > 0) {
+            System.out.println("Recluso y usuario editados correctamente.");
+        } else {
+            System.out.println("No se encontró el recluso con el ID proporcionado o no se realizaron cambios.");
+        }
+    } catch (SQLException | ClassNotFoundException e) {
+        System.err.println("Error al editar el recluso: " + e.getMessage());
+    } finally {
         try {
-            connectionBD.openConnection();
-
-             String sql = "{CALL sp_EditarRecluso(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-
-        // Crear la declaración y establecer los parámetros
-        CallableStatement cstmt = connectionBD.getConnection().prepareCall(sql);
-        cstmt.setString(1, id_recluso);
-        cstmt.setString(2, cedulaR);
-        cstmt.setString(3, nombre);
-        cstmt.setString(4, apellidos);
-        cstmt.setInt(5, tiemp_condena);
-        cstmt.setString(6, delit);
-        cstmt.setString(7, correo);
-        cstmt.setString(8, usuario);
-        String contrasenaString = new String(contrasena);
-        cstmt.setString(9, contrasenaString);
-        
-        java.sql.Date fechaN = new java.sql.Date(fechaNacimiento.getTime());
-        cstmt.setDate(10, fechaN);
-
-        // Ejecutar el stored procedure
-        cstmt.execute();
-            System.out.println("Recluso editado correctamente.");
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println("Error al editar el recluso: " + e.getMessage());
-        } finally {
-            try {
-                connectionBD.closeConnection();
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión: " + e.getMessage());
-            }
+            connectionBD.closeConnection();
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión: " + e.getMessage());
         }
     }
+}
+
+
     
     // Método para calcular la edad a partir de la fecha de nacimiento
      public String calcularEdad(String fechaNacimiento) {
@@ -478,6 +496,32 @@ public class ctrlReclusos {
         connectionBD.closeConnection();
     }
 }
+    public String ObtenerIdRecluso(String usuario, String contrasena) throws ClassNotFoundException, SQLException {
+        String IdRecluso = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT ID_RECLUSO FROM RECLUSOS WHERE USUARIO = ? AND CONTRA = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                IdRecluso = resultSet.getString("ID_RECLUSO");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return IdRecluso;
+    }
 
 }
 
