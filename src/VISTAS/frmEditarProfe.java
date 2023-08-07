@@ -45,16 +45,13 @@ public class frmEditarProfe extends javax.swing.JFrame {
         controlador.cargarDatosProfe(lbl_IdProfe, usuario, contraseña, txtApellidosProfe, txtNombresProfe, txtCedulaProfe, txtCorreoProfe, jDateFechaNacimiento);
         txtUsuarioProfe.setText(usuario);
 
-        // No es posible obtener la contraseña en texto plano debido a la seguridad
-        // txtPasswordProfe.setText(contraseña);
-        // txtPasswConfirmProfe.setText(contraseña);
+     
         this.usuario = usuario;
         this.contraseña = contraseña;
 
-        // Mostrar asteriscos en campos de contraseña
-        String asterisks = "*".repeat(contraseña.length());
-        txtPasswordProfe.setText(asterisks);
-        txtPasswConfirmProfe.setText(asterisks);
+        // setear la contraseña
+        txtPasswordProfe.setText(contraseña);
+        txtPasswConfirmProfe.setText(contraseña);
 
         this.perfilProfesor = perfilProfesor; // Asignar la referencia
 
