@@ -107,6 +107,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtPasswordReo = new javax.swing.JPasswordField();
         txtPasswConfirmReo = new javax.swing.JPasswordField();
+        jLabel30 = new javax.swing.JLabel();
         btnRegistrarReclusoNuevo = new javax.swing.JButton();
         btnEditarReo = new javax.swing.JButton();
         btnEliminarReo = new javax.swing.JButton();
@@ -465,15 +466,20 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         });
         jPanel2.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
 
-        jLabel16.setText("Tiempo Condena (Meses):");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, -1, -1));
+        jLabel16.setText("Tiempo Condena:");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 100, -1));
 
+        txtAniosCondena.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAniosCondenaFocusLost(evt);
+            }
+        });
         txtAniosCondena.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAniosCondenaKeyTyped(evt);
             }
         });
-        jPanel2.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 50, -1));
+        jPanel2.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 50, -1));
 
         jLabel17.setText("Delito:");
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
@@ -532,6 +538,9 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jPanel2.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 140, -1));
         jPanel2.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
         jPanel2.add(txtPasswConfirmReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 170, -1));
+
+        jLabel30.setText("Meses");
+        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, -1));
 
         JpaneREgisterReclusos.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 650, 350));
 
@@ -773,6 +782,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             if (texto.length() > 2) {
                 evt.consume(); // Consumir la tecla si ya hay más de dos dígitos
             }
+            
         }
     }//GEN-LAST:event_txtAniosCondenaKeyTyped
 
@@ -808,7 +818,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
             char[] passwordConfirm = txtPasswConfirmReo.getPassword();
             String contraConfirm = new String(passwordConfirm);
             String contra = valido.validadContrasena(new String(password));
-            int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
+            int TimeCondena = valido.ValidarCondena(Integer.parseInt(txtAniosCondena.getText()));
             String delito = txtDelitoReo.getText();
             Date fechaNac = valido.ValidarFecha(jDateFechaNacimiento.getDate());
             //validar campos vacios
@@ -828,7 +838,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
                             JOptionPane.WARNING_MESSAGE);
                     // Detener el evento
                     return;
-                }else {
+                } else {
                     // Crear la instancia de Recluso
                     Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, contra, correo, fechaNac);
                     codigoRecluso = recluso.GenerarIdRecluso(cedula);
@@ -1023,6 +1033,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jDateFechaNacimientoPropertyChange
+
+    private void txtAniosCondenaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAniosCondenaFocusLost
+        String texto=txtAniosCondena.getText();
+        // Verificar si el valor es menor a 36
+            if (!texto.isEmpty() && Integer.parseInt(texto) < 36) {
+                // Mostrar un JOptionPane informativo.
+                JOptionPane.showMessageDialog(this,
+                        "Condena debe ser mayor a 36 meses.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                txtAniosCondena.setText("");
+            }
+    }//GEN-LAST:event_txtAniosCondenaFocusLost
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1134,6 +1157,7 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
