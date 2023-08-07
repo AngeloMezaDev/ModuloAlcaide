@@ -4,11 +4,15 @@
  */
 package VISTAS;
 
+import CONTROLADOR.Validaciones;
 import CONTROLADOR.ctrlRegistroNuevoProfe;
 import CONTROLADOR.ctrlRegistroReclusos;
-import MODELO.AsignacionRecluso;
 import MODELO.Recluso;
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,20 +28,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private ctrlRegistroReclusos controlador;
     private ctrlRegistroNuevoProfe ctrl;
     private DefaultTableModel modeloTabla;
+    private Validaciones valido;
 
     /**
      * Creates new form frmAlcaide
      */
     public frmReclusosAlcaide() {
         initComponents();
+        valido = new Validaciones();
         lblHandle.setText("admin");
-        lblEdad.setText("");
         controlador = new ctrlRegistroReclusos();
+        controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
+        JTableReclusosExistentes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ctrl = new ctrlRegistroNuevoProfe();// Inicializar la instancia de la clase controladora
-        controlador.cargarReclusosComboBox(CmbReclusosExistentes);
-        controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
-        JTableAsigancionRecluso.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //elementos que solo se visualiazn para Talleres
     }
 
     /**
@@ -78,42 +81,42 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        btnActualizar = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        JTableAsigancionRecluso = new javax.swing.JTable();
+        JpaneREgisterReclusos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        panelAgregar = new javax.swing.JPanel();
-        btnAgregar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombresReo = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        panelCancelar = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
-        panelEditar = new javax.swing.JPanel();
-        btnEditar = new javax.swing.JButton();
-        jLabel21 = new javax.swing.JLabel();
-        panelEliminar = new javax.swing.JPanel();
-        btnEliminar = new javax.swing.JButton();
-        jLabel22 = new javax.swing.JLabel();
-        lblActTaller = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jPNombre = new javax.swing.JPanel();
-        jPCampoNombre = new javax.swing.JPanel();
-        jPCampoFecha = new javax.swing.JPanel();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        CmbActividadTaller = new javax.swing.JComboBox<>();
-        CmbReclusosExistentes = new javax.swing.JComboBox<>();
-        jLabel17 = new javax.swing.JLabel();
-        lbl_IDrecluso = new javax.swing.JLabel();
+        txtApellidosReo = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        CmbAsignacionRecluso = new javax.swing.JComboBox<>();
-        jPanel4 = new javax.swing.JPanel();
-        btnAdminReclusos = new javax.swing.JButton();
-        jLabel25 = new javax.swing.JLabel();
+        txtCedulaReo = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        txtAniosCondena = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        txtDelitoReo = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
-        lblEdad = new javax.swing.JLabel();
+        txtUsuarioReo = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txtCorreoReo = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        lbl_idRecluso = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        txtPasswordReo = new javax.swing.JPasswordField();
+        txtPasswConfirmReo = new javax.swing.JPasswordField();
+        btnRegistrarReclusoNuevo = new javax.swing.JButton();
+        btnEditarReo = new javax.swing.JButton();
+        btnEliminarReo = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JTableReclusosExistentes = new javax.swing.JTable();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -424,248 +427,205 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prison.png"))); // NOI18N
         jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
-        btnActualizar.setBackground(new java.awt.Color(0, 0, 102));
-        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/sync.png"))); // NOI18N
-        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnActualizarMouseClicked(evt);
-            }
-        });
-        jPanelBanner.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 30, -1));
-
         jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1080, -1));
 
-        JTableAsigancionRecluso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        JTableAsigancionRecluso.setModel(new javax.swing.table.DefaultTableModel(
+        JpaneREgisterReclusos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Nombres:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+
+        txtNombresReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresReoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 170, -1));
+
+        jLabel14.setText("Apellidos:");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+
+        txtApellidosReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosReoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 170, -1));
+
+        jLabel15.setText("Cédula:");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, -1, -1));
+
+        txtCedulaReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaReoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 170, -1));
+
+        jLabel16.setText("Tiempo Condena (Meses):");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, -1, -1));
+
+        txtAniosCondena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAniosCondenaKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtAniosCondena, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 50, -1));
+
+        jLabel17.setText("Delito:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, 20));
+
+        txtDelitoReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDelitoReoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtDelitoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, 170, -1));
+
+        jSeparator2.setBackground(new java.awt.Color(153, 153, 255));
+        jSeparator2.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 580, 10));
+
+        jLabel19.setText("Usuario:");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
+
+        txtUsuarioReo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioReoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtUsuarioReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 170, -1));
+
+        jLabel20.setFont(new java.awt.Font("Candara Light", 1, 18)); // NOI18N
+        jLabel20.setText("CREDENCIALES");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
+
+        jLabel21.setText("Correo Electronico:");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
+        jPanel2.add(txtCorreoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 170, -1));
+
+        jLabel22.setText("Contraseña:");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, -1, -1));
+
+        jLabel23.setText("Confirme su contraseña:");
+        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, -1, -1));
+
+        jLabel24.setText("ID:");
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        lbl_idRecluso.setText("#");
+        jPanel2.add(lbl_idRecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 70, -1));
+
+        jLabel26.setText("Fecha Nacimiento:");
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
+
+        jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd");
+        jDateFechaNacimiento.setFocusable(false);
+        jDateFechaNacimiento.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateFechaNacimientoPropertyChange(evt);
+            }
+        });
+        jPanel2.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 140, -1));
+        jPanel2.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
+        jPanel2.add(txtPasswConfirmReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 170, -1));
+
+        JpaneREgisterReclusos.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 650, 350));
+
+        btnRegistrarReclusoNuevo.setBackground(new java.awt.Color(153, 255, 102));
+        btnRegistrarReclusoNuevo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRegistrarReclusoNuevo.setText("REGISTRAR");
+        btnRegistrarReclusoNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarReclusoNuevoActionPerformed(evt);
+            }
+        });
+        JpaneREgisterReclusos.add(btnRegistrarReclusoNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 110, 115, 45));
+
+        btnEditarReo.setText("MODIFICAR");
+        btnEditarReo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarReoActionPerformed(evt);
+            }
+        });
+        JpaneREgisterReclusos.add(btnEditarReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 170, 115, 45));
+
+        btnEliminarReo.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminarReo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEliminarReo.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarReo.setText("ELIMINAR");
+        btnEliminarReo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarReoActionPerformed(evt);
+            }
+        });
+        JpaneREgisterReclusos.add(btnEliminarReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 230, 115, 45));
+
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        JpaneREgisterReclusos.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 40, 115, 33));
+
+        JTableReclusosExistentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID_Asignacion", "Nombre Recluso", "ID_RECLUSO", "Tipo_Asignacion", "Nombre Actividad/Taller", "ID_ACTIVIDAD"
+                "ID_RECLCUSO", "NOMBRES", "APELLIDOS", "CEDULA", "CORREO", "DELITO", "TIEMPO_CONDENA"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        JTableAsigancionRecluso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        JTableAsigancionRecluso.setGridColor(new java.awt.Color(255, 255, 255));
-        JTableAsigancionRecluso.setIntercellSpacing(new java.awt.Dimension(5, 5));
-        JTableAsigancionRecluso.addMouseListener(new java.awt.event.MouseAdapter() {
+        JTableReclusosExistentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableAsigancionReclusoMouseClicked(evt);
+                JTableReclusosExistentesMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(JTableAsigancionRecluso);
-        if (JTableAsigancionRecluso.getColumnModel().getColumnCount() > 0) {
-            JTableAsigancionRecluso.getColumnModel().getColumn(0).setResizable(false);
-            JTableAsigancionRecluso.getColumnModel().getColumn(0).setPreferredWidth(10);
-            JTableAsigancionRecluso.getColumnModel().getColumn(1).setResizable(false);
-            JTableAsigancionRecluso.getColumnModel().getColumn(1).setPreferredWidth(10);
-            JTableAsigancionRecluso.getColumnModel().getColumn(2).setResizable(false);
-            JTableAsigancionRecluso.getColumnModel().getColumn(3).setResizable(false);
-            JTableAsigancionRecluso.getColumnModel().getColumn(3).setPreferredWidth(10);
-            JTableAsigancionRecluso.getColumnModel().getColumn(4).setResizable(false);
-            JTableAsigancionRecluso.getColumnModel().getColumn(5).setResizable(false);
-        }
+        jScrollPane1.setViewportView(JTableReclusosExistentes);
 
-        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 1080, 320));
+        JpaneREgisterReclusos.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 960, 110));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
+        JpaneREgisterReclusos.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 180, 43, -1));
 
-        jLabel16.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel16.setText("ID:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 22, -1));
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/cancel.png"))); // NOI18N
+        JpaneREgisterReclusos.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 43, -1));
 
-        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 10, 278));
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
+        JpaneREgisterReclusos.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 240, 43, -1));
 
-        panelAgregar.setBackground(new java.awt.Color(204, 204, 204));
-        panelAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        panelAgregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/diskette.png"))); // NOI18N
+        JpaneREgisterReclusos.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 120, 43, -1));
 
-        btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        panelAgregar.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
-
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/diskette.png"))); // NOI18N
-        panelAgregar.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
-
-        jPanel2.add(panelAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, 140, -1));
-
-        panelCancelar.setBackground(new java.awt.Color(204, 204, 204));
-        panelCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        panelCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        panelCancelar.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/cancel.png"))); // NOI18N
-        panelCancelar.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
-
-        jPanel2.add(panelCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 140, 140, -1));
-
-        panelEditar.setBackground(new java.awt.Color(204, 204, 204));
-        panelEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        panelEditar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnEditar.setText("Modificar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-        panelEditar.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
-
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
-        panelEditar.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
-
-        jPanel2.add(panelEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 140, 140, -1));
-
-        panelEliminar.setBackground(new java.awt.Color(204, 204, 204));
-        panelEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        panelEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        panelEliminar.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 90, -1));
-
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/bin.png"))); // NOI18N
-        panelEliminar.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 43, -1));
-
-        jPanel2.add(panelEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 140, 140, -1));
-
-        lblActTaller.setText("Actividad:");
-        jPanel2.add(lblActTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, 70, 20));
-
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(749, 21, -1, -1));
-
-        jPNombre.setBackground(new java.awt.Color(204, 204, 204));
-        jPNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 78, 210, -1));
-
-        jPCampoNombre.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPCampoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(749, 43, 180, -1));
-
-        jPCampoFecha.setBackground(new java.awt.Color(204, 204, 204));
-        jPCampoFecha.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPCampoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(935, 116, -1, 38));
-        jPanel2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 184, 420, 17));
-        jPanel2.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 620, 10));
-
-        CmbActividadTaller.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--" }));
-        CmbActividadTaller.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbActividadTallerItemStateChanged(evt);
-            }
-        });
-        CmbActividadTaller.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmbActividadTallerActionPerformed(evt);
-            }
-        });
-        jPanel2.add(CmbActividadTaller, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 158, -1));
-
-        CmbReclusosExistentes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Selecione--" }));
-        CmbReclusosExistentes.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbReclusosExistentesItemStateChanged(evt);
-            }
-        });
-        jPanel2.add(CmbReclusosExistentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 118, 180, -1));
-
-        jLabel17.setText("Asignacion:");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, -1, -1));
-
-        lbl_IDrecluso.setBackground(new java.awt.Color(255, 255, 255));
-        lbl_IDrecluso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(lbl_IDrecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 70, 20));
-
-        jLabel15.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Nombre de Recluso:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, -1, -1));
-
-        CmbAsignacionRecluso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "Actividad", " " }));
-        CmbAsignacionRecluso.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                CmbAsignacionReclusoItemStateChanged(evt);
-            }
-        });
-        CmbAsignacionRecluso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmbAsignacionReclusoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(CmbAsignacionRecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 180, -1));
-
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-
-        btnAdminReclusos.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        btnAdminReclusos.setText("Administrar \nReclusos");
-        btnAdminReclusos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminReclusosActionPerformed(evt);
-            }
-        });
-
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/AdminReo.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdminReclusos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnAdminReclusos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 27, -1, -1));
-
-        jLabel19.setText("Edad:");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, -1, -1));
-        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 60, 20));
-
-        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 1080, 210));
+        jPanelBackGround.add(JpaneREgisterReclusos, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 1000, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1367, Short.MAX_VALUE)
+            .addComponent(jPanelBackGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -770,246 +730,6 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         TalleresA.setVisible(true);
     }//GEN-LAST:event_btnTalleresMouseClicked
 
-    private void CmbAsignacionReclusoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CmbAsignacionReclusoActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
-        if (asignaciones.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "No existen Asignaciones aun\n"
-                    + "Cree primero un asignacion para poder editar.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
-                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
-                || lblEdad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        // Obtener los datos del asigancion a editar
-        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
-        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
-        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
-        String idRecluso = lbl_IDrecluso.getText();
-        String Nuevo_nombreRecluso = (String) CmbReclusosExistentes.getSelectedItem();
-        String Nuevo_tipoAsignacion = (String) CmbAsignacionRecluso.getSelectedItem();
-        String Nuevo_nombreActividadTaller = (String) CmbActividadTaller.getSelectedItem();
-        String Nuevo_idActividadTaller =ctrl.ObtenerActividad(Nuevo_nombreActividadTaller);
-        AsignacionRecluso asignacion = new AsignacionRecluso(idAsignacion, idRecluso, Nuevo_nombreRecluso,
-                Nuevo_tipoAsignacion, Nuevo_nombreActividadTaller, Nuevo_idActividadTaller);
-
-        // Crear el mensaje de confirmación
-        String mensaje = "¿Deseas Editar la asignación con ID: " + idAsignacion + "?";
-        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
-        // Verificar la opción seleccionada
-        if (opcion == JOptionPane.YES_OPTION) {
-            // Llamar al método eliminarAsignacion del controlador
-            controlador.editarAsignacion(asignacion);
-            limpiarInputs();
-        } else {
-            // Detener el evento
-            return;
-        }
-        // Actualizar la tabla de Asignaciones con los datos actualizados
-        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
-        controlador.cargarDatosAsignacionesReos(modeloTabla);
-
-        // Mostrar un mensaje de éxito
-        JOptionPane.showMessageDialog(this, "Asignacion editada correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
-
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // cuando de click se limpian los input
-        limpiarInputs();
-        //actualizar tabla
-        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();
-        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
-        controlador.cargarDatosAsignacionesReos(modeloTabla);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        try {
-            // Obtener los valores necesarios para la asignación desde los campos de la interfaz
-            String idRecluso = lbl_IDrecluso.getText();
-            String nombreRecluso = (String) CmbReclusosExistentes.getSelectedItem();
-            String tipoAsignacion = (String) CmbAsignacionRecluso.getSelectedItem();
-            String nombreActividadTaller = (String) CmbActividadTaller.getSelectedItem();
-            String idActividadTaller = ctrl.ObtenerActividad(nombreActividadTaller);
-            
-            if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
-                    || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
-                    || lblEdad.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Existen campos vacios, por favor seleccione que los datos correctos.",
-                        "Advertencia",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            } else {
-                // Crear la instancia de Recluso
-                AsignacionRecluso asigancion = new AsignacionRecluso("", idRecluso, nombreRecluso, tipoAsignacion,
-                        nombreActividadTaller, idActividadTaller);
-
-                // Crear el mensaje de confirmación
-                String mensaje = "¿Deseas Registar al recluso: " + nombreRecluso + " en " + nombreActividadTaller + " ?";
-                int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
-                // Verificar la opción seleccionada
-                if (opcion == JOptionPane.YES_OPTION) {
-                    // Llamar al método en tu controlador para agregar la asignación de recluso
-                    controlador.agregarAsignacionRecluso(asigancion);
-                    limpiarInputs();
-                } else {
-                    // Detener el evento
-                    return;
-                }
-
-                // Mostrar mensaje al usuario
-                JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
-        }
-        // Actualizar la tabla de profesores (si es necesario)
-        controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnAdminReclusosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReclusosActionPerformed
-        frmCreateNewRecluso profe = new frmCreateNewRecluso();
-        profe.setVisible(true);
-    }//GEN-LAST:event_btnAdminReclusosActionPerformed
-
-    private void CmbReclusosExistentesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbReclusosExistentesItemStateChanged
-        String Cmbrecluso = (String) CmbReclusosExistentes.getSelectedItem();
-        List<Recluso> reclusos = controlador.cargarDatosRecluso();
-        String IDrecluso = "";
-        int edad = 0;
-        for (Recluso reo : reclusos) {
-            if ((reo.getNombres() + " " + reo.getApellidos()).equalsIgnoreCase(Cmbrecluso)) {
-                IDrecluso = reo.getCodigoRecluso();
-                edad = reo.CalcularEdad(reo.getFechaNacimiento());
-            }
-        }
-        lbl_IDrecluso.setText(IDrecluso);
-        if (edad == 0) {
-            lblEdad.setText("");
-        } else {
-            lblEdad.setText(edad + " años");
-        }
-    }//GEN-LAST:event_CmbReclusosExistentesItemStateChanged
-
-    private void CmbAsignacionReclusoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbAsignacionReclusoItemStateChanged
-        //Obtener la opcion Selecionada: Actividad o Taller.
-        String opcion = (String) CmbAsignacionRecluso.getSelectedItem();
-        // Verificar la opción seleccionada
-        if (opcion.equals("Actividad")) {
-            CmbActividadTaller.removeAllItems();
-            ctrl.cargarActividadesComboBox(CmbActividadTaller);
-        } 
-    }//GEN-LAST:event_CmbAsignacionReclusoItemStateChanged
-
-    private void CmbActividadTallerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_CmbActividadTallerItemStateChanged
-        //Obtener la opcion Selecionada: Actividad o Taller.
-        String opcion = (String) CmbAsignacionRecluso.getSelectedItem();
-        // Verificar la opción seleccionada
-        if (opcion.equals("Actividad")) {
-            lblActTaller.setText("Actividad: ");
-        }
-    }//GEN-LAST:event_CmbActividadTallerItemStateChanged
-
-    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
-        // limpiar inputs
-        limpiarInputs();
-        // Actualizar la tabla de Asignaciones con los datos actualizados
-        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();
-        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
-        controlador.cargarDatosAsignacionesReos(modeloTabla);
-        controlador.cargarReclusosComboBox(CmbReclusosExistentes);
-    }//GEN-LAST:event_btnActualizarMouseClicked
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        List<AsignacionRecluso> asignaciones = controlador.Lista_AsignacionesReos();
-        if (asignaciones.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "No existen Asignaciones aun\n"
-                    + "Cree primero un asignacion para poder eliminar.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        } else if (lbl_IDrecluso.getText().isEmpty() || CmbReclusosExistentes.getSelectedIndex() == 0
-                || CmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionRecluso.getSelectedIndex() == 0
-                || lblEdad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "No ha selecionado una asignacion, por favor seleccione alguna de la tabla.",
-                    "Advertencia",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        // Obtener los datos del asigancion a Eliminar
-        DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsigancionRecluso.getModel();//modelo para obetner IDasignacion
-        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
-        String idAsignacion = modeloTabla.getValueAt(filaSeleccionada, 0).toString();
-        // Crear el mensaje de confirmación
-        String mensaje = "¿Deseas eliminar la asignación con ID: " + idAsignacion + "?";
-        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
-        // Verificar la opción seleccionada
-        if (opcion == JOptionPane.YES_OPTION) {
-            // Llamar al método eliminarAsignacion del controlador
-            controlador.eliminarAsignacion(idAsignacion);
-            limpiarInputs();
-        } else {
-            // Detener el evento
-            return;
-        }
-
-        // Actualizar la tabla de profesores (si es necesario)
-        controlador.cargarDatosAsignacionesReos(modeloTabla);
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void JTableAsigancionReclusoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableAsigancionReclusoMouseClicked
-        int filaSeleccionada = JTableAsigancionRecluso.getSelectedRow();
-        List<AsignacionRecluso> asignaciones = controlador.cargarDatosAsignacionesReos((DefaultTableModel) JTableAsigancionRecluso.getModel());
-        // Obtener el recluso  seleccionado de la lista
-        AsignacionRecluso asignacion = asignaciones.get(filaSeleccionada);
-        CmbReclusosExistentes.removeAllItems();
-        controlador.cargarReclusosComboBox(CmbReclusosExistentes);//cargarcombobox
-        // Obtener los datos del recluso
-        String idAsignacion = asignacion.getIdAsignacion();
-        String idRecluso = asignacion.getIdRecluso();
-        String NombreReo = asignacion.getNombreRecluso();
-        String tipoAsignacion = asignacion.getTipoAsignacion();
-        String Nombre_ActTaller = asignacion.getNombreActividadTaller();
-        String edad = "";
-
-        //Para obtener la edad
-        List<Recluso> reo = controlador.cargarDatosRecluso();
-        for (Recluso recluso : reo) {
-            if (recluso.getCodigoRecluso().equals(idRecluso)) {
-                edad = recluso.CalcularEdad(recluso.getFechaNacimiento()) + " años";
-            }
-
-        }
-        System.out.println("la edad del recluso es: " + edad);
-        // Establecer los datos en los campos de texto
-        lbl_IDrecluso.setText("" + idRecluso);
-        lblEdad.setText(edad);
-        CmbReclusosExistentes.setSelectedItem(NombreReo);
-        CmbAsignacionRecluso.setSelectedItem(tipoAsignacion);
-        CmbActividadTaller.setSelectedItem(Nombre_ActTaller);
-        // Restaurar la selección después de la actualización
-        if (filaSeleccionada != -1) {
-            JTableAsigancionRecluso.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
-        }
-    }//GEN-LAST:event_JTableAsigancionReclusoMouseClicked
-
     private void btnReclusosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReclusosMouseExited
         resetColor(btnTalleres);
         resetColor(btnActividades);
@@ -1024,9 +744,286 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
         setColor(btnReclusos);
     }//GEN-LAST:event_btnProfesoresMouseExited
 
-    private void CmbActividadTallerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbActividadTallerActionPerformed
+    private void txtNombresReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtNombresReoKeyTyped
+
+    private void txtApellidosReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtApellidosReoKeyTyped
+
+    private void txtCedulaReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaReoKeyTyped
+        valido.validarCedula(evt, txtCedulaReo.getText());
+    }//GEN-LAST:event_txtCedulaReoKeyTyped
+
+    private void txtAniosCondenaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAniosCondenaKeyTyped
+        char c = evt.getKeyChar();
+        String texto = txtAniosCondena.getText() + c;
+
+        // Permitir solo dígitos y la tecla "Borrar"
+        if (!Character.isDigit(c) && c != evt.VK_BACK_SPACE) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten números en los años de condena.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Verificar que no se ingresen más de dos dígitos
+            if (texto.length() > 2) {
+                evt.consume(); // Consumir la tecla si ya hay más de dos dígitos
+            }
+        }
+    }//GEN-LAST:event_txtAniosCondenaKeyTyped
+
+    private void txtDelitoReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDelitoReoKeyTyped
+        valido.validarSoloLetras(evt);
+    }//GEN-LAST:event_txtDelitoReoKeyTyped
+
+    private void txtUsuarioReoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioReoKeyTyped
+
+        char c = evt.getKeyChar();
+        // Permitir letras, números y la tecla "Borrar"
+        if (!Character.isLetterOrDigit(c) && c != evt.VK_BACK_SPACE) {
+            evt.consume();
+            // Mostrar un JOptionPane informativo.
+            JOptionPane.showMessageDialog(this,
+                    "Solo se permiten letras y números en el usuario.\nRecuerde tambien que NO se admiten espacios",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtUsuarioReoKeyTyped
+
+    private void btnRegistrarReclusoNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarReclusoNuevoActionPerformed
+
+        try {
+            // Obtener los valores de los campos de texto
+            String codigoRecluso = "#R0001";
+            String cedula = txtCedulaReo.getText();
+            String nombres = txtNombresReo.getText();
+            String apellidos = txtApellidosReo.getText();
+            String correo = valido.validarCorreoElectronico(txtCorreoReo.getText());
+            String usuario = valido.validarNombreUsuario(txtUsuarioReo.getText());
+            char[] password = txtPasswordReo.getPassword();
+            char[] passwordConfirm = txtPasswConfirmReo.getPassword();
+            String contraConfirm = new String(passwordConfirm);
+            String contra = valido.validadContrasena(new String(password));
+            int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
+            String delito = txtDelitoReo.getText();
+            Date fechaNac = valido.ValidarFecha(jDateFechaNacimiento.getDate());
+
+            //validar campos vacios
+            if (txtCedulaReo.getText().isEmpty() || txtNombresReo.getText().isEmpty() || txtApellidosReo.getText().isEmpty()
+                    || txtCorreoReo.getText().isEmpty() || txtAniosCondena.getText().isEmpty()
+                    || txtUsuarioReo.getText().isEmpty() || password.length == 0 || passwordConfirm.length == 0 || txtDelitoReo.getText().isEmpty() || fechaNac == null) {
+                JOptionPane.showMessageDialog(this,
+                        "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+                        "Advertencia",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            } else {
+                if (!contra.equals(contraConfirm)) {
+                    JOptionPane.showMessageDialog(this,
+                            "La contraseña no coincide con la confirmacion, por favor verifique sean iguales",
+                            "Advertencia",
+                            JOptionPane.WARNING_MESSAGE);
+                    // Detener el evento
+                    return;
+                }else {
+                    // Crear la instancia de Recluso
+                    Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, contra, correo, fechaNac);
+                    codigoRecluso = recluso.GenerarIdRecluso(cedula);
+                    recluso.setCodigoRecluso(codigoRecluso);//asignar el id generado
+                    // Crear el mensaje de confirmación
+                    String mensaje = "¿Deseas Registar al recluso: " + recluso.getNombres() + " " + recluso.getApellidos() + "?";
+                    int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+                    // Verificar la opción seleccionada
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        // Guardar los datos en la base de datos
+                        controlador.RegistrarNuevoRecluso(recluso);
+                        limpiarInputs();
+                    } else {
+                        // Detener el evento
+                        return;
+                    }
+                }
+                // Mostrar mensaje al usuario
+                JOptionPane.showMessageDialog(this, "Los datos se han añadido correctamente.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage());
+        }
+        // Actualizar la tabla de profesores (si es necesario)
+        controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
+    }//GEN-LAST:event_btnRegistrarReclusoNuevoActionPerformed
+
+    private void btnEditarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarReoActionPerformed
+        // Obtener los datos del profesor a editar
+        String codigoRecluso = lbl_idRecluso.getText();
+        if (!controlador.existeRecluso(codigoRecluso)) {
+            JOptionPane.showMessageDialog(this,
+                    "El recluso con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un Recluso/a .",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String cedula = txtCedulaReo.getText();
+        String nombres = txtNombresReo.getText();
+        String apellidos = txtApellidosReo.getText();
+        String correo = valido.validarCorreoElectronico(txtCorreoReo.getText());
+        String usuario = valido.validarNombreUsuario(txtUsuarioReo.getText());
+        char[] password = txtPasswordReo.getPassword();
+        String Nuevacontra = new String(password);
+        char[] passwordConf = txtPasswConfirmReo.getPassword();
+        String NuevaContraConf = new String(passwordConf);
+        int TimeCondena = Integer.parseInt(txtAniosCondena.getText());
+        String delito = txtDelitoReo.getText();
+        Date fechaNac = valido.ValidarFecha(jDateFechaNacimiento.getDate());
+
+        if (cedula.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || txtAniosCondena.getText().isEmpty() || NuevaContraConf.isEmpty()
+                || usuario.isEmpty() || NuevaContraConf.isEmpty() || delito.isEmpty() || fechaNac == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Existen campos vacios o datos invalidos, por favor verifique que los datos sean correctos.",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            // Crear la instancia de Recluso
+            Recluso recluso = new Recluso(codigoRecluso, TimeCondena, delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo, fechaNac);
+            // Crear el mensaje de confirmación
+            String mensaje = "¿Deseas Modificar al recluso: " + recluso.getNombres() + " " + recluso.getApellidos() + " ?";
+            int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+            // Verificar la opción seleccionada
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Guardar los datos en la base de datos
+                controlador.EditarRecluso(recluso);
+                limpiarInputs();
+            } else {
+                // Detener el evento
+                return;
+            }
+        }
+        // Actualizar la tabla de profesores con los datos actualizados
+        DefaultTableModel modeloTabla = (DefaultTableModel) JTableReclusosExistentes.getModel();
+        modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+        controlador.cargarDatosRecluso(modeloTabla);
+
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Recluso editado correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnEditarReoActionPerformed
+
+    private void btnEliminarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarReoActionPerformed
+        // Obtener el ID del profesor seleccionado
+        String idRecluso = lbl_idRecluso.getText();
+        if (!controlador.existeRecluso(idRecluso)) {
+            JOptionPane.showMessageDialog(this,
+                    "El recluso con el ID especificado no existe\n"
+                    + "VERIFIQUE: que haya seleccionado a un Recluso/a .",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombreReo = txtNombresReo.getText() + " " + txtApellidosReo.getText();
+        int asignaciones = controlador.consultarAsignacionesRecluso(idRecluso);
+
+        //Verificar si tiene asiganciones hechas
+        if (asignaciones >= 1) {
+            JOptionPane.showMessageDialog(this,
+                    " " + nombreReo + "tiene " + asignaciones + " Asigancion/es"
+                    + "\nSi elimina este Recluso/a tambien se"
+                    + "\neliminaran sus asiganciones",
+                    "Advertencia Eliminacion",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        // Crear el mensaje de confirmación
+        String mensaje = "¿Deseas Eliminar al recluso: " + nombreReo + " ?";
+        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar Resgistro", JOptionPane.YES_NO_OPTION);
+        // Verificar la opción seleccionada
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Llamar al método eliminarProfesor del controlador
+            controlador.eliminarRecluso(idRecluso);
+        } else {
+            // Detener el evento
+            return;
+        }
+        limpiarInputs();
+        // Actualizar la tabla de profesores (si es necesario)
+        controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
+    }//GEN-LAST:event_btnEliminarReoActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarInputs();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void JTableReclusosExistentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableReclusosExistentesMouseClicked
+        int filaSeleccionada = JTableReclusosExistentes.getSelectedRow();
+        List<Recluso> recluso = controlador.cargarDatosRecluso((DefaultTableModel) JTableReclusosExistentes.getModel());
+        // Obtener el profesor seleccionado de la lista
+        Recluso reo = recluso.get(filaSeleccionada);
+
+        // Obtener los datos del profesor
+        String idRecluso = reo.getCodigoRecluso();
+        String cedula = reo.getCedula();
+        String nombres = reo.getNombres();
+        String apellidos = reo.getApellidos();
+        int condena = reo.getTiempo_condena();
+        String delito = reo.getDelito();
+        String correo = reo.getCorreo();
+        String usuario = reo.getUser();
+        String contrasena = reo.getPassword();
+        Date fechaNac = reo.getFechaNacimiento();
+        // Establecer los datos en los campos de texto
+        lbl_idRecluso.setText(idRecluso);
+        txtNombresReo.setText(nombres);
+        txtApellidosReo.setText(apellidos);
+        txtCedulaReo.setText(cedula);
+        txtCedulaReo.setEditable(false);
+        txtCorreoReo.setText(correo);
+        txtAniosCondena.setText("" + condena);
+        txtDelitoReo.setText(delito);
+        txtUsuarioReo.setText(usuario);
+        txtPasswordReo.setText(contrasena);
+        txtPasswConfirmReo.setText(contrasena);
+        jDateFechaNacimiento.setDate(fechaNac);
+        // Restaurar la selección después de la actualización
+        if (filaSeleccionada != -1) {
+            JTableReclusosExistentes.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        }
+    }//GEN-LAST:event_JTableReclusosExistentesMouseClicked
+
+    private void jDateFechaNacimientoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateFechaNacimientoPropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_CmbActividadTallerActionPerformed
+        if ("date".equals(evt.getPropertyName())) {
+            // Obtener la fecha seleccionada en jDateFechaNacimiento
+            Date fechaNacimiento = jDateFechaNacimiento.getDate();
+
+            // Verificar que la fecha seleccionada no sea nula
+            if (fechaNacimiento != null) {
+                // Crear un calendario con la fecha actual
+                Calendar calFechaActual = Calendar.getInstance();
+
+                // Crear un calendario con la fecha de nacimiento seleccionada
+                Calendar calFechaNacimiento = Calendar.getInstance();
+                calFechaNacimiento.setTime(fechaNacimiento);
+
+                // Calcular la fecha mínima permitida (18 años antes de la fecha actual)
+                calFechaActual.add(Calendar.YEAR, -18);
+
+                // Verificar si la fecha de nacimiento es menor a 18 años
+                if (calFechaNacimiento.after(calFechaActual)) {
+                    // La fecha de nacimiento no cumple con los requisitos, mostrar un mensaje de advertencia
+                    JOptionPane.showMessageDialog(null,
+                            "ERROR: La fecha de nacimiento debe ser superior a 18 años.",
+                            "Advertencia",
+                            JOptionPane.WARNING_MESSAGE);
+                    jDateFechaNacimiento.setDate(null);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_jDateFechaNacimientoPropertyChange
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1036,11 +1033,19 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     }
 
     private void limpiarInputs() {
-        lbl_IDrecluso.setText("");
-        lblEdad.setText("");
-        CmbReclusosExistentes.setSelectedIndex(0);
-        CmbAsignacionRecluso.setSelectedIndex(0);
-        CmbActividadTaller.setSelectedIndex(0);
+        lbl_idRecluso.setText("");
+        txtNombresReo.setText("");
+        txtApellidosReo.setText("");
+        txtCedulaReo.setText("");
+        txtCedulaReo.setEditable(true);
+        txtAniosCondena.setText("");
+        txtDelitoReo.setText("");
+        txtUsuarioReo.setText("");
+        txtCorreoReo.setText("");
+        txtPasswordReo.setText("");
+        txtPasswConfirmReo.setText("");
+        jDateFechaNacimiento.setDate(null);
+        JTableReclusosExistentes.clearSelection();
     }
 
     /**
@@ -1095,21 +1100,18 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
-    private javax.swing.JComboBox<String> CmbActividadTaller;
-    private javax.swing.JComboBox<String> CmbAsignacionRecluso;
-    private javax.swing.JComboBox<String> CmbReclusosExistentes;
-    private javax.swing.JTable JTableAsigancionRecluso;
+    private javax.swing.JTable JTableReclusosExistentes;
+    private javax.swing.JPanel JpaneREgisterReclusos;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JPanel btnActividades;
-    private javax.swing.JLabel btnActualizar;
-    private javax.swing.JButton btnAdminReclusos;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEditarReo;
+    private javax.swing.JButton btnEliminarReo;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JPanel btnProfesores;
     private javax.swing.JPanel btnReclusos;
+    private javax.swing.JButton btnRegistrarReclusoNuevo;
     private javax.swing.JPanel btnTalleres;
+    private com.toedter.calendar.JDateChooser jDateFechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1121,10 +1123,17 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1132,33 +1141,29 @@ public class frmReclusosAlcaide extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPCampoFecha;
-    private javax.swing.JPanel jPCampoNombre;
-    private javax.swing.JPanel jPNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelBackGround;
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblActTaller;
-    private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogout;
-    private javax.swing.JLabel lbl_IDrecluso;
-    private javax.swing.JPanel panelAgregar;
-    private javax.swing.JPanel panelCancelar;
-    private javax.swing.JPanel panelEditar;
-    private javax.swing.JPanel panelEliminar;
+    private javax.swing.JLabel lbl_idRecluso;
+    private javax.swing.JTextField txtAniosCondena;
+    private javax.swing.JTextField txtApellidosReo;
+    private javax.swing.JTextField txtCedulaReo;
+    private javax.swing.JTextField txtCorreoReo;
+    private javax.swing.JTextField txtDelitoReo;
+    private javax.swing.JTextField txtNombresReo;
+    private javax.swing.JPasswordField txtPasswConfirmReo;
+    private javax.swing.JPasswordField txtPasswordReo;
+    private javax.swing.JTextField txtUsuarioReo;
     // End of variables declaration//GEN-END:variables
 
 }
