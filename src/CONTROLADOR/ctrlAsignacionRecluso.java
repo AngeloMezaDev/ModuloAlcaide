@@ -146,7 +146,30 @@ public class ctrlAsignacionRecluso {
             connectionBD.closeConnection();
         }
     }
-    
+    public void cargarTareasRecluso(JComboBox<String> cmbTareas, String nombreTaller, String nombreGrupo) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT DISTINCT TITULO FROM DEBER WHERE CURSO = ? AND GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+            statement.setString(2, nombreGrupo);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String tareas = resultSet.getString("TITULO");
+                cmbTareas.addItem(tareas);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar talleres: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
     public String getIdRecluso(String usuario) throws ClassNotFoundException, SQLException {
         // Realiza una consulta a la base de datos para obtener el ID del profesor
         String idRecluso = ""; // Inicializa con un valor por defecto
@@ -191,7 +214,7 @@ public class ctrlAsignacionRecluso {
         return idRecluso;
     }
 
-    public void CargarDatosTalleres(String user, String contra, JLabel Taller, JLabel Grupo, JLabel NombreProfesor, JLabel TiempoReduccion, JLabel FechaInicio, JLabel FechaFin, JLabel Tarea, String NombreTaller, String NombreCurso) throws ClassNotFoundException, SQLException {
+    public void CargarDatosTalleres(String user, String contra, JLabel Taller, JLabel Grupo, JLabel TiempoReduccion, JLabel FechaInicio, JLabel FechaFin, String NombreTaller, String NombreCurso) throws ClassNotFoundException, SQLException {
         ConnectionBD connectionBD = new ConnectionBD();
         datosGlobalesRecluso(user, contra);
         datosGlobalesInscripcion();
@@ -199,7 +222,7 @@ public class ctrlAsignacionRecluso {
             connectionBD.openConnection();
 
             // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
-            String sql = "SELECT NOMBRE_TALLER, NOMBRE_GRUPO, REDUCCION_CONDENA, FECHA_CREACION, FECHA_VENCIMIENTO FROM INSCRIPCION where NOMBRE_TALLER = ?  AND NOMBRE_GRUPO = ? ";
+            String sql = "SELECT * FROM INSCRIPCION where NOMBRE_TALLER = ?  AND NOMBRE_GRUPO = ? ";
 
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
@@ -212,11 +235,9 @@ public class ctrlAsignacionRecluso {
             while (resultSet.next()) {
                 Taller.setText(resultSet.getString("NOMBRE_TALLER"));
                 Grupo.setText(resultSet.getString("NOMBRE_GRUPO"));
-                NombreProfesor.setText("");
                 TiempoReduccion.setText(resultSet.getString("REDUCCION_CONDENA"));
                 FechaInicio.setText(resultSet.getString("FECHA_CREACION"));
                 FechaFin.setText(resultSet.getString("FECHA_VENCIMIENTO"));
-                Tarea.setText("TAREA");
             }
             System.out.println("Datos de Asignacion cargados correctamente");
 
@@ -231,7 +252,7 @@ public class ctrlAsignacionRecluso {
    
     public void guardarDeber(JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, JTextArea txtRespuesta) throws SQLException, ClassNotFoundException {
         ConnectionBD connectionBD = new ConnectionBD();
-        String nuevoId = generarIdAsignacion();
+        String nuevoId = generarIdDeber();
         try {
             connectionBD.openConnection();
 
@@ -269,7 +290,7 @@ public class ctrlAsignacionRecluso {
         }
     }
 
-    public String generarIdAsignacion() throws ClassNotFoundException, SQLException {
+    public String generarIdDeber() throws ClassNotFoundException, SQLException {
         try {
             connectionBD.openConnection();
 
@@ -394,14 +415,14 @@ public class ctrlAsignacionRecluso {
         }
         return nombreTarea;
     }
-    public boolean VerificarDeberEnviado(String IdDeber) throws SQLException, ClassNotFoundException{
+    public boolean VerificarDeberEnviado(String ID_Autor) throws SQLException, ClassNotFoundException{
         boolean resultado = false;
         try {
             connectionBD.openConnection();
 
-            String query = "SELECT * FROM DEBER WHERE Id_Deber = ?";
+            String query = "SELECT * FROM DEBER WHERE Id_Autor = ?";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
-            statement.setString(1, IdDeber);
+            statement.setString(1, ID_Autor);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

@@ -1,5 +1,6 @@
 package VISTAS;
 
+import CONTROLADOR.ctrlAsignacionRecluso;
 import CONTROLADOR.ctrlReclusos;
 import MODELO.ConnectionBD;
 import MODELO.Inscripcion;
@@ -31,6 +32,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     public static String apellidosR = "";
     public static String correo = "";
     public static String idRecluso = "";
+    ctrlAsignacionRecluso ctrc = new ctrlAsignacionRecluso();
     
     public frmInscripcionReclusos(String usuario, String contrasena) throws ClassNotFoundException {
         initComponents();
@@ -65,10 +67,10 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
 
         jPanelBackGround = new javax.swing.JPanel();
         jPanelSide = new javax.swing.JPanel();
-        btnNotificaciones = new javax.swing.JPanel();
+        btnTalleres = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnTalleres = new javax.swing.JPanel();
+        btnInscripciones = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         btnPerfil = new javax.swing.JPanel();
@@ -107,17 +109,17 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnNotificaciones.setBackground(new java.awt.Color(85, 65, 118));
-        btnNotificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTalleres.setBackground(new java.awt.Color(85, 65, 118));
+        btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNotificacionesMouseClicked(evt);
+                btnTalleresMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNotificacionesMouseEntered(evt);
+                btnTalleresMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNotificacionesMouseExited(evt);
+                btnTalleresMouseExited(evt);
             }
         });
 
@@ -129,39 +131,39 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Taller.png"))); // NOI18N
 
-        javax.swing.GroupLayout btnNotificacionesLayout = new javax.swing.GroupLayout(btnNotificaciones);
-        btnNotificaciones.setLayout(btnNotificacionesLayout);
-        btnNotificacionesLayout.setHorizontalGroup(
-            btnNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnNotificacionesLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
+        btnTalleres.setLayout(btnTalleresLayout);
+        btnTalleresLayout.setHorizontalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
-        btnNotificacionesLayout.setVerticalGroup(
-            btnNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnNotificacionesLayout.createSequentialGroup()
+        btnTalleresLayout.setVerticalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNotificacionesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addGap(14, 14, 14))
         );
 
-        jPanelSide.add(btnNotificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 300, 50));
+        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 300, 50));
 
-        btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
-        btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnInscripciones.setBackground(new java.awt.Color(64, 43, 100));
+        btnInscripciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInscripciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnTalleresMouseEntered(evt);
+                btnInscripcionesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnTalleresMouseExited(evt);
+                btnInscripcionesMouseExited(evt);
             }
         });
 
@@ -173,28 +175,28 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Inscripcion.png"))); // NOI18N
 
-        javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
-        btnTalleres.setLayout(btnTalleresLayout);
-        btnTalleresLayout.setHorizontalGroup(
-            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnTalleresLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnInscripcionesLayout = new javax.swing.GroupLayout(btnInscripciones);
+        btnInscripciones.setLayout(btnInscripcionesLayout);
+        btnInscripcionesLayout.setHorizontalGroup(
+            btnInscripcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnInscripcionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4))
         );
-        btnTalleresLayout.setVerticalGroup(
-            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnTalleresLayout.createSequentialGroup()
+        btnInscripcionesLayout.setVerticalGroup(
+            btnInscripcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnInscripcionesLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnInscripcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
                 .addGap(14, 14, 14))
         );
 
-        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 300, 50));
+        jPanelSide.add(btnInscripciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 300, 50));
 
         btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
         btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -469,39 +471,39 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void btnNotificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseEntered
-        setColor(btnNotificaciones);
-        resetColor(btnTalleres);
-        resetColor(btnPerfil);
-    }//GEN-LAST:event_btnNotificacionesMouseEntered
-
-    private void btnNotificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseExited
-        resetColor(btnNotificaciones);
-        resetColor(btnTalleres);
-        resetColor(btnPerfil);
-    }//GEN-LAST:event_btnNotificacionesMouseExited
-
     private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
         setColor(btnTalleres);
-        resetColor(btnNotificaciones);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseEntered
 
     private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
-        resetColor(btnNotificaciones);
         resetColor(btnTalleres);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseExited
 
+    private void btnInscripcionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInscripcionesMouseEntered
+        setColor(btnInscripciones);
+        resetColor(btnTalleres);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnInscripcionesMouseEntered
+
+    private void btnInscripcionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInscripcionesMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnInscripciones);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnInscripcionesMouseExited
+
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
         setColor(btnPerfil);
+        resetColor(btnInscripciones);
         resetColor(btnTalleres);
-        resetColor(btnNotificaciones);
     }//GEN-LAST:event_btnPerfilMouseEntered
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
-        resetColor(btnNotificaciones);
         resetColor(btnTalleres);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 
@@ -524,7 +526,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
-    private void btnNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseClicked
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
         frmTalleres noti = null;
         try {
             noti = new frmTalleres(usuario, contrasena);
@@ -535,7 +537,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         }
         this.dispose();
         noti.setVisible(true);
-    }//GEN-LAST:event_btnNotificacionesMouseClicked
+    }//GEN-LAST:event_btnTalleresMouseClicked
     
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // Mostrar mensaje de confirmación para cerrar sesión
@@ -558,31 +560,64 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
     int maxPostulaciones = 3;
     int seleccionadas = 0;
+    String IdRecluso = "";
     for (int i = 0; i < jTable1.getRowCount(); i++) {
         Boolean b = (Boolean) jTable1.getModel().getValueAt(i, 7);
+        
         if (b != null && b) {        
-        String idTaller = (String) jTable1.getModel().getValueAt(i, 0);
-        String nombreTaller = (String) jTable1.getModel().getValueAt(i, 1);
-        String nombreGrupo = (String) jTable1.getModel().getValueAt(i, 2);
-        int reduccion = (int) jTable1.getModel().getValueAt(i, 3);
-        Date fechaCreacion = (Date) jTable1.getModel().getValueAt(i, 4);
-        Date fechaVencimiento = (Date) jTable1.getModel().getValueAt(i, 5);       
-        int cupos = (int) jTable1.getModel().getValueAt(i, 6);
-        Inscripcion inscripcion = new Inscripcion(nombreR, apellidosR, correo, idRecluso, nombreGrupo, cupos, idTaller, nombreTaller, 0, cupos, fechaCreacion, fechaVencimiento, reduccion);
-        controlador.cargarIdGrupo(idTaller);
-        controlador.guardarTaller(inscripcion);    
-
             seleccionadas++;
+            
+            try {
+                IdRecluso = ctrc.ObtenerIdRecluso(usuario,contrasena);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                if(!controlador.InscripcionesAlcanzadas(IdRecluso)){
+                    String idTaller = (String) jTable1.getModel().getValueAt(i, 0);
+                    String nombreTaller = (String) jTable1.getModel().getValueAt(i, 1);
+                    String nombreGrupo = (String) jTable1.getModel().getValueAt(i, 2);
+                    int reduccion = (int) jTable1.getModel().getValueAt(i, 3);
+                    Date fechaCreacion = (Date) jTable1.getModel().getValueAt(i, 4);
+                    Date fechaVencimiento = (Date) jTable1.getModel().getValueAt(i, 5);       
+                    int cupos = (int) jTable1.getModel().getValueAt(i, 6);
+                    Inscripcion inscripcion = new Inscripcion(nombreR, apellidosR, correo, idRecluso, nombreGrupo, cupos, idTaller, nombreTaller, 0, cupos, fechaCreacion, fechaVencimiento, reduccion);
+                    controlador.cargarIdGrupo(idTaller);
+                    controlador.guardarTaller(inscripcion);                        
+                } else{ 
+                    JOptionPane.showMessageDialog(null, "Alcanzaste el máximo de inscripciones");
+
+                }         
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
         }
         if (seleccionadas > maxPostulaciones) {
-            JOptionPane.showMessageDialog(null, "Seleccione " + maxPostulaciones + " postulaciones como máximo");
+            JOptionPane.showMessageDialog(null, "Seleccione " + maxPostulaciones + " talleres como máximo");
             return;
         }
     }
     if (seleccionadas == 0) {
         JOptionPane.showMessageDialog(null, "Seleccione al menos una postulación");
-    } else {
-        JOptionPane.showMessageDialog(null, "Postulaciones enviadas con éxito");
+    } else {       
+        JOptionPane.showMessageDialog(null, "Inscripciones enviadas con éxito");
+        try {
+            controlador.MisTalleres(IdRecluso);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
 
 
@@ -638,7 +673,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
     private javax.swing.JButton btnEnviar;
-    private javax.swing.JPanel btnNotificaciones;
+    private javax.swing.JPanel btnInscripciones;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnTalleres;
     private javax.swing.JLabel jLabel1;

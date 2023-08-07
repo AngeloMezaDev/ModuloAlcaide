@@ -745,11 +745,11 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="lblTarea" min="-2" pref="127" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="cmbTareas" min="-2" pref="276" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Component id="btnTarea" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -779,11 +779,11 @@
                           <Component id="lblReduccion" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="lblFechaFin" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="68" max="32767" attributes="0"/>
+                      <EmptySpace pref="71" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel30" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTarea" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="btnTarea" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbTareas" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
@@ -849,7 +849,7 @@
                 <Property name="text" type="java.lang.String" value="GRUPO:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnTarea">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="66" red="66" type="rgb"/>
@@ -857,7 +857,7 @@
                 <Property name="text" type="java.lang.String" value="IR A TAREA"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTareaActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblReduccion">
@@ -871,12 +871,17 @@
                 <Property name="text" type="java.lang.String" value="SIN DOCENTE"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblTarea">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="SIN TAREA"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="lblFechaFin">
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cmbTareas">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

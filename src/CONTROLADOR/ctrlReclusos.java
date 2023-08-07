@@ -190,7 +190,7 @@ public class ctrlReclusos {
                     lblGrupo2.setText(nombreGrupo);
                 } else if (contador == 2) {
                     lblTaller3.setText(nombreTaller);
-                    lblGrupo2.setText(nombreGrupo);
+                    lblGrupo3.setText(nombreGrupo);
                 }
 
                 contador++;
@@ -407,7 +407,7 @@ public class ctrlReclusos {
             
             // Ejecutar el stored procedure
             cstmt.execute();
-
+            
             System.out.println("Inscripcion guardada correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al guardar la inscripcion: " + e.getMessage());
@@ -419,6 +419,65 @@ public class ctrlReclusos {
             }
         }
     }
+
+    public boolean InscripcionesAlcanzadas(String IdRecluso) throws ClassNotFoundException, SQLException {
+    boolean resultado = false;
+    try {
+        connectionBD.openConnection();
+
+        String query = "SELECT COUNT(*) AS TotalInscripciones FROM INSCRIPCION WHERE Id_Recluso = ?";
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+        statement.setString(1, IdRecluso);
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int totalInscripciones = resultSet.getInt("TotalInscripciones");
+            System.out.println("NUMERO DE INSCRIPCIONES: " + totalInscripciones);
+            if (totalInscripciones >= 3) {
+                resultado = true; // Ya se alcanzó el límite de inscripciones
+            }
+        } else {
+            resultado = false; // No se encontró ninguna inscripción
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al cargar las Inscripciones Alcanzadas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        connectionBD.closeConnection();
+    }
+    return resultado;
+}
+
+    public void MisTalleres(String IdRecluso) throws ClassNotFoundException, SQLException {
+    try {
+        connectionBD.openConnection();
+
+        String query = "SELECT * FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+        PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+        statement.setString(1, IdRecluso);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            String nombreTaller = resultSet.getString("NOMBRE_TALLER");
+            String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
+            String reduccionCondena = resultSet.getString("REDUCCION_CONDENA");
+            String fechaInicio = resultSet.getString("FECHA_CREACION");
+
+            String message = "Nombre: " + nombreTaller + "\n" +
+                             "Grupo: " + nombreGrupo + "\n" +
+                             "Tiempo de reducción: " + reduccionCondena + "\n" +
+                             "Fecha de Inicio: " + fechaInicio;
+
+            JOptionPane.showMessageDialog(null, message, "Detalles de Inscripciones", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al cargar las Inscripciones: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        connectionBD.closeConnection();
+    }
+}
 
 }
 
