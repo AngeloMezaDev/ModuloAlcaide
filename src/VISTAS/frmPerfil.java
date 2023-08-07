@@ -2,6 +2,7 @@ package VISTAS;
 
 import CONTROLADOR.ctrlReclusos;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -127,10 +128,10 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel9.setBackground(new java.awt.Color(204, 204, 204));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setText("NOTIFICACIONES");
+        jLabel9.setText("TALLERES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/campana.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Taller.png"))); // NOI18N
 
         javax.swing.GroupLayout btnNotificacionesLayout = new javax.swing.GroupLayout(btnNotificaciones);
         btnNotificaciones.setLayout(btnNotificacionesLayout);
@@ -284,10 +285,10 @@ public class frmPerfil extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("TALLERES");
+        jLabel4.setText("INSCRIPCIÓN");
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Inscripcion.png"))); // NOI18N
 
         javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
         btnTalleres.setLayout(btnTalleresLayout);
@@ -782,7 +783,14 @@ public class frmPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLogOutMouseClicked
 
     private void btnNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotificacionesMouseClicked
-       frmNotificacionesReclusos noti= new frmNotificacionesReclusos(usuario, contrasena);
+       frmTalleres noti = null;
+        try {
+            noti = new frmTalleres(usuario, contrasena);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
         noti.setVisible(true);
     }//GEN-LAST:event_btnNotificacionesMouseClicked
@@ -856,13 +864,13 @@ public class frmPerfil extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

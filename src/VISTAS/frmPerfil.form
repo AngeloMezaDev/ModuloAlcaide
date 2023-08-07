@@ -129,14 +129,14 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="NOTIFICACIONES"/>
+                    <Property name="text" type="java.lang.String" value="TALLERES"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/campana.png"/>
+                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/Taller.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -420,14 +420,14 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="TALLERES"/>
+                    <Property name="text" type="java.lang.String" value="INSCRIPCI&#xd3;N"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel15">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/group.png"/>
+                      <Image iconType="3" name="/Imagen/Imagenes_Alcaide/Inscripcion.png"/>
                     </Property>
                   </Properties>
                 </Component>

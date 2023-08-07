@@ -20,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.stream.Collectors;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -41,8 +43,9 @@ public class ctrlReclusos {
     private static String correo = "";
     private static String cedulaR= "";
     private static Date fechaNacimiento = null;
-    
-
+    private static String nombreTaller = "";
+    private static String nombreGrupo= "";
+    private static String Tiemporeduccion = "";
     public ctrlReclusos() {
         connectionBD = new ConnectionBD();
     }
@@ -75,7 +78,8 @@ public class ctrlReclusos {
             }
         }
     }
-    // Método para cargar todos los datos del recluso en perfil
+    
+        // Método para cargar todos los datos del recluso en perfil
     public void cargarDatosRecluso(String usuario, String contra, JLabel lblApellidos, JLabel lblNombres, JLabel lblCedula, JLabel lblTiempoCond, JLabel lblDelito, JLabel lblCorreo, JLabel lbledad, JLabel lblFechaNacs) {
         try {
             connectionBD.openConnection();
@@ -128,7 +132,37 @@ public class ctrlReclusos {
             }
         }
     }
-   // Método para cargar los nombres y grupos correspondientes de los talleres inscritos
+    // Método para cargar varliables globales utilizadas más adelante
+    public void datosGlobalesInscripcion() {
+        
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
+            String sql = "Select nombre_taller, nombre_grupo from Inscripcion where id_recluso = ?";
+            // Crear la declaración preparada y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, id_recluso);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            while (resultSet.next()) {
+                this.nombreTaller = resultSet.getString("nombre_taller");
+                this.nombreGrupo = resultSet.getString("nombre_grupo");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println("Error al obtener los datos gloabales para la asignacion de los reclusos: " + e.getMessage());
+        } finally {
+            try {
+                connectionBD.closeConnection();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+
+    }
+    // Método para cargar los nombres y grupos correspondientes de los talleres inscritos
     public void cargarNombresTalleres(JLabel lblTaller1, JLabel lblTaller2, JLabel lblTaller3, JLabel lblGrupo1, JLabel lblGrupo2, JLabel lblGrupo3) {
         try {
             connectionBD.openConnection();
@@ -198,6 +232,7 @@ public class ctrlReclusos {
                 lblCorreo.setText(resultSet.getString("correo"));
                 jDateFechaNac.setDate(fecha(resultSet.getString("fecha_nacimiento")));
                 tiempo_condena = resultSet.getInt("tiempo_condena");
+                Tiemporeduccion = resultSet.getInt("tiempo_condena") + "";
                 delito = resultSet.getString("delito");
             }
             System.out.println("Datos de reclusos cargados correctamente.");
@@ -247,38 +282,7 @@ public class ctrlReclusos {
             }
         }
     }
-    // Método para cargar la fecha de los talleres y colocarlos en el calendario de la interfaz de notificaciones
-    public void cargarFechaTalleres(JCalendar cldAgenda) {
-            try {
-                connectionBD.openConnection();
-
-                // Crear la sentencia SQL 
-                String sql = "Select fecha_creacion, fecha_vencimiento from inscripcion" +
-                " WHERE id_recluso = ?";
-
-                // Crear la declaración y ejecutar la consulta
-                PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-                statement.setString(1, id_recluso);
-                ResultSet resultSet = statement.executeQuery();           
-                // Recorrer el resultado           
-                while (resultSet.next()) {
-                    String fechaCreacion =resultSet.getString("fecha_vencimiento");
-                    // Setear el JCalendar con la fecha de creación
-                    cldAgenda.setDate(fecha(fechaCreacion));
-
-                }
-                System.out.println("Fecha de talleres cargados con éxito");
-            } catch (SQLException | ClassNotFoundException e) {
-                System.err.println("Error al obtener la fecha de los talleres: " + e.getMessage());
-            } finally {
-                try {
-                    connectionBD.closeConnection();
-                } catch (SQLException e) {
-                    System.err.println("Error al cerrar la conexión: " + e.getMessage());
-                }
-            }
-    }
-
+    
     // Método para calcular la edad a partir de la fecha de nacimiento
      public String calcularEdad(String fechaNacimiento) {
         try {
