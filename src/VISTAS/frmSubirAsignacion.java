@@ -360,7 +360,7 @@ public class frmSubirAsignacion extends javax.swing.JFrame {
 
         ctrlAsig.guardarDeber(lblTitulo, lblFechaLimite, lblCurso, lblGrupo, txtDescripcion, txtRespuesta);
 
-        JOptionPane.showMessageDialog(this, "Asignación guardada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Deber enviado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
     } catch (SQLException ex) {
         Logger.getLogger(frmSubirAsignacion.class.getName()).log(Level.SEVERE, null, ex);

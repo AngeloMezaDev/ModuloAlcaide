@@ -93,13 +93,13 @@ public class frmTalleres extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnTarea = new javax.swing.JButton();
         lblReduccion = new javax.swing.JLabel();
         lblGrupo = new javax.swing.JLabel();
         lblFechaInicio = new javax.swing.JLabel();
         lblNombreDocente = new javax.swing.JLabel();
-        lblTarea = new javax.swing.JLabel();
         lblFechaFin = new javax.swing.JLabel();
+        cmbTareas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -470,17 +470,15 @@ public class frmTalleres extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel31.setText("GRUPO:");
 
-        jButton1.setBackground(new java.awt.Color(102, 102, 255));
-        jButton1.setText("IR A TAREA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTarea.setBackground(new java.awt.Color(102, 102, 255));
+        btnTarea.setText("IR A TAREA");
+        btnTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTareaActionPerformed(evt);
             }
         });
 
         lblNombreDocente.setText("SIN DOCENTE");
-
-        lblTarea.setText("SIN TAREA");
 
         javax.swing.GroupLayout PanelBodyLayout = new javax.swing.GroupLayout(PanelBody);
         PanelBody.setLayout(PanelBodyLayout);
@@ -517,11 +515,11 @@ public class frmTalleres extends javax.swing.JFrame {
                         .addGap(152, 152, 152))
                     .addGroup(PanelBodyLayout.createSequentialGroup()
                         .addComponent(jLabel30)
-                        .addGap(40, 40, 40)
-                        .addComponent(lblTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(256, 256, 256))))
+                        .addGap(29, 29, 29)
+                        .addComponent(cmbTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnTarea)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         PanelBodyLayout.setVerticalGroup(
             PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,11 +542,11 @@ public class frmTalleres extends javax.swing.JFrame {
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblReduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(lblTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTarea)
+                    .addComponent(cmbTareas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52))
         );
 
@@ -651,10 +649,13 @@ public class frmTalleres extends javax.swing.JFrame {
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnTalleresMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareaActionPerformed
         frmSubirAsignacion subir = null;
         String IdRecluso = "";
         String IdDeber = "";
+        String NombreAutor = "";
+        String ApellidoAutor = "";
+        
         try {
             IdRecluso = controlador.ObtenerIdRecluso(usuario, contrasena);
         } catch (ClassNotFoundException ex) {
@@ -662,6 +663,9 @@ public class frmTalleres extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        
         try {
             controlador.ObtenerIdDeber(IdRecluso);
         } catch (SQLException ex) {
@@ -670,7 +674,7 @@ public class frmTalleres extends javax.swing.JFrame {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            if(controlador.VerificarDeberEnviado(IdDeber)){
+            if(!controlador.VerificarDeberEnviado(IdRecluso)){
                 try {
             
             subir = new frmSubirAsignacion(usuario, contrasena, lblNombreTaller.getText(), lblGrupo.getText());
@@ -690,7 +694,7 @@ public class frmTalleres extends javax.swing.JFrame {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnTareaActionPerformed
 
     private void cmbGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGrupoActionPerformed
         // TODO add your handling code here:
@@ -702,9 +706,10 @@ public class frmTalleres extends javax.swing.JFrame {
        String nombreCurso = (String) cmbGrupo.getSelectedItem();
        String nombreDocente = "";
         try {           
-            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblNombreDocente, lblReduccion, lblFechaInicio, lblFechaFin, lblTarea, nombreTaller, nombreCurso);
+            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblReduccion, lblFechaInicio, lblFechaFin, nombreTaller, nombreCurso);
             lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreCurso));
-            lblTarea.setText(controlador.NombreTarea(nombreTaller, nombreCurso));
+            controlador.cargarTareasRecluso(cmbTareas, nombreTaller, nombreCurso);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -800,9 +805,10 @@ public class frmTalleres extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnTalleres;
+    private javax.swing.JButton btnTarea;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbGrupo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> cmbTareas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -842,6 +848,5 @@ public class frmTalleres extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreDocente;
     private javax.swing.JLabel lblNombreTaller;
     private javax.swing.JLabel lblReduccion;
-    private javax.swing.JLabel lblTarea;
     // End of variables declaration//GEN-END:variables
 }
