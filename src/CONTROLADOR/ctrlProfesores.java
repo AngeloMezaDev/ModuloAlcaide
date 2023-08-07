@@ -714,7 +714,31 @@ public class ctrlProfesores {
             connectionBD.closeConnection();
         }
     }
+    //Método para cargar la fecha de vencimiento de un taller 
+    public void cargarFechaVencimientoTallerSeleccionado(String nombreTaller, JDateChooser jDateFecha) throws SQLException {
+        try {
+            connectionBD.openConnection();
 
+            String query = "SELECT FECHA_VENCIMIENTO FROM TalleresAlcaide WHERE NOMBRE_TALLER = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String fechaVencimiento = resultSet.getString("FECHA_VENCIMIENTO");
+                jDateFecha.setDate(fecha(fechaVencimiento)); // Suponiendo que fecha es un método para convertir la cadena a un objeto Date
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
     //Método para guardar las asistencias
     public void guardarAsistencias(JTable jTableAsistencias) {
         try {
