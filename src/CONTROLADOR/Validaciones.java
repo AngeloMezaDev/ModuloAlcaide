@@ -138,4 +138,12 @@ public class Validaciones {
         }
     }
 
+    public Integer ValidarCondena(int condena) {
+        if (condena >= 36) { // Condena mayor a 3 años (36 meses)
+            return condena;
+        } else {
+            JOptionPane.showMessageDialog(null, "El programa de talleres para reducción de condena solo admite reclusos con condenas mayores a 3 años.");
+            return 0; // Retornar 0 si la condena no es válida
+        }
+    }
 }
