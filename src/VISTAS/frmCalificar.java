@@ -35,12 +35,14 @@ public class frmCalificar extends javax.swing.JFrame {
      * Creates new form frmCalificacion
      */
     public frmCalificar(String usuario, String contraseña) {
-        initComponents();
         this.usuario = usuario;
+        this.contraseña = contraseña;
+
+        initComponents();
         System.out.println(usuario);
         ctrlProf = new ctrlProfesores();
         ctrlAsig = new ctrlAsignacionProfe(); // Inicializar ctrlAsig aquí
-        lblHandle.setText("@"+usuario);
+        lblHandle.setText("@" + usuario);
 
         try {
             String idProfesor = ctrlProf.getIdProfesor(usuario);
@@ -804,7 +806,7 @@ public class frmCalificar extends javax.swing.JFrame {
             int nota;
             try {
                 nota = Integer.parseInt(txtNota.getText());
-                if (nota <0 || nota > 10) {
+                if (nota < 1 || nota > 10) {
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException ex) {

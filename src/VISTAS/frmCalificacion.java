@@ -29,9 +29,11 @@ public class frmCalificacion extends javax.swing.JFrame {
      * Creates new form frmCalificacion
      */
     public frmCalificacion(String usuario, String contraseña) {
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+        
         initComponents();
         lblHandle.setText("@" + usuario);
-        this.usuario = usuario;
         ctrlProf = new ctrlProfesores();
         ctrlAsig = new ctrlAsignacionProfe(); // Inicializar ctrlAsig aquí
 

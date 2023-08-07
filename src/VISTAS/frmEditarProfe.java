@@ -12,8 +12,11 @@ import MODELO.Profesor;
 import MODELO.Recluso;
 import java.awt.Color;
 import java.awt.Window;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -25,86 +28,36 @@ import javax.swing.table.DefaultTableModel;
 public class frmEditarProfe extends javax.swing.JFrame {
 
     /**
+     * *
      * Creates new form frmCreateNewProfe
      */
     private ctrlProfesores controlador;
     private static String usuario = "";
-    private static String contrasena = "";
-    private static String docente = "";
-    private static String apellidos = "";
-    private static String correo = "";
-    private static String nombres = "";
-    private static String cedula = "";
-    private static Date fechaNacimiento = null;
-    private String nuevosNombres;
-    private String nuevosApellidos;
-    private String nuevoUsuario;
-    private String nuevoCorreo;
+    private static String contraseña = "";
+
     private String nuevaContrasena;
     private frmPerfilProfesor perfilProfesor;
 
-    public void setPerfilProfesor(frmPerfilProfesor perfilProfesor) {
-        this.perfilProfesor = perfilProfesor;
-    }
-
-    public frmEditarProfe(String usuario, String contrasena) {
+    public frmEditarProfe(String usuario, String contraseña) {
         initComponents();
         controlador = new ctrlProfesores();
-//        lbl_IdProfe, usuario, contrasena, txtNombresReo,txtApellidosReo , txtCorreoReo, txtCedulaReo, jDateFechaNacimiento
-        controlador.cargarDatosProfe(lbl_IdProfe, usuario, contrasena, txtApellidosReo, txtNombresReo, txtCedulaReo, txtCorreoReo, jDateFechaNacimiento);
-        txtUsuarioReo.setText(usuario);
-        txtPasswordReo.setText(contrasena);
-        txtPasswConfirmReo.setText(contrasena);
+
+        controlador.cargarDatosProfe(lbl_IdProfe, usuario, contraseña, txtApellidosProfe, txtNombresProfe, txtCedulaProfe, txtCorreoProfe, jDateFechaNacimiento);
+        txtUsuarioProfe.setText(usuario);
+
+        // No es posible obtener la contraseña en texto plano debido a la seguridad
+        // txtPasswordProfe.setText(contraseña);
+        // txtPasswConfirmProfe.setText(contraseña);
+        this.usuario = usuario;
+        this.contraseña = contraseña;
+
+        // Mostrar asteriscos en campos de contraseña
+        String asterisks = "*".repeat(contraseña.length());
+        txtPasswordProfe.setText(asterisks);
+        txtPasswConfirmProfe.setText(asterisks);
+
         this.perfilProfesor = perfilProfesor; // Asignar la referencia
 
-        this.usuario = usuario;
-        this.contrasena = contrasena;
-
-        String asterisks = "*".repeat(contrasena.length());
-
-    }
-    // Método para cerrar el formulario y actualizar frmPerfilProfesor
-
-    private void cerrarYActualizar() {
-        // Obtener los nuevos datos del profesor
-        String nuevosNombres = txtNombresReo.getText();
-        String nuevosApellidos = txtApellidosReo.getText();
-        String nuevoUsuario = txtUsuarioReo.getText();
-        String nuevoCorreo = txtCorreoReo.getText();
-        String nuevaContrasena = new String(txtPasswordReo.getPassword());
-
-        // Validar que al menos uno de los campos obligatorios se haya modificado
-        if (nuevosNombres.isEmpty() && nuevosApellidos.isEmpty() && nuevoCorreo.isEmpty() && nuevaContrasena.isEmpty() && nuevoUsuario.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Al menos un campo debe ser modificado.", "Error de actualización", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Llamar al método de actualización solo si al menos un campo fue modificado
-            boolean actualizacionExitosa = controlador.actualizarDatosProfesor(nuevosNombres, nuevosApellidos, nuevoUsuario, nuevoCorreo, nuevaContrasena);
-
-            if (actualizacionExitosa) {
-                // Realizar acciones si la actualización fue exitosa
-
-                // Actualizar los campos en el formulario frmPerfilProfesor
-                perfilProfesor.actualizarNombres(nuevosNombres);
-                perfilProfesor.actualizarApellidos(nuevosApellidos);
-                perfilProfesor.actualizarUsuario(nuevoUsuario);
-                perfilProfesor.actualizarCorreo(nuevoCorreo);
-                perfilProfesor.actualizarContrasena(nuevaContrasena);
-
-                // Actualizar campos de usuario y contraseña en la tabla Usuarios
-                boolean actualizacionUsuariosExitosa = controlador.actualizarDatosUsuario(nuevoUsuario, nuevaContrasena, usuario);
-
-                if (actualizacionUsuariosExitosa) {
-                    JOptionPane.showMessageDialog(null, "Datos de usuario y contraseña actualizados en la tabla Usuarios.", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo actualizar usuario y contraseña en la tabla Usuarios.", "Error de actualización", JOptionPane.ERROR_MESSAGE);
-                }
-
-                // Cerrar el formulario actual (frmEditarProfe)
-                this.dispose();
-            } else {
-                // Realizar acciones si la actualización falló
-            }
-        }
     }
 
     /**
@@ -123,25 +76,25 @@ public class frmEditarProfe extends javax.swing.JFrame {
         lblExit2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNombresReo = new javax.swing.JTextField();
+        txtNombresProfe = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtApellidosReo = new javax.swing.JTextField();
+        txtApellidosProfe = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtCedulaReo = new javax.swing.JTextField();
+        txtCedulaProfe = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        txtUsuarioReo = new javax.swing.JTextField();
+        txtUsuarioProfe = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtCorreoReo = new javax.swing.JTextField();
+        txtCorreoProfe = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         lbl_IdProfe = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
-        txtPasswordReo = new javax.swing.JPasswordField();
-        txtPasswConfirmReo = new javax.swing.JPasswordField();
+        txtPasswordProfe = new javax.swing.JPasswordField();
+        txtPasswConfirmProfe = new javax.swing.JPasswordField();
         btnCancelar = new javax.swing.JButton();
         btnEditarReo = new javax.swing.JButton();
 
@@ -204,17 +157,21 @@ public class frmEditarProfe extends javax.swing.JFrame {
 
         jLabel1.setText("Nombres:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-        jPanel1.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 210, -1));
+
+        txtNombresProfe.setEnabled(false);
+        jPanel1.add(txtNombresProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 210, -1));
 
         jLabel2.setText("Apellidos:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 210, -1));
+
+        txtApellidosProfe.setEnabled(false);
+        jPanel1.add(txtApellidosProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 210, -1));
 
         jLabel3.setText("Cédula:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, -1, -1));
 
-        txtCedulaReo.setEnabled(false);
-        jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 170, -1));
+        txtCedulaProfe.setEnabled(false);
+        jPanel1.add(txtCedulaProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 170, -1));
 
         jSeparator1.setBackground(new java.awt.Color(153, 153, 255));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 255));
@@ -222,7 +179,7 @@ public class frmEditarProfe extends javax.swing.JFrame {
 
         jLabel6.setText("Usuario:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
-        jPanel1.add(txtUsuarioReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 170, -1));
+        jPanel1.add(txtUsuarioProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Candara Light", 1, 18)); // NOI18N
         jLabel7.setText("CREDENCIALES");
@@ -230,7 +187,7 @@ public class frmEditarProfe extends javax.swing.JFrame {
 
         jLabel8.setText("Correo Electronico:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, -1, -1));
-        jPanel1.add(txtCorreoReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 170, -1));
+        jPanel1.add(txtCorreoProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 170, -1));
 
         jLabel9.setText("Nueva Contraseña:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
@@ -252,11 +209,11 @@ public class frmEditarProfe extends javax.swing.JFrame {
         jDateFechaNacimiento.setFocusable(false);
         jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 170, -1));
 
-        txtPasswordReo.setText("jPasswordField1");
-        jPanel1.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
+        txtPasswordProfe.setText("jPasswordField1");
+        jPanel1.add(txtPasswordProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
 
-        txtPasswConfirmReo.setText("jPasswordField1");
-        jPanel1.add(txtPasswConfirmReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 170, -1));
+        txtPasswConfirmProfe.setText("jPasswordField1");
+        jPanel1.add(txtPasswConfirmProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 170, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 610, 400));
 
@@ -297,76 +254,62 @@ public class frmEditarProfe extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    // Métodos para actualizar los campos con los nuevos valores
-    public void actualizarNombres(String nuevosNombres) {
-        txtNombresReo.setText(nuevosNombres);
-    }
 
-    public void actualizarApellidos(String nuevosApellidos) {
-        txtApellidosReo.setText(nuevosApellidos);
-    }
-
-    public void actualizarUsuario(String nuevoUsuario) {
-        txtUsuarioReo.setText(nuevoUsuario);
-    }
-
-    public void actualizarCorreo(String nuevoCorreo) {
-        txtCorreoReo.setText(nuevoCorreo);
-    }
-
-    public void actualizarContrasena(String nuevaContrasena) {
-        // Suponiendo que lblContrasena es el JLabel donde se muestra la contraseña actual
-        txtPasswordReo.setText(nuevaContrasena);
-    }
     private void btnEditarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarReoActionPerformed
-        // Obtener los datos del profesor a editar
-//        String cedulaRecluso = txtCedulaReo.getText();
-//        String codigoRecluso = lbl_idRecluso.getText();
-//        String cedula = txtCedulaReo.getText();
-//        String nombres = txtNombresReo.getText();
-//        String apellidos = txtApellidosReo.getText();
-//        String correo = txtCorreoReo.getText();
-//        String usuario = txtUsuarioReo.getText();
-//        char[] password = txtPasswordReo.getPassword();
-//        String Nuevacontra = new String(password);
-//        Date fechaNac = jDateFechaNacimiento.getDate();
-//        System.out.println("Tiempo condena: " + tiempo_condena);
-//        System.out.println("Delito" + delito);
-//        // Verificar que los campos no estén vacíos
-//        if (codigoRecluso.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || correo.isEmpty() || usuario.isEmpty() || Nuevacontra.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
-//            return; // Detener la ejecución del método
-//        }
-//        // Crear la instancia de Recluso
-//        Recluso recluso = new Recluso(codigoRecluso, tiempo_condena, delito, cedula, nombres, apellidos, usuario, Nuevacontra, correo, fechaNac);
-//        // Crear el mensaje de confirmación
-//        String mensaje = "¿Deseas Modificar tus datos personales: " + recluso.getNombres() + " " + recluso.getApellidos() + "?";
-//        int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar cambios", JOptionPane.YES_NO_OPTION);
-//        // Verificar la opción seleccionada
-//        if (opcion == JOptionPane.YES_OPTION) {
-//            // Guardar los datos en la base de datos
-//            controlador.EditarRecluso(recluso);
-//            limpiarInputs();
-//
-//        } else {
-//            // Detener el evento
-//            return;
-//        }
-//
-//        // Mostrar un mensaje de éxito
-//        JOptionPane.showMessageDialog(this, "Datos editados correctamente", "Edición exitosa", JOptionPane.INFORMATION_MESSAGE);
-//        this.dispose();
-        cerrarYActualizar();
+        int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "Desea actualizar los cambios? Esto cerrará la sesión actual.",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            String nuevaContrasena = new String(txtPasswordProfe.getPassword());
+            String confirmNuevaContrasena = new String(txtPasswConfirmProfe.getPassword());
+
+            if (nuevaContrasena.equals(confirmNuevaContrasena)) {
+                try {
+                    controlador.actualizarDatos(txtUsuarioProfe.getText(), txtCorreoProfe.getText(), nuevaContrasena);
+                    JOptionPane.showMessageDialog(null, "Datos actualizados correctamente. La sesión se cerrará.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Cerrar el formulario frmEditarProfe
+                    this.dispose();
+
+                    // Cerrar el formulario frmPerfilProfesor si está abierto
+                    for (Window window : Window.getWindows()) {
+                        if (window instanceof frmPerfilProfesor) {
+                            ((frmPerfilProfesor) window).cerrarFormulario();
+                            break;  // Solo cerrar la primera instancia encontrada (si hay múltiples)
+                        }
+                    }
+
+                    // Abrir el formulario de inicio de sesión (frmLogin)
+                    Login loginForm = new Login();
+                    loginForm.setVisible(true);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmEditarProfe.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Error al actualizar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmEditarProfe.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Error al actualizar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            this.dispose();
+        }
 
     }//GEN-LAST:event_btnEditarReoActionPerformed
     private void limpiarInputs() {
-        txtNombresReo.setText("");
-        txtApellidosReo.setText("");
-        txtCedulaReo.setText("");
-        txtUsuarioReo.setText("");
-        txtCorreoReo.setText("");
-        txtPasswordReo.setText("");
-        txtPasswConfirmReo.setText("");
+        txtNombresProfe.setText("");
+        txtApellidosProfe.setText("");
+        txtCedulaProfe.setText("");
+        txtUsuarioProfe.setText("");
+        txtCorreoProfe.setText("");
+        txtPasswordProfe.setText("");
+        txtPasswConfirmProfe.setText("");
     }
 // Método para obtener una instancia del formulario frmPerfilProfesor si ya está abierto
 
@@ -432,7 +375,7 @@ public class frmEditarProfe extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmEditarProfe(usuario, contrasena).setVisible(true);
+                new frmEditarProfe(usuario, contraseña).setVisible(true);
             }
         });
     }
@@ -459,12 +402,12 @@ public class frmEditarProfe extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lbl_IdProfe;
-    private javax.swing.JTextField txtApellidosReo;
-    private javax.swing.JTextField txtCedulaReo;
-    private javax.swing.JTextField txtCorreoReo;
-    private javax.swing.JTextField txtNombresReo;
-    private javax.swing.JPasswordField txtPasswConfirmReo;
-    private javax.swing.JPasswordField txtPasswordReo;
-    private javax.swing.JTextField txtUsuarioReo;
+    private javax.swing.JTextField txtApellidosProfe;
+    private javax.swing.JTextField txtCedulaProfe;
+    private javax.swing.JTextField txtCorreoProfe;
+    private javax.swing.JTextField txtNombresProfe;
+    private javax.swing.JPasswordField txtPasswConfirmProfe;
+    private javax.swing.JPasswordField txtPasswordProfe;
+    private javax.swing.JTextField txtUsuarioProfe;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,50 +10,39 @@ import javax.swing.JPanel;
 
 public class frmPerfilProfesor extends javax.swing.JFrame {
 
+    private static frmPerfilProfesor instance;
+
     private ctrlProfesores controlador;
     private static String usuario = "";
-    private static String contrasena = "";
+    private static String contraseña = "";
     private static String docente = "";
-    // Método para actualizar el campo de nombres
 
-    public void actualizarNombres(String nuevosNombres) {
-        lblNombres.setText(nuevosNombres);
+    public void cerrarFormulario() {
+        dispose();
     }
 
-    // Método para actualizar el campo de apellidos
-    public void actualizarApellidos(String nuevosApellidos) {
-        lblApellidos.setText(nuevosApellidos);
-    }
-
-    // Método para actualizar el campo de usuario
-    public void actualizarUsuario(String nuevoUsuario) {
-        usuario = nuevoUsuario; // Actualizar la variable de usuario en la clase
-        lblUsuario.setText(nuevoUsuario);
-    }
-
-    // Método para actualizar el campo de contraseña
-    public void actualizarContrasena(String nuevaContrasena) {
-        contrasena = nuevaContrasena; // Actualizar la variable de contraseña en la clase
-        lblContra.setText(nuevaContrasena);
-    }
-
-    // Método para actualizar el campo de correo
-    public void actualizarCorreo(String nuevoCorreo) {
-        lblCorreo.setText(nuevoCorreo);
-    }
-
-    public frmPerfilProfesor(String usuario, String contrasena) {
+    public frmPerfilProfesor(String usuario, String contraseña) {
         initComponents();
         lblHandle.setText("@" + usuario);
         this.usuario = usuario;
-        this.contrasena = contrasena;
+        this.contraseña = contraseña;
         lblUsuario.setText(usuario);
-        String asterisks = "*".repeat(contrasena.length());
+        String asterisks = "*".repeat(contraseña.length());
         lblContra.setText(asterisks);
         controlador = new ctrlProfesores();
-        controlador.cargarDatosProfesor(lblId, usuario, contrasena, lblApellidos, lblNombres, lblCedula, lblAñosExperiencia, lblEspecialidad, lblCorreo, lblEdad, lblFechaNac);
+        controlador.cargarDatosProfesor(lblId, usuario, contraseña, lblApellidos, lblNombres, lblCedula, lblAñosExperiencia, lblEspecialidad, lblCorreo, lblEdad, lblFechaNac);
         controlador.cargarDatosAsignacionesProfe(lblTipoAsig, lblActTaller, lblGrupo, lblId.getText());
     }
+
+    public static frmPerfilProfesor getInstance() {
+        if (instance == null) {
+            instance = new frmPerfilProfesor(usuario, contraseña);
+        }
+        return instance;
+    }
+
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -749,11 +738,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         btnEditarPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/editing.png"))); // NOI18N
         btnEditarPerfil.setText("Editar Perfil");
         btnEditarPerfil.setBorder(null);
-        btnEditarPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarPerfilMouseClicked(evt);
-            }
-        });
         btnEditarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarPerfilActionPerformed(evt);
@@ -809,33 +793,30 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
                 .addComponent(lblCorreo)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel26)
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
                         .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblContra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(lblPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(38, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel28)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 100, 430, 260));
+        jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 90, 430, 260));
 
         jPanel4.setBackground(new java.awt.Color(230, 240, 243));
 
@@ -903,8 +884,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     // Método para abrir el formulario de edición y establecer el formulario frmPerfilProfesor como padre
 
     private void abrirFormularioEdicion() {
-        frmEditarProfe editarProfe = new frmEditarProfe(usuario, contrasena);
-        editarProfe.setPerfilProfesor(this);
+        frmEditarProfe editarProfe = new frmEditarProfe(usuario, contraseña);
         editarProfe.setVisible(true);
     }
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
@@ -926,12 +906,12 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_lblLogOutMouseClicked
 
     private void lblPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMouseExited
-        String asterisks = "*".repeat(contrasena.length());
+        String asterisks = "*".repeat(contraseña.length());
         lblContra.setText(asterisks);
     }//GEN-LAST:event_lblPassMouseExited
 
     private void lblPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPassMousePressed
-        lblContra.setText(contrasena);
+        lblContra.setText(contraseña);
     }//GEN-LAST:event_lblPassMousePressed
 
     private void btnEditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPerfilActionPerformed
@@ -957,11 +937,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblLogOut1MouseClicked
 
-    private void btnEditarPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarPerfilMouseClicked
-        frmEditarProfe perfiledit = new frmEditarProfe(usuario, contrasena);
-        perfiledit.setVisible(true);
-    }//GEN-LAST:event_btnEditarPerfilMouseClicked
-
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
         resetColor(btnAsignaciones);
@@ -981,7 +956,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAsistenciasMouseExited
 
     private void btnAsignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseClicked
-        frmCalificacion cal = new frmCalificacion(usuario, contrasena);
+        frmCalificacion cal = new frmCalificacion(usuario, contraseña);
         cal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAsignacionesMouseClicked
@@ -1020,7 +995,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformesMouseExited
 
     private void btnCalificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseClicked
-        frmCalificar calificar = new frmCalificar(usuario, contrasena);
+        frmCalificar calificar = new frmCalificar(usuario, contraseña);
         calificar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCalificarMouseClicked
@@ -1058,7 +1033,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilMouseExited
 
     private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
-        frmProfesores profe = new frmProfesores(usuario, contrasena);
+        frmProfesores profe = new frmProfesores(usuario, contraseña);
         profe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAsistenciasMouseClicked
@@ -1115,7 +1090,7 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmPerfilProfesor(usuario, contrasena).setVisible(true);
+                new frmPerfilProfesor(usuario, contraseña).setVisible(true);
             }
         });
     }

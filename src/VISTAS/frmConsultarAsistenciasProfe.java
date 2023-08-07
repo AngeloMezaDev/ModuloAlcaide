@@ -28,6 +28,9 @@ public class frmConsultarAsistenciasProfe extends javax.swing.JFrame {
 
     public frmConsultarAsistenciasProfe(String usuario, String contraseña) {
         initComponents();
+          // Agregar elementos "placeholder" a los JComboBox
+        cmbTallerConsulta.addItem("Seleccione un taller...");
+        cmbGrupoConsulta.addItem("Seleccione un grupo...");
         ctrlProf = new ctrlProfesores();
         try {
             String idProfesor = ctrlProf.getIdProfesor(usuario);
@@ -36,10 +39,6 @@ public class frmConsultarAsistenciasProfe extends javax.swing.JFrame {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-//        TableColumn tc = jTableConsultaAsis.getColumnModel().getColumn(6);
-//        tc.setCellEditor(jTableConsultaAsis.getDefaultEditor(Boolean.class));
-//        tc.setCellRenderer(jTableConsultaAsis.getDefaultRenderer(Boolean.class));
     }
 
     /**

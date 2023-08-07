@@ -83,7 +83,7 @@ public class ctrlProfesores {
                     System.err.println("Error al convertir la fecha: " + e.getMessage());
                 }
             }
-            System.out.println("Datos de reclusos cargados correctamente.");
+            System.out.println("Datos del docente cargados correctamente.");
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println("Error al obtener los datos de los reclusos: " + e.getMessage());
         } finally {
@@ -563,6 +563,30 @@ public class ctrlProfesores {
         }
     }
 
+    public boolean validarExistenciaReclusos(String curso, String grupo) {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT COUNT(*) AS count FROM Inscripcion WHERE Nombre_Taller = ? AND NOMBRE_GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, curso);
+            statement.setString(2, grupo);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int count = resultSet.getInt("count");
+
+            resultSet.close();
+            statement.close();
+            connectionBD.closeConnection();
+
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean validarCoincidencias(JComboBox<String> cmbTalleres, JComboBox<String> cmbGrupos) {
         String tallerSeleccionado = cmbTalleres.getSelectedItem().toString();
         String grupoSeleccionado = cmbGrupos.getSelectedItem().toString();
@@ -637,35 +661,34 @@ public class ctrlProfesores {
     }
 
     public String getIdAsignacion() throws ClassNotFoundException, SQLException {
-    String idAsignacion = ""; // Inicializa con un valor por defecto
-    ConnectionBD connectionBD = new ConnectionBD();
+        String idAsignacion = ""; // Inicializa con un valor por defecto
+        ConnectionBD connectionBD = new ConnectionBD();
 
-    try {
-        connectionBD.openConnection();
+        try {
+            connectionBD.openConnection();
 
-        // Consulta para obtener el idAsignacion de algún deber existente
-        String queryIdAsignacion = "SELECT Id_Asignacion FROM DEBER FETCH FIRST 1 ROWS ONLY";
-        PreparedStatement statementIdAsignacion = connectionBD.getConnection().prepareStatement(queryIdAsignacion);
+            // Consulta para obtener el idAsignacion de algún deber existente
+            String queryIdAsignacion = "SELECT Id_Asignacion FROM DEBER FETCH FIRST 1 ROWS ONLY";
+            PreparedStatement statementIdAsignacion = connectionBD.getConnection().prepareStatement(queryIdAsignacion);
 
-        ResultSet resultSetIdAsignacion = statementIdAsignacion.executeQuery();
+            ResultSet resultSetIdAsignacion = statementIdAsignacion.executeQuery();
 
-        if (resultSetIdAsignacion.next()) {
-            idAsignacion = resultSetIdAsignacion.getString("Id_Asignacion");
+            if (resultSetIdAsignacion.next()) {
+                idAsignacion = resultSetIdAsignacion.getString("Id_Asignacion");
+            }
+
+            resultSetIdAsignacion.close();
+            statementIdAsignacion.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+            connectionBD.closeConnection();
         }
 
-        resultSetIdAsignacion.close();
-        statementIdAsignacion.close();
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Manejo de la excepción
-    } finally {
-        connectionBD.closeConnection();
+        return idAsignacion;
     }
-
-    return idAsignacion;
-}
-
 
     public void cargarFechaCreacionTallerSeleccionado(String nombreTaller, JDateChooser jDateFecha) throws SQLException {
         try {
@@ -816,6 +839,40 @@ public class ctrlProfesores {
         String nuevoId = String.format("#AS%03d", ultimoId);
 
         return nuevoId;
+    }
+
+    public void actualizarDatos(String usuario, String correo, String contrasena) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            // Consulta para actualizar en la tabla "PROFESORES"
+            String sqlActualizarProfesores = "UPDATE PROFESORES SET CORREO = ?, CONTRA = ?, USUARIO = ? WHERE ID_PROFESOR = ?";
+            PreparedStatement statementProfesores = connectionBD.getConnection().prepareStatement(sqlActualizarProfesores);
+            statementProfesores.setString(1, correo);
+            statementProfesores.setString(2, contrasena);
+            statementProfesores.setString(3, usuario);
+            statementProfesores.setString(4, id_profesor); // Reemplaza idProfesor con el valor adecuado
+            int profesoresUpdated = statementProfesores.executeUpdate();
+            statementProfesores.close();
+
+            // Consulta para actualizar en la tabla "USUARIOS"
+            String sqlActualizarUsuarios = "UPDATE USUARIOS SET CORREO_ELECTRONICO = ?, CONTRASENA = ?, NOMBRE_USUARIO = ? WHERE ID_USUARIO = ?";
+            PreparedStatement statementUsuarios = connectionBD.getConnection().prepareStatement(sqlActualizarUsuarios);
+            statementUsuarios.setString(1, correo);
+            statementUsuarios.setString(2, contrasena);
+            statementUsuarios.setString(3, usuario);
+            statementUsuarios.setString(4, id_profesor); // Reemplaza idUsuario con el valor adecuado
+            int usuariosUpdated = statementUsuarios.executeUpdate();
+            statementUsuarios.close();
+
+            System.out.println("Datos actualizados en la tabla PROFESORES: " + profesoresUpdated + " filas afectadas");
+            System.out.println("Datos actualizados en la tabla USUARIOS: " + usuariosUpdated + " filas afectadas");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
     }
 
 }

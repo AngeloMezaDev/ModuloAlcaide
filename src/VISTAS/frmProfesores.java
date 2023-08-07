@@ -51,6 +51,9 @@ public class frmProfesores extends javax.swing.JFrame {
         this.usuario = usuario;
         this.contraseña = contraseña;
         initComponents();
+        // Agregar elementos "placeholder" a los JComboBox
+        cmbTallerAsistencias.addItem("Seleccione un taller...");
+        cmbGrupoAsistencias.addItem("Seleccione un grupo...");
 
         lblHandle.setText("@" + usuario);
         ctrlProf = new ctrlProfesores();
@@ -678,7 +681,27 @@ public class frmProfesores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPerfilMouseClicked
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        String tallerSeleccionado = cmbTallerAsistencias.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupoAsistencias.getSelectedItem().toString();
+        Date selectedDate = jDateFecha.getDate();
+
+        if (tallerSeleccionado.isEmpty() || grupoSeleccionado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un taller y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (selectedDate == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!ctrlProf.validarExistenciaReclusos(tallerSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No hay reclusos inscritos en el curso y grupo seleccionados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         ctrlProf.agregarFilaAsistencia(jTableAsistencias, cmbTallerAsistencias, cmbGrupoAsistencias, jDateFecha);
+
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
