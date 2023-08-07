@@ -24,24 +24,18 @@ public class frmSubirAsignacion extends javax.swing.JFrame {
     private static String usuario = "";
     private static String contraseña = "";
     private ctrlAsignacionRecluso ctrlAsig;
-
+    private static String taller = "";
+    private static String curso = "";
     /**
      * Creates new form frmCalificacion
      */
-    public frmSubirAsignacion(String usuario, String contraseña) {
+    public frmSubirAsignacion(String usuario, String contrasena, String nombreTaller, String nombreCurso) throws ClassNotFoundException, SQLException {
         initComponents();
-
+        this.taller = nombreTaller; 
+        this.curso = nombreCurso;
         ctrlAsig = new ctrlAsignacionRecluso(); // Inicializar ctrlAsig aquí
-
-        try {
-            ctrlAsig.datosGlobalesRecluso(usuario, contraseña);
-            ctrlAsig.datosGlobalesInscripcion();
-            ctrlAsig.cargarAsignacion(lblTitulo, lblFechaLimite, lblCurso, lblGrupo, txtDescripcion);
-            // Generar y establecer el ID de asignación en lblId           
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // Manejar la excepción según sea necesario
-        }
+        ctrlAsig.cargarAsignacion(usuario, contrasena, lblTitulo, lblFechaLimite, lblCurso, lblGrupo, txtDescripcion, nombreTaller, nombreCurso);
+        // Generar y establecer el ID de asignación en lblId
 
     }
 
@@ -349,8 +343,7 @@ public class frmSubirAsignacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
-        this.dispose();
-        
+        this.dispose();        
     }//GEN-LAST:event_lblExit2MouseClicked
 
     private void lblExit2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseEntered
@@ -417,7 +410,13 @@ public class frmSubirAsignacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmSubirAsignacion(usuario, contraseña).setVisible(true);
+                try {
+                    new frmSubirAsignacion(usuario, contraseña, taller, curso).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmSubirAsignacion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmSubirAsignacion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

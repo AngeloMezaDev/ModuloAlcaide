@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -32,7 +33,7 @@ public class ctrlAsignacionRecluso {
     private static String nombreTaller = "";
     private static String nombreGrupo = "";
     private static String idAsignacion = "";
-
+    private static String deber = "";
     public ctrlAsignacionRecluso() {
         connectionBD = new ConnectionBD();
     }
@@ -97,34 +98,125 @@ public class ctrlAsignacionRecluso {
         }
 
     }
+    public void cargarTalleresRecluso(JComboBox<String> cmbTallerAsistencias, String idRecluso) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
 
-    public void cargarAsignacion(JLabel lblTitulo, JLabel lblfecha, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion) throws SQLException, ClassNotFoundException {
-        ConnectionBD connectionBD = new ConnectionBD();
+            String query = "SELECT DISTINCT NOMBRE_TALLER FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, idRecluso);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreTaller = resultSet.getString("NOMBRE_TALLER");
+                cmbTallerAsistencias.addItem(nombreTaller);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar talleres: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+    public void cargarGruposRecluso(JComboBox<String> cmbGrupoAsistencias, String idRecluso) throws SQLException, ClassNotFoundException {
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT DISTINCT NOMBRE_GRUPO FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, idRecluso);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreGrupo = resultSet.getString("NOMBRE_GRUPO");
+                cmbGrupoAsistencias.addItem(nombreGrupo);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar grupos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+    }
+    
+    public String getIdRecluso(String usuario) throws ClassNotFoundException, SQLException {
+        // Realiza una consulta a la base de datos para obtener el ID del profesor
+        String idRecluso = ""; // Inicializa con un valor por defecto
 
         try {
             connectionBD.openConnection();
 
+            // Consulta para obtener el ID del profesor basado en el nombre de usuario
+            String queryIdProfesor = "SELECT id_recluso FROM Reclusos WHERE usuario = ?";
+            PreparedStatement statementIdProfesor = connectionBD.getConnection().prepareStatement(queryIdProfesor);
+            statementIdProfesor.setString(1, usuario);
+
+            ResultSet resultSetIdProfesor = statementIdProfesor.executeQuery();
+
+            if (resultSetIdProfesor.next()) {
+                idRecluso = resultSetIdProfesor.getString("id_recluso");
+
+                // Consulta para obtener el ID_DOCENTE basado en el ID del profesor
+                String query = "SELECT ID_RECLUSO FROM AsignacionRecluso WHERE ID_RECLUSO = ?";
+                PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+                statement.setString(1, idRecluso);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    idRecluso = resultSet.getString("ID_RECLUSO");
+                }
+
+                resultSet.close();
+                statement.close();
+            }
+
+            resultSetIdProfesor.close();
+            statementIdProfesor.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de la excepción
+        } finally {
+            connectionBD.closeConnection();
+        }
+
+        return idRecluso;
+    }
+
+    public void CargarDatosTalleres(String user, String contra, JLabel Taller, JLabel Grupo, JLabel NombreProfesor, JLabel TiempoReduccion, JLabel FechaInicio, JLabel FechaFin, JLabel Tarea, String NombreTaller, String NombreCurso) throws ClassNotFoundException, SQLException {
+        ConnectionBD connectionBD = new ConnectionBD();
+        datosGlobalesRecluso(user, contra);
+        datosGlobalesInscripcion();
+        try {
+            connectionBD.openConnection();
+
             // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
-            String sql = "SELECT ID_ASIGNACION, TITULO, CURSO, GRUPO, DESCRIPCION, FECHA_LIMITE FROM ASIGNACION where CURSO = ?  AND GRUPO = ? ";
+            String sql = "SELECT NOMBRE_TALLER, NOMBRE_GRUPO, REDUCCION_CONDENA, FECHA_CREACION, FECHA_VENCIMIENTO FROM INSCRIPCION where NOMBRE_TALLER = ?  AND NOMBRE_GRUPO = ? ";
 
             // Crear la declaración preparada y establecer los parámetros
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
-            statement.setString(1, nombreTaller);
-            statement.setString(2, nombreGrupo);
+            statement.setString(1, NombreTaller);
+            statement.setString(2, NombreCurso);
 
             ResultSet resultSet = statement.executeQuery();
 
             // Recorrer el resultado y agregar los datos al modelo de la tabla
             while (resultSet.next()) {
-                idAsignacion = resultSet.getString("ID_ASIGNACION");
-                lblTitulo.setText(resultSet.getString("TITULO"));
-                java.sql.Date fechaLimite = resultSet.getDate("FECHA_LIMITE");
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String fechaTexto = dateFormat.format(fechaLimite);
-                lblfecha.setText(fechaTexto);
-                lblCurso.setText(resultSet.getString("CURSO"));
-                lblGrupo.setText(resultSet.getString("GRUPO"));
-                txtDescripcion.setText(resultSet.getString("DESCRIPCION"));
+                Taller.setText(resultSet.getString("NOMBRE_TALLER"));
+                Grupo.setText(resultSet.getString("NOMBRE_GRUPO"));
+                NombreProfesor.setText("");
+                TiempoReduccion.setText(resultSet.getString("REDUCCION_CONDENA"));
+                FechaInicio.setText(resultSet.getString("FECHA_CREACION"));
+                FechaFin.setText(resultSet.getString("FECHA_VENCIMIENTO"));
+                Tarea.setText("TAREA");
             }
             System.out.println("Datos de Asignacion cargados correctamente");
 
@@ -136,7 +228,7 @@ public class ctrlAsignacionRecluso {
             connectionBD.closeConnection();
         }
     }
-
+   
     public void guardarDeber(JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, JTextArea txtRespuesta) throws SQLException, ClassNotFoundException {
         ConnectionBD connectionBD = new ConnectionBD();
         String nuevoId = generarIdAsignacion();
@@ -212,5 +304,173 @@ public class ctrlAsignacionRecluso {
         DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date fechaUtil = formatoFecha.parse(fechaTexto);
         return new Date(fechaUtil.getTime());
+    }
+
+    public void cargarAsignacion(String usuario, String contrasena, JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, String NombreTaller, String NombreCurso) throws ClassNotFoundException, SQLException {
+        datosGlobalesInscripcion();
+        try {
+            connectionBD.openConnection();
+
+            // Crear la sentencia SQL para obtener los datos del recluso con el usuario y contraseña proporcionados
+            String sql = "SELECT TITULO, FECHA_LIMITE, CURSO, GRUPO, DESCRIPCION FROM ASIGNACION where CURSO = ?  AND GRUPO = ? ";
+
+            // Crear la declaración preparada y establecer los parámetros
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(sql);
+            statement.setString(1, NombreTaller);
+            statement.setString(2, NombreCurso);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Recorrer el resultado y agregar los datos al modelo de la tabla
+            while (resultSet.next()) {
+                        lblTitulo.setText(resultSet.getString("TITULO"));
+                        lblFechaLimite.setText(resultSet.getString("FECHA_LIMITE"));
+                        lblCurso.setText(resultSet.getString("CURSO"));
+                        lblGrupo.setText(resultSet.getString("GRUPO"));
+                        txtDescripcion.setText(resultSet.getString("DESCRIPCION"));
+            }
+            System.out.println("Datos de Asignacion cargados correctamente");
+
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionBD.closeConnection();
+        }
+
+        
+    }
+
+    public String NombreDocente(String nombreTaller, String nombreCurso) throws ClassNotFoundException, SQLException {
+       String nombreDocente = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT NOMBRE_DOCENTE FROM ASIGNACIONPROFESOR WHERE NOMBRE_ACTIVIDADTALLER = ? AND NOMBRE_GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+            statement.setString(2, nombreCurso);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                nombreDocente = resultSet.getString("NOMBRE_DOCENTE");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar nombre del docente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return nombreDocente;
+    }
+
+    public String NombreTarea(String nombreTaller, String nombreCurso) throws ClassNotFoundException, SQLException {
+        String nombreTarea = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT TITULO FROM DEBER WHERE CURSO = ? AND GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+            statement.setString(2, nombreCurso);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreDocente = resultSet.getString("TITULO");
+                return nombreDocente;
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar nombre de la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return nombreTarea;
+    }
+    public boolean VerificarDeberEnviado(String IdDeber) throws SQLException, ClassNotFoundException{
+        boolean resultado = false;
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT * FROM DEBER WHERE Id_Deber = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, IdDeber);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                // Si el resultado tiene al menos una fila, el deber ha sido enviado
+                resultado =  true;
+            } else {
+                // Si no se encontró ninguna fila, el deber no ha sido enviado
+                resultado = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar nombre de la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return resultado;
+    }
+
+    public String ObtenerIdRecluso(String usuario, String contrasena) throws ClassNotFoundException, SQLException {
+        String IdRecluso = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT ID_RECLUSO FROM RECLUSOS WHERE USUARIO = ? AND CONTRA = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                IdRecluso = resultSet.getString("ID_RECLUSO");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return IdRecluso;
+    }
+
+    public String ObtenerIdDeber(String IdRecluso) throws SQLException, ClassNotFoundException {
+        String IdTarea = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT ID_DEBER FROM DEBER WHERE ID_AUTOR = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, IdRecluso);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                IdTarea = resultSet.getString("ID_DEBER");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id de la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return IdRecluso;
+
     }
 }
