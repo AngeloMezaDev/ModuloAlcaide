@@ -1,9 +1,11 @@
 package VISTAS;
 
+import CONTROLADOR.ctrlAsignacionRecluso;
 import CONTROLADOR.ctrlReclusos;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,26 +18,27 @@ import javax.swing.JPanel;
  *
  * @author ricar
  */
-public class frmNotificacionesReclusos extends javax.swing.JFrame {
+public class frmTalleres extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmNotificacionesReclusos
+     * Creates new form frmTalleres
      */
 
-    private ctrlReclusos controlador;
+    private ctrlAsignacionRecluso controlador;
     private static String usuario = ""; 
     private static String contrasena = "";
     //Date fechaRegistrada = controlador.cargarFecha();
-    public frmNotificacionesReclusos(String usuario,String contrasena) {
+    public frmTalleres(String usuario,String contrasena) throws ClassNotFoundException, SQLException {
         initComponents();
         this.usuario = usuario; 
         this.contrasena = contrasena;
-        controlador = new ctrlReclusos();
+        controlador = new ctrlAsignacionRecluso();
        
+    String idRecluso = controlador.getIdRecluso(usuario);
+    controlador.cargarTalleresRecluso(cmbCurso, idRecluso);
+    controlador.cargarGruposRecluso(cmbGrupo, idRecluso); 
     
-        controlador.cargarFechaTalleres(cldAgenda);
-
-       
+    
     }
 
     /**
@@ -74,16 +77,34 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        cmbCurso = new javax.swing.JComboBox<>();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        cmbGrupo = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        PanelBody = new javax.swing.JPanel();
+        lblNombreTaller = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        cldAgenda = new com.toedter.calendar.JCalendar();
+        lblReduccion = new javax.swing.JLabel();
+        lblGrupo = new javax.swing.JLabel();
+        lblFechaInicio = new javax.swing.JLabel();
+        lblNombreDocente = new javax.swing.JLabel();
+        lblTarea = new javax.swing.JLabel();
+        lblFechaFin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
 
-        jPanelBackGround.setBackground(new java.awt.Color(255, 255, 255));
         jPanelBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
@@ -103,10 +124,10 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         jLabel9.setBackground(new java.awt.Color(204, 204, 204));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setText("NOTIFICACIONES");
+        jLabel9.setText("TALLERES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/campana.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Taller.png"))); // NOI18N
 
         javax.swing.GroupLayout btnActividadesLayout = new javax.swing.GroupLayout(btnActividades);
         btnActividades.setLayout(btnActividadesLayout);
@@ -229,11 +250,13 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
         jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("RECLUSO");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -257,10 +280,10 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("TALLERES");
+        jLabel4.setText("INSCRIPCIÓN");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/group.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Inscripcion.png"))); // NOI18N
 
         javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
         btnTalleres.setLayout(btnTalleresLayout);
@@ -343,17 +366,28 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel8.setText("Notificación de actividades");
+        jLabel8.setText("Mis Talleres");
 
-        jLabel15.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel15.setText("(Actividades previamente elegidas a realizar)");
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/multiple-users-silhouette.png"))); // NOI18N
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/lapiz.png"))); // NOI18N
+        jLabel26.setText("CURSO");
 
-        jButton1.setText("TAREAS");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel25.setText("GRUPO");
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/learning.png"))); // NOI18N
+
+        cmbGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cmbGrupoActionPerformed(evt);
+            }
+        });
+
+        btnBuscar.setBackground(new java.awt.Color(0, 102, 0));
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -362,19 +396,27 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addContainerGap(118, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(160, 160, 160))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(147, 147, 147)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(301, 301, 301)))
                 .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -382,38 +424,135 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel15))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cmbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel17)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBuscar))))
+                        .addGap(0, 9, Short.MAX_VALUE))))
         );
 
-        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 860, -1));
+        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 930, 100));
 
-        cldAgenda.setBackground(new java.awt.Color(153, 255, 153));
-        cldAgenda.setDecorationBordersVisible(true);
-        cldAgenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cldAgendaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cldAgendaMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                cldAgendaMousePressed(evt);
+        PanelBody.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel22.setText("NOMBRE DEL TALLER:");
+
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel24.setText("FECHA DE FIN: ");
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel27.setText("FECHA DE INICIO: ");
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel28.setText("NOMBRE DEL DOCENTE:");
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel29.setText("TIEMPO DE REDUCCIÓN: ");
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel30.setText("TAREAS:");
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel31.setText("GRUPO:");
+
+        jButton1.setBackground(new java.awt.Color(102, 102, 255));
+        jButton1.setText("IR A TAREA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanelBackGround.add(cldAgenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 930, 330));
+
+        lblNombreDocente.setText("SIN DOCENTE");
+
+        lblTarea.setText("SIN TAREA");
+
+        javax.swing.GroupLayout PanelBodyLayout = new javax.swing.GroupLayout(PanelBody);
+        PanelBody.setLayout(PanelBodyLayout);
+        PanelBodyLayout.setHorizontalGroup(
+            PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBodyLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelBodyLayout.createSequentialGroup()
+                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelBodyLayout.createSequentialGroup()
+                                .addComponent(jLabel29)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblReduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelBodyLayout.createSequentialGroup()
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelBodyLayout.createSequentialGroup()
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(31, 31, 31)
+                                    .addComponent(lblNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(152, 152, 152))
+                    .addGroup(PanelBodyLayout.createSequentialGroup()
+                        .addComponent(jLabel30)
+                        .addGap(40, 40, 40)
+                        .addComponent(lblTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(256, 256, 256))))
+        );
+        PanelBodyLayout.setVerticalGroup(
+            PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBodyLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreTaller, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblReduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(lblTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52))
+        );
+
+        jPanelBackGround.add(PanelBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 980, 330));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -489,77 +628,12 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel14MouseClicked
 
-    private void cldAgendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseClicked
-        // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
-
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
-
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
-
-    }//GEN-LAST:event_cldAgendaMouseClicked
-
-    private void cldAgendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseEntered
-            // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
-
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
-
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
-
-    }//GEN-LAST:event_cldAgendaMouseEntered
-
-    private void cldAgendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMousePressed
-               // Obtener la fecha seleccionada del calendario
-    java.util.Date selectedDate = cldAgenda.getDate();
-
-    // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-    // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-    java.util.Date targetDate = null;
-    try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        targetDate = sdf.parse("2023-07-31");
-    } catch (ParseException ex) {
-        ex.printStackTrace();
-    }
-
-    if (selectedDate != null && selectedDate.equals(targetDate)) {
-        // Mostrar el mensaje para la fecha seleccionada
-        javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-        System.out.println("Si vale");
-    }
-    }//GEN-LAST:event_cldAgendaMousePressed
-
     private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
         frmInscripcionReclusos tall = null;
         try {
             tall = new frmInscripcionReclusos(usuario, contrasena);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
         tall.setVisible(true);
@@ -578,9 +652,66 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTalleresMouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        frmSubirAsignacion subir = new frmSubirAsignacion(usuario, contrasena);
-        subir.setVisible(true);
+        frmSubirAsignacion subir = null;
+        String IdRecluso = "";
+        String IdDeber = "";
+        try {
+            IdRecluso = controlador.ObtenerIdRecluso(usuario, contrasena);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            controlador.ObtenerIdDeber(IdRecluso);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            if(controlador.VerificarDeberEnviado(IdDeber)){
+                try {
+            
+            subir = new frmSubirAsignacion(usuario, contrasena, lblNombreTaller.getText(), lblGrupo.getText());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            subir.setVisible(true);
+
+            } else{
+                JOptionPane.showMessageDialog(null, "Ya enviaste el deber.", "Verificación de Deber", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmbGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGrupoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGrupoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+       String nombreTaller = (String) cmbCurso.getSelectedItem();
+       String nombreCurso = (String) cmbGrupo.getSelectedItem();
+       String nombreDocente = "";
+        try {           
+            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblNombreDocente, lblReduccion, lblFechaInicio, lblFechaFin, lblTarea, nombreTaller, nombreCurso);
+            lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreCurso));
+            lblTarea.setText(controlador.NombreTarea(nombreTaller, nombreCurso));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -606,14 +737,30 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmNotificacionesReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -634,7 +781,13 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmNotificacionesReclusos(usuario, contrasena).setVisible(true);
+                try {
+                    new frmTalleres(usuario, contrasena).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -642,10 +795,13 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
+    private javax.swing.JPanel PanelBody;
     private javax.swing.JPanel btnActividades;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnTalleres;
-    private com.toedter.calendar.JCalendar cldAgenda;
+    private javax.swing.JComboBox<String> cmbCurso;
+    private javax.swing.JComboBox<String> cmbGrupo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -653,10 +809,19 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -671,5 +836,12 @@ public class frmNotificacionesReclusos extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblFechaFin;
+    private javax.swing.JLabel lblFechaInicio;
+    private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblNombreDocente;
+    private javax.swing.JLabel lblNombreTaller;
+    private javax.swing.JLabel lblReduccion;
+    private javax.swing.JLabel lblTarea;
     // End of variables declaration//GEN-END:variables
 }
