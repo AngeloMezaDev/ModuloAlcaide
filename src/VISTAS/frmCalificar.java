@@ -247,6 +247,7 @@ public class frmCalificar extends javax.swing.JFrame {
         });
 
         txtDescripcion.setColumns(20);
+        txtDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         txtDescripcion.setRows(5);
         txtDescripcion.setEnabled(false);
         jScrollPane1.setViewportView(txtDescripcion);
@@ -294,14 +295,21 @@ public class frmCalificar extends javax.swing.JFrame {
 
         jLabel29.setText("RESPUESTA:");
 
-        txtNota.setForeground(new java.awt.Color(153, 153, 153));
+        txtNota.setBackground(new java.awt.Color(192, 192, 192));
+        txtNota.setForeground(new java.awt.Color(0, 0, 0));
         txtNota.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNotaActionPerformed(evt);
+            }
+        });
 
         jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/teacher.png.png"))); // NOI18N
 
         jLabel31.setText("OBSERVACIÓN:");
 
-        txtObservacion.setForeground(new java.awt.Color(153, 153, 153));
+        txtObservacion.setBackground(new java.awt.Color(192, 192, 192));
+        txtObservacion.setForeground(new java.awt.Color(0, 0, 0));
         txtObservacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout PanelBodyLayout = new javax.swing.GroupLayout(PanelBody);
@@ -1009,6 +1017,10 @@ public class frmCalificar extends javax.swing.JFrame {
         info.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnInformesMouseClicked
+
+    private void txtNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNotaActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));

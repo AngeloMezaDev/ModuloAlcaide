@@ -42,9 +42,9 @@ public class frmCalificacion extends javax.swing.JFrame {
             ctrlProf.cargarTalleresDocente(cmbCurso, idProfesor);
             ctrlProf.cargarGruposDocente(cmbGrupo, idProfesor);
 
-            // Generar y establecer el ID de asignación en lblId
-            String nuevoIdAsignacion = ctrlAsig.generarIdAsignacion();
-            lblId.setText(nuevoIdAsignacion);
+//            // Generar y establecer el ID de asignación en lblId
+//            String nuevoIdAsignacion = ctrlAsig.generarIdAsignacion();
+//            lblId.setText(nuevoIdAsignacion);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
