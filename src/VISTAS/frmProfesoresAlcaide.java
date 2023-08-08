@@ -864,7 +864,7 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-
+        
         if (lblID.getText().isEmpty() || CmbProfesoresExistentes.getSelectedIndex() == 0
                 || cmbActividadTaller.getSelectedIndex() == 0 || CmbAsignacionDocente.getSelectedIndex() == 0
                 || lblEdad.getText().isEmpty()) {
@@ -895,6 +895,10 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
             controlador.agregarAsignacionProfesor(idDocente, nombreDocente, tipoAsignacion, nombreActividadTaller,
                     idActividadTaller, nombreGrupo);
             limpiarInputs();
+            //actualizar tabla
+            DefaultTableModel modeloTabla = (DefaultTableModel) JTableAsignacionProfesores.getModel();
+            modeloTabla.setRowCount(0); // Limpiar los datos existentes en la tabla
+            controlador.cargarDatosAsignaciones(modeloTabla);
         } else {
             // Detener el evento
             return;
