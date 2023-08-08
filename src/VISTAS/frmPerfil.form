@@ -992,7 +992,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="50" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1078,7 +1078,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Rockwell" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Reducci&#xf3;n de talleres"/>
+                <Property name="text" type="java.lang.String" value="Reducci&#xf3;n Condena por talleres"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblConteo">
@@ -1094,7 +1094,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Rockwell" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Conteo regresivo"/>
+                <Property name="text" type="java.lang.String" value="Tiempo condena Actual"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblReduccionFinal">

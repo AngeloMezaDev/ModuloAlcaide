@@ -810,7 +810,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="FECHA DE FIN: "/>
+                <Property name="text" type="java.lang.String" value="FECHA DE INCIO: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel27">
@@ -818,7 +818,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="FECHA DE INICIO: "/>
+                <Property name="text" type="java.lang.String" value="FECHA DE FIN: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">

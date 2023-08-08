@@ -456,10 +456,10 @@ public class frmTalleres extends javax.swing.JFrame {
         jLabel22.setText("NOMBRE DEL TALLER:");
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel24.setText("FECHA DE FIN: ");
+        jLabel24.setText("FECHA DE INCIO: ");
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel27.setText("FECHA DE INICIO: ");
+        jLabel27.setText("FECHA DE FIN: ");
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setText("NOMBRE DEL DOCENTE:");

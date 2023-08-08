@@ -621,13 +621,13 @@ public class frmPerfil extends javax.swing.JFrame {
         lblTiempoCondena.setText("S");
 
         jLabel36.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        jLabel36.setText("Reducción de talleres");
+        jLabel36.setText("Reducción Condena por talleres");
 
         lblConteo.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
         lblConteo.setText("S");
 
         jLabel38.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
-        jLabel38.setText("Conteo regresivo");
+        jLabel38.setText("Tiempo condena Actual");
 
         lblReduccionFinal.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
         lblReduccionFinal.setText("S");
@@ -652,7 +652,7 @@ public class frmPerfil extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblConteo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
