@@ -33,7 +33,6 @@ public class Login extends javax.swing.JFrame {
     String usr=""; String contr="";
     frmAlcaide alcaide = new frmAlcaide();
     frmProfesores profesor = new frmProfesores(usr,contr);
-    frmPerfil recluso = new frmPerfil(usr, contr);
     private HashMap<String, Integer> intentosFallidos = new HashMap<>();
     private ConnectionBD connectionBD;
 
@@ -382,7 +381,7 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresoActionPerformed
 
-    private void validarCredenciales(String usuario, String contrasena) throws Excepciones.CredencialesInvalidasException, Excepciones.UsuarioNoExistenteException, Excepciones.CuentaBloqueadaException {
+    private void validarCredenciales(String usuario, String contrasena) throws Excepciones.CredencialesInvalidasException, Excepciones.UsuarioNoExistenteException, Excepciones.CuentaBloqueadaException, ClassNotFoundException, SQLException {
         
         // Verificar si se ha alcanzado el límite de intentos fallidos
         int intentosFallidos = obtenerIntentosFallidos(usuario);
@@ -467,7 +466,7 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    private void abrirFormulario(String rol, String user, String contra) throws Excepciones.UsuarioNoExistenteException {
+    private void abrirFormulario(String rol, String user, String contra) throws Excepciones.UsuarioNoExistenteException, ClassNotFoundException, SQLException {
         if (rol.equals("Alcaide")) {
             frmAlcaide alcaide = new frmAlcaide();
             alcaide.setVisible(true);

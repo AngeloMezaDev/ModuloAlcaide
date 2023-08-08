@@ -523,7 +523,14 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        frmPerfil perfil=new frmPerfil(usuario, contrasena);
+        frmPerfil perfil = null;
+        try {
+            perfil = new frmPerfil(usuario, contrasena);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked

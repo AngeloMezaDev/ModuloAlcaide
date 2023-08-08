@@ -522,6 +522,205 @@ public class ctrlReclusos {
         }
         return IdRecluso;
     }
+    public String ObtenerTiempoCondena(String usuario, String contrasena) throws ClassNotFoundException, SQLException {
+        String IdRecluso = "";
+        try {
+            connectionBD.openConnection();
 
+            String query = "SELECT TIEMPO_CONDENA FROM RECLUSOS WHERE USUARIO = ? AND CONTRA = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                IdRecluso = resultSet.getString("TIEMPO_CONDENA");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el TIEMPO DE CONDENA del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return IdRecluso;
+    }
+    public String ObtenerTallerR(String IdR) throws ClassNotFoundException, SQLException {
+        String Taller = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT NOMBRE_TALLER FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, IdR);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Taller = resultSet.getString("NOMBRE_TALLER");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return Taller;
+    }
+    public String ObtenerGrupoR(String IdR) throws ClassNotFoundException, SQLException {
+        String Grupo = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT NOMBRE_GRUPO FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, IdR);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Grupo = resultSet.getString("NOMBRE_GRUPO");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return Grupo;
+    }
+    public String ObtenerReduccionT(String IdR) throws ClassNotFoundException, SQLException {
+        String Grupo = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "SELECT REDUCCION_CONDENA FROM INSCRIPCION WHERE ID_RECLUSO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, IdR);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Grupo = resultSet.getString("REDUCCION_CONDENA");
+                
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar el id del recluso: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return Grupo;
+    }
+    public int cargarNota(String Id_recluso, String nombreTaller, String nombreGrupo) throws SQLException, ClassNotFoundException {
+        int nota = 0;
+        try {
+            connectionBD.openConnection();
+
+            String query = "Select Nota from Informes where id_autor = ? and curso = ? and grupo = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, Id_recluso);
+	    statement.setString(2, nombreTaller);
+            statement.setString(3, nombreGrupo);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                nota= resultSet.getInt("Nota");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar la nota del informe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return nota;
+    }
+    public String cargarEstado(String Id_recluso, String nombreTaller, String nombreGrupo) throws SQLException, ClassNotFoundException {
+        String estado = "";
+        try {
+            connectionBD.openConnection();
+
+            String query = "Select Estado from Informes where id_autor = ? and curso = ? and grupo = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, Id_recluso);
+	    statement.setString(2, nombreTaller);
+            statement.setString(3, nombreGrupo);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+		estado = resultSet.getString("Estado");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar datos del informe: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return estado;
+    }
+    public int Reduccion(int nota, String estado, String ReduccionTaller) {
+    int Ponderacion = 0;
+    int tiempoReduccion = 0;
+
+    if (nota > 7 && estado.equals("Aprobado")) {
+        int intReduccionTaller = Integer.parseInt(ReduccionTaller);
+
+        switch (nota) {
+            case 10:
+                Ponderacion = 30;
+                tiempoReduccion = intReduccionTaller * Ponderacion;
+                break;
+            case 9:
+                Ponderacion = 27;
+                tiempoReduccion = intReduccionTaller * Ponderacion;
+                break;
+            case 8:
+                Ponderacion = 24;
+                tiempoReduccion = intReduccionTaller * Ponderacion;
+                break;
+            case 7:
+                Ponderacion = 10;
+                tiempoReduccion = intReduccionTaller * Ponderacion;
+                break;
+            default:
+                break;
+        }
+    }
+
+    return tiempoReduccion;
+}
+
+    public int Regresivo(String tiempoCondena, int Reduccion){
+        double resta = 0;
+        // Convertir el tiempo de condena de meses a días
+        int tiempoEnDias = convertirMesesADias(tiempoCondena);
+        // Realizar la resta utilizando la reducción proporcionada
+        resta = tiempoEnDias - Reduccion;
+        return (int) resta;
+    }
+    private int convertirMesesADias(String tiempoCondena) {
+        // Suponemos que el tiempo de condena viene en formato de meses como una cadena
+        // Multiplicamos por 30 para simplificar, pero debes ajustarlo según la cantidad real de días en un mes.
+        return Integer.parseInt(tiempoCondena) * 30; // Conversión simplificada
+    }
 }
 

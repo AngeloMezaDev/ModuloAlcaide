@@ -1,5 +1,5 @@
 package VISTAS;
-
+import CONTROLADOR.ctrlAsignacionRecluso;
 import CONTROLADOR.ctrlReclusos;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -13,8 +13,8 @@ public class frmPerfil extends javax.swing.JFrame {
     private ctrlReclusos controlador;
     private static String usuario="";
     private static String contrasena="";
-    
-    public frmPerfil(String usuario, String contrasena) {
+    private ctrlAsignacionRecluso ctrl = new ctrlAsignacionRecluso();
+    public frmPerfil(String usuario, String contrasena) throws ClassNotFoundException, SQLException {
         initComponents();
         lblHandle.setText("@"+usuario);
         this.usuario = usuario;
@@ -25,6 +25,17 @@ public class frmPerfil extends javax.swing.JFrame {
         lblUsuario.setText(usuario); 
         String asterisks = "*".repeat(contrasena.length());
         lblContrasena.setText(asterisks);
+        
+        String IdRecluso = controlador.ObtenerIdRecluso(usuario, contrasena);
+        String  NTaller = controlador.ObtenerTallerR(IdRecluso);
+        String NGrupo = controlador.ObtenerGrupoR(IdRecluso);
+        int nota = controlador.cargarNota(IdRecluso, NTaller, NGrupo);
+        String estado = controlador.cargarEstado(IdRecluso, NTaller, NGrupo);
+        String ReduccionTaller = controlador.ObtenerReduccionT(IdRecluso);
+        int reduccion = controlador.Reduccion(nota, estado, ReduccionTaller);
+        lblReduccionFinal.setText(reduccion + " días");
+        String tiempoCondena = controlador.ObtenerTiempoCondena(usuario, contrasena);
+        lblConteo.setText(controlador.Regresivo(tiempoCondena, reduccion) + " dias");
    }
 
     /**
@@ -92,6 +103,10 @@ public class frmPerfil extends javax.swing.JFrame {
         lblDelito = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         lblTiempoCondena = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        lblConteo = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        lblReduccionFinal = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -581,10 +596,10 @@ public class frmPerfil extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblTaller3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
-        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 290, 430, 340));
+        jPanelBackGround.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 370, 430, 260));
 
         jPanel3.setBackground(new java.awt.Color(230, 240, 243));
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -605,6 +620,18 @@ public class frmPerfil extends javax.swing.JFrame {
         lblTiempoCondena.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
         lblTiempoCondena.setText("S");
 
+        jLabel36.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        jLabel36.setText("Reducción de talleres");
+
+        lblConteo.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        lblConteo.setText("S");
+
+        jLabel38.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        jLabel38.setText("Conteo regresivo");
+
+        lblReduccionFinal.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        lblReduccionFinal.setText("S");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -612,12 +639,20 @@ public class frmPerfil extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35)
-                    .addComponent(lblTiempoCondena, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33)
                     .addComponent(lblDelito, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32))
-                .addContainerGap(180, Short.MAX_VALUE))
+                    .addComponent(jLabel32)
+                    .addComponent(lblReduccionFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel35)
+                            .addComponent(lblTiempoCondena, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel36))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblConteo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -626,16 +661,28 @@ public class frmPerfil extends javax.swing.JFrame {
                 .addComponent(jLabel32)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel33)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDelito)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel35)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTiempoCondena)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblDelito)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTiempoCondena)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblReduccionFinal)
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel38)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblConteo)
+                        .addGap(77, 77, 77))))
         );
 
-        jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 100, 430, 180));
+        jPanelBackGround.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 100, 430, 260));
 
         jPanel4.setBackground(new java.awt.Color(230, 240, 243));
 
@@ -797,7 +844,14 @@ public class frmPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNotificacionesMouseClicked
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        frmPerfil perfil=new frmPerfil(usuario, contrasena);
+        frmPerfil perfil = null;
+        try {
+            perfil = new frmPerfil(usuario, contrasena);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
@@ -878,7 +932,13 @@ public class frmPerfil extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmPerfil(usuario, contrasena).setVisible(true);
+                try {
+                    new frmPerfil(usuario, contrasena).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmPerfil.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -911,7 +971,9 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -929,6 +991,7 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblConteo;
     private javax.swing.JLabel lblContrasena;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDelito;
@@ -942,6 +1005,7 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPass;
+    private javax.swing.JLabel lblReduccionFinal;
     private javax.swing.JLabel lblTaller1;
     private javax.swing.JLabel lblTaller2;
     private javax.swing.JLabel lblTaller3;
