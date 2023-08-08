@@ -247,6 +247,7 @@ public class frmCalificar extends javax.swing.JFrame {
         });
 
         txtDescripcion.setColumns(20);
+        txtDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         txtDescripcion.setRows(5);
         txtDescripcion.setEnabled(false);
         jScrollPane1.setViewportView(txtDescripcion);
