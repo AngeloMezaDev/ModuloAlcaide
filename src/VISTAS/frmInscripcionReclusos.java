@@ -83,7 +83,7 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lblRol = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jPanelBanner = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -299,13 +299,15 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
-        lblRol.setBackground(new java.awt.Color(54, 33, 89));
-        lblRol.setForeground(new java.awt.Color(255, 255, 255));
-        lblRol.setText("Recluso");
-        lblRol.setBorder(null);
-        lblRol.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lblRol.setFocusable(false);
-        jPanelSide.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Recluso");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
 
         jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 640));
 
@@ -699,9 +701,9 @@ public class frmInscripcionReclusos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
-    private javax.swing.JTextField lblRol;
     // End of variables declaration//GEN-END:variables
 
     

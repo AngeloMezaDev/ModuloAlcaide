@@ -107,7 +107,7 @@ public class ctrlReclusos {
                 lblCedula.setText(resultSet.getString("cedula"));
                 lblApellidos.setText(resultSet.getString("apellidos"));
                 lblNombres.setText(resultSet.getString("nombres"));
-                lblTiempoCond.setText(resultSet.getString("tiempo_condena")+" años");
+                lblTiempoCond.setText(resultSet.getString("tiempo_condena")+" Meses");
                 lblDelito.setText(resultSet.getString("delito"));
                 lblCorreo.setText(resultSet.getString("correo"));
                 lblFechaNacs.setText(obtenerSoloFecha(resultSet.getString("fecha_nacimiento")));
