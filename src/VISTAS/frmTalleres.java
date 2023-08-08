@@ -703,12 +703,12 @@ public class frmTalleres extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
        String nombreTaller = (String) cmbCurso.getSelectedItem();
-       String nombreCurso = (String) cmbGrupo.getSelectedItem();
+       String nombreGrupo = (String) cmbGrupo.getSelectedItem();
        String nombreDocente = "";
         try {           
-            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblReduccion, lblFechaInicio, lblFechaFin, nombreTaller, nombreCurso);
-            lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreCurso));
-            controlador.cargarTareasRecluso(cmbTareas, nombreTaller, nombreCurso);
+            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblReduccion, lblFechaInicio, lblFechaFin, nombreTaller, nombreGrupo);
+            lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreGrupo));
+            controlador.cargarTareasRecluso(cmbTareas, nombreTaller, nombreGrupo);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);

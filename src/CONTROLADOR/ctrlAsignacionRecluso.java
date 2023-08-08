@@ -150,14 +150,18 @@ public class ctrlAsignacionRecluso {
         try {
             connectionBD.openConnection();
 
-            String query = "SELECT DISTINCT TITULO FROM DEBER WHERE CURSO = ? AND GRUPO = ?";
+            String query = "SELECT TITULO FROM ASIGNACION WHERE CURSO = ? AND GRUPO = ?";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
             statement.setString(1, nombreTaller);
+            System.out.println("NombreTaller: " +  nombreTaller);
             statement.setString(2, nombreGrupo);
+            System.out.println("GRUPO: " + nombreGrupo);
+
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String tareas = resultSet.getString("TITULO");
+                System.out.println("TITULO: " + tareas);
                 cmbTareas.addItem(tareas);
             }
 
@@ -291,6 +295,7 @@ public class ctrlAsignacionRecluso {
     }
 
     public String generarIdDeber() throws ClassNotFoundException, SQLException {
+        String nuevoId="";
         try {
             connectionBD.openConnection();
 
@@ -307,18 +312,20 @@ public class ctrlAsignacionRecluso {
             }
 
             maxId++; // Incrementar el ID
-            String nuevoId = String.format("#DR%03d", maxId); // Generar el nuevo ID
+             nuevoId = String.format("#DR%03d", maxId); // Generar el nuevo ID
 
             resultSet.close();
             statement.close();
-
-            return nuevoId;
+            System.out.println("ID DEBER: "+nuevoId);
+            
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
             connectionBD.closeConnection();
         }
+        return nuevoId;
     }
 
     public static Date convertirTextoADate(String fechaTexto) throws ParseException {
