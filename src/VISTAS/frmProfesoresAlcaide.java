@@ -633,8 +633,8 @@ public class frmProfesoresAlcaide extends javax.swing.JFrame {
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 137, -1, 17));
 
         jLabel17.setText("Edad:");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 46, -1, -1));
-        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 50, 10));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
+        jPanel2.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 50, 20));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
