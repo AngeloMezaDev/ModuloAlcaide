@@ -10,8 +10,11 @@ import CONTROLADOR.ctrlRegistroReclusos;
 import MODELO.Actividad;
 import MODELO.Recluso;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -72,8 +75,6 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         txtCorreoReo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        lbl_idRecluso = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jDateFechaNacimiento = new com.toedter.calendar.JDateChooser();
         txtPasswordReo = new javax.swing.JPasswordField();
@@ -93,7 +94,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("EDITAR");
-        jPanelBanner.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
+        jPanelBanner.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 221));
 
@@ -111,7 +112,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 0, -1, -1));
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/prison.png"))); // NOI18N
-        jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+        jPanelBanner.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
 
         lblExit2.setBackground(new java.awt.Color(33, 45, 62));
         lblExit2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
@@ -139,22 +140,22 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nombres:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-        jPanel1.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 210, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+        jPanel1.add(txtNombresReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 210, -1));
 
         jLabel2.setText("Apellidos:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-        jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 210, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel1.add(txtApellidosReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 210, -1));
 
         jLabel3.setText("Cédula:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
 
         txtCedulaReo.setEnabled(false);
-        jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 170, -1));
+        jPanel1.add(txtCedulaReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 170, -1));
 
         jSeparator1.setBackground(new java.awt.Color(153, 153, 255));
         jSeparator1.setForeground(new java.awt.Color(153, 153, 255));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 580, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 580, 10));
 
         jLabel6.setText("Usuario:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
@@ -174,19 +175,13 @@ public class frmEditarRecluso extends javax.swing.JFrame {
         jLabel12.setText("Confirme su nueva contraseña:");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
 
-        jLabel13.setText("ID:");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
-
-        lbl_idRecluso.setText("#");
-        jPanel1.add(lbl_idRecluso, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 70, -1));
-
         jLabel15.setText("Fecha Nacimiento:");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, -1, -1));
 
         jDateFechaNacimiento.setDateFormatString("yyyy/MM/dd ");
         jDateFechaNacimiento.setEnabled(false);
         jDateFechaNacimiento.setFocusable(false);
-        jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 170, -1));
+        jPanel1.add(jDateFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 170, -1));
 
         txtPasswordReo.setText("jPasswordField1");
         jPanel1.add(txtPasswordReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 170, -1));
@@ -202,7 +197,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 500, 115, 45));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 490, 115, 45));
 
         btnEditarReo.setText("MODIFICAR");
         btnEditarReo.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +205,7 @@ public class frmEditarRecluso extends javax.swing.JFrame {
                 btnEditarReoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEditarReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 500, 115, 45));
+        getContentPane().add(btnEditarReo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 490, 115, 45));
 
         pack();
         setLocationRelativeTo(null);
@@ -237,16 +232,17 @@ public class frmEditarRecluso extends javax.swing.JFrame {
 
     private void btnEditarReoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarReoActionPerformed
         // Obtener los datos del profesor a editar
-            String codigoRecluso = lbl_idRecluso.getText();
             String cedula = txtCedulaReo.getText();
             String nombres = txtNombresReo.getText();
             String apellidos = txtApellidosReo.getText();
             String correo = txtCorreoReo.getText();
-            String usuario = txtUsuarioReo.getText();
+            String user = txtUsuarioReo.getText();
             char[] password = txtPasswordReo.getPassword();
             String Nuevacontra= new String(password);
+            char[] Contraconf = txtPasswConfirmReo.getPassword();
+            String Nuevacontraconf= new String(Contraconf);
         // Verificar que los campos no estén vacíos
-        if (codigoRecluso.isEmpty() || nombres.isEmpty() || apellidos.isEmpty() || cedula.isEmpty() || correo.isEmpty() || usuario.isEmpty()|| Nuevacontra.isEmpty()) {
+        if ( nombres.isEmpty() || apellidos.isEmpty() || correo.isEmpty() || usuario.isEmpty()|| Nuevacontra.isEmpty()|| Nuevacontraconf.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Detener la ejecución del método
         }
@@ -255,8 +251,15 @@ public class frmEditarRecluso extends javax.swing.JFrame {
             int opcion = JOptionPane.showConfirmDialog(null, mensaje, "Confirmar cambios", JOptionPane.YES_NO_OPTION);
             // Verificar la opción seleccionada
             if (opcion == JOptionPane.YES_OPTION) {
-                // Guardar los datos en la base de datos
-                 controlador.EditarRecluso(nombres, apellidos, usuario, correo, password);
+                try {
+                    // Guardar los datos en la base de datos
+
+                    controlador.EditarRecluso(controlador.ObtenerIdRecluso(usuario, contrasena),nombres, apellidos, user, correo, password);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmEditarRecluso.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmEditarRecluso.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 limpiarInputs();
                 
             } else {
@@ -335,7 +338,6 @@ public class frmEditarRecluso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
@@ -349,7 +351,6 @@ public class frmEditarRecluso extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblExit2;
-    private javax.swing.JLabel lbl_idRecluso;
     private javax.swing.JTextField txtApellidosReo;
     private javax.swing.JTextField txtCedulaReo;
     private javax.swing.JTextField txtCorreoReo;

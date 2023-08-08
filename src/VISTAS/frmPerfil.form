@@ -607,7 +607,7 @@
                                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btnEditarPerfil" min="-2" pref="109" max="-2" attributes="0"/>
+                                      <Component id="btnEditarPerfil" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -779,7 +779,7 @@
             <Component class="javax.swing.JButton" name="btnEditarPerfil">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="be" green="96" red="25" type="rgb"/>
+                  <Color blue="33" green="66" red="ff" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -791,9 +791,6 @@
                   <Image iconType="3" name="/Imagen/Imagenes_Alcaide/editing.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar Perfil"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarPerfilActionPerformed"/>
