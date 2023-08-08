@@ -55,7 +55,7 @@ public class frmInformeGenerado extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 String nombreTallerSeleccionado = cmbCurso.getSelectedItem().toString();
                 try {
-                    ctrlProf.cargarFechaVencimientoTallerSeleccionado(nombreTallerSeleccionado, jDateFechaInforme);
+                    ctrlProf.cargarFechaVencimientoTallerSeleccionado(nombreTallerSeleccionado, jDateFechaInformes);
                 } catch (SQLException ex) {
                     Logger.getLogger(frmProfesores.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -72,7 +72,8 @@ public class frmInformeGenerado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JPanelEncabezado = new javax.swing.JPanel();
+        jCalendar1 = new com.toedter.calendar.JCalendar();
+        JPanelEncabezado1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
@@ -85,31 +86,30 @@ public class frmInformeGenerado extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cmbGrupo = new javax.swing.JComboBox<>();
         cmbCurso = new javax.swing.JComboBox<>();
-        jDateFechaInforme = new com.toedter.calendar.JDateChooser();
+        jDateFechaInformes = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
 
-        JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
-        JPanelEncabezado.setPreferredSize(new java.awt.Dimension(1060, 84));
-        JPanelEncabezado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        JPanelEncabezado1.setBackground(new java.awt.Color(122, 72, 221));
+        JPanelEncabezado1.setPreferredSize(new java.awt.Dimension(1060, 84));
+        JPanelEncabezado1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
         jLabel11.setText("INFORMES DE NOTAS");
-        JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
+        JPanelEncabezado1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
         jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - INFORME DE RECLUSOS-CONSULTA\"");
-        JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
+        JPanelEncabezado1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
-        jPanelExit2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblExit2.setBackground(new java.awt.Color(122, 72, 221));
         lblExit2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
@@ -129,9 +129,21 @@ public class frmInformeGenerado extends javax.swing.JFrame {
                 lblExit2MouseExited(evt);
             }
         });
-        jPanelExit2.add(lblExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 59, 34));
 
-        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 0, 60, -1));
+        javax.swing.GroupLayout jPanelExit2Layout = new javax.swing.GroupLayout(jPanelExit2);
+        jPanelExit2.setLayout(jPanelExit2Layout);
+        jPanelExit2Layout.setHorizontalGroup(
+            jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExit2Layout.createSequentialGroup()
+                .addComponent(lblExit2, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelExit2Layout.setVerticalGroup(
+            jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        JPanelEncabezado1.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 0, 70, -1));
 
         jTableInformeGenerado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,14 +188,14 @@ public class frmInformeGenerado extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateFechaInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateFechaInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
@@ -202,7 +214,7 @@ public class frmInformeGenerado extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateFechaInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateFechaInformes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cmbCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,21 +227,21 @@ public class frmInformeGenerado extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1410, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(JPanelEncabezado, javax.swing.GroupLayout.DEFAULT_SIZE, 1390, Short.MAX_VALUE))
+                .addComponent(JPanelEncabezado1, javax.swing.GroupLayout.DEFAULT_SIZE, 1410, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 91, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(JPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JPanelEncabezado1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 510, Short.MAX_VALUE)))
         );
 
@@ -251,26 +263,25 @@ public class frmInformeGenerado extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
-        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
-        Date fechaInforme = jDateFechaInforme.getDate();
+       String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+    String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
+    Date fechaInforme = jDateFechaInformes.getDate();
 
-        if ("Seleccione un curso...".equals(cursoSeleccionado) || "Seleccione un grupo...".equals(grupoSeleccionado)) {
-            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if ("Seleccione un curso...".equals(cursoSeleccionado) || "Seleccione un grupo...".equals(grupoSeleccionado)) {
+        JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (fechaInforme == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (fechaInforme == null) {
+        JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!ctrlInfo.existeInforme(cursoSeleccionado, grupoSeleccionado, fechaInforme)) {
-            JOptionPane.showMessageDialog(this, "No se encontraron informes generados.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
+    ctrlInfo.consultarInformes(cursoSeleccionado, grupoSeleccionado, fechaInforme, jTableInformeGenerado);
 
-        ctrlInfo.consultarInformes(cmbCurso, cmbGrupo, jDateFechaInforme, jTableInformeGenerado);
+    if (jTableInformeGenerado.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No se encontraron informes generados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -310,11 +321,12 @@ public class frmInformeGenerado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JPanelEncabezado;
+    private javax.swing.JPanel JPanelEncabezado1;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbGrupo;
-    private com.toedter.calendar.JDateChooser jDateFechaInforme;
+    private com.toedter.calendar.JCalendar jCalendar1;
+    private com.toedter.calendar.JDateChooser jDateFechaInformes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
