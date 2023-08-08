@@ -16,6 +16,7 @@ public class frmPerfil extends javax.swing.JFrame {
     
     public frmPerfil(String usuario, String contrasena) {
         initComponents();
+        lblHandle.setText("@"+usuario);
         this.usuario = usuario;
         this.contrasena = contrasena;
         controlador = new ctrlReclusos();
@@ -43,7 +44,7 @@ public class frmPerfil extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
@@ -203,11 +204,11 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setText("USER");
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -254,6 +255,7 @@ public class frmPerfil extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
@@ -897,7 +899,6 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -937,6 +938,7 @@ public class frmPerfil extends javax.swing.JFrame {
     private javax.swing.JLabel lblGrupo1;
     private javax.swing.JLabel lblGrupo2;
     private javax.swing.JLabel lblGrupo3;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPass;

@@ -32,6 +32,7 @@ public class frmTalleres extends javax.swing.JFrame {
         initComponents();
         this.usuario = usuario; 
         this.contrasena = contrasena;
+        lblHandle.setText("@"+usuario);
         controlador = new ctrlAsignacionRecluso();
        
     String idRecluso = controlador.getIdRecluso(usuario);
@@ -58,17 +59,17 @@ public class frmTalleres extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         LlbIconUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         BtnOpcion5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         btnTalleres = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanelBanner = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -96,9 +97,9 @@ public class frmTalleres extends javax.swing.JFrame {
         btnTarea = new javax.swing.JButton();
         lblReduccion = new javax.swing.JLabel();
         lblGrupo = new javax.swing.JLabel();
-        lblFechaInicio = new javax.swing.JLabel();
-        lblNombreDocente = new javax.swing.JLabel();
         lblFechaFin = new javax.swing.JLabel();
+        lblNombreDocente = new javax.swing.JLabel();
+        lblFechaInicio = new javax.swing.JLabel();
         cmbTareas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -199,11 +200,11 @@ public class frmTalleres extends javax.swing.JFrame {
 
         jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        jPanelSide.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setText("USER");
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -255,14 +256,6 @@ public class frmTalleres extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         jPanelSide.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
 
-        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("RECLUSO");
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.setFocusable(false);
-        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
-
         btnTalleres.setBackground(new java.awt.Color(64, 43, 100));
         btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -307,6 +300,16 @@ public class frmTalleres extends javax.swing.JFrame {
         );
 
         jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
+
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("Recluso");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
 
         jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
 
@@ -509,8 +512,8 @@ public class frmTalleres extends javax.swing.JFrame {
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(152, 152, 152))
                     .addGroup(PanelBodyLayout.createSequentialGroup()
@@ -535,13 +538,13 @@ public class frmTalleres extends javax.swing.JFrame {
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblReduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -703,12 +706,12 @@ public class frmTalleres extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
        String nombreTaller = (String) cmbCurso.getSelectedItem();
-       String nombreCurso = (String) cmbGrupo.getSelectedItem();
+       String nombreGrupo = (String) cmbGrupo.getSelectedItem();
        String nombreDocente = "";
         try {           
-            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblReduccion, lblFechaInicio, lblFechaFin, nombreTaller, nombreCurso);
-            lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreCurso));
-            controlador.cargarTareasRecluso(cmbTareas, nombreTaller, nombreCurso);
+            controlador.CargarDatosTalleres(usuario, contrasena, lblNombreTaller, lblGrupo, lblReduccion, lblFechaFin, lblFechaInicio, nombreTaller, nombreGrupo);
+            lblNombreDocente.setText(controlador.NombreDocente(nombreTaller, nombreGrupo));
+            controlador.cargarTareasRecluso(cmbTareas, nombreTaller, nombreGrupo);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(frmTalleres.class.getName()).log(Level.SEVERE, null, ex);
@@ -816,7 +819,6 @@ public class frmTalleres extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
@@ -845,6 +847,7 @@ public class frmTalleres extends javax.swing.JFrame {
     private javax.swing.JLabel lblFechaFin;
     private javax.swing.JLabel lblFechaInicio;
     private javax.swing.JLabel lblGrupo;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblNombreDocente;
     private javax.swing.JLabel lblNombreTaller;
     private javax.swing.JLabel lblReduccion;

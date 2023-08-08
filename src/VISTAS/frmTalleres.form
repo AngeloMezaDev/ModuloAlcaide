@@ -201,7 +201,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabel2">
+            <Component class="javax.swing.JLabel" name="lblHandle">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -328,29 +328,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="59" green="21" red="36" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="RECLUSO"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
-                </Property>
-                <Property name="focusable" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="100" y="70" width="160" height="20"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Container class="javax.swing.JPanel" name="btnTalleres">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -421,6 +398,33 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="jTextField1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="59" green="21" red="36" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Recluso"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Default Cursor"/>
+                </Property>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="100" y="70" width="160" height="20"/>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelBanner">
@@ -737,8 +741,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFechaInicio" min="-2" pref="127" max="-2" attributes="0"/>
                                   <Component id="lblFechaFin" min="-2" pref="127" max="-2" attributes="0"/>
+                                  <Component id="lblFechaInicio" min="-2" pref="127" max="-2" attributes="0"/>
                                   <Component id="lblNombreDocente" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
@@ -770,14 +774,14 @@
                           <Component id="jLabel24" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jLabel31" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="lblGrupo" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="lblFechaInicio" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="lblFechaFin" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel29" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jLabel27" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="lblReduccion" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="lblFechaFin" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="lblFechaInicio" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="71" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -864,14 +868,14 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblGrupo">
             </Component>
-            <Component class="javax.swing.JLabel" name="lblFechaInicio">
+            <Component class="javax.swing.JLabel" name="lblFechaFin">
             </Component>
             <Component class="javax.swing.JLabel" name="lblNombreDocente">
               <Properties>
                 <Property name="text" type="java.lang.String" value="SIN DOCENTE"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblFechaFin">
+            <Component class="javax.swing.JLabel" name="lblFechaInicio">
             </Component>
             <Component class="javax.swing.JComboBox" name="cmbTareas">
               <Properties>

@@ -150,14 +150,18 @@ public class ctrlAsignacionRecluso {
         try {
             connectionBD.openConnection();
 
-            String query = "SELECT DISTINCT TITULO FROM DEBER WHERE CURSO = ? AND GRUPO = ?";
+            String query = "SELECT TITULO FROM ASIGNACION WHERE CURSO = ? AND GRUPO = ?";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
             statement.setString(1, nombreTaller);
+            System.out.println("NombreTaller: " +  nombreTaller);
             statement.setString(2, nombreGrupo);
+            System.out.println("GRUPO: " + nombreGrupo);
+
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String tareas = resultSet.getString("TITULO");
+                System.out.println("TITULO: " + tareas);
                 cmbTareas.addItem(tareas);
             }
 
@@ -236,8 +240,14 @@ public class ctrlAsignacionRecluso {
                 Taller.setText(resultSet.getString("NOMBRE_TALLER"));
                 Grupo.setText(resultSet.getString("NOMBRE_GRUPO"));
                 TiempoReduccion.setText(resultSet.getString("REDUCCION_CONDENA"));
-                FechaInicio.setText(resultSet.getString("FECHA_CREACION"));
-                FechaFin.setText(resultSet.getString("FECHA_VENCIMIENTO"));
+                Date fecha_incio=resultSet.getDate("FECHA_CREACION");
+                Date fecha_Limite=resultSet.getDate("FECHA_VENCIMIENTO");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                 String fechaStr = dateFormat.format(fecha_Limite);
+                 String fechaIni=dateFormat.format(fecha_incio);
+                 System.out.println(fechaStr);
+                FechaInicio.setText(fechaIni);
+                FechaFin.setText(fechaStr);
             }
             System.out.println("Datos de Asignacion cargados correctamente");
 
@@ -252,14 +262,14 @@ public class ctrlAsignacionRecluso {
    
     public void guardarDeber(JLabel lblTitulo, JLabel lblFechaLimite, JLabel lblCurso, JLabel lblGrupo, JTextArea txtDescripcion, JTextArea txtRespuesta) throws SQLException, ClassNotFoundException {
         ConnectionBD connectionBD = new ConnectionBD();
-        String nuevoId = generarIdDeber();
+        String nuevoId = generarIdDeber(); System.out.println("ID DE LA ASIGNACION: "+ ObtenerIdAsignacion(lblCurso.getText(), lblGrupo.getText()));
         try {
             connectionBD.openConnection();
 
             String query = "INSERT INTO Deber (Id_Deber, Id_Asignacion, Titulo, Curso, Grupo, Descripcion, Respuesta, Fecha_Limite, Nombre_Autor, Apellido_Autor, Id_Autor) VALUES (?, ?, ?, ?, ?, ?, ?, TO_DATE(?, 'DD-MM-YYYY'), ?, ?, ?)";
             PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
             statement.setString(1, nuevoId);
-            statement.setString(2, idAsignacion);
+            statement.setString(2, ObtenerIdAsignacion(lblCurso.getText(), lblGrupo.getText()));
             statement.setString(3, lblTitulo.getText());
             statement.setString(4, lblCurso.getText());
             statement.setString(5, lblGrupo.getText());
@@ -272,6 +282,7 @@ public class ctrlAsignacionRecluso {
                 Date fechaSql = dateFormat.parse(fechaTexto);
                 SimpleDateFormat oracleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 String fechaFormateada = oracleDateFormat.format(fechaSql);
+                System.out.println(fechaFormateada);
                 statement.setString(8, fechaFormateada);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -289,8 +300,34 @@ public class ctrlAsignacionRecluso {
             connectionBD.closeConnection();
         }
     }
+    public String ObtenerIdAsignacion(String nombreTaller, String nombreCurso) throws ClassNotFoundException, SQLException {
+        String nombreTarea = "";
+        try {
+            connectionBD.openConnection();
 
+            String query = "SELECT ID_ASIGNACION FROM ASIGNACION WHERE CURSO = ? AND GRUPO = ?";
+            PreparedStatement statement = connectionBD.getConnection().prepareStatement(query);
+            statement.setString(1, nombreTaller);
+            statement.setString(2, nombreCurso);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nombreDocente = resultSet.getString("ID_ASIGNACION");
+                return nombreDocente;
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar nombre de la tarea: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            connectionBD.closeConnection();
+        }
+        return nombreTarea;
+    }
     public String generarIdDeber() throws ClassNotFoundException, SQLException {
+        String nuevoId="";
         try {
             connectionBD.openConnection();
 
@@ -307,18 +344,20 @@ public class ctrlAsignacionRecluso {
             }
 
             maxId++; // Incrementar el ID
-            String nuevoId = String.format("#DR%03d", maxId); // Generar el nuevo ID
+             nuevoId = String.format("#DR%03d", maxId); // Generar el nuevo ID
 
             resultSet.close();
             statement.close();
-
-            return nuevoId;
+            System.out.println("ID DEBER: "+nuevoId);
+            
+            
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
             connectionBD.closeConnection();
         }
+        return nuevoId;
     }
 
     public static Date convertirTextoADate(String fechaTexto) throws ParseException {
@@ -345,10 +384,16 @@ public class ctrlAsignacionRecluso {
             // Recorrer el resultado y agregar los datos al modelo de la tabla
             while (resultSet.next()) {
                         lblTitulo.setText(resultSet.getString("TITULO"));
-                        lblFechaLimite.setText(resultSet.getString("FECHA_LIMITE"));
+                        
+                        Date fecha_Limite=resultSet.getDate("FECHA_LIMITE");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                        String fechaStr = dateFormat.format(fecha_Limite);
+                 
+                        lblFechaLimite.setText(fechaStr);
                         lblCurso.setText(resultSet.getString("CURSO"));
                         lblGrupo.setText(resultSet.getString("GRUPO"));
                         txtDescripcion.setText(resultSet.getString("DESCRIPCION"));
+                        System.out.println(fechaStr);
             }
             System.out.println("Datos de Asignacion cargados correctamente");
 
