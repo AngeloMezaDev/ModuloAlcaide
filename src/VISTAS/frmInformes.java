@@ -1,56 +1,78 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this licensex
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package VISTAS;
 
 import CONTROLADOR.ctrlAsignacionProfe;
+import CONTROLADOR.ctrlInformesProfe;
 import CONTROLADOR.ctrlProfesores;
+import VISTAS.Login;
+import VISTAS.frmProfesores;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author carel
  */
-public class frmCalificacion extends javax.swing.JFrame {
+public class frmInformes extends javax.swing.JFrame {
 
-    private ctrlProfesores ctrlProf;
+    private ctrlProfesores controlador;
     private static String usuario = "";
     private static String contraseña = "";
     private ctrlAsignacionProfe ctrlAsig;
+    private ctrlProfesores ctrlProf;
+    private ctrlInformesProfe ctrlInfo;
 
-    /**
-     * Creates new form frmCalificacion
-     */
-    public frmCalificacion(String usuario, String contraseña) {
+    public frmInformes(String usuario, String contraseña) {
+        initComponents();
         this.usuario = usuario;
         this.contraseña = contraseña;
-
-        initComponents();
         lblHandle.setText("@" + usuario);
-        ctrlProf = new ctrlProfesores();
+        controlador = new ctrlProfesores();
         ctrlAsig = new ctrlAsignacionProfe(); // Inicializar ctrlAsig aquí
+        ctrlInfo = new ctrlInformesProfe();
+
+        // Agregar elementos "placeholder" a los JComboBox
+        cmbCurso.addItem("Seleccione un taller...");
+        cmbGrupo.addItem("Seleccione un grupo...");
+
+        // Inicializar ctrlProf aquí
+        ctrlProf = new ctrlProfesores();
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new Object[]{"ID_INFORME", "ID_DEBER", "ID_ASIGNACION", "TITULO", "FECHA_LIMITE", "CURSO", "GRUPO", "DESCRIPCION", "RESPUESTA", "NOMBRE_AUTOR", "APELLIDO_AUTOR", "ID_AUTOR", "NOTA", "OBSERVACION", "ESTADO"});
+        jTableInforme.setModel(model);
 
         try {
-            String idProfesor = ctrlProf.getIdProfesor(usuario);
-            ctrlProf.cargarTalleresDocente(cmbCurso, idProfesor);
-            ctrlProf.cargarGruposDocente(cmbGrupo, idProfesor);
-
-//            // Generar y establecer el ID de asignación en lblId
-//            String nuevoIdAsignacion = ctrlAsig.generarIdAsignacion();
-//            lblId.setText(nuevoIdAsignacion);
+            String idProfesor = controlador.getIdProfesor(usuario);
+            controlador.cargarTalleresDocente(cmbCurso, idProfesor);
+            controlador.cargarGruposDocente(cmbGrupo, idProfesor);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             // Manejar la excepción según sea necesario
         }
 
+        cmbCurso.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreTallerSeleccionado = cmbCurso.getSelectedItem().toString();
+                try {
+                    ctrlProf.cargarFechaVencimientoTallerSeleccionado(nombreTallerSeleccionado, jDateFechaVencimiento);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmProfesores.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     /**
@@ -70,51 +92,40 @@ public class frmCalificacion extends javax.swing.JFrame {
         btnSalir = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         lblLogOut = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         btnAsistencias = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         btnAsignaciones = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         btnInformes = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         btnCalificar = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         btnPerfil = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
         JPanelEncabezado = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
-        PanelBg = new javax.swing.JPanel();
-        PanelTitulo = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        lblId = new javax.swing.JLabel();
-        PanelBody = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        btnSubir = new javax.swing.JButton();
+        jDateFechaVencimiento = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtDescripcion = new javax.swing.JTextArea();
+        jTableInforme = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jDateFechaAsignacion = new com.toedter.calendar.JDateChooser();
-        lblEvento = new javax.swing.JLabel();
-        cmbCurso = new javax.swing.JComboBox<>();
-        jLabel19 = new javax.swing.JLabel();
         cmbGrupo = new javax.swing.JComboBox<>();
-        btnNuevo = new javax.swing.JButton();
+        cmbCurso = new javax.swing.JComboBox<>();
+        btnCargar = new javax.swing.JButton();
+        btnCargar1 = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnGenerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocationByPlatform(true);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -129,9 +140,9 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         lblHandle.setBackground(new java.awt.Color(204, 204, 204));
         lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblHandle.setForeground(new java.awt.Color(255, 255, 255));
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
         lblHandle.setText("USER");
-        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 170, -1));
+        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 190, -1));
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -171,13 +182,28 @@ public class frmCalificacion extends javax.swing.JFrame {
         btnSalirLayout.setVerticalGroup(
             btnSalirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnSalirLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblLogOut)
                 .addGap(14, 14, 14))
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         JPanelMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
+
+        jTextField1.setBackground(new java.awt.Color(54, 33, 89));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("PROFESOR");
+        jTextField1.setBorder(null);
+        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTextField1.setFocusable(false);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        JPanelMenu.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 180, 40));
 
         btnAsistencias.setBackground(new java.awt.Color(64, 43, 100));
         btnAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -202,11 +228,11 @@ public class frmCalificacion extends javax.swing.JFrame {
         jLabel4.setMinimumSize(new java.awt.Dimension(89, 20));
         jLabel4.setPreferredSize(new java.awt.Dimension(89, 20));
 
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Asistencia_2.png"))); // NOI18N
-        jLabel18.setMaximumSize(new java.awt.Dimension(32, 32));
-        jLabel18.setMinimumSize(new java.awt.Dimension(32, 32));
-        jLabel18.setPreferredSize(new java.awt.Dimension(32, 32));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Asistencia_2.png"))); // NOI18N
+        jLabel12.setMaximumSize(new java.awt.Dimension(32, 32));
+        jLabel12.setMinimumSize(new java.awt.Dimension(32, 32));
+        jLabel12.setPreferredSize(new java.awt.Dimension(32, 32));
 
         javax.swing.GroupLayout btnAsistenciasLayout = new javax.swing.GroupLayout(btnAsistencias);
         btnAsistencias.setLayout(btnAsistenciasLayout);
@@ -214,7 +240,7 @@ public class frmCalificacion extends javax.swing.JFrame {
             btnAsistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAsistenciasLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -223,7 +249,7 @@ public class frmCalificacion extends javax.swing.JFrame {
             btnAsistenciasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAsistenciasLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnAsistenciasLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,10 +257,13 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         JPanelMenu.add(btnAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnAsignaciones.setBackground(new java.awt.Color(85, 65, 118));
+        btnAsignaciones.setBackground(new java.awt.Color(64, 43, 100));
         btnAsignaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAsignaciones.setPreferredSize(new java.awt.Dimension(126, 50));
         btnAsignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAsignacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAsignacionesMouseEntered(evt);
             }
@@ -249,11 +278,11 @@ public class frmCalificacion extends javax.swing.JFrame {
         jLabel5.setText("ASIGNACIONES");
         jLabel5.setName(""); // NOI18N
 
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/calificaciones1.png"))); // NOI18N
-        jLabel21.setMaximumSize(new java.awt.Dimension(32, 32));
-        jLabel21.setMinimumSize(new java.awt.Dimension(32, 32));
-        jLabel21.setPreferredSize(new java.awt.Dimension(32, 32));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/calificaciones1.png"))); // NOI18N
+        jLabel13.setMaximumSize(new java.awt.Dimension(32, 32));
+        jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
+        jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
 
         javax.swing.GroupLayout btnAsignacionesLayout = new javax.swing.GroupLayout(btnAsignaciones);
         btnAsignaciones.setLayout(btnAsignacionesLayout);
@@ -261,7 +290,7 @@ public class frmCalificacion extends javax.swing.JFrame {
             btnAsignacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel5))
         );
@@ -269,7 +298,7 @@ public class frmCalificacion extends javax.swing.JFrame {
             btnAsignacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5))
@@ -277,13 +306,10 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         JPanelMenu.add(btnAsignaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
-        btnInformes.setBackground(new java.awt.Color(64, 43, 100));
+        btnInformes.setBackground(new java.awt.Color(85, 65, 118));
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnInformesMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
             }
@@ -295,10 +321,10 @@ public class frmCalificacion extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Informe1.png"))); // NOI18N
 
-        jLabel22.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel22.setText("INFORMES DE RECLUSOS");
+        jLabel7.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel7.setText("INFORMES DE RECLUSOS");
 
         javax.swing.GroupLayout btnInformesLayout = new javax.swing.GroupLayout(btnInformes);
         btnInformes.setLayout(btnInformesLayout);
@@ -308,7 +334,7 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
-                .addComponent(jLabel22))
+                .addComponent(jLabel7))
         );
         btnInformesLayout.setVerticalGroup(
             btnInformesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,7 +343,7 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnInformesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel22))
+                .addComponent(jLabel7))
         );
 
         JPanelMenu.add(btnInformes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 290, 50));
@@ -337,13 +363,13 @@ public class frmCalificacion extends javax.swing.JFrame {
             }
         });
 
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/assignment.png"))); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/assignment.png"))); // NOI18N
 
-        jLabel24.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel24.setText("CALIFICAR");
+        jLabel18.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel18.setText("CALIFICAR");
 
         javax.swing.GroupLayout btnCalificarLayout = new javax.swing.GroupLayout(btnCalificar);
         btnCalificar.setLayout(btnCalificarLayout);
@@ -351,19 +377,19 @@ public class frmCalificacion extends javax.swing.JFrame {
             btnCalificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnCalificarLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         btnCalificarLayout.setVerticalGroup(
             btnCalificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnCalificarLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(btnCalificarLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel24))
+                .addComponent(jLabel18))
         );
 
         JPanelMenu.add(btnCalificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 290, 50));
@@ -414,12 +440,6 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         JPanelMenu.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 50));
 
-        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setText("PROFESOR");
-        JPanelMenu.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 130, -1));
-
         getContentPane().add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         JPanelEncabezado.setBackground(new java.awt.Color(122, 72, 221));
@@ -429,13 +449,13 @@ public class frmCalificacion extends javax.swing.JFrame {
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("PROFESORES");
+        jLabel11.setText("INFORMES DE RECLUSOS");
         JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - CALIFICACIONES\"");
+        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL - INFORME DE RECLUSOS\"");
         JPanelEncabezado.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 64, -1, -1));
 
         jPanelExit2.setBackground(new java.awt.Color(122, 72, 210));
@@ -463,7 +483,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         jPanelExit2.setLayout(jPanelExit2Layout);
         jPanelExit2Layout.setHorizontalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
         jPanelExit2Layout.setVerticalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,183 +492,62 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addComponent(lblExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 0, -1, -1));
+        JPanelEncabezado.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 0, 60, -1));
 
-        getContentPane().add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 1110, -1));
+        getContentPane().add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 0, 1100, -1));
+        getContentPane().add(jDateFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1197, 102, 179, -1));
 
-        PanelTitulo.setBackground(new java.awt.Color(240, 173, 78));
-        PanelTitulo.setForeground(new java.awt.Color(255, 144, 5));
+        jTableInforme.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/assignment.png"))); // NOI18N
+            },
+            new String [] {
 
-        txtTitulo.setBackground(new java.awt.Color(240, 173, 78));
-        txtTitulo.setBorder(null);
+            }
+        ));
+        jScrollPane1.setViewportView(jTableInforme);
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("TITULO:");
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 260, 1060, 289));
 
-        javax.swing.GroupLayout PanelTituloLayout = new javax.swing.GroupLayout(PanelTitulo);
-        PanelTitulo.setLayout(PanelTituloLayout);
-        PanelTituloLayout.setHorizontalGroup(
-            PanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelTituloLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(PanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelTituloLayout.createSequentialGroup()
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
-        PanelTituloLayout.setVerticalGroup(
-            PanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelTituloLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel20)))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+        jLabel2.setText("CURSO");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 49, 39));
 
-        PanelBody.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("GRUPO");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 120, 49, 39));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/clock.png"))); // NOI18N
+        getContentPane().add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 130, 155, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/calendar.png"))); // NOI18N
+        getContentPane().add(cmbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 158, -1));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/product-description.png"))); // NOI18N
-
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/learning.png"))); // NOI18N
-
-        btnSubir.setBackground(new java.awt.Color(0, 181, 68));
-        btnSubir.setForeground(new java.awt.Color(0, 0, 0));
-        btnSubir.setText("SUBIR");
-        btnSubir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnSubir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubirActionPerformed(evt);
+        btnCargar.setText("CARGAR");
+        btnCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCargarMouseClicked(evt);
             }
         });
+        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1229, 182, 120, 44));
 
-        txtDescripcion.setColumns(20);
-        txtDescripcion.setRows(5);
-        jScrollPane1.setViewportView(txtDescripcion);
+        btnCargar1.setText("CARGAR");
+        getContentPane().add(btnCargar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1229, 182, 120, 44));
 
-        jLabel3.setText("DESCRIPCION");
-
-        lblEvento.setText("EVENTO DE CURSO");
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/multiple-users-silhouette.png"))); // NOI18N
-
-        btnNuevo.setBackground(new java.awt.Color(102, 102, 255));
-        btnNuevo.setForeground(new java.awt.Color(0, 0, 0));
-        btnNuevo.setText("NUEVO");
-        btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
+                btnConsultarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 180, 110, 50));
 
-        javax.swing.GroupLayout PanelBodyLayout = new javax.swing.GroupLayout(PanelBody);
-        PanelBody.setLayout(PanelBodyLayout);
-        PanelBodyLayout.setHorizontalGroup(
-            PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBodyLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jLabel19))
-                .addGap(62, 62, 62)
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateFechaAsignacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                    .addComponent(cmbCurso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbGrupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(235, 235, 235)
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelBodyLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 206, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addGap(24, 24, 24))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBodyLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
-        );
-        PanelBodyLayout.setVerticalGroup(
-            PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBodyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(3, 3, 3)
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel13))
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateFechaAsignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelBodyLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelBodyLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblEvento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
-                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbCurso))
-                        .addGap(34, 34, 34)
-                        .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbGrupo))))
-                .addGap(30, 30, 30))
-        );
-
-        javax.swing.GroupLayout PanelBgLayout = new javax.swing.GroupLayout(PanelBg);
-        PanelBg.setLayout(PanelBgLayout);
-        PanelBgLayout.setHorizontalGroup(
-            PanelBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBgLayout.createSequentialGroup()
-                .addGroup(PanelBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        PanelBgLayout.setVerticalGroup(
-            PanelBgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBgLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(PanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(PanelBg, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 96, 1060, 504));
+        btnGenerar.setText("GENERAR");
+        btnGenerar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 180, 110, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -686,80 +585,62 @@ public class frmCalificacion extends javax.swing.JFrame {
         jPanelExit2.setBackground(new Color(122, 72, 221));
     }//GEN-LAST:event_lblExit2MouseExited
 
-    private void btnSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirActionPerformed
-        try {
-            if (cmbCurso.getSelectedItem() == null || cmbGrupo.getSelectedItem() == null || jDateFechaAsignacion.getDate() == null || txtTitulo.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos antes de subir la asignación.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
-            ctrlAsig.guardarAsignacion(txtTitulo, cmbCurso, cmbGrupo, jDateFechaAsignacion, txtDescripcion, lblId);
-            lblId.setText("");
-            limpiarCampos();
-            JOptionPane.showMessageDialog(this, "Asignación guardada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(frmCalificacion.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al guardar la asignación.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(frmCalificacion.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error al conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnSubirActionPerformed
-    private void limpiarCampos() {
-        txtTitulo.setText("");
-        txtDescripcion.setText("");
-        cmbCurso.removeAllItems();
-        cmbGrupo.removeAllItems();
-        jDateFechaAsignacion.setDate(null);
-
-    }
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
         resetColor(btnAsignaciones);
         resetColor(btnInformes);
-        resetColor(btnCalificar);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnAsistenciasMouseEntered
 
     private void btnAsistenciasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseExited
         resetColor(btnAsistencias);
-        setColor(btnAsignaciones);
-        resetColor(btnInformes);
-        resetColor(btnCalificar);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnAsistenciasMouseExited
+
+    private void btnAsignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseClicked
+        frmCalificacion cal = new frmCalificacion(usuario, contraseña);
+        cal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAsignacionesMouseClicked
 
     private void btnAsignacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseEntered
         resetColor(btnAsistencias);
         setColor(btnAsignaciones);
         resetColor(btnInformes);
-        resetColor(btnCalificar);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnAsignacionesMouseEntered
 
     private void btnAsignacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseExited
         resetColor(btnAsistencias);
-        setColor(btnAsignaciones);
-        resetColor(btnInformes);
-        resetColor(btnCalificar);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnAsignacionesMouseExited
 
     private void btnInformesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseEntered
         resetColor(btnAsistencias);
         resetColor(btnAsignaciones);
         setColor(btnInformes);
-        resetColor(btnCalificar);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnInformesMouseEntered
 
     private void btnInformesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseExited
         resetColor(btnAsistencias);
-        setColor(btnAsignaciones);
-        resetColor(btnInformes);
-        resetColor(btnCalificar);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnInformesMouseExited
 
     private void btnCalificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseClicked
@@ -778,10 +659,10 @@ public class frmCalificacion extends javax.swing.JFrame {
 
     private void btnCalificarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseExited
         resetColor(btnAsistencias);
-        setColor(btnAsignaciones);
-        resetColor(btnInformes);
-        resetColor(btnCalificar);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnCalificarMouseExited
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
@@ -800,10 +681,10 @@ public class frmCalificacion extends javax.swing.JFrame {
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
         resetColor(btnAsistencias);
-        setColor(btnAsignaciones);
-        resetColor(btnInformes);
-        resetColor(btnCalificar);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
         resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnPerfilMouseExited
 
     private void btnAsistenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseClicked
@@ -812,29 +693,66 @@ public class frmCalificacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAsistenciasMouseClicked
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        try {
-            String idProfesor = ctrlProf.getIdProfesor(usuario);
-            ctrlProf.cargarTalleresDocente(cmbCurso, idProfesor);
-            ctrlProf.cargarGruposDocente(cmbGrupo, idProfesor);
-            ctrlProf.getIdAsignacion();
+    private void btnCargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCargarMouseClicked
+        String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
 
-            // Generar y establecer el ID de asignación en lblId
-            String nuevoIdAsignacion = ctrlAsig.generarIdAsignacion();
-            lblId.setText(nuevoIdAsignacion);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // Manejar la excepción según sea necesario
+        if ("Seleccione un taller...".equals(cursoSeleccionado) || "Seleccione un grupo...".equals(grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-    }//GEN-LAST:event_btnNuevoActionPerformed
+        if (ctrlProf.validarCoincidencias(cmbCurso, cmbGrupo)) {
+            try {
+                ctrlInfo.cargarTareasPorFiltros(jTableInforme, cmbCurso, cmbGrupo);
+                JOptionPane.showMessageDialog(this, "Informes cargados exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmInformes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontraron informes.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCargarMouseClicked
 
-    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
-        frmInformes info = new frmInformes(usuario, contraseña);
-        info.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnInformesMouseClicked
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        //Programación del botón generar informe.
+        String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
+
+        if ("Seleccione un curso...".equals(cursoSeleccionado) || "Seleccione un grupo...".equals(grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!ctrlInfo.existeInforme(cursoSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No se encontraron informes generados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea generar un informe?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            ctrlInfo.generarInforme(cmbCurso, cmbGrupo, jDateFechaVencimiento);
+            JOptionPane.showMessageDialog(this, "Informe Generado correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String tallerSeleccionado = cmbCurso.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
+
+        if (tallerSeleccionado.isEmpty() || grupoSeleccionado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!ctrlInfo.existeInformePorTallerYGrupo(tallerSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No se encontraron informes generados para el taller y grupo seleccionados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        frmInformeGenerado generado = new frmInformeGenerado(usuario, contraseña);
+        generado.setVisible(true);
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -861,20 +779,21 @@ public class frmCalificacion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCalificacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmInformes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCalificacion(usuario, contraseña).setVisible(true);
+                new frmInformes(usuario, contraseña).setVisible(true);
             }
         });
     }
@@ -883,20 +802,19 @@ public class frmCalificacion extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelEncabezado;
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
-    private javax.swing.JPanel PanelBg;
-    private javax.swing.JPanel PanelBody;
-    private javax.swing.JPanel PanelTitulo;
     private javax.swing.JPanel btnAsignaciones;
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JPanel btnCalificar;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnCargar1;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JPanel btnInformes;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnSalir;
-    private javax.swing.JButton btnSubir;
     private javax.swing.JComboBox<String> cmbCurso;
     private javax.swing.JComboBox<String> cmbGrupo;
-    private com.toedter.calendar.JDateChooser jDateFechaAsignacion;
+    private com.toedter.calendar.JDateChooser jDateFechaVencimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -907,28 +825,19 @@ public class frmCalificacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblEvento;
+    private javax.swing.JTable jTableInforme;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
-    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblLogOut;
-    private javax.swing.JTextArea txtDescripcion;
-    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

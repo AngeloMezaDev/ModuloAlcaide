@@ -32,7 +32,7 @@ public class Login extends javax.swing.JFrame {
      */
     String usr=""; String contr="";
     frmAlcaide alcaide = new frmAlcaide();
-    frmProfesores profesor = new frmProfesores();
+    frmProfesores profesor = new frmProfesores(usr,contr);
     frmPerfil recluso = new frmPerfil(usr, contr);
     private HashMap<String, Integer> intentosFallidos = new HashMap<>();
     private ConnectionBD connectionBD;
@@ -472,7 +472,7 @@ public class Login extends javax.swing.JFrame {
             frmAlcaide alcaide = new frmAlcaide();
             alcaide.setVisible(true);
         } else if (rol.equals("Profesor")) {
-            frmProfesores profesor = new frmProfesores();
+            frmProfesores profesor = new frmProfesores(user,contra);
             profesor.setVisible(true);
         } else if (rol.equals("Recluso")) {
             frmPerfil perfil = new frmPerfil(user, contra);

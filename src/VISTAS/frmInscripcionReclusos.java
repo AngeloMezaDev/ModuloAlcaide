@@ -1,40 +1,59 @@
 package VISTAS;
 
+import CONTROLADOR.ctrlAsignacionRecluso;
 import CONTROLADOR.ctrlReclusos;
+import MODELO.ConnectionBD;
+import MODELO.Inscripcion;
+import MODELO.Recluso;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
-/**
- *
- * @author ricar
- */
-public class frmReclusos extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmReclusos
-     */
-    private ctrlReclusos controlador;
-    private static String usuario = "";
-    private static String contrasena = "";
-
-    //Date fechaRegistrada = controlador.cargarFecha();
-    public frmReclusos(String usuario, String contrasena) {
+public class frmInscripcionReclusos extends javax.swing.JFrame {
+    
+    private DefaultTableModel modeloTabla;
+    private static String usuario = ""; 
+    private static String contrasena ="";
+    ctrlReclusos controlador = new ctrlReclusos();
+    private ConnectionBD connectionBD;
+    public static String nombreR = "";
+    public static String apellidosR = "";
+    public static String correo = "";
+    public static String idRecluso = "";
+    ctrlAsignacionRecluso ctrc = new ctrlAsignacionRecluso();
+    
+    public frmInscripcionReclusos(String usuario, String contrasena) throws ClassNotFoundException {
         initComponents();
+        connectionBD = new ConnectionBD();
         lblHandle.setText("@" + usuario);
-        this.usuario = usuario;
+        this.usuario = usuario; 
         this.contrasena = contrasena;
-        controlador = new ctrlReclusos();
-        // Deshabilita la interacción del usuario con el JCalendar
+        ctrlReclusos controlador = new ctrlReclusos();
+        modeloTabla = new DefaultTableModel();
+        jTable1.setModel(modeloTabla);
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        controlador.cargarDatosTalleres(cldAgenda);
-        cldAgenda.setEnabled(false);
+        String[] nombresColumnas = {"ID Taller", "Nombre de taller", "Grupo","Tiempo de Reducción", "Fecha de inicio", "Fecha de finalización", "Cupos", "Inscribirse"};
+        modeloTabla.setColumnIdentifiers(nombresColumnas);
 
+        controlador.cargarDatosTalleresG(modeloTabla);
+        TableColumn tc = jTable1.getColumnModel().getColumn(7); 
+        tc.setCellEditor(jTable1.getDefaultEditor(Boolean.class)); 
+        tc.setCellRenderer(jTable1.getDefaultRenderer(Boolean.class));
+        
+        
     }
 
     /**
@@ -48,9 +67,12 @@ public class frmReclusos extends javax.swing.JFrame {
 
         jPanelBackGround = new javax.swing.JPanel();
         jPanelSide = new javax.swing.JPanel();
-        btnActividades = new javax.swing.JPanel();
+        btnTalleres = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnInscripciones = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         btnPerfil = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -72,61 +94,109 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        cldAgenda = new com.toedter.calendar.JCalendar();
+        btnEnviar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setUndecorated(true);
 
         jPanelBackGround.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelBackGround.setMinimumSize(new java.awt.Dimension(1337, 640));
         jPanelBackGround.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelSide.setBackground(new java.awt.Color(54, 33, 89));
         jPanelSide.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnActividades.setBackground(new java.awt.Color(85, 65, 118));
-        btnActividades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnActividades.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnTalleres.setBackground(new java.awt.Color(85, 65, 118));
+        btnTalleres.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTalleres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTalleresMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnActividadesMouseEntered(evt);
+                btnTalleresMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnActividadesMouseExited(evt);
+                btnTalleresMouseExited(evt);
             }
         });
 
         jLabel9.setBackground(new java.awt.Color(204, 204, 204));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setText("NOTIFICACIONES");
+        jLabel9.setText("TALLERES");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/campana.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Taller.png"))); // NOI18N
 
-        javax.swing.GroupLayout btnActividadesLayout = new javax.swing.GroupLayout(btnActividades);
-        btnActividades.setLayout(btnActividadesLayout);
-        btnActividadesLayout.setHorizontalGroup(
-            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnActividadesLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnTalleresLayout = new javax.swing.GroupLayout(btnTalleres);
+        btnTalleres.setLayout(btnTalleresLayout);
+        btnTalleresLayout.setHorizontalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addContainerGap())
         );
-        btnActividadesLayout.setVerticalGroup(
-            btnActividadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnActividadesLayout.createSequentialGroup()
+        btnTalleresLayout.setVerticalGroup(
+            btnTalleresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnTalleresLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnActividadesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnTalleresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9)
                 .addGap(14, 14, 14))
         );
 
-        jPanelSide.add(btnActividades, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
+        jPanelSide.add(btnTalleres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 300, 50));
+
+        btnInscripciones.setBackground(new java.awt.Color(64, 43, 100));
+        btnInscripciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInscripciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnInscripcionesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInscripcionesMouseExited(evt);
+            }
+        });
+
+        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("INSCRIPCIONES");
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/Inscripcion.png"))); // NOI18N
+
+        javax.swing.GroupLayout btnInscripcionesLayout = new javax.swing.GroupLayout(btnInscripciones);
+        btnInscripciones.setLayout(btnInscripcionesLayout);
+        btnInscripcionesLayout.setHorizontalGroup(
+            btnInscripcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnInscripcionesLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel4))
+        );
+        btnInscripcionesLayout.setVerticalGroup(
+            btnInscripcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnInscripcionesLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnInscripcionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(14, 14, 14))
+        );
+
+        jPanelSide.add(btnInscripciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 300, 50));
 
         btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
         btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -171,15 +241,13 @@ public class frmReclusos extends javax.swing.JFrame {
                 .addComponent(jLabel6))
         );
 
-        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
+        jPanelSide.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 300, 50));
 
         lblHandle.setBackground(new java.awt.Color(204, 204, 204));
-        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblHandle.setForeground(new java.awt.Color(204, 204, 204));
-        lblHandle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHandle.setText("USER");
-        lblHandle.setToolTipText("");
-        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 180, -1));
+        jPanelSide.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
         LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
@@ -207,22 +275,22 @@ public class frmReclusos extends javax.swing.JFrame {
         BtnOpcion5Layout.setHorizontalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BtnOpcion5Layout.createSequentialGroup()
-                .addContainerGap(183, Short.MAX_VALUE)
+                .addContainerGap(173, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
-                .addContainerGap())
+                .addGap(31, 31, 31))
         );
         BtnOpcion5Layout.setVerticalGroup(
             BtnOpcion5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnOpcion5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
-                .addGap(14, 14, 14))
             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addGroup(BtnOpcion5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel14)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
+        jPanelSide.add(BtnOpcion5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 300, 50));
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -235,13 +303,13 @@ public class frmReclusos extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(204, 204, 204));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("RECLUSO");
+        jTextField1.setText("Recluso");
         jTextField1.setBorder(null);
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTextField1.setFocusable(false);
         jPanelSide.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 20));
 
-        jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
+        jPanelBackGround.add(jPanelSide, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 640));
 
         jPanelBanner.setBackground(new java.awt.Color(122, 72, 221));
         jPanelBanner.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -249,7 +317,7 @@ public class frmReclusos extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL\" - NOTIFICACIONES ");
+        jLabel10.setText("SISTEMA CARCELARIO \"CARCEQUIL\" - TALLERES");
         jPanelBanner.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 64, -1, -1));
 
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
@@ -288,79 +356,113 @@ public class frmReclusos extends javax.swing.JFrame {
         );
         jPanelExit2Layout.setVerticalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExit2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 0, -1, -1));
+        jPanelBanner.add(jPanelExit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 0, -1, -1));
 
-        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
+        jPanelBackGround.add(jPanelBanner, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1090, -1));
 
-        jPanel1.setBackground(new java.awt.Color(140, 184, 198));
+        jPanel1.setBackground(new java.awt.Color(230, 240, 243));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/TrabajoForzado1.png"))); // NOI18N
+
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel8.setText("Notificación de actividades");
+        jLabel8.setText("Inscripción de talleres ");
 
         jLabel15.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel15.setText("(Actividades previamente elegidas a realizar)");
+        jLabel15.setText("Elija los talleres que desea realizar. Como máximo puede elegir");
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/lapiz.png"))); // NOI18N
+        jLabel17.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel17.setText("3 talleres. Tenga en cuenta el tiempo de reducción de condena.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(113, 113, 113)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(160, 160, 160)
-                .addComponent(jLabel7)
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel17))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel17)
+                .addGap(46, 46, 46))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 860, -1));
+        jPanelBackGround.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 810, 160));
 
-        cldAgenda.setBackground(new java.awt.Color(153, 255, 153));
-        cldAgenda.setDecorationBordersVisible(true);
-        cldAgenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cldAgendaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cldAgendaMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                cldAgendaMousePressed(evt);
+        btnEnviar.setBackground(new java.awt.Color(65, 39, 111));
+        btnEnviar.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
+        btnEnviar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviar.setText("Inscribirse");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
             }
         });
-        jPanelBackGround.add(cldAgenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 930, 330));
+        jPanelBackGround.add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1240, 600, -1, -1));
+
+        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID Taller", "Nombre del taller", "Grupo:", "Tiempo de Reducción", "Fecha de inicio", "Fecha de finalización", "Cupos", "Inscribirse"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
+        jTable1.setIntercellSpacing(new java.awt.Dimension(5, 5));
+        TableColumn tc = jTable1.getColumnModel().getColumn(6); 
+        tc.setCellEditor(jTable1.getDefaultEditor(Boolean.class)); 
+        tc.setCellRenderer(jTable1.getDefaultRenderer(Boolean.class));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanelBackGround.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 1070, 290));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanelBackGround, javax.swing.GroupLayout.PREFERRED_SIZE, 1362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,24 +472,40 @@ public class frmReclusos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnActividadesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseEntered
-        setColor(btnActividades);
+    
+    private void btnTalleresMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseEntered
+        setColor(btnTalleres);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
-    }//GEN-LAST:event_btnActividadesMouseEntered
+    }//GEN-LAST:event_btnTalleresMouseEntered
 
-    private void btnActividadesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActividadesMouseExited
-        setColor(btnActividades);
+    private void btnTalleresMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
-    }//GEN-LAST:event_btnActividadesMouseExited
+    }//GEN-LAST:event_btnTalleresMouseExited
+
+    private void btnInscripcionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInscripcionesMouseEntered
+        setColor(btnInscripciones);
+        resetColor(btnTalleres);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnInscripcionesMouseEntered
+
+    private void btnInscripcionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInscripcionesMouseExited
+        resetColor(btnTalleres);
+        resetColor(btnInscripciones);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnInscripcionesMouseExited
 
     private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
         setColor(btnPerfil);
-        resetColor(btnActividades);
+        resetColor(btnInscripciones);
+        resetColor(btnTalleres);
     }//GEN-LAST:event_btnPerfilMouseEntered
 
     private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
-        setColor(btnActividades);
+        resetColor(btnTalleres);
+        resetColor(btnInscripciones);
         resetColor(btnPerfil);
     }//GEN-LAST:event_btnPerfilMouseExited
 
@@ -401,15 +519,28 @@ public class frmReclusos extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseEntered
 
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(122, 72, 221));
+        jPanelExit2.setBackground(new Color(122,72,221));
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
-        frmPerfil perfil = new frmPerfil(usuario, contrasena);
+        frmPerfil perfil=new frmPerfil(usuario, contrasena);
         this.dispose();
         perfil.setVisible(true);
     }//GEN-LAST:event_btnPerfilMouseClicked
 
+    private void btnTalleresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTalleresMouseClicked
+        frmTalleres noti = null;
+        try {
+            noti = new frmTalleres(usuario, contrasena);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
+        noti.setVisible(true);
+    }//GEN-LAST:event_btnTalleresMouseClicked
+    
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // Mostrar mensaje de confirmación para cerrar sesión
         int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
@@ -428,71 +559,72 @@ public class frmReclusos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel14MouseClicked
 
-    private void cldAgendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseClicked
-        // Obtener la fecha seleccionada del calendario
-        java.util.Date selectedDate = cldAgenda.getDate();
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+    int maxPostulaciones = 3;
+    int seleccionadas = 0;
+    String IdRecluso = "";
+    for (int i = 0; i < jTable1.getRowCount(); i++) {
+        Boolean b = (Boolean) jTable1.getModel().getValueAt(i, 7);
+        
+        if (b != null && b) {        
+            seleccionadas++;
+            
+            try {
+                IdRecluso = ctrc.ObtenerIdRecluso(usuario,contrasena);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                if(!controlador.InscripcionesAlcanzadas(IdRecluso)){
+                    String idTaller = (String) jTable1.getModel().getValueAt(i, 0);
+                    String nombreTaller = (String) jTable1.getModel().getValueAt(i, 1);
+                    String nombreGrupo = (String) jTable1.getModel().getValueAt(i, 2);
+                    int reduccion = (int) jTable1.getModel().getValueAt(i, 3);
+                    Date fechaCreacion = (Date) jTable1.getModel().getValueAt(i, 4);
+                    Date fechaVencimiento = (Date) jTable1.getModel().getValueAt(i, 5);       
+                    int cupos = (int) jTable1.getModel().getValueAt(i, 6);
+                    Inscripcion inscripcion = new Inscripcion(nombreR, apellidosR, correo, idRecluso, nombreGrupo, cupos, idTaller, nombreTaller, 0, cupos, fechaCreacion, fechaVencimiento, reduccion);
+                    controlador.cargarIdGrupo(idTaller);
+                    controlador.guardarTaller(inscripcion);                        
+                } else{ 
+                    JOptionPane.showMessageDialog(null, "Alcanzaste el máximo de inscripciones");
 
-        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-        java.util.Date targetDate = null;
+                }         
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        }
+        if (seleccionadas > maxPostulaciones) {
+            JOptionPane.showMessageDialog(null, "Seleccione " + maxPostulaciones + " talleres como máximo");
+            return;
+        }
+    }
+    if (seleccionadas == 0) {
+        JOptionPane.showMessageDialog(null, "Seleccione al menos una postulación");
+    } else {       
+        JOptionPane.showMessageDialog(null, "Inscripciones enviadas con éxito");
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            targetDate = sdf.parse("2023-07-31");
-        } catch (ParseException ex) {
-            ex.printStackTrace();
+            controlador.MisTalleres(IdRecluso);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        
+    }
 
-        if (selectedDate != null && selectedDate.equals(targetDate)) {
-            // Mostrar el mensaje para la fecha seleccionada
-            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-            System.out.println("Si vale");
-        }
 
-    }//GEN-LAST:event_cldAgendaMouseClicked
-
-    private void cldAgendaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMouseEntered
-        // Obtener la fecha seleccionada del calendario
-        java.util.Date selectedDate = cldAgenda.getDate();
-
-        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-        java.util.Date targetDate = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            targetDate = sdf.parse("2023-07-31");
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        if (selectedDate != null && selectedDate.equals(targetDate)) {
-            // Mostrar el mensaje para la fecha seleccionada
-            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-            System.out.println("Si vale");
-        }
-
-    }//GEN-LAST:event_cldAgendaMouseEntered
-
-    private void cldAgendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cldAgendaMousePressed
-        // Obtener la fecha seleccionada del calendario
-        java.util.Date selectedDate = cldAgenda.getDate();
-
-        // Aquí puedes verificar si la fecha seleccionada es la que deseas mostrar el mensaje
-        // Por ejemplo, supongamos que deseas mostrar un mensaje para el 31 de julio de 2023
-        java.util.Date targetDate = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            targetDate = sdf.parse("2023-07-31");
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        if (selectedDate != null && selectedDate.equals(targetDate)) {
-            // Mostrar el mensaje para la fecha seleccionada
-            javax.swing.JOptionPane.showMessageDialog(this, "Mensaje para el 04 de AGO de 2023");
-            System.out.println("Si vale");
-        }
-    }//GEN-LAST:event_cldAgendaMousePressed
-
+    }//GEN-LAST:event_btnEnviarActionPerformed
+    
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -500,7 +632,6 @@ public class frmReclusos extends javax.swing.JFrame {
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
     }
-
     /**
      * @param args the command line arguments
      */
@@ -518,23 +649,24 @@ public class frmReclusos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmReclusos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmTalleres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmReclusos(usuario, contrasena).setVisible(true);
+                try {
+                    new frmInscripcionReclusos(usuario, contrasena).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(frmInscripcionReclusos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -542,17 +674,20 @@ public class frmReclusos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnOpcion5;
     private javax.swing.JLabel LlbIconUser;
-    private javax.swing.JPanel btnActividades;
+    private javax.swing.JButton btnEnviar;
+    private javax.swing.JPanel btnInscripciones;
     private javax.swing.JPanel btnPerfil;
-    private com.toedter.calendar.JCalendar cldAgenda;
+    private javax.swing.JPanel btnTalleres;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -563,9 +698,13 @@ public class frmReclusos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBanner;
     private javax.swing.JPanel jPanelExit2;
     private javax.swing.JPanel jPanelSide;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblExit2;
     private javax.swing.JLabel lblHandle;
     // End of variables declaration//GEN-END:variables
+
+    
 }

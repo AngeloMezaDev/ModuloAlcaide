@@ -5,9 +5,34 @@
  */
 package VISTAS;
 
+import CONTROLADOR.ctrlProfesores;
+import MODELO.Usuario;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.EventObject;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,8 +43,42 @@ public class frmProfesores extends javax.swing.JFrame {
     /**
      * Creates new form fmrProfesores
      */
-    public frmProfesores() {
+    private static String usuario = "";
+    private static String contraseña = "";
+    private ctrlProfesores ctrlProf;
+
+    public frmProfesores(String usuario, String contraseña) {
+        this.usuario = usuario;
+        this.contraseña = contraseña;
         initComponents();
+        // Agregar elementos "placeholder" a los JComboBox
+        cmbTallerAsistencias.addItem("Seleccione un taller...");
+        cmbGrupoAsistencias.addItem("Seleccione un grupo...");
+
+        lblHandle.setText("@" + usuario);
+        ctrlProf = new ctrlProfesores();
+        try {
+            String idProfesor = ctrlProf.getIdProfesor(usuario);
+            ctrlProf.cargarTalleresDocente(cmbTallerAsistencias, idProfesor); // Cargar talleres al abrir el formulario
+            ctrlProf.cargarGruposDocente(cmbGrupoAsistencias, idProfesor); // Cargar grupos al abrir el formulario
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejar la excepción según sea necesario
+        }
+
+        TableColumn tc = jTableAsistencias.getColumnModel().getColumn(6);
+        tc.setCellEditor(jTableAsistencias.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(jTableAsistencias.getDefaultRenderer(Boolean.class));
+        cmbTallerAsistencias.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String nombreTallerSeleccionado = cmbTallerAsistencias.getSelectedItem().toString();
+                try {
+                    ctrlProf.cargarFechaCreacionTallerSeleccionado(nombreTallerSeleccionado, jDateFecha);
+                } catch (SQLException ex) {
+                    Logger.getLogger(frmProfesores.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     /**
@@ -36,7 +95,7 @@ public class frmProfesores extends javax.swing.JFrame {
         btnAsistencias = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        btnCalificaciones = new javax.swing.JPanel();
+        btnAsignaciones = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         btnInformes = new javax.swing.JPanel();
@@ -44,25 +103,34 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         LlbIconUser = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblHandle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         lblLogOut = new javax.swing.JLabel();
+        btnPerfil = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        btnCalificar = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
         JPanelEncabezado = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanelExit2 = new javax.swing.JPanel();
         lblExit2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        jTableAsistencias = new javax.swing.JTable();
+        jDateFecha = new com.toedter.calendar.JDateChooser();
+        btnConsultarAsistencias = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbTallerAsistencias = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbGrupoAsistencias = new javax.swing.JComboBox<>();
+        btnCargar = new javax.swing.JButton();
+        BtnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -130,22 +198,25 @@ public class frmProfesores extends javax.swing.JFrame {
 
         JPanelMenu.add(btnAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 290, 50));
 
-        btnCalificaciones.setBackground(new java.awt.Color(64, 43, 100));
-        btnCalificaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCalificaciones.setPreferredSize(new java.awt.Dimension(126, 50));
-        btnCalificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAsignaciones.setBackground(new java.awt.Color(64, 43, 100));
+        btnAsignaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAsignaciones.setPreferredSize(new java.awt.Dimension(126, 50));
+        btnAsignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAsignacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCalificacionesMouseEntered(evt);
+                btnAsignacionesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnCalificacionesMouseExited(evt);
+                btnAsignacionesMouseExited(evt);
             }
         });
 
         jLabel5.setBackground(new java.awt.Color(204, 204, 204));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("CALIFICACIONES");
+        jLabel5.setText("ASIGNACIONES");
         jLabel5.setName(""); // NOI18N
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -154,32 +225,35 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel13.setMinimumSize(new java.awt.Dimension(32, 32));
         jLabel13.setPreferredSize(new java.awt.Dimension(32, 32));
 
-        javax.swing.GroupLayout btnCalificacionesLayout = new javax.swing.GroupLayout(btnCalificaciones);
-        btnCalificaciones.setLayout(btnCalificacionesLayout);
-        btnCalificacionesLayout.setHorizontalGroup(
-            btnCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnAsignacionesLayout = new javax.swing.GroupLayout(btnAsignaciones);
+        btnAsignaciones.setLayout(btnAsignacionesLayout);
+        btnAsignacionesLayout.setHorizontalGroup(
+            btnAsignacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel5))
         );
-        btnCalificacionesLayout.setVerticalGroup(
-            btnCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
+        btnAsignacionesLayout.setVerticalGroup(
+            btnAsignacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(btnCalificacionesLayout.createSequentialGroup()
+            .addGroup(btnAsignacionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel5))
         );
 
-        JPanelMenu.add(btnCalificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
+        JPanelMenu.add(btnAsignaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 290, 50));
 
         btnInformes.setBackground(new java.awt.Color(64, 43, 100));
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInformesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
             }
@@ -220,17 +294,18 @@ public class frmProfesores extends javax.swing.JFrame {
         JPanelMenu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 230, 20));
 
         LlbIconUser.setForeground(new java.awt.Color(153, 153, 153));
-        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/UserIconBanner.png"))); // NOI18N
+        LlbIconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/PerfilProfe.png"))); // NOI18N
         JPanelMenu.add(LlbIconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 40, 40));
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("USER");
-        JPanelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblHandle.setBackground(new java.awt.Color(204, 204, 204));
+        lblHandle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblHandle.setForeground(new java.awt.Color(204, 204, 204));
+        lblHandle.setText("USER");
+        JPanelMenu.add(lblHandle, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 180, -1));
 
         jLabel1.setBackground(new java.awt.Color(54, 33, 89));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ROL:");
         jLabel1.setOpaque(true);
         JPanelMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 65, -1, 30));
@@ -274,6 +349,104 @@ public class frmProfesores extends javax.swing.JFrame {
 
         JPanelMenu.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 290, 50));
 
+        btnPerfil.setBackground(new java.awt.Color(64, 43, 100));
+        btnPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPerfil.setPreferredSize(new java.awt.Dimension(126, 50));
+        btnPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPerfilMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPerfilMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnPerfilMouseExited(evt);
+            }
+        });
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/PerfilProfe.png"))); // NOI18N
+
+        jLabel16.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel16.setText("PERFIL");
+
+        javax.swing.GroupLayout btnPerfilLayout = new javax.swing.GroupLayout(btnPerfil);
+        btnPerfil.setLayout(btnPerfilLayout);
+        btnPerfilLayout.setHorizontalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        btnPerfilLayout.setVerticalGroup(
+            btnPerfilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnPerfilLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(btnPerfilLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel16))
+        );
+
+        JPanelMenu.add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 290, 50));
+
+        btnCalificar.setBackground(new java.awt.Color(64, 43, 100));
+        btnCalificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCalificar.setPreferredSize(new java.awt.Dimension(126, 50));
+        btnCalificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCalificarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCalificarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCalificarMouseExited(evt);
+            }
+        });
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/assignment.png"))); // NOI18N
+
+        jLabel18.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel18.setText("CALIFICAR");
+
+        javax.swing.GroupLayout btnCalificarLayout = new javax.swing.GroupLayout(btnCalificar);
+        btnCalificar.setLayout(btnCalificarLayout);
+        btnCalificarLayout.setHorizontalGroup(
+            btnCalificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCalificarLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        btnCalificarLayout.setVerticalGroup(
+            btnCalificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCalificarLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(btnCalificarLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel18))
+        );
+
+        JPanelMenu.add(btnCalificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 290, 50));
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("PROFESOR");
+        JPanelMenu.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 130, -1));
+
         jPanelFondo.add(JPanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
         JPanelMenu.getAccessibleContext().setAccessibleParent(jPanelFondo);
 
@@ -302,6 +475,7 @@ public class frmProfesores extends javax.swing.JFrame {
         lblExit2.setBackground(new java.awt.Color(122, 72, 221));
         lblExit2.setFont(new java.awt.Font("Rockwell", 1, 18)); // NOI18N
         lblExit2.setForeground(new java.awt.Color(255, 255, 255));
+        lblExit2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblExit2.setText("X");
         lblExit2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblExit2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -321,9 +495,7 @@ public class frmProfesores extends javax.swing.JFrame {
         jPanelExit2.setLayout(jPanelExit2Layout);
         jPanelExit2Layout.setHorizontalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelExit2Layout.createSequentialGroup()
-                .addGap(0, 17, Short.MAX_VALUE)
-                .addComponent(lblExit2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(lblExit2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
         jPanelExit2Layout.setVerticalGroup(
             jPanelExit2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,46 +508,42 @@ public class frmProfesores extends javax.swing.JFrame {
 
         jPanelFondo.add(JPanelEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 0, 1060, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAsistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NOMBRE", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
+                "ID_ASISTENCIA", "ID_RECLUSO", "NOMBRE", "TALLER", "GRUPO", "FECHA", "ASISTENCIA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAsistencias);
 
         jPanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 960, 350));
-        jPanelFondo.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
+        jPanelFondo.add(jDateFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(1125, 110, 170, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("CARGAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultarAsistencias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnConsultarAsistencias.setText("CONSULTAR");
+        btnConsultarAsistencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConsultarAsistenciasActionPerformed(evt);
             }
         });
-        jPanelFondo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+        jPanelFondo.add(btnConsultarAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("REGISTRO DE ASISTENCIA");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanelFondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 100, 300, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
+        jPanelFondo.add(cmbTallerAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 230, -1));
 
         jLabel8.setText("TALLERES:");
         jPanelFondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
@@ -383,8 +551,25 @@ public class frmProfesores extends javax.swing.JFrame {
         jLabel9.setText("GRUPO:");
         jPanelFondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanelFondo.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+        jPanelFondo.add(cmbGrupoAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 190, 230, -1));
+
+        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargar.setText("CARGAR");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 190, 140, 20));
+
+        BtnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnGuardar.setText("GUARDAR");
+        BtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGuardarActionPerformed(evt);
+            }
+        });
+        jPanelFondo.add(BtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 190, 140, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -401,40 +586,47 @@ public class frmProfesores extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
-        resetColor(btnCalificaciones);
+        resetColor(btnAsignaciones);
         resetColor(btnInformes);
+        resetColor(btnPerfil);
+        resetColor(btnCalificar);
+
     }//GEN-LAST:event_btnAsistenciasMouseEntered
 
     private void btnAsistenciasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseExited
         setColor(btnAsistencias);
-        resetColor(btnCalificaciones);
+        resetColor(btnAsignaciones);
         resetColor(btnInformes);
+        resetColor(btnPerfil);
+        resetColor(btnCalificar);
+
     }//GEN-LAST:event_btnAsistenciasMouseExited
 
-    private void btnCalificacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseEntered
-        setColor(btnCalificaciones);
+    private void btnAsignacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseEntered
         resetColor(btnAsistencias);
+        setColor(btnAsignaciones);
         resetColor(btnInformes);
-    }//GEN-LAST:event_btnCalificacionesMouseEntered
-
-    private void btnCalificacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificacionesMouseExited
-        setColor(btnAsistencias);
-        resetColor(btnCalificaciones);
-        resetColor(btnInformes);
-    }//GEN-LAST:event_btnCalificacionesMouseExited
+        resetColor(btnPerfil);
+        resetColor(btnCalificar);
+    }//GEN-LAST:event_btnAsignacionesMouseEntered
 
     private void btnInformesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseEntered
-        setColor(btnInformes);
-        resetColor(btnCalificaciones);
         resetColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        setColor(btnInformes);
+        resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnInformesMouseEntered
 
     private void btnInformesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseExited
         setColor(btnAsistencias);
-        resetColor(btnCalificaciones);
+        resetColor(btnAsignaciones);
         resetColor(btnInformes);
+        resetColor(btnPerfil);
+        resetColor(btnCalificar);
     }//GEN-LAST:event_btnInformesMouseExited
 
     private void lblExit2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseClicked
@@ -447,7 +639,7 @@ public class frmProfesores extends javax.swing.JFrame {
     }//GEN-LAST:event_lblExit2MouseEntered
 
     private void lblExit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExit2MouseExited
-        jPanelExit2.setBackground(new Color(122,72,221));
+        jPanelExit2.setBackground(new Color(122, 72, 221));
     }//GEN-LAST:event_lblExit2MouseExited
 
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
@@ -455,19 +647,13 @@ public class frmProfesores extends javax.swing.JFrame {
         // Mostrar mensaje de confirmación para cerrar sesión
         int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
 
- 
-
         // Verificar la opción seleccionada por el usuario
         if (opcion == JOptionPane.YES_OPTION) {
             // Mostrar mensaje de sesión cerrada con éxito
             JOptionPane.showMessageDialog(null, "Sesión cerrada con éxito", "Sesión cerrada", JOptionPane.INFORMATION_MESSAGE);
 
- 
-
             // Cerrar el formulario actual
             this.dispose();
-
- 
 
             // Cargar el formulario de login
             Login loginForm = new Login();
@@ -475,9 +661,135 @@ public class frmProfesores extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblLogOutMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnPerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseEntered
+        resetColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        resetColor(btnInformes);
+        resetColor(btnCalificar);
+        setColor(btnPerfil);
+    }//GEN-LAST:event_btnPerfilMouseEntered
+
+    private void btnPerfilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseExited
+        setColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        resetColor(btnInformes);
+        resetColor(btnCalificar);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnPerfilMouseExited
+
+    private void btnPerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPerfilMouseClicked
+        frmPerfilProfesor perfil = new frmPerfilProfesor(usuario, contraseña);
+        perfil.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnPerfilMouseClicked
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        String tallerSeleccionado = cmbTallerAsistencias.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupoAsistencias.getSelectedItem().toString();
+        Date selectedDate = jDateFecha.getDate();
+
+        if (tallerSeleccionado.isEmpty() || grupoSeleccionado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un taller y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (selectedDate == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fecha.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de cargar las asistencias
+
+        if (!ctrlProf.validarExistenciaReclusos(tallerSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No hay reclusos inscritos en el curso y grupo seleccionados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ctrlProf.agregarFilaAsistencia(jTableAsistencias, cmbTallerAsistencias, cmbGrupoAsistencias, jDateFecha);
+        JOptionPane.showMessageDialog(this, "Asistencias cargadas correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
+
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void BtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+
+        if (model.getRowCount() > 0) {
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Desea guardar las asistencias?", "Guardar Asistencias", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                ctrlProf.guardarAsistencias(jTableAsistencias);
+                JOptionPane.showMessageDialog(this, "Asistencias guardadas exitosamente.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+
+                // Limpia la tabla después de guardar
+                model.setRowCount(0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay datos para guardar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_BtnGuardarActionPerformed
+
+    private void btnConsultarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAsistenciasActionPerformed
+        try {
+            boolean existenRegistros = ctrlProf.verificarExistenciaRegistrosAsistencias();
+
+            if (existenRegistros) {
+                System.out.println("Usuario:" + usuario);
+                frmConsultarAsistenciasProfe consulta = new frmConsultarAsistenciasProfe(usuario, contraseña);
+                consulta.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No existen registros de asistencias.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Manejar la excepción según sea necesario
+        }
+
+    }//GEN-LAST:event_btnConsultarAsistenciasActionPerformed
+
+    private void btnAsignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseClicked
+        frmCalificacion cal = new frmCalificacion(usuario, contraseña);
+        cal.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_btnAsignacionesMouseClicked
+
+    private void btnCalificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseClicked
+        frmCalificar calificar = new frmCalificar(usuario, contraseña);
+        calificar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCalificarMouseClicked
+
+    private void btnCalificarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseEntered
+        resetColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        resetColor(btnInformes);
+        setColor(btnCalificar);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnCalificarMouseEntered
+
+    private void btnCalificarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalificarMouseExited
+        setColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        resetColor(btnInformes);
+        resetColor(btnCalificar);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnCalificarMouseExited
+
+    private void btnAsignacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsignacionesMouseExited
+        setColor(btnAsistencias);
+        resetColor(btnAsignaciones);
+        resetColor(btnInformes);
+        resetColor(btnCalificar);
+        resetColor(btnPerfil);
+    }//GEN-LAST:event_btnAsignacionesMouseExited
+
+    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
+        frmInformes info = new frmInformes(usuario, contraseña);
+        info.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInformesMouseClicked
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
@@ -486,6 +798,7 @@ public class frmProfesores extends javax.swing.JFrame {
     void resetColor(JPanel panel) {
         panel.setBackground(new Color(64, 43, 100));
     }
+
     /**
      * @param args the command line arguments
      */
@@ -517,31 +830,39 @@ public class frmProfesores extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmProfesores().setVisible(true);
+                new frmProfesores(usuario, contraseña).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnGuardar;
     private javax.swing.JPanel JPanelEncabezado;
     private javax.swing.JPanel JPanelMenu;
     private javax.swing.JLabel LlbIconUser;
+    private javax.swing.JPanel btnAsignaciones;
     private javax.swing.JPanel btnAsistencias;
-    private javax.swing.JPanel btnCalificaciones;
+    private javax.swing.JPanel btnCalificar;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnConsultarAsistencias;
     private javax.swing.JPanel btnInformes;
+    private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JComboBox<String> cmbGrupoAsistencias;
+    private javax.swing.JComboBox<String> cmbTallerAsistencias;
+    private com.toedter.calendar.JDateChooser jDateFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -552,8 +873,9 @@ public class frmProfesores extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAsistencias;
     private javax.swing.JLabel lblExit2;
+    private javax.swing.JLabel lblHandle;
     private javax.swing.JLabel lblLogOut;
     // End of variables declaration//GEN-END:variables
 }
