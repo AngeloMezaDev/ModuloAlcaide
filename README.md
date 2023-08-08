@@ -5,8 +5,8 @@ En netbeans clonar el repositorio con el link adjunto anteriormente. Abrir netbe
 
 Credenciales para ingreso:
 
-Branch Alcaide
-User: Alcaide
+ROL Alcaide
+User: admin
 
 Password: admin
 
