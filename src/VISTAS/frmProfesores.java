@@ -698,12 +698,16 @@ public class frmProfesores extends javax.swing.JFrame {
             return;
         }
 
+        DefaultTableModel model = (DefaultTableModel) jTableAsistencias.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de cargar las asistencias
+
         if (!ctrlProf.validarExistenciaReclusos(tallerSeleccionado, grupoSeleccionado)) {
             JOptionPane.showMessageDialog(this, "No hay reclusos inscritos en el curso y grupo seleccionados.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         ctrlProf.agregarFilaAsistencia(jTableAsistencias, cmbTallerAsistencias, cmbGrupoAsistencias, jDateFecha);
+        JOptionPane.showMessageDialog(this, "Asistencias cargadas correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
 
     }//GEN-LAST:event_btnCargarActionPerformed
 

@@ -31,7 +31,7 @@ public class frmCalificacion extends javax.swing.JFrame {
     public frmCalificacion(String usuario, String contraseña) {
         this.usuario = usuario;
         this.contraseña = contraseña;
-        
+
         initComponents();
         lblHandle.setText("@" + usuario);
         ctrlProf = new ctrlProfesores();
@@ -111,6 +111,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         cmbCurso = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         cmbGrupo = new javax.swing.JComboBox<>();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -544,6 +545,15 @@ public class frmCalificacion extends javax.swing.JFrame {
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/Imagenes_Alcaide/multiple-users-silhouette.png"))); // NOI18N
 
+        btnNuevo.setBackground(new java.awt.Color(102, 102, 255));
+        btnNuevo.setForeground(new java.awt.Color(0, 0, 0));
+        btnNuevo.setText("NUEVO");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelBodyLayout = new javax.swing.GroupLayout(PanelBody);
         PanelBody.setLayout(PanelBodyLayout);
         PanelBodyLayout.setHorizontalGroup(
@@ -574,6 +584,8 @@ public class frmCalificacion extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBodyLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -581,7 +593,9 @@ public class frmCalificacion extends javax.swing.JFrame {
             PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(3, 3, 3)
                 .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(PanelBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -676,7 +690,8 @@ public class frmCalificacion extends javax.swing.JFrame {
             }
 
             ctrlAsig.guardarAsignacion(txtTitulo, cmbCurso, cmbGrupo, jDateFechaAsignacion, txtDescripcion, lblId);
-
+            lblId.setText("");
+            limpiarCampos();
             JOptionPane.showMessageDialog(this, "Asignación guardada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {
@@ -687,7 +702,14 @@ public class frmCalificacion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSubirActionPerformed
+    private void limpiarCampos() {
+        txtTitulo.setText("");
+        txtDescripcion.setText("");
+        cmbCurso.removeAllItems();
+        cmbGrupo.removeAllItems();
+        jDateFechaAsignacion.setDate(null);
 
+    }
     private void btnAsistenciasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAsistenciasMouseEntered
         setColor(btnAsistencias);
         resetColor(btnAsignaciones);
@@ -786,6 +808,24 @@ public class frmCalificacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAsistenciasMouseClicked
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        try {
+            String idProfesor = ctrlProf.getIdProfesor(usuario);
+            ctrlProf.cargarTalleresDocente(cmbCurso, idProfesor);
+            ctrlProf.cargarGruposDocente(cmbGrupo, idProfesor);
+            ctrlProf.getIdAsignacion();
+
+            // Generar y establecer el ID de asignación en lblId
+            String nuevoIdAsignacion = ctrlAsig.generarIdAsignacion();
+            lblId.setText(nuevoIdAsignacion);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Manejar la excepción según sea necesario
+        }
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -840,6 +880,7 @@ public class frmCalificacion extends javax.swing.JFrame {
     private javax.swing.JPanel btnAsistencias;
     private javax.swing.JPanel btnCalificar;
     private javax.swing.JPanel btnInformes;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnSalir;
     private javax.swing.JButton btnSubir;

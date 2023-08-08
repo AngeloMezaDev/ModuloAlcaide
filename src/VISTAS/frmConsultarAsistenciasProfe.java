@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -28,7 +29,7 @@ public class frmConsultarAsistenciasProfe extends javax.swing.JFrame {
 
     public frmConsultarAsistenciasProfe(String usuario, String contraseña) {
         initComponents();
-          // Agregar elementos "placeholder" a los JComboBox
+        // Agregar elementos "placeholder" a los JComboBox
         cmbTallerConsulta.addItem("Seleccione un taller...");
         cmbGrupoConsulta.addItem("Seleccione un grupo...");
         ctrlProf = new ctrlProfesores();
@@ -223,8 +224,12 @@ public class frmConsultarAsistenciasProfe extends javax.swing.JFrame {
             return;
         }
 
+        DefaultTableModel model = (DefaultTableModel) jTableConsultaAsis.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de cargar las asistencias
+
         try {
             ctrlProf.cargarAsistencias(cmbTallerConsulta, cmbGrupoConsulta, jDateConsulta, jTableConsultaAsis);
+            JOptionPane.showMessageDialog(this, "Asistencias cargadas correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(frmConsultarAsistenciasProfe.class.getName()).log(Level.SEVERE, null, ex);
         }

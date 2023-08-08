@@ -40,7 +40,7 @@ public class frmInformes extends javax.swing.JFrame {
         controlador = new ctrlProfesores();
         ctrlAsig = new ctrlAsignacionProfe(); // Inicializar ctrlAsig aquí
         ctrlInfo = new ctrlInformesProfe();
-        
+
         // Agregar elementos "placeholder" a los JComboBox
         cmbCurso.addItem("Seleccione un taller...");
         cmbGrupo.addItem("Seleccione un grupo...");
@@ -122,6 +122,8 @@ public class frmInformes extends javax.swing.JFrame {
         cmbCurso = new javax.swing.JComboBox<>();
         btnCargar = new javax.swing.JButton();
         btnCargar1 = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnGenerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -508,14 +510,14 @@ public class frmInformes extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 260, 1060, 289));
 
         jLabel2.setText("CURSO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 141, 49, 39));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 49, 39));
 
         jLabel3.setText("GRUPO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(793, 141, 49, 39));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 120, 49, 39));
 
-        getContentPane().add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 149, 155, -1));
+        getContentPane().add(cmbGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 130, 155, -1));
 
-        getContentPane().add(cmbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 149, 158, -1));
+        getContentPane().add(cmbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 158, -1));
 
         btnCargar.setText("CARGAR");
         btnCargar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -527,6 +529,22 @@ public class frmInformes extends javax.swing.JFrame {
 
         btnCargar1.setText("CARGAR");
         getContentPane().add(btnCargar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1229, 182, 120, 44));
+
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 180, 110, 50));
+
+        btnGenerar.setText("GENERAR");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 180, 110, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -693,6 +711,33 @@ public class frmInformes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCargarMouseClicked
 
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        //Programación del botón generar informe.
+        String cursoSeleccionado = cmbCurso.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
+
+        if ("Seleccione un curso...".equals(cursoSeleccionado) || "Seleccione un grupo...".equals(grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!ctrlInfo.existeInforme(cursoSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No se encontraron informes generados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea generar un informe?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            ctrlInfo.generarInforme(cmbCurso, cmbGrupo);
+            JOptionPane.showMessageDialog(this, "Informe Generado correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        frmConsultarAsistenciasProfe consultaprofe = new frmConsultarAsistenciasProfe(usuario, contraseña);
+        consultaprofe.setVisible(true);
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -746,6 +791,8 @@ public class frmInformes extends javax.swing.JFrame {
     private javax.swing.JPanel btnCalificar;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnCargar1;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JPanel btnInformes;
     private javax.swing.JPanel btnPerfil;
     private javax.swing.JPanel btnSalir;
