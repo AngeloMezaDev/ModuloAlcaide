@@ -411,6 +411,9 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInformesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
             }
@@ -1052,6 +1055,12 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
         jPanelExit5.setBackground(new Color(122, 72, 221));
     }//GEN-LAST:event_lblExit5MouseExited
 
+    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
+        frmInformes info = new frmInformes(usuario, contraseña);
+        info.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInformesMouseClicked
+
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));
     }
@@ -1149,9 +1158,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelBackGround;
-    private javax.swing.JPanel jPanelExit2;
-    private javax.swing.JPanel jPanelExit3;
-    private javax.swing.JPanel jPanelExit4;
     private javax.swing.JPanel jPanelExit5;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JSeparator jSeparator1;
@@ -1164,9 +1170,6 @@ public class frmPerfilProfesor extends javax.swing.JFrame {
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblEspecialidad;
-    private javax.swing.JLabel lblExit2;
-    private javax.swing.JLabel lblExit3;
-    private javax.swing.JLabel lblExit4;
     private javax.swing.JLabel lblExit5;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblGrupo;

@@ -449,7 +449,7 @@ public class frmInformes extends javax.swing.JFrame {
         jLabel11.setBackground(new java.awt.Color(204, 204, 204));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel11.setText("INFORMES DE ASISTENCIAS");
+        jLabel11.setText("INFORMES DE RECLUSOS");
         JPanelEncabezado.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(204, 204, 204));
@@ -520,6 +520,7 @@ public class frmInformes extends javax.swing.JFrame {
         getContentPane().add(cmbCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 158, -1));
 
         btnCargar.setText("CARGAR");
+        btnCargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCargar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCargarMouseClicked(evt);
@@ -531,6 +532,7 @@ public class frmInformes extends javax.swing.JFrame {
         getContentPane().add(btnCargar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1229, 182, 120, 44));
 
         btnConsultar.setText("CONSULTAR");
+        btnConsultar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarActionPerformed(evt);
@@ -539,6 +541,7 @@ public class frmInformes extends javax.swing.JFrame {
         getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 180, 110, 50));
 
         btnGenerar.setText("GENERAR");
+        btnGenerar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarActionPerformed(evt);
@@ -728,14 +731,27 @@ public class frmInformes extends javax.swing.JFrame {
 
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea generar un informe?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (confirmacion == JOptionPane.YES_OPTION) {
-            ctrlInfo.generarInforme(cmbCurso, cmbGrupo);
+            ctrlInfo.generarInforme(cmbCurso, cmbGrupo, jDateFechaVencimiento);
             JOptionPane.showMessageDialog(this, "Informe Generado correctamente.", "Éxito", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        frmConsultarAsistenciasProfe consultaprofe = new frmConsultarAsistenciasProfe(usuario, contraseña);
-        consultaprofe.setVisible(true);
+        String tallerSeleccionado = cmbCurso.getSelectedItem().toString();
+        String grupoSeleccionado = cmbGrupo.getSelectedItem().toString();
+
+        if (tallerSeleccionado.isEmpty() || grupoSeleccionado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un curso y un grupo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!ctrlInfo.existeInformePorTallerYGrupo(tallerSeleccionado, grupoSeleccionado)) {
+            JOptionPane.showMessageDialog(this, "No se encontraron informes generados para el taller y grupo seleccionados.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        frmInformeGenerado generado = new frmInformeGenerado(usuario, contraseña);
+        generado.setVisible(true);
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     void setColor(JPanel panel) {

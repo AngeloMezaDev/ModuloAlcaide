@@ -575,6 +575,9 @@ public class frmCalificar extends javax.swing.JFrame {
         btnInformes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInformes.setPreferredSize(new java.awt.Dimension(126, 50));
         btnInformes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInformesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnInformesMouseEntered(evt);
             }
@@ -1000,6 +1003,12 @@ public class frmCalificar extends javax.swing.JFrame {
         profe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAsistenciasMouseClicked
+
+    private void btnInformesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInformesMouseClicked
+        frmInformes info = new frmInformes(usuario, contraseña);
+        info.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInformesMouseClicked
 
     void setColor(JPanel panel) {
         panel.setBackground(new Color(85, 65, 118));

@@ -548,6 +548,7 @@ public class frmCalificacion extends javax.swing.JFrame {
         btnNuevo.setBackground(new java.awt.Color(102, 102, 255));
         btnNuevo.setForeground(new java.awt.Color(0, 0, 0));
         btnNuevo.setText("NUEVO");
+        btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
